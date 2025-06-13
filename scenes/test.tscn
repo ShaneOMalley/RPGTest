@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://k8hmbnoq6hjm"]
+
+[ext_resource type="Script" uid="uid://b7tuba2kg26n" path="res://scripts/game/FSM_Battle.gd" id="1_errlg"]
+
+[node name="Test" type="Node2D"]
+script = ExtResource("1_errlg")
