@@ -1,3 +1,36 @@
-[gd_resource type="SpriteFrames" format=3 uid="uid://bs85ao7nlm7lm"]
+[gd_resource type="SpriteFrames" load_steps=5 format=3 uid="uid://bs85ao7nlm7lm"]
+
+[ext_resource type="Texture2D" uid="uid://c6jqugc6epyof" path="res://res/sprites/enemies/test_enemy_attack_1.png" id="1_d4sdq"]
+[ext_resource type="Texture2D" uid="uid://igfs7oyf5ko5" path="res://res/sprites/enemies/test_enemy_hit_1.png" id="2_ka03l"]
+[ext_resource type="Texture2D" uid="uid://xoit6n18vqp2" path="res://res/sprites/enemies/test_enemy_idle_1.png" id="3_fweuc"]
+[ext_resource type="Texture2D" uid="uid://dhuq6nmhr3jxu" path="res://res/sprites/enemies/test_enemy_idle_2.png" id="4_xylqv"]
 
 [resource]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_d4sdq")
+}],
+"loop": true,
+"name": &"attack",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_ka03l")
+}],
+"loop": true,
+"name": &"hit",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_fweuc")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_xylqv")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}]

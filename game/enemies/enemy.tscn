@@ -1,5 +1,11 @@
-[gd_scene format=3 uid="uid://i6qlyigyis8y"]
+[gd_scene load_steps=2 format=3 uid="uid://i6qlyigyis8y"]
+
+[ext_resource type="SpriteFrames" uid="uid://bs85ao7nlm7lm" path="res://res/test_enemy_sprite_frames.tres" id="1_1kd2t"]
 
 [node name="Enemy" type="Node2D"]
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(215, 150)
+sprite_frames = ExtResource("1_1kd2t")
+animation = &"idle"
+frame_progress = 0.593091

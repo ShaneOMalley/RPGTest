@@ -1,6 +1,10 @@
-[gd_scene load_steps=2 format=3 uid="uid://k8hmbnoq6hjm"]
+[gd_scene load_steps=3 format=3 uid="uid://k8hmbnoq6hjm"]
 
-[ext_resource type="Script" uid="uid://f0qjf84ixq4s" path="res://scripts/game/fsm_battle.gd" id="1_errlg"]
+[ext_resource type="Script" path="res://scripts/game/fsm_battle.gd" id="1_errlg"]
+[ext_resource type="Script" uid="uid://cd0d6rulouge8" path="res://scripts/game/battle/battle_participant.gd" id="2_bl13t"]
 
 [node name="Test" type="Node2D"]
 script = ExtResource("1_errlg")
+
+[node name="Node2D" type="Node2D" parent="."]
+script = ExtResource("2_bl13t")

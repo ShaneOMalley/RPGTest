@@ -14,3 +14,7 @@ config/name="RPGTest"
 run/main_scene="uid://k8hmbnoq6hjm"
 config/features=PackedStringArray("4.4", "Forward Plus")
 config/icon="res://icon.svg"
+
+[autoload]
+
+BattleManager="*res://scripts/game/battle/battle_manager.gd"
