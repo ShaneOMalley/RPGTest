@@ -1,16 +1,21 @@
-class_name FSM_Battle
+class_name FSMBattle extends FiniteStateMachine
 
-extends FiniteStateMachine
-
-class FSMState1:
-	extends FSMState
+class FSMState1 extends FSMState:
 	func update(_delta: float) -> void:
-		print("updating state 1")
+		pass
+		# print("updating state 1")
+	
+	func on_enter() -> void:
+		print("enter state 1")
 
 class FSMState2:
 	extends FSMState
 	func update(_delta: float) -> void:
-		print("updating state 2")
+		pass
+		# print("updating state 2")
+	
+	func on_enter() -> void:
+		print("enter state 2")
 
 var _time = 0.0
 

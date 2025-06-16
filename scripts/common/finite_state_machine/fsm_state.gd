@@ -1,6 +1,4 @@
-﻿class_name FSMState
-
-extends RefCounted
+﻿class_name FSMState extends RefCounted
 
 func on_enter() -> void:
 	pass

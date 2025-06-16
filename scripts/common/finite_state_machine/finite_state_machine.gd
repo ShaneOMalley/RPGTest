@@ -1,6 +1,4 @@
-class_name FiniteStateMachine
-
-extends Node
+class_name FiniteStateMachine extends Node2D
 
 class Transition:
 	extends RefCounted
@@ -49,6 +47,8 @@ func _process(delta: float) -> void:
 	if (found_index != -1):
 		var transition := _current_valid_transitions[found_index]
 		goto_state(transition.to_state)
+		# todo: decide whether or not to do this
+		# _process(delta)
 	
 	if _current_state:
 		_current_state.update(delta)
