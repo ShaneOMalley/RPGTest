@@ -1,4 +1,4 @@
-﻿class_name FSMState extends RefCounted
+﻿class_name FSMState extends Node2D
 
 func on_enter() -> void:
 	pass

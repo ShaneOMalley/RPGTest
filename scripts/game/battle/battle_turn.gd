@@ -2,8 +2,7 @@
 
 # todo: support restrictions in special turns. i.e. power up -> generate turn where you can only attack
 
-enum TurnType
-{ 
+enum TurnType { 
 	NORMAL,		# Will be re-calculated
 	SPECIAL,	# Will not be re-calculated
 }

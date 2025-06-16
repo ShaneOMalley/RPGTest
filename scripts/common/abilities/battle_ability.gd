@@ -11,8 +11,9 @@ class BattleAbilityAttack extends BattleAbility:
 	func execute():
 		var damage := floori(max(0, source.strength - (target.vitality / 2.0)))
 		target.hp -= damage
-		
-		print("hit %s for %d damage!")
+
+		# print(target.to_string())
+		print("%s hit %s for %d damage!" % [source.to_string(), target.to_string(), damage])
 
 class BattleAbilityPass extends BattleAbility:
 

@@ -2,7 +2,7 @@
 
 func make_attack() -> BattleAbility:
 	var attack = BattleAbility.BattleAbilityAttack.new()
-	attack.source = self
+	attack.source = BattleManager.test_get_player()
 	attack.target = BattleManager.test_get_random_enemy()
 	return attack
 

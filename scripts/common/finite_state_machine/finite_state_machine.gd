@@ -28,6 +28,8 @@ func goto_state(new_state: StringName) -> void:
 		
 	if _current_state:
 		_current_state.on_exit()
+
+	print("going to %s" % new_state)
 		
 	_current_state = _states[new_state]
 	_current_state.on_enter()
