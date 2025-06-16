@@ -1,0 +1,1 @@
+﻿class_name StateBattleTurnDecisionEnemy extends StateBattleTurnDecision
