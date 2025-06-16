@@ -1,34 +1,18 @@
 class_name FSMBattle extends FiniteStateMachine
 
-class FSMState1 extends FSMState:
-	func update(_delta: float) -> void:
-		pass
-		# print("updating state 1")
-	
-	func on_enter() -> void:
-		print("enter state 1")
-
-class FSMState2:
-	extends FSMState
-	func update(_delta: float) -> void:
-		pass
-		# print("updating state 2")
-	
-	func on_enter() -> void:
-		print("enter state 2")
-
-var _time = 0.0
-
 func _init() -> void:
-	add_state("one", FSMState1.new())
-	add_state("two", FSMState2.new())
+	add_state("turn_setup", StateBattleTurnSetup.new())
+	add_state("turn_decision_player", StateBattleTurnDecisionPlayer.new())
+	add_state("turn_decision_enemy", StateBattleTurnDecisionEnemy.new())
+	add_state("turn_ability", StateBattleTurnAbility.new())
+	add_state("turn_handle_death", StateBattleTurnHandleDeath.new())
 
-	add_transition("one", "two", func(): return floori(self._time) % 2 == 0)
-	add_transition("two", "one", func(): return floori(self._time) % 2 == 1)
+	# add_transition("one", "two", func(): return floori(self._time) % 2 == 0)
+	add_transition("decision_player", "turn_ability", func(): return BattleManager.has_queued_ability())
+	add_transition("turn_ability", "turn_handle_death", func(): return !BattleManager.get_is_blocked())
+	add_transition("turn_handle_death", "decision_player", func(): return !BattleManager.get_is_blocked())
 
-	goto_state("one")
+	goto_state("decision_player")
 
-func _process(delta: float) -> void:
-	super._process(delta)
-	
-	_time += delta	
+# func _process(delta: float) -> void:
+# 	super._process(delta)

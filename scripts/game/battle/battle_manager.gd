@@ -1,5 +1,7 @@
 extends Node
 
+## The battle manager holds important state about the battle
+
 enum Affiliation { PLAYER, ENEMY }
 
 const MAX_TURNS = 20
@@ -8,6 +10,27 @@ var participants: Array[BattleParticipant]
 var turns: Array[BattleTurn]
 var battle_time: float = 0
 var state_machine: FSMBattle
+
+## generic blocking timer
+var _is_blocked: bool
+func start_blocking_timer(time: float) -> void:
+	var timer := get_tree().create_timer(time)
+	_is_blocked = true
+	timer.timeout.connect(func(): self._is_blocked = false)
+	
+func get_is_blocked() -> bool:
+	return _is_blocked
+
+## ability queueing
+var _queued_ability: BattleAbility
+func queue_ability(in_queued_ability: BattleAbility) -> void:
+	_queued_ability = in_queued_ability
+	
+func has_queued_ability() -> bool:
+	return _queued_ability != null
+	
+func execute_queued_ability() -> void:
+	_queued_ability.execute()
 
 func _generate_normal_turn(time: float, participant: BattleParticipant):
 	turns.push_back(BattleTurn.new(time, participant, BattleTurn.TurnType.NORMAL))
