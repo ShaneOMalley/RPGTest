@@ -14,7 +14,7 @@ func _init() -> void:
 	
 	goto_state("turn_decision_player")
 	
-	_process(1)
+	# _process(1)
 
 func _process(delta: float) -> void:
 	# print("hello")

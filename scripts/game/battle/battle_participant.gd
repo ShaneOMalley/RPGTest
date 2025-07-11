@@ -1,6 +1,8 @@
 class_name BattleParticipant extends Node
 
+var max_hp: int
 var hp: int
+var max_mp: int
 var mp: int
 var affiliation: BattleManager.Affiliation
 # todo: pull stats from data asset

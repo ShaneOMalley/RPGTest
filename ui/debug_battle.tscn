@@ -1,0 +1,29 @@
+[gd_scene load_steps=2 format=3 uid="uid://7rge64bqjwj5"]
+
+[ext_resource type="Script" uid="uid://teiyx5dc18gn" path="res://scripts/ui/debug_battle.gd" id="1_w7s8q"]
+
+[node name="DebugBattle" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = -1152.0
+offset_bottom = -648.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_w7s8q")
+
+[node name="PanelContainer" type="PanelContainer" parent="."]
+layout_mode = 1
+offset_left = 10.0
+offset_top = 10.0
+offset_right = 810.0
+offset_bottom = 310.0
+
+[node name="RichTextLabel" type="RichTextLabel" parent="PanelContainer"]
+layout_mode = 2
+theme_override_font_sizes/normal_font_size = 22
+text = "test
+multiline
+
+space then line"
