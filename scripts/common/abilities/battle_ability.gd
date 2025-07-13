@@ -18,4 +18,4 @@ class BattleAbilityAttack extends BattleAbility:
 class BattleAbilityPass extends BattleAbility:
 
 	func execute():
-		print("%s does nothing...")
+		print("%s does nothing..." % source)

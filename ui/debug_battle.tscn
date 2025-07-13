@@ -17,13 +17,26 @@ script = ExtResource("1_w7s8q")
 layout_mode = 1
 offset_left = 10.0
 offset_top = 10.0
-offset_right = 810.0
-offset_bottom = 310.0
+offset_right = 1110.0
+offset_bottom = 410.0
 
-[node name="RichTextLabel" type="RichTextLabel" parent="PanelContainer"]
+[node name="BattleStateText" type="RichTextLabel" parent="PanelContainer"]
 layout_mode = 2
 theme_override_font_sizes/normal_font_size = 22
 text = "test
 multiline
 
 space then line"
+
+[node name="TurnsText" type="RichTextLabel" parent="PanelContainer"]
+layout_mode = 2
+size_flags_horizontal = 8
+theme_override_font_sizes/normal_font_size = 22
+bbcode_enabled = true
+text = "turn 1
+turn 222
+turn 3"
+fit_content = true
+scroll_active = false
+autowrap_mode = 0
+horizontal_alignment = 2

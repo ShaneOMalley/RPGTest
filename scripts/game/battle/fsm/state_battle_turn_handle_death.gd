@@ -10,6 +10,8 @@ func on_enter() -> void:
 	var participant_is_alive := func(participant: BattleParticipant) -> bool:
 		return participant.hp > 0
 
+	# TODO: Make this less messy
 	BattleManager.participants = BattleManager.participants.filter(participant_is_alive)
+	BattleManager._turns = BattleManager._turns.filter(func(turn: BattleTurn): return turn.participant.hp > 0)
 	
 	BattleManager.start_blocking_timer(0.5)

@@ -4,7 +4,7 @@ extends Node
 
 enum Affiliation { PLAYER, ENEMY }
 
-const MAX_TURNS: int = 20
+const MAX_TURNS: int = 5
 
 var participants: Array[BattleParticipant]
 
@@ -40,6 +40,15 @@ func execute_queued_ability() -> void:
 	
 func clear_queued_ability() -> void:
 	_queued_ability.free()
+
+## Turn Management
+var _current_turn: BattleTurn
+func goto_next_turn() -> void:
+	_current_turn = _turns.pop_front()
+	_build_turns_list(MAX_TURNS - _turns.size())
+
+func get_current_turn() -> BattleTurn:
+	return _current_turn
 	
 ## test functions
 func test_get_random_enemy() -> BattleParticipant:
@@ -79,19 +88,27 @@ func _test_add_participants() -> void:
 		print(turn.to_string())
 	
 # turn generation
+# todo: support fallback time for units that come into battle mid-way
+func _get_next_normal_turn_time(participant: BattleParticipant):
+	var last_participant_turn: BattleTurn = _turns.filter(func(turn: BattleTurn): return turn.participant == participant).back()
+	var period := participant.get_turn_period()
+	return last_participant_turn.time + period if last_participant_turn else period
+
 func _generate_normal_turn(time: float, participant: BattleParticipant):
+	# var last_participant_turn: BattleTurn = _turns.filter(func(turn: BattleTurn): return turn.participant == participant).back()
+	# var period := participant.get_turn_period()
+	# var time := last_participant_turn.time + period if last_participant_turn else period
 	_turns.push_back(BattleTurn.new(time, participant, BattleTurn.TurnType.NORMAL))
 
 var _participant_frequency_tracker: Dictionary[BattleParticipant, float]
-func _build_turns_list():
-	var filter_func = func(battle_turn: BattleTurn) -> bool:
-		return battle_turn.turn_type != BattleTurn.TurnType.NORMAL
-	
-	_turns.filter(filter_func)
+func _build_turns_list(num_turns: int):
+	# var filter_func = func(battle_turn: BattleTurn) -> bool:
+	# 	return battle_turn.turn_type != BattleTurn.TurnType.NORMAL
+	# _turns.filter(filter_func)
 
 	_participant_frequency_tracker.clear()
 	for participant in participants:
-		_participant_frequency_tracker[participant] = participant.get_turn_period()
+		_participant_frequency_tracker[participant] = _get_next_normal_turn_time(participant) # participant.get_turn_period()
 
 	var find_fastest_participant = func():
 		var lowest_score := 10000.0
@@ -103,7 +120,7 @@ func _build_turns_list():
 				lowest_score = score
 		return best_participant
 	
-	for i in range(MAX_TURNS):
+	for i in range(num_turns):
 		var fastest_participant = find_fastest_participant.call()
 		_generate_normal_turn(_participant_frequency_tracker[fastest_participant], fastest_participant)
 		_participant_frequency_tracker[fastest_participant] += fastest_participant.get_turn_period()
@@ -111,7 +128,7 @@ func _build_turns_list():
 func _setup_battle():
 	_test_add_participants()
 
-	_build_turns_list()
+	_build_turns_list(MAX_TURNS)
 	
 	_state_machine = FSMBattle.new()
 	add_child(_state_machine)
