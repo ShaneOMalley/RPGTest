@@ -1,0 +1,21 @@
+[gd_scene load_steps=3 format=3 uid="uid://bk3tvyhf7s8eg"]
+
+[ext_resource type="Texture2D" uid="uid://xoit6n18vqp2" path="res://res/sprites/enemies/test_enemy_idle_1.png" id="1_bhddf"]
+[ext_resource type="Script" uid="uid://dml8tis66ysy5" path="res://scripts/ui/battle/ui_enemy.gd" id="2_8aegp"]
+
+[node name="Enemy" type="TextureRect"]
+custom_minimum_size = Vector2(100, 100)
+texture = ExtResource("1_bhddf")
+expand_mode = 2
+script = ExtResource("2_8aegp")
+
+[node name="HPText" type="RichTextLabel" parent="."]
+layout_mode = 1
+offset_left = 1.0
+offset_top = -12.0
+offset_right = 67.0
+offset_bottom = 13.0
+text = "test/test
+"
+fit_content = true
+autowrap_mode = 0

@@ -10,7 +10,7 @@ var participants: Array[BattleParticipant]
 
 # todo: just make these public?
 var _turns: Array[BattleTurn]
-var _battle_time: float = 0
+# var _battle_time: float = 0
 var _state_machine: FSMBattle
 
 ## state getters
@@ -69,6 +69,7 @@ func _test_add_participants() -> void:
 	var enemy_1 = BattleParticipant.new()
 	enemy_1.participant_name = "Ghoul"
 	enemy_1.agility = 7
+	enemy_1.strength = 2
 	enemy_1.max_hp = 20
 	enemy_1.hp = 20
 	enemy_1.affiliation = Affiliation.ENEMY
@@ -76,6 +77,7 @@ func _test_add_participants() -> void:
 	var enemy_2 = BattleParticipant.new()
 	enemy_2.participant_name = "Goblin"
 	enemy_2.agility = 8
+	enemy_2.strength = 2
 	enemy_2.max_hp = 17
 	enemy_2.hp = 17
 	enemy_2.affiliation = Affiliation.ENEMY
@@ -128,6 +130,7 @@ func _build_turns_list(num_turns: int):
 func _setup_battle():
 	_test_add_participants()
 
+	# TODO: Maybe let this be done in a setup state?
 	_build_turns_list(MAX_TURNS)
 	
 	_state_machine = FSMBattle.new()
