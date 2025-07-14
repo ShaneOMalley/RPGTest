@@ -4,6 +4,6 @@ func execute() -> void:
 	super.execute()
 
 	var effect = BattleEffectAttack.new(source, target)
-	effect.grant()
+	effect.apply()
 
 	end()

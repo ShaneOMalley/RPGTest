@@ -9,6 +9,7 @@ const MAX_TURNS: int = 5
 var participants: Array[BattleParticipant]
 
 signal on_battle_started
+signal on_battle_effect_applied(BattleEffect)
 
 # todo: just make these public?
 var _turns: Array[BattleTurn]
@@ -159,6 +160,10 @@ func _setup_battle():
 
 func _cleanup_battle():
 	_state_machine.free()
+
+func _process(_delta: float) -> void:
+	if Input.is_action_just_pressed("ui_down"):
+		_setup_battle()
 	
-func _ready() -> void:
-	_setup_battle()
+# func _ready() -> void:
+# 	_setup_battle()
