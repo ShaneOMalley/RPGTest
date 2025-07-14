@@ -8,6 +8,8 @@ const MAX_TURNS: int = 5
 
 var participants: Array[BattleParticipant]
 
+signal on_battle_started
+
 # todo: just make these public?
 var _turns: Array[BattleTurn]
 # var _battle_time: float = 0
@@ -17,15 +19,29 @@ var _state_machine: FSMBattle
 func get_participants() -> Array[BattleParticipant]:
 	return participants
 
+# TODO: Cache this instead of filtering each time it's called
+func get_enemies() -> Array[BattleParticipant]:
+	# var filter_enemies := func(participant: BattleParticipant) -> bool:
+	# 	return participant.affiliation == BattleManager.Affiliation.ENEMY
+	# return BattleManager.participants.filter(filter_enemies)
+
+	return BattleManager.participants.filter(func(participant: BattleParticipant) -> bool:
+		return participant.affiliation == BattleManager.Affiliation.ENEMY)
+
+# TODO: Cache this instead of filtering each time it's called
+func get_player_party() -> Array[BattleParticipant]:
+	return BattleManager.participants.filter(func(participant: BattleParticipant) -> bool:
+		return participant.affiliation == BattleManager.Affiliation.PLAYER)
+
 ## generic blocking timer
-var _is_blocked: bool
-func start_blocking_timer(time: float) -> void:
-	var timer := get_tree().create_timer(time)
-	_is_blocked = true
-	timer.timeout.connect(func(): self._is_blocked = false)
-	
-func get_is_blocked() -> bool:
-	return _is_blocked
+# var _is_blocked: bool
+# func start_blocking_timer(time: float) -> void:
+# 	var timer := get_tree().create_timer(time)
+# 	_is_blocked = true
+# 	timer.timeout.connect(func(): self._is_blocked = false)
+# 	
+# func get_is_blocked() -> bool:
+# 	return _is_blocked
 
 ## ability queueing
 var _queued_ability: BattleAbility
@@ -34,7 +50,10 @@ func queue_ability(in_queued_ability: BattleAbility) -> void:
 	
 func has_queued_ability() -> bool:
 	return _queued_ability != null
-	
+
+func has_executing_ability() -> bool:
+	return _queued_ability and _queued_ability.get_is_executing()
+
 func execute_queued_ability() -> void:
 	_queued_ability.execute()
 	
@@ -59,7 +78,7 @@ func test_get_player() -> BattleParticipant:
 
 func _test_add_participants() -> void:
 	var player = BattleParticipant.new()
-	player.participant_name = "! Player"
+	player.id = "! Player"
 	player.agility = 14
 	player.strength = 10
 	player.max_hp = 100
@@ -67,7 +86,7 @@ func _test_add_participants() -> void:
 	player.affiliation = Affiliation.PLAYER
 
 	var enemy_1 = BattleParticipant.new()
-	enemy_1.participant_name = "Ghoul"
+	enemy_1.id = "Ghoul"
 	enemy_1.agility = 7
 	enemy_1.strength = 2
 	enemy_1.max_hp = 20
@@ -75,7 +94,7 @@ func _test_add_participants() -> void:
 	enemy_1.affiliation = Affiliation.ENEMY
 	
 	var enemy_2 = BattleParticipant.new()
-	enemy_2.participant_name = "Goblin"
+	enemy_2.id = "Goblin"
 	enemy_2.agility = 8
 	enemy_2.strength = 2
 	enemy_2.max_hp = 17
@@ -135,6 +154,8 @@ func _setup_battle():
 	
 	_state_machine = FSMBattle.new()
 	add_child(_state_machine)
+
+	on_battle_started.emit()
 
 func _cleanup_battle():
 	_state_machine.free()

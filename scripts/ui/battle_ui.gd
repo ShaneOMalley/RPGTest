@@ -1,4 +1,4 @@
-extends Control
+class_name BattleUI extends Control
 
 @export var enemy_template: Resource
 
@@ -15,7 +15,7 @@ func add_enemy(id: StringName, hp: int, max_hp: int) -> void:
 
 	ui_enemy.update_hp(hp, max_hp)
 
-func _ready() -> void:
-	add_enemy("fucker", 20, 20)
-	add_enemy("cunt", 30, 30)
-	pass
+# func _ready() -> void:
+# 	add_enemy("fucker", 20, 20)
+# 	add_enemy("cunt", 30, 30)
+# 	pass

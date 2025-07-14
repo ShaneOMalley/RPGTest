@@ -14,4 +14,4 @@ func on_enter() -> void:
 	BattleManager.participants = BattleManager.participants.filter(participant_is_alive)
 	BattleManager._turns = BattleManager._turns.filter(func(turn: BattleTurn): return turn.participant.hp > 0)
 	
-	BattleManager.start_blocking_timer(0.5)
+	# BattleManager.start_blocking_timer(0.5)

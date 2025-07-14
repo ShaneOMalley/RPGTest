@@ -6,7 +6,7 @@ var max_mp: int
 var mp: int
 var affiliation: BattleManager.Affiliation
 # todo: pull stats from data asset
-var participant_name: String
+var id: StringName
 var strength: int
 var magic: int
 var agility: int
@@ -21,4 +21,4 @@ func _process(_delta: float):
 	pass
 
 func _to_string() -> String:
-	return "「%s」" % participant_name
+	return "「%s」" % id

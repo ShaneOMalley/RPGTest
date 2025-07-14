@@ -2,14 +2,14 @@ extends Control
 
 func _process(delta: float) -> void:
 	# Battle State
-	var filter_enemies := func(participant: BattleParticipant) -> bool:
-		return participant.affiliation == BattleManager.Affiliation.ENEMY
+	# var filter_enemies := func(participant: BattleParticipant) -> bool:
+	# 	return participant.affiliation == BattleManager.Affiliation.ENEMY
 
-	var filter_player := func(participant: BattleParticipant) -> bool:
-		return participant.affiliation == BattleManager.Affiliation.PLAYER
+	# var filter_player := func(participant: BattleParticipant) -> bool:
+	# 	return participant.affiliation == BattleManager.Affiliation.PLAYER
 
-	var enemies = BattleManager.participants.filter(filter_enemies)
-	var players = BattleManager.participants.filter(filter_player)
+	var enemies = BattleManager.get_enemies()
+	var players = BattleManager.get_player_party()
 
 	var battle_state_string := ""
 	battle_state_string += "-- ENEMIES --\n"

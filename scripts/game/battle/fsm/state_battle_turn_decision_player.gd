@@ -1,12 +1,12 @@
 ﻿class_name StateBattleTurnDecisionPlayer extends StateBattleTurnDecision
 
-func make_attack() -> BattleAbility:
-	var attack = BattleAbility.BattleAbilityAttack.new()
-	attack.source = BattleManager.test_get_player()
-	attack.target = BattleManager.test_get_random_enemy()
+func _make_attack() -> BattleAbility:
+	var source = BattleManager.test_get_player()
+	var target = BattleManager.test_get_random_enemy()
+	var attack = BattleAbilityAttack.new(source, target)
 	return attack
 
 func update(_delta: float) -> void:
-	if Input.is_action_pressed("ui_accept"):
-		var attack = make_attack()
+	if Input.is_action_just_pressed("ui_accept"):
+		var attack = _make_attack()
 		BattleManager.queue_ability(attack)

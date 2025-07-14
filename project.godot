@@ -18,3 +18,5 @@ config/icon="res://icon.svg"
 [autoload]
 
 BattleManager="*res://scripts/game/battle/battle_manager.gd"
+BattlePresenter="*res://scripts/game/battle/battle_presenter.gd"
+BattleView="*res://scripts/game/battle/battle_view.gd"
