@@ -15,10 +15,14 @@ signal on_battle_effect_applied(BattleEffect)
 var _turns: Array[BattleTurn]
 # var _battle_time: float = 0
 var _state_machine: FSMBattle
+var _is_battle_active: bool = false
 
 ## state getters
 func get_participants() -> Array[BattleParticipant]:
 	return participants
+
+func get_is_battle_active() -> bool:
+	return _is_battle_active
 
 # TODO: Cache this instead of filtering each time it's called
 func get_enemies() -> Array[BattleParticipant]:
@@ -45,21 +49,29 @@ func get_player_party() -> Array[BattleParticipant]:
 # 	return _is_blocked
 
 ## ability queueing
-var _queued_ability: BattleAbility
-func queue_ability(in_queued_ability: BattleAbility) -> void:
-	_queued_ability = in_queued_ability
+class AbilityExecution:
+	var ability: BattleAbility
+	var target: BattleParticipant
+
+	func _init(in_ability: BattleAbility, in_target: BattleParticipant) -> void:
+		ability = in_ability
+		target = in_target
+
+var _queued_ability_execution: AbilityExecution
+func queue_ability(in_ability: BattleAbility, in_target: BattleParticipant) -> void:
+	_queued_ability_execution = AbilityExecution.new(in_ability, in_target)
 	
 func has_queued_ability() -> bool:
-	return _queued_ability != null
+	return _queued_ability_execution != null
 
 func has_executing_ability() -> bool:
-	return _queued_ability and _queued_ability.get_is_executing()
+	return _queued_ability_execution and  _queued_ability_execution.ability.get_is_executing()
 
 func execute_queued_ability() -> void:
-	_queued_ability.execute()
+	_queued_ability_execution.ability.execute(_queued_ability_execution.target)
 	
 func clear_queued_ability() -> void:
-	_queued_ability.free()
+	_queued_ability_execution = null
 
 ## Turn Management
 var _current_turn: BattleTurn
@@ -156,10 +168,12 @@ func _setup_battle():
 	_state_machine = FSMBattle.new()
 	add_child(_state_machine)
 
+	_is_battle_active = true
 	on_battle_started.emit()
 
 func _cleanup_battle():
 	_state_machine.free()
+	_is_battle_active = false
 
 func _process(_delta: float) -> void:
 	if Input.is_action_just_pressed("ui_down"):

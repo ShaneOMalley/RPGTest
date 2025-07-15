@@ -1,9 +1,9 @@
 class_name BattleAbilityAttack extends BattleAbility
 
-func execute() -> void:
-	super.execute()
+func execute(target: BattleParticipant) -> void:
+	super.execute(target)
 
-	var effect = BattleEffectAttack.new(source, target)
+	var effect = BattleEffectAttack.new(_source, target)
 	effect.apply()
 
 	end()

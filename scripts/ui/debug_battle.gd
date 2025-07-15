@@ -1,6 +1,10 @@
 extends Control
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
+
+	if !BattleManager.get_is_battle_active():
+		return
+
 	# Battle State
 	# var filter_enemies := func(participant: BattleParticipant) -> bool:
 	# 	return participant.affiliation == BattleManager.Affiliation.ENEMY
@@ -22,7 +26,6 @@ func _process(delta: float) -> void:
 		battle_state_string += "    %s %d/%d" % [player.to_string(), player.hp, player.max_hp]
 
 	$PanelContainer/BattleStateText.text = battle_state_string
-
 
 	# Turns
 	var turns_string := ""

@@ -1,10 +1,12 @@
 ﻿class_name BattleAbility extends Node
 
-var source: BattleParticipant
-var target: BattleParticipant
+var _source: BattleParticipant
 var _is_executing := false
 
-func execute() -> void:
+# TODO: Right now there is an assumption that the only execution context 
+# needed is an optional `_target`. There might be a more comprehensive struct
+# implemented later
+func execute(_target: BattleParticipant) -> void:
 	_is_executing = true
 	pass
 
@@ -27,21 +29,5 @@ func end() -> void:
 func get_is_executing() -> bool:
 	return _is_executing
 
-func _init(in_source: BattleParticipant, in_target: BattleParticipant) -> void:
-	source = in_source
-	target = in_target
-
-# class BattleAbilityAttack extends BattleAbility:
-# 	
-# 	func execute():
-# 		var damage := floori(max(0, source.strength - (target.vitality / 2.0)))
-# 		target.hp -= damage
-# 
-# 		print("%s hit %s for %d damage!" % [source.to_string(), target.to_string(), damage])
-# 
-# 		end()
-
-# class BattleAbilityPass extends BattleAbility:
-# 
-# 	func execute():
-# 		print("%s does nothing..." % source)
+func _init(in_source: BattleParticipant) -> void:
+	_source = in_source
