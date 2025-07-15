@@ -19,6 +19,16 @@ func execute(_target: BattleParticipant) -> void:
 # func get_is_blocked() -> bool:
 # 	return _is_blocked
 
+static var ability_class_registry: Dictionary[StringName, GDScript] = {
+	"attack": BattleAbilityAttack,
+	"pass": BattleAbilityPass,
+}
+
+# TODO: Find some elegant way of doing this and letting BattleAbility subclasses register themselves
+# static func _register_ability(id: StringName, ability: GDScript) -> void:
+# 	assert(Utils.is_subclass_of(ability, BattleAbility))
+# 	_ability_class_registry[id] = ability
+
 func end() -> void:
 	#_is_executing = false
 	# TODO: remove this hacky blocking timer and uncomment above

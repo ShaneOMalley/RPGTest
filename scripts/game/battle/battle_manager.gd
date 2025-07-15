@@ -65,7 +65,7 @@ class AbilityExecution:
 		ability.execute(target)
 
 var _queued_ability_execution: AbilityExecution
-func queue_ability(in_ability: BattleAbility, in_target: BattleParticipant) -> void:
+func queue_ability_execution(in_ability: BattleAbility, in_target: BattleParticipant) -> void:
 	_queued_ability_execution = AbilityExecution.new(in_ability, in_target)
 	
 func has_queued_ability() -> bool:
@@ -106,6 +106,8 @@ func _test_add_participants() -> void:
 	var enemy_1 = BattleParticipant.create_from_config(&"ghoul")
 	enemy_1.affiliation = Affiliation.ENEMY
 	
+	# enemy_2.max_hp = 17
+	# enemy_2.hp = 17
 	var enemy_2 = BattleParticipant.create_from_config(&"goblin")
 	enemy_2.affiliation = Affiliation.ENEMY
 

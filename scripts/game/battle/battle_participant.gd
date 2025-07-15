@@ -12,6 +12,8 @@ var magic: int
 var agility: int
 var vitality: int
 
+var abilities: Dictionary[StringName, BattleAbility]
+
 # todo: make this scale with enemies somehow?
 func get_turn_period() -> float:
 	# return 25 - agility ** 0.7
@@ -40,5 +42,11 @@ static func create_from_config(in_id: StringName) -> BattleParticipant:
 	participant.magic = data.magic
 	participant.agility = data.agility
 	participant.vitality = data.vitality
+
+	if data.abilities:
+		for ability_id in data.abilities:
+			var ability_class := BattleAbility.ability_class_registry[ability_id]
+			var ability_instance := ability_class.new(participant) as BattleAbility
+			participant.abilities[ability_id] = ability_instance
 
 	return participant
