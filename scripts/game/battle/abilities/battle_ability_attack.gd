@@ -7,3 +7,6 @@ func execute(target: BattleParticipant) -> void:
 	effect.apply()
 
 	end()
+
+func is_valid_for_target(possible_target: BattleParticipant) -> bool:
+	return possible_target.affiliation != _source.affiliation

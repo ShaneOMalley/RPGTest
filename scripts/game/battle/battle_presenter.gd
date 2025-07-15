@@ -1,32 +1,57 @@
 extends Node
 
-# @export var battle_ui: BattleUI
-var battle_ui: BattleUI
-
-func setup_enemy(id: StringName, hp: int, max_hp: int) -> void:
-	battle_ui.add_enemy(id, hp, max_hp)
-
 func on_battle_started() -> void:
-	# TODO: Define this path in config (also, find out how to do config in Godot?)
-	battle_ui = preload("res://ui/battle/battle_ui.tscn").instantiate()
-	get_tree().root.add_child(battle_ui)
+	BattleView.setup_ui()
 
 	var enemies := BattleManager.get_enemies()
 	for enemy in enemies:
-		setup_enemy(enemy.id, enemy.hp, enemy.max_hp)
+		BattleView.setup_enemy(enemy.id, enemy.hp, enemy.max_hp)
 
 func on_battle_effect_applied(battle_effect: BattleEffect) -> void:
 	var target = battle_effect.target
 
 	# TODO: Make this happen somewhere else; don't assume that 0 health means removal
 	if target.hp <= 0:
-		battle_ui.remove_enemy(target.id)
+		BattleView.remove_enemy(target.id)
 	else:
-		battle_ui.update_enemy_hp(target.id, target.hp, target.max_hp)
+		BattleView.update_enemy_hp(target.id, target.hp, target.max_hp)
 
 	print(battle_effect.to_string())
+
+func on_battle_player_turn_started(battle_participant: BattleParticipant) -> void:
+	var battle_menu_entries: Array[BattleUI.BattleMenuEntry]
+
+	var abilities := battle_participant.abilities
+	for ability_id in abilities:
+		var ability := abilities[ability_id]
+
+		var battle_menu_entry := BattleUI.BattleMenuEntry.new()
+		battle_menu_entry.ability_id = ability_id
+		battle_menu_entry.ability_string = ability_id
+
+		var valid_participants = BattleManager.get_participants().filter(ability.is_valid_for_target)
+		for valid_participant in valid_participants:
+			battle_menu_entry.valid_participant_targets.append(valid_participant.id)
+
+		battle_menu_entries.append(battle_menu_entry)
+
+	BattleView.show_battle_menu(battle_menu_entries)
+
+func on_battle_player_turn_ended(battle_participant: BattleParticipant) -> void:
+	BattleView.hide_battle_menu()
+	pass
+
+func on_ability_and_target_selected(ability_id: StringName, target_id: StringName) -> void:
+	var current_participant := BattleManager.get_current_turn_participant()
+	var ability := current_participant.abilities[ability_id]
+	var target := BattleManager.get_participant(target_id)
+	BattleManager.queue_ability_execution(ability, target)
 
 func _ready():
 	# battle_ui = preload("res://ui/battle/battle_ui.tscn").instantiate()
 	BattleManager.on_battle_started.connect(on_battle_started)
 	BattleManager.on_battle_effect_applied.connect(on_battle_effect_applied)
+	BattleManager.on_battle_player_turn_started.connect(on_battle_player_turn_started)
+	BattleManager.on_battle_player_turn_ended.connect(on_battle_player_turn_ended)
+
+	BattleView.on_ability_and_target_selected.connect(on_ability_and_target_selected)

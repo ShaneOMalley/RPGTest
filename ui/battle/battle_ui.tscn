@@ -1,13 +1,16 @@
-[gd_scene load_steps=3 format=3 uid="uid://by8ko4w2dgslh"]
+[gd_scene load_steps=4 format=3 uid="uid://by8ko4w2dgslh"]
 
 [ext_resource type="PackedScene" uid="uid://bk3tvyhf7s8eg" path="res://ui/battle/ui_enemy.tscn" id="1_02iql"]
 [ext_resource type="Script" uid="uid://pkhib2brsl7a" path="res://scripts/ui/battle_ui.gd" id="1_6je2w"]
+[ext_resource type="Script" uid="uid://8qrnrxijldix" path="res://scripts/ui/battle/battle_menu_entry_ui.gd" id="3_wfc18"]
 
 [node name="BattleUI" type="Control"]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_left = -1.0
+offset_right = -1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_6je2w")
@@ -77,10 +80,28 @@ alignment = 1
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="ColorRect" type="ColorRect" parent="PlayerPartyContainer2"]
+[node name="BattleMenuBackground" type="ColorRect" parent="PlayerPartyContainer2"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 2.0
+
+[node name="BattleMenu" type="VBoxContainer" parent="PlayerPartyContainer2/BattleMenuBackground"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 2.0
+
+[node name="BattleMenuEntryPrototype" type="Button" parent="PlayerPartyContainer2/BattleMenuBackground/BattleMenu"]
+visible = false
+custom_minimum_size = Vector2(0, 30)
+layout_mode = 2
+text = "Attack"
+alignment = 0
+script = ExtResource("3_wfc18")
 
 [node name="Control2" type="Control" parent="PlayerPartyContainer2"]
 layout_mode = 2

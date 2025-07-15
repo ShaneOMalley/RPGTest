@@ -10,6 +10,8 @@ var participants: Array[BattleParticipant]
 
 signal on_battle_started
 signal on_battle_effect_applied(BattleEffect)
+signal on_battle_player_turn_started(BattleParticipant)
+signal on_battle_player_turn_ended(BattleParticipant)
 
 # todo: just make these public?
 var _turns: Array[BattleTurn]
@@ -163,6 +165,8 @@ func _setup_battle():
 	_build_turns_list(MAX_TURNS)
 	
 	_state_machine = FSMBattle.new()
+	_state_machine.on_state_entered.connect(_on_state_entered)
+	_state_machine.on_state_exited.connect(_on_state_exited)
 	add_child(_state_machine)
 
 	_is_battle_active = true
@@ -172,8 +176,16 @@ func _cleanup_battle():
 	_state_machine.free()
 	_is_battle_active = false
 
+func _on_state_entered(id: StringName) -> void:
+	if id == &"turn_decision_player":
+		on_battle_player_turn_started.emit(get_current_turn_participant())
+
+func _on_state_exited(id: StringName) -> void:
+	if id == &"turn_decision_player":
+		on_battle_player_turn_ended.emit(get_current_turn_participant())
+
 func _process(_delta: float) -> void:
-	if Input.is_action_just_pressed("ui_down"):
+	if Input.is_action_just_pressed("ui_right"):
 		_setup_battle()
 	
 # func _ready() -> void:

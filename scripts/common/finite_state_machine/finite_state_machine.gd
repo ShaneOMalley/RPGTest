@@ -6,9 +6,13 @@ class Transition:
 	var from_state: StringName
 	var to_state: StringName
 	var condition: Callable
+
+signal on_state_entered(StringName)
+signal on_state_exited(StringName)
 	
 var _states: Dictionary[StringName, FSMState]
 var _current_state: FSMState
+var _current_state_name: StringName
 var _transitions: Array[Transition]
 var _current_valid_transitions: Array[Transition]
 
@@ -22,20 +26,23 @@ func add_transition(from_state: StringName, to_state: StringName, condition: Cal
 	transition.condition = condition
 	_transitions.push_back(transition)
 
-func goto_state(new_state: StringName) -> void:
-	if !_states.has(new_state):
+func goto_state(new_state_name: StringName) -> void:
+	if !_states.has(new_state_name):
 		return
 		
 	if _current_state:
 		_current_state.on_exit()
+		on_state_exited.emit(_current_state_name)
 
-	print("going to %s" % new_state)
+	print("going to %s" % new_state_name)
 		
-	_current_state = _states[new_state]
+	_current_state = _states[new_state_name]
 	_current_state.on_enter()
+	_current_state_name = new_state_name
+	on_state_entered.emit(new_state_name)
 	
 	var filter_func := func(transition: Transition) -> bool:
-		return transition.from_state == new_state
+		return transition.from_state == new_state_name
 	
 	_current_valid_transitions.clear()
 	_current_valid_transitions = _transitions.filter(filter_func)
