@@ -1,0 +1,6 @@
+{
+    "test" :
+    {
+        "enemy_battle_characters": ["ghoul", "goblin", "ghoul"]
+    }
+}

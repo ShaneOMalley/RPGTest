@@ -1,0 +1,36 @@
+{
+	"player" :
+	{
+		"max_hp": 100,
+		"max_mp": 30,
+		"strength": 10,
+		"agility": 14,
+		"magic": 5,
+		"vitality": 12,
+
+		"abilities": ["attack", "pass"]
+	},
+
+	"ghoul" :
+	{
+		"max_hp": 20,
+		"max_mp": 10,
+		"strength": 1,
+		"agility": 7,
+		"magic": 4,
+		"vitality": 1,
+
+		"abilities": ["pass"]
+	},
+	"goblin" :
+	{
+		"max_hp": 17,
+		"max_mp": 0,
+		"strength": 2,
+		"agility": 8,
+		"magic": 5,
+		"vitality": 3,
+
+		"abilities": ["pass"]
+	}
+}

@@ -24,6 +24,10 @@ func get_participants() -> Array[BattleParticipant]:
 func get_is_battle_active() -> bool:
 	return _is_battle_active
 
+func get_participant(id: StringName) -> BattleParticipant:
+	var index := participants.find_custom((func(participant): return participant.id == id))
+	return participants[index]
+
 # TODO: Cache this instead of filtering each time it's called
 func get_enemies() -> Array[BattleParticipant]:
 	# var filter_enemies := func(participant: BattleParticipant) -> bool:
@@ -57,6 +61,9 @@ class AbilityExecution:
 		ability = in_ability
 		target = in_target
 
+	func execute() -> void:
+		ability.execute(target)
+
 var _queued_ability_execution: AbilityExecution
 func queue_ability(in_ability: BattleAbility, in_target: BattleParticipant) -> void:
 	_queued_ability_execution = AbilityExecution.new(in_ability, in_target)
@@ -68,7 +75,7 @@ func has_executing_ability() -> bool:
 	return _queued_ability_execution and  _queued_ability_execution.ability.get_is_executing()
 
 func execute_queued_ability() -> void:
-	_queued_ability_execution.ability.execute(_queued_ability_execution.target)
+	_queued_ability_execution.execute()
 	
 func clear_queued_ability() -> void:
 	_queued_ability_execution = null
@@ -81,6 +88,9 @@ func goto_next_turn() -> void:
 
 func get_current_turn() -> BattleTurn:
 	return _current_turn
+
+func get_current_turn_participant() -> BattleParticipant:
+	return _current_turn.participant
 	
 ## test functions
 func test_get_random_enemy() -> BattleParticipant:
@@ -90,28 +100,13 @@ func test_get_player() -> BattleParticipant:
 	return participants.filter(func(participant): return participant.affiliation == Affiliation.PLAYER).pick_random()
 
 func _test_add_participants() -> void:
-	var player = BattleParticipant.new()
-	player.id = "! Player"
-	player.agility = 14
-	player.strength = 10
-	player.max_hp = 100
-	player.hp = 100
+	var player = BattleParticipant.create_from_config(&"player")
 	player.affiliation = Affiliation.PLAYER
 
-	var enemy_1 = BattleParticipant.new()
-	enemy_1.id = "Ghoul"
-	enemy_1.agility = 7
-	enemy_1.strength = 2
-	enemy_1.max_hp = 20
-	enemy_1.hp = 20
+	var enemy_1 = BattleParticipant.create_from_config(&"ghoul")
 	enemy_1.affiliation = Affiliation.ENEMY
 	
-	var enemy_2 = BattleParticipant.new()
-	enemy_2.id = "Goblin"
-	enemy_2.agility = 8
-	enemy_2.strength = 2
-	enemy_2.max_hp = 17
-	enemy_2.hp = 17
+	var enemy_2 = BattleParticipant.create_from_config(&"goblin")
 	enemy_2.affiliation = Affiliation.ENEMY
 
 	participants.push_back(player)
