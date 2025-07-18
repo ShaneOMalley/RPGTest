@@ -25,7 +25,7 @@ func add_enemy(id: StringName, hp: int, max_hp: int) -> void:
 
 	$EnemiesContainer.add_child(ui_enemy)
 
-	ui_enemy.update_hp(hp, max_hp)
+	ui_enemy.populate(id, hp, max_hp)
 
 func update_enemy_hp(id: StringName, hp: int, max_hp: int) -> void:
 	_enemies[id].update_hp(hp, max_hp)
@@ -86,6 +86,10 @@ func show_battle_menu(entries: Array[BattleMenuEntry]) -> void:
 
 		ui_entry.show()
 		ui_entry.set_text(entry.ability_string)
+		# ui_entry.focus_entered.connect(func(): print("focus entered"))
+		# ui_entry.focus_exited.connect(func(): print("focus exited"))
+		# ui_entry.mouse_entered.connect(func(): print("mouse entered"))
+		# ui_entry.mouse_exited.connect(func(): print("mouse exited"))
 		ui_entry.disabled = !entry.can_activate
 		ui_entry.pressed.connect(func(): show_target_menu(entry.ability_id, entry.valid_participant_targets))
 

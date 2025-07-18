@@ -9,6 +9,16 @@ texture = ExtResource("1_bhddf")
 expand_mode = 2
 script = ExtResource("2_8aegp")
 
+[node name="HPName" type="RichTextLabel" parent="."]
+layout_mode = 1
+offset_left = 1.0
+offset_top = -33.0
+offset_right = 102.0
+offset_bottom = -10.0
+text = "GoblinGoblin"
+fit_content = true
+autowrap_mode = 0
+
 [node name="HPText" type="RichTextLabel" parent="."]
 layout_mode = 1
 offset_left = 1.0

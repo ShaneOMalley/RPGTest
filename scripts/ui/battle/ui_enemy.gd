@@ -1,8 +1,12 @@
 class_name UIEnemy extends TextureRect
 
-var _participant_id: StringName
 var _hp: int
 var _max_hp: int
+
+func populate(participant_name: String, hp: int, max_hp: int) -> void:
+    $HPName.text = participant_name
+    update_hp(hp, max_hp)
+    pass
 
 func update_hp(hp: int, max_hp: int) -> void:
     $HPText.text = "HP: %d/%d" % [hp, max_hp]
