@@ -5,7 +5,7 @@ var _hp: int
 var _max_hp: int
 
 func update_hp(hp: int, max_hp: int) -> void:
-    $HPText.text = "%d/%d" % [hp, max_hp]
+    $HPText.text = "HP: %d/%d" % [hp, max_hp]
     _hp = hp
     _max_hp = max_hp
 

@@ -1,8 +1,9 @@
-[gd_scene load_steps=4 format=3 uid="uid://by8ko4w2dgslh"]
+[gd_scene load_steps=5 format=3 uid="uid://by8ko4w2dgslh"]
 
 [ext_resource type="PackedScene" uid="uid://bk3tvyhf7s8eg" path="res://ui/battle/ui_enemy.tscn" id="1_02iql"]
-[ext_resource type="Script" uid="uid://pkhib2brsl7a" path="res://scripts/ui/battle_ui.gd" id="1_6je2w"]
-[ext_resource type="Script" uid="uid://8qrnrxijldix" path="res://scripts/ui/battle/battle_menu_entry_ui.gd" id="3_wfc18"]
+[ext_resource type="Script" uid="uid://pkhib2brsl7a" path="res://scripts/ui/ui_battle.gd" id="1_6je2w"]
+[ext_resource type="PackedScene" uid="uid://bqkxs2hin7pck" path="res://ui/battle/player_party_member.tscn" id="3_uml01"]
+[ext_resource type="Script" uid="uid://8qrnrxijldix" path="res://scripts/ui/battle/ui_battle_menu_entry.gd" id="3_wfc18"]
 
 [node name="BattleUI" type="Control"]
 layout_mode = 3
@@ -38,30 +39,26 @@ anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
-offset_left = -406.0
+offset_left = -412.0
 offset_top = -94.0
-offset_right = 394.0
+offset_right = 400.0
 grow_horizontal = 2
 grow_vertical = 0
 alignment = 1
 
-[node name="ColorRect" type="ColorRect" parent="PlayerPartyContainer"]
+[node name="PlayerPartyMember1" parent="PlayerPartyContainer" instance=ExtResource("3_uml01")]
 layout_mode = 2
-size_flags_horizontal = 3
 
-[node name="ColorRect2" type="ColorRect" parent="PlayerPartyContainer"]
+[node name="PlayerPartyMember2" parent="PlayerPartyContainer" instance=ExtResource("3_uml01")]
 layout_mode = 2
-size_flags_horizontal = 3
 
-[node name="ColorRect3" type="ColorRect" parent="PlayerPartyContainer"]
+[node name="PlayerPartyMember3" parent="PlayerPartyContainer" instance=ExtResource("3_uml01")]
 layout_mode = 2
-size_flags_horizontal = 3
 
-[node name="ColorRect4" type="ColorRect" parent="PlayerPartyContainer"]
+[node name="PlayerPartyMember4" parent="PlayerPartyContainer" instance=ExtResource("3_uml01")]
 layout_mode = 2
-size_flags_horizontal = 3
 
-[node name="PlayerPartyContainer2" type="HBoxContainer" parent="."]
+[node name="MenuContainer" type="HBoxContainer" parent="."]
 layout_mode = 1
 anchors_preset = 7
 anchor_left = 0.5
@@ -76,16 +73,16 @@ grow_horizontal = 2
 grow_vertical = 0
 alignment = 1
 
-[node name="Control" type="Control" parent="PlayerPartyContainer2"]
+[node name="Padding1" type="Control" parent="MenuContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="BattleMenuBackground" type="ColorRect" parent="PlayerPartyContainer2"]
+[node name="BattleMenuBackground" type="ColorRect" parent="MenuContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 2.0
 
-[node name="BattleMenu" type="VBoxContainer" parent="PlayerPartyContainer2/BattleMenuBackground"]
+[node name="BattleMenu" type="VBoxContainer" parent="MenuContainer/BattleMenuBackground"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -95,7 +92,7 @@ grow_vertical = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 2.0
 
-[node name="BattleMenuEntryPrototype" type="Button" parent="PlayerPartyContainer2/BattleMenuBackground/BattleMenu"]
+[node name="BattleMenuEntryPrototype" type="Button" parent="MenuContainer/BattleMenuBackground/BattleMenu"]
 visible = false
 custom_minimum_size = Vector2(0, 30)
 layout_mode = 2
@@ -103,6 +100,6 @@ text = "Attack"
 alignment = 0
 script = ExtResource("3_wfc18")
 
-[node name="Control2" type="Control" parent="PlayerPartyContainer2"]
+[node name="Padding2" type="Control" parent="MenuContainer"]
 layout_mode = 2
 size_flags_horizontal = 3

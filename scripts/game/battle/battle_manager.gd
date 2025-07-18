@@ -40,7 +40,7 @@ func get_enemies() -> Array[BattleParticipant]:
 		return participant.affiliation == BattleManager.Affiliation.ENEMY)
 
 # TODO: Cache this instead of filtering each time it's called
-func get_player_party() -> Array[BattleParticipant]:
+func get_players() -> Array[BattleParticipant]:
 	return BattleManager.participants.filter(func(participant: BattleParticipant) -> bool:
 		return participant.affiliation == BattleManager.Affiliation.PLAYER)
 

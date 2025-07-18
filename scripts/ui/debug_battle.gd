@@ -13,7 +13,7 @@ func _process(_delta: float) -> void:
 	# 	return participant.affiliation == BattleManager.Affiliation.PLAYER
 
 	var enemies = BattleManager.get_enemies()
-	var players = BattleManager.get_player_party()
+	var players = BattleManager.get_players()
 
 	var battle_state_string := ""
 	battle_state_string += "-- ENEMIES --\n"

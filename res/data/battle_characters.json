@@ -6,7 +6,7 @@
 		"strength": 10,
 		"agility": 14,
 		"magic": 5,
-		"vitality": 12,
+		"vitality": 6,
 
 		"abilities": ["attack", "pass"]
 	},
@@ -15,22 +15,22 @@
 	{
 		"max_hp": 20,
 		"max_mp": 10,
-		"strength": 1,
+		"strength": 6,
 		"agility": 7,
 		"magic": 4,
 		"vitality": 1,
 
-		"abilities": ["pass"]
+		"abilities": ["attack", "pass"]
 	},
 	"goblin" :
 	{
 		"max_hp": 17,
 		"max_mp": 0,
-		"strength": 2,
+		"strength": 4,
 		"agility": 8,
 		"magic": 5,
 		"vitality": 3,
 
-		"abilities": ["pass"]
+		"abilities": ["attack", "pass"]
 	}
 }

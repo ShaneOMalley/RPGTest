@@ -30,5 +30,11 @@ func get_is_executing() -> bool:
 func is_valid_for_target(possible_target: BattleParticipant) -> bool:
 	return true
 
+func can_activate() -> bool:
+	for participant in BattleManager.get_participants():
+		if is_valid_for_target(participant):
+			return true
+	return false
+
 func _init(in_source: BattleParticipant) -> void:
 	_source = in_source
