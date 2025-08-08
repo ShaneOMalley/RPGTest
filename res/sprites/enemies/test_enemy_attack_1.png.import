@@ -3,15 +3,11 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://c6jqugc6epyof"
-path="res://.godot/imported/test_enemy_attack_1.png-3740f63faad42514e0f6cf1040612e98.ctex"
-metadata={
-"vram_texture": false
-}
+valid=false
 
 [deps]
 
 source_file="res://res/sprites/enemies/test_enemy_attack_1.png"
-dest_files=["res://.godot/imported/test_enemy_attack_1.png-3740f63faad42514e0f6cf1040612e98.ctex"]
 
 [params]
 

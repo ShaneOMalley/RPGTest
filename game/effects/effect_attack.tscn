@@ -1,0 +1,17 @@
+[gd_scene load_steps=4 format=3 uid="uid://dme81fha7jgl2"]
+
+[ext_resource type="Texture2D" uid="uid://dun71hlnl844t" path="res://res/particles/textures/attack.png" id="1_cw2kt"]
+[ext_resource type="Material" uid="uid://dfwv8i15bbsal" path="res://res/particles/process_materials/test_particle_process_material.tres" id="2_6yeey"]
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_cw2kt"]
+particles_animation = true
+particles_anim_h_frames = 3
+particles_anim_v_frames = 3
+particles_anim_loop = false
+
+[node name="GPUParticles2D" type="GPUParticles2D"]
+material = SubResource("CanvasItemMaterial_cw2kt")
+amount = 1
+texture = ExtResource("1_cw2kt")
+lifetime = 0.37
+process_material = ExtResource("2_6yeey")

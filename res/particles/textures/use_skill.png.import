@@ -2,12 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://igfs7oyf5ko5"
-valid=false
+uid="uid://btmwxnis6anps"
+path="res://.godot/imported/use_skill.png-51648cfb9e4279f5b3af77c8b1484143.ctex"
+metadata={
+"vram_texture": false
+}
 
 [deps]
 
-source_file="res://res/sprites/enemies/test_enemy_hit_1.png"
+source_file="res://res/particles/textures/use_skill.png"
+dest_files=["res://.godot/imported/use_skill.png-51648cfb9e4279f5b3af77c8b1484143.ctex"]
 
 [params]
 
