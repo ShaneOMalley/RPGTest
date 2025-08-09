@@ -1,6 +1,6 @@
 extends Node
 
-func on_battle_started() -> void:
+func on_pre_setup_complete() -> void:
 	BattleView.setup_ui()
 
 	var enemies := BattleManager.get_enemies()
@@ -60,7 +60,7 @@ func on_ability_and_target_selected(ability_id: StringName, target_id: StringNam
 
 func _ready():
 	# battle_ui = preload("res://ui/battle/battle_ui.tscn").instantiate()
-	BattleManager.on_battle_started.connect(on_battle_started)
+	BattleManager.on_battle_pre_setup_complete.connect(on_pre_setup_complete)
 	BattleManager.on_battle_effect_applied.connect(on_battle_effect_applied)
 	BattleManager.on_battle_player_turn_started.connect(on_battle_player_turn_started)
 	BattleManager.on_battle_player_turn_ended.connect(on_battle_player_turn_ended)

@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="BattleAbilityPass" load_steps=3 format=3 uid="uid://dpx8ag4irxx0s"]
+
+[ext_resource type="PackedScene" uid="uid://bvkr4e5f5ju3a" path="res://game/effects/effect_use_skill.tscn" id="1_mxe3v"]
+[ext_resource type="Script" uid="uid://v0njydxivk0c" path="res://scripts/game/battle/abilities/battle_ability_pass.gd" id="1_phjvc"]
+
+[resource]
+script = ExtResource("1_phjvc")
+effect_activate = ExtResource("1_mxe3v")
+metadata/_custom_type_script = "uid://v0njydxivk0c"

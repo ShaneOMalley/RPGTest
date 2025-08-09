@@ -1,12 +1,15 @@
-﻿class_name BattleAbility extends Node
+﻿class_name BattleAbility extends Resource
 
 var _source: BattleParticipant
 var _is_executing := false
 # var _valid_targets: Array[BattleParticipant]
 
-static var ability_class_registry: Dictionary[StringName, GDScript] = {
-	"attack": BattleAbilityAttack,
-	"pass": BattleAbilityPass,
+@export var effect_activate: PackedScene
+@export var effect_affect_target: PackedScene
+
+static var ability_class_registry: Dictionary[StringName, String] = {
+	"attack": "res://game/abilities/ability_attack.tres",
+	"pass": "res://game/abilities/ability_pass.tres",
 }
 
 # TODO: Right now there is an assumption that the only execution context 
@@ -27,7 +30,7 @@ func get_is_executing() -> bool:
 	return _is_executing
 
 # This function must be subclassed and return true for valid targets
-func is_valid_for_target(possible_target: BattleParticipant) -> bool:
+func is_valid_for_target(_possible_target: BattleParticipant) -> bool:
 	return true
 
 func can_activate() -> bool:
@@ -36,5 +39,8 @@ func can_activate() -> bool:
 			return true
 	return false
 
-func _init(in_source: BattleParticipant) -> void:
+func initialize(in_source: BattleParticipant = null) -> void:
 	_source = in_source
+
+# func _init(in_source: BattleParticipant = null) -> void:
+# 	_source = in_source

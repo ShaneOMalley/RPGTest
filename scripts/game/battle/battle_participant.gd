@@ -45,8 +45,11 @@ static func create_from_config(in_id: StringName) -> BattleParticipant:
 
 	if data.abilities:
 		for ability_id in data.abilities:
-			var ability_class := BattleAbility.ability_class_registry[ability_id]
-			var ability_instance := ability_class.new(participant) as BattleAbility
-			participant.abilities[ability_id] = ability_instance
+			# This is smelly. It would be better to refactor so that resources are read-only, and there is a separate "instance" ("spec" in GAS terminology)
+			var ability_resource_path := BattleAbility.ability_class_registry[ability_id]
+			# TODO: Implement async loading
+			var ability := load(ability_resource_path).duplicate() as BattleAbility
+			ability.initialize(participant)
+			participant.abilities[ability_id] = ability
 
 	return participant

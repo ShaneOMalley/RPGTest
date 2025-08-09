@@ -28,9 +28,12 @@ func _process(_delta: float) -> void:
 	$PanelContainer/BattleStateText.text = battle_state_string
 
 	# Turns
-	var turns_string := ""
-	turns_string += "[color=yellow]%s[/color]    \n" % BattleManager.get_current_turn().to_string()
-	for turn: BattleTurn in BattleManager._turns:
-		turns_string += "%s\n" % turn.to_string()
+	if (is_instance_valid(BattleManager.get_current_turn())):
+		var turns_string := ""
+		turns_string += "[color=yellow]%s[/color]    \n" % BattleManager.get_current_turn().to_string()
+		for turn: BattleTurn in BattleManager._turns:
+			turns_string += "%s\n" % turn.to_string()
 
-	$PanelContainer/TurnsText.text = turns_string
+		$PanelContainer/TurnsText.text = turns_string
+	else:
+		$PanelContainer/TurnsText.text = ""

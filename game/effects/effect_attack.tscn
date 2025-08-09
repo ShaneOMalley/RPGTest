@@ -11,6 +11,7 @@ particles_anim_loop = false
 
 [node name="GPUParticles2D" type="GPUParticles2D"]
 material = SubResource("CanvasItemMaterial_cw2kt")
+emitting = false
 amount = 1
 texture = ExtResource("1_cw2kt")
 lifetime = 0.37

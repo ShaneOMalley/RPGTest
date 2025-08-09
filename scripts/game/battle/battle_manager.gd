@@ -8,7 +8,7 @@ const MAX_TURNS: int = 5
 
 var participants: Array[BattleParticipant]
 
-signal on_battle_started
+signal on_battle_pre_setup_complete
 signal on_battle_effect_applied(BattleEffect)
 signal on_battle_player_turn_started(BattleParticipant)
 signal on_battle_player_turn_ended(BattleParticipant)
@@ -53,6 +53,17 @@ func get_players() -> Array[BattleParticipant]:
 # 	
 # func get_is_blocked() -> bool:
 # 	return _is_blocked
+
+## loading and setting up participants
+var _is_finished_setting_up_participants := false
+func get_is_finished_setting_up_participants() -> bool:
+	return _is_finished_setting_up_participants
+
+func set_is_finished_setting_up_participants(value: bool) -> void:
+	_is_finished_setting_up_participants = value
+
+func add_participant(participant: BattleParticipant) -> void:
+	participants.push_back(participant)
 
 ## ability queueing
 class AbilityExecution:
@@ -101,25 +112,6 @@ func test_get_random_enemy() -> BattleParticipant:
 func test_get_player() -> BattleParticipant:
 	return participants.filter(func(participant): return participant.affiliation == Affiliation.PLAYER).pick_random()
 
-func _test_add_participants() -> void:
-	var player = BattleParticipant.create_from_config(&"player")
-	player.affiliation = Affiliation.PLAYER
-
-	var enemy_1 = BattleParticipant.create_from_config(&"ghoul")
-	enemy_1.affiliation = Affiliation.ENEMY
-	
-	# enemy_2.max_hp = 17
-	# enemy_2.hp = 17
-	var enemy_2 = BattleParticipant.create_from_config(&"goblin")
-	enemy_2.affiliation = Affiliation.ENEMY
-
-	participants.push_back(player)
-	participants.push_back(enemy_1)
-	participants.push_back(enemy_2)
-
-	for turn in _turns:
-		print(turn.to_string())
-	
 # turn generation
 # todo: support fallback time for units that come into battle mid-way
 func _get_next_normal_turn_time(participant: BattleParticipant):
@@ -159,22 +151,25 @@ func _build_turns_list(num_turns: int):
 		_participant_frequency_tracker[fastest_participant] += fastest_participant.get_turn_period()
 		
 func _setup_battle():
-	_test_add_participants()
-
-	# TODO: Maybe let this be done in a setup state?
-	_build_turns_list(MAX_TURNS)
+	# _test_add_participants()
+	# _build_turns_list(MAX_TURNS)
 	
+	_is_battle_active = true
+	_is_finished_setting_up_participants = false
+
 	_state_machine = FSMBattle.new()
 	_state_machine.on_state_entered.connect(_on_state_entered)
 	_state_machine.on_state_exited.connect(_on_state_exited)
 	add_child(_state_machine)
-
-	_is_battle_active = true
-	on_battle_started.emit()
+	_state_machine.start()
 
 func _cleanup_battle():
 	_state_machine.free()
 	_is_battle_active = false
+
+func on_pre_setup_complete():
+	on_battle_pre_setup_complete.emit()
+	_build_turns_list(MAX_TURNS)
 
 func _on_state_entered(id: StringName) -> void:
 	if id == &"turn_decision_player":
