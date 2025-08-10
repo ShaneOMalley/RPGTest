@@ -47,9 +47,25 @@ static func create_from_config(in_id: StringName) -> BattleParticipant:
 		for ability_id in data.abilities:
 			# This is smelly. It would be better to refactor so that resources are read-only, and there is a separate "instance" ("spec" in GAS terminology)
 			var ability_resource_path := BattleAbility.ability_class_registry[ability_id]
-			# TODO: Implement async loading
-			var ability := load(ability_resource_path).duplicate() as BattleAbility
+			var ability = load(ability_resource_path) as BattleAbility
 			ability.initialize(participant)
 			participant.abilities[ability_id] = ability
 
 	return participant
+
+# static func load_participants_async(in_ids: Array[StringName]) -> Callable: # -> Signal
+static func load_participants_async(in_ids: Array[StringName], callback: Callable) -> void:
+	var all_ability_paths: Dictionary[String, bool]
+
+	for _id in in_ids:
+		# TODO: Don't read JSON file and parse every time
+		var file := FileAccess.open(config_path, FileAccess.READ)
+		var json = JSON.parse_string(file.get_as_text()) 
+		var data = json[_id]
+
+		if data.abilities:
+			for ability_id in data.abilities:
+				var ability_resource_path := BattleAbility.ability_class_registry[ability_id]
+				all_ability_paths[ability_resource_path] = true
+
+	LoadHelper.load_multiple_async(all_ability_paths.keys(), callback)

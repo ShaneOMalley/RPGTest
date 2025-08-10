@@ -1,4 +1,4 @@
-﻿class_name BattleAbility extends Resource
+class_name BattleAbility extends Resource
 
 var _source: BattleParticipant
 var _is_executing := false
