@@ -6,7 +6,7 @@ func execute(target: BattleParticipant) -> void:
 	var effect = BattleEffectAttack.new(_source, target)
 	effect.apply()
 
-	end()
+	set_lifetime(0.5)
 
 func is_valid_for_target(possible_target: BattleParticipant) -> bool:
 	return possible_target.affiliation != _source.affiliation

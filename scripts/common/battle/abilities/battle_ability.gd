@@ -20,9 +20,6 @@ func execute(_target: BattleParticipant) -> void:
 	pass
 
 func end() -> void:
-	# TODO: remove this hacky blocking timer and uncomment above
-	# var timer := BattleManager.get_tree().create_timer(0.5)
-	# timer.timeout.connect(func(): self._is_executing = false)
 	_is_executing = false
 	pass
 
@@ -33,11 +30,17 @@ func get_is_executing() -> bool:
 func is_valid_for_target(_possible_target: BattleParticipant) -> bool:
 	return true
 
+# Returns whether this ability can currently activate
 func can_activate() -> bool:
 	for participant in BattleManager.get_participants():
 		if is_valid_for_target(participant):
 			return true
 	return false
+
+# Helper function for ending ability after certain amount of time
+func set_lifetime(lifetime: float) -> void:
+	var timer := BattleManager.get_tree().create_timer(lifetime)
+	timer.timeout.connect(func(): end())
 
 func initialize(in_source: BattleParticipant = null) -> void:
 	_source = in_source

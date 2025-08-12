@@ -16,6 +16,13 @@ class BattleMenuEntry:
 	var can_activate: bool
 	var valid_participant_targets: Array[StringName]
 
+# Effects
+func play_oneshot_effect(effect_prototype: PackedScene, x: float, y: float):
+	var effect := effect_prototype.instantiate() as GPUParticles2D
+	effect.finished.connect(func(): effect.free())
+	add_child(effect)
+	effect.position = Vector2(x, y)
+
 # Enemy
 func add_enemy(id: StringName, hp: int, max_hp: int) -> void:
 	var ui_enemy := enemy_template.instantiate() as UIEnemy
@@ -35,7 +42,6 @@ func remove_enemy(id: StringName) -> void:
 		_enemies[id].free()
 
 # Player
-
 func get_player_ui(index: int) -> PlayerPartyMember:
 	match index:
 		0: return $PlayerPartyContainer/PlayerPartyMember1

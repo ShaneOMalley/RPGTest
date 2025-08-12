@@ -115,9 +115,13 @@ func test_get_player() -> BattleParticipant:
 # turn generation
 # todo: support fallback time for units that come into battle mid-way
 func _get_next_normal_turn_time(participant: BattleParticipant):
-	var last_participant_turn: BattleTurn = _turns.filter(func(turn: BattleTurn): return turn.participant == participant).back()
-	var period := participant.get_turn_period()
-	return last_participant_turn.time + period if last_participant_turn else period
+	var _participant_turns = _turns.filter(func(turn: BattleTurn): return turn.participant == participant)
+	if !_participant_turns.is_empty():
+		var last_participant_turn: BattleTurn = _participant_turns.back()
+		var period := participant.get_turn_period()
+		return last_participant_turn.time + period if last_participant_turn else period
+
+	return 0
 
 func _generate_normal_turn(time: float, participant: BattleParticipant):
 	# var last_participant_turn: BattleTurn = _turns.filter(func(turn: BattleTurn): return turn.participant == participant).back()

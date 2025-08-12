@@ -48,7 +48,7 @@ func on_battle_player_turn_started(battle_participant: BattleParticipant) -> voi
 
 	BattleView.show_battle_menu(battle_menu_entries)
 
-func on_battle_player_turn_ended(battle_participant: BattleParticipant) -> void:
+func on_battle_player_turn_ended(_battle_participant: BattleParticipant) -> void:
 	BattleView.hide_battle_menu()
 	pass
 
