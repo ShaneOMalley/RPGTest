@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://ccujrlhsbqr1t"]
+
+[ext_resource type="PackedScene" uid="uid://bk3tvyhf7s8eg" path="res://ui/battle/ui_enemy.tscn" id="1_42udw"]
+
+[node name="Enemy" instance=ExtResource("1_42udw")]
+
+[node name="AnimationPlayer" parent="." index="2"]
+active = false

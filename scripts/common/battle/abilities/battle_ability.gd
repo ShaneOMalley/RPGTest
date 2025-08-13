@@ -1,11 +1,13 @@
 class_name BattleAbility extends Resource
 
 var _source: BattleParticipant
+var _target: BattleParticipant
 var _is_executing := false
 # var _valid_targets: Array[BattleParticipant]
 
-@export var effect_activate: PackedScene
-@export var effect_affect_target: PackedScene
+# TODO: Find some way of statically typing this. Is it possible?
+@export var fx_activate: PackedScene
+@export var fx_affect_target: PackedScene
 
 static var ability_class_registry: Dictionary[StringName, String] = {
 	"attack": "res://game/abilities/ability_attack.tres",
@@ -15,7 +17,8 @@ static var ability_class_registry: Dictionary[StringName, String] = {
 # TODO: Right now there is an assumption that the only execution context 
 # needed is an optional `_target`. There might be a more comprehensive struct
 # implemented later
-func execute(_target: BattleParticipant) -> void:
+func execute(_in_target: BattleParticipant) -> void:
+	_target =_in_target
 	_is_executing = true
 	pass
 
@@ -37,10 +40,14 @@ func can_activate() -> bool:
 			return true
 	return false
 
+# Helper function for calling a callable after a certain amount of time
+func set_timer(time: float, callable: Callable) -> void:
+	var timer := BattleManager.get_tree().create_timer(time)
+	timer.timeout.connect(callable)
+
 # Helper function for ending ability after certain amount of time
 func set_lifetime(lifetime: float) -> void:
-	var timer := BattleManager.get_tree().create_timer(lifetime)
-	timer.timeout.connect(func(): end())
+	set_timer(lifetime, end)
 
 func initialize(in_source: BattleParticipant = null) -> void:
 	_source = in_source

@@ -9,9 +9,11 @@ const MAX_TURNS: int = 5
 var participants: Array[BattleParticipant]
 
 signal on_battle_pre_setup_complete
-signal on_battle_effect_applied(BattleEffect)
-signal on_battle_player_turn_started(BattleParticipant)
-signal on_battle_player_turn_ended(BattleParticipant)
+signal on_battle_effect_applied(effect: BattleEffect)
+signal on_battle_fx_requested(fx: PackedScene, target: BattleParticipant)
+signal on_battle_player_turn_started(participant: BattleParticipant)
+signal on_battle_player_turn_ended(participant: BattleParticipant)
+signal on_battle_particiant_removed(participant: BattleParticipant)
 
 # todo: just make these public?
 var _turns: Array[BattleTurn]
@@ -19,7 +21,7 @@ var _turns: Array[BattleTurn]
 var _state_machine: FSMBattle
 var _is_battle_active: bool = false
 
-## state getters
+## State getters
 func get_participants() -> Array[BattleParticipant]:
 	return participants
 
@@ -44,17 +46,7 @@ func get_players() -> Array[BattleParticipant]:
 	return BattleManager.participants.filter(func(participant: BattleParticipant) -> bool:
 		return participant.affiliation == BattleManager.Affiliation.PLAYER)
 
-## generic blocking timer
-# var _is_blocked: bool
-# func start_blocking_timer(time: float) -> void:
-# 	var timer := get_tree().create_timer(time)
-# 	_is_blocked = true
-# 	timer.timeout.connect(func(): self._is_blocked = false)
-# 	
-# func get_is_blocked() -> bool:
-# 	return _is_blocked
-
-## loading and setting up participants
+## Loading and setting up participants
 var _is_finished_setting_up_participants := false
 func get_is_finished_setting_up_participants() -> bool:
 	return _is_finished_setting_up_participants
@@ -65,7 +57,7 @@ func set_is_finished_setting_up_participants(value: bool) -> void:
 func add_participant(participant: BattleParticipant) -> void:
 	participants.push_back(participant)
 
-## ability queueing
+## Ability queueing
 class AbilityExecution:
 	var ability: BattleAbility
 	var target: BattleParticipant
@@ -93,6 +85,16 @@ func execute_queued_ability() -> void:
 func clear_queued_ability() -> void:
 	_queued_ability_execution = null
 
+## FX Management
+func play_oneshot_fx(effect_prototype: PackedScene, target: BattleParticipant):
+	on_battle_fx_requested.emit(effect_prototype, target)
+
+## Particpant Management
+func remove_participant(participant: BattleParticipant) -> void:
+	participants.erase(participant)
+	_turns = _turns.filter(func(turn: BattleTurn): return turn.participant != participant)
+	on_battle_particiant_removed.emit(participant)
+
 ## Turn Management
 var _current_turn: BattleTurn
 func goto_next_turn() -> void:
@@ -105,7 +107,7 @@ func get_current_turn() -> BattleTurn:
 func get_current_turn_participant() -> BattleParticipant:
 	return _current_turn.participant
 	
-## test functions
+## Test functions
 func test_get_random_enemy() -> BattleParticipant:
 	return participants.filter(func(participant): return participant.affiliation == Affiliation.ENEMY).pick_random()
 	
@@ -168,12 +170,12 @@ func _setup_battle():
 	_state_machine.start()
 
 func _cleanup_battle():
-	_state_machine.free()
+	_state_machine.queue_free()
 	_is_battle_active = false
 
-func on_pre_setup_complete():
-	on_battle_pre_setup_complete.emit()
+func complete_pre_setup():
 	_build_turns_list(MAX_TURNS)
+	on_battle_pre_setup_complete.emit()
 
 func _on_state_entered(id: StringName) -> void:
 	if id == &"turn_decision_player":

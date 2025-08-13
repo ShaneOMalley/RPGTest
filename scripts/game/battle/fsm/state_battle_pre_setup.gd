@@ -25,5 +25,5 @@ func on_enter() -> void:
 	pass
 
 func on_exit() -> void:
-	BattleManager.on_pre_setup_complete()
+	BattleManager.complete_pre_setup()
 	pass

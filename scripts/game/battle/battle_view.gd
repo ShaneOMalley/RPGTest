@@ -4,6 +4,10 @@ signal on_ability_and_target_selected(ability_id, target_id)
 
 var battle_ui: UIBattle
 
+# FX
+func play_oneshot_fx(effect_prototype: PackedScene, target_id: StringName):
+	battle_ui.play_oneshot_fx(effect_prototype, target_id)
+
 # Enemy
 func setup_enemy(id: StringName, hp: int, max_hp: int) -> void:
 	battle_ui.add_enemy(id, hp, max_hp)
@@ -41,4 +45,4 @@ func setup_ui() -> void:
 	battle_ui.hide_all_players_info()
 
 func destroy_ui() -> void:
-	battle_ui.free()
+	battle_ui.queue_free()

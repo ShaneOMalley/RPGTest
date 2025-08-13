@@ -1,15 +1,7 @@
-[gd_scene load_steps=3 format=3 uid="uid://k8hmbnoq6hjm"]
+[gd_scene load_steps=2 format=3 uid="uid://k8hmbnoq6hjm"]
 
-[ext_resource type="PackedScene" uid="uid://dme81fha7jgl2" path="res://game/effects/effect_attack.tscn" id="1_errlg"]
-
-[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_bl13t"]
-particles_animation = true
-particles_anim_h_frames = 3
-particles_anim_v_frames = 3
-particles_anim_loop = false
+[ext_resource type="PackedScene" uid="uid://dme81fha7jgl2" path="res://game/ui_fx/uifx_attack.tscn" id="1_errlg"]
 
 [node name="Test" type="Node2D"]
 
 [node name="GPUParticles2D" parent="." instance=ExtResource("1_errlg")]
-material = SubResource("CanvasItemMaterial_bl13t")
-position = Vector2(434, 262.28)

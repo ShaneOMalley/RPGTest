@@ -16,15 +16,9 @@ func on_battle_effect_applied(battle_effect: BattleEffect) -> void:
 
 	# TODO: Make this happen somewhere else; don't assume that 0 health means removal
 	if target.affiliation == BattleManager.Affiliation.ENEMY:
-		if target.hp <= 0:
-			BattleView.remove_enemy(target.id)
-		else:
-			BattleView.update_enemy_hp(target.id, target.hp, target.max_hp)
+		BattleView.update_enemy_hp(target.id, target.hp, target.max_hp)
 	elif target.affiliation == BattleManager.Affiliation.PLAYER:
-		if target.hp <= 0:
-			BattleView.remove_player(target.id)
-		else:
-			BattleView.update_player_hp(target.id, target.hp, target.max_hp)
+		BattleView.update_player_hp(target.id, target.hp, target.max_hp)
 
 	print(battle_effect.to_string())
 
@@ -50,7 +44,16 @@ func on_battle_player_turn_started(battle_participant: BattleParticipant) -> voi
 
 func on_battle_player_turn_ended(_battle_participant: BattleParticipant) -> void:
 	BattleView.hide_battle_menu()
+
+func on_battle_particiant_removed(battle_participant: BattleParticipant) -> void:
+	if battle_participant.affiliation == BattleManager.Affiliation.ENEMY:
+		BattleView.remove_enemy(battle_participant.id)
+	elif battle_participant.affiliation == BattleManager.Affiliation.PLAYER:
+		BattleView.remove_player(battle_participant.id)
 	pass
+
+func on_battle_fx_requested(effect_prototype: PackedScene, target: BattleParticipant) -> void:
+	BattleView.play_oneshot_fx(effect_prototype, target.id)
 
 func on_ability_and_target_selected(ability_id: StringName, target_id: StringName) -> void:
 	var current_participant := BattleManager.get_current_turn_participant()
@@ -59,10 +62,11 @@ func on_ability_and_target_selected(ability_id: StringName, target_id: StringNam
 	BattleManager.queue_ability_execution(ability, target)
 
 func _ready():
-	# battle_ui = preload("res://ui/battle/battle_ui.tscn").instantiate()
 	BattleManager.on_battle_pre_setup_complete.connect(on_pre_setup_complete)
 	BattleManager.on_battle_effect_applied.connect(on_battle_effect_applied)
+	BattleManager.on_battle_fx_requested.connect(on_battle_fx_requested)
 	BattleManager.on_battle_player_turn_started.connect(on_battle_player_turn_started)
 	BattleManager.on_battle_player_turn_ended.connect(on_battle_player_turn_ended)
+	BattleManager.on_battle_particiant_removed.connect(on_battle_particiant_removed)
 
 	BattleView.on_ability_and_target_selected.connect(on_ability_and_target_selected)

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dhuq6nmhr3jxu"
-path="res://.godot/imported/test_enemy_idle_2.png-fcc0bfd4076b16992429acfd9a77f01b.ctex"
+uid="uid://bt72qjcmn2x0e"
+path="res://.godot/imported/pass.png-e7835781f324e2612a4a699e094bc549.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://res/sprites/enemies/test_enemy_idle_2.png"
-dest_files=["res://.godot/imported/test_enemy_idle_2.png-fcc0bfd4076b16992429acfd9a77f01b.ctex"]
+source_file="res://res/particles/textures/pass.png"
+dest_files=["res://.godot/imported/pass.png-e7835781f324e2612a4a699e094bc549.ctex"]
 
 [params]
 

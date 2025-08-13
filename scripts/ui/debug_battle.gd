@@ -6,12 +6,6 @@ func _process(_delta: float) -> void:
 		return
 
 	# Battle State
-	# var filter_enemies := func(participant: BattleParticipant) -> bool:
-	# 	return participant.affiliation == BattleManager.Affiliation.ENEMY
-
-	# var filter_player := func(participant: BattleParticipant) -> bool:
-	# 	return participant.affiliation == BattleManager.Affiliation.PLAYER
-
 	var enemies = BattleManager.get_enemies()
 	var players = BattleManager.get_players()
 
@@ -26,6 +20,9 @@ func _process(_delta: float) -> void:
 		battle_state_string += "    %s %d/%d" % [player.to_string(), player.hp, player.max_hp]
 
 	$PanelContainer/BattleStateText.text = battle_state_string
+
+	# FSM
+	$PanelContainer/FSMText.text = BattleManager._state_machine._current_state_name
 
 	# Turns
 	if (is_instance_valid(BattleManager.get_current_turn())):

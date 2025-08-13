@@ -6,8 +6,8 @@ signal on_ability_and_target_selected(ability_id, target_id)
 
 var _enemies: Dictionary[StringName, UIEnemy]
 var _battle_menu_entries : Array[UIBattleMenuEntry]
+var _player_to_ui_index: Dictionary[StringName, int]
 
-var player_to_ui_index: Dictionary[StringName, int]
 const MAX_PLAYERS := 4
 
 class BattleMenuEntry:
@@ -17,11 +17,19 @@ class BattleMenuEntry:
 	var valid_participant_targets: Array[StringName]
 
 # Effects
-func play_oneshot_effect(effect_prototype: PackedScene, x: float, y: float):
-	var effect := effect_prototype.instantiate() as GPUParticles2D
-	effect.finished.connect(func(): effect.free())
+func play_oneshot_fx(effect_prototype: PackedScene, target_id: StringName):
+	# TODO: Instantiate this on a bespoke canvas just for UI_FXs
+	var effect := effect_prototype.instantiate() as UIFX
+	var element: Control
+
+	if _enemies.has(target_id):
+		# effect.position = _enemies[target_id].position
+		element = _enemies[target_id]
+	elif _player_to_ui_index.has(target_id):
+		element = get_player_ui(_player_to_ui_index[target_id])
+
+	effect.position = element.get_global_transform_with_canvas().get_origin() + element.size / 2
 	add_child(effect)
-	effect.position = Vector2(x, y)
 
 # Enemy
 func add_enemy(id: StringName, hp: int, max_hp: int) -> void:
@@ -39,7 +47,7 @@ func update_enemy_hp(id: StringName, hp: int, max_hp: int) -> void:
 
 func remove_enemy(id: StringName) -> void:
 	if is_instance_valid(_enemies[id]):
-		_enemies[id].free()
+		_enemies[id].queue_free()
 
 # Player
 func get_player_ui(index: int) -> PlayerPartyMember:
@@ -52,20 +60,20 @@ func get_player_ui(index: int) -> PlayerPartyMember:
 
 func add_player(id: StringName, hp: int, max_hp: int) -> void:
 	for index in range(MAX_PLAYERS):
-		if player_to_ui_index.find_key(index) == null:
+		if _player_to_ui_index.find_key(index) == null:
 			var player_ui = get_player_ui(index)
 			player_ui.populate(id, hp, max_hp)
-			player_to_ui_index[id] = index
+			_player_to_ui_index[id] = index
 			return
 
 func update_player_hp(id: StringName, hp: int, max_hp: int) -> void:
-	var index = player_to_ui_index[id]
+	var index = _player_to_ui_index[id]
 	get_player_ui(index).update_hp(hp, max_hp)
 
 func remove_player(id: StringName) -> void:
-	var index = player_to_ui_index[id]
+	var index = _player_to_ui_index[id]
 	get_player_ui(index).hide_info()
-	player_to_ui_index.erase(id)
+	_player_to_ui_index.erase(id)
 
 func hide_all_players_info() -> void:
 	for index in range(MAX_PLAYERS):

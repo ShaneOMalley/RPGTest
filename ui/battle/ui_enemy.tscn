@@ -5,6 +5,8 @@
 
 [node name="Enemy" type="TextureRect"]
 custom_minimum_size = Vector2(100, 100)
+offset_right = 100.0
+offset_bottom = 100.0
 texture = ExtResource("1_bhddf")
 expand_mode = 2
 script = ExtResource("2_8aegp")
