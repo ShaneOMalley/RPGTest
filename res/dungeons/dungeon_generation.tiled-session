@@ -1,0 +1,46 @@
+{
+    "Map/SizeTest": {
+        "height": 4300,
+        "width": 2
+    },
+    "activeFile": "test_dungeon.tmx",
+    "expandedProjectPaths": [
+        ".",
+        "tilemap"
+    ],
+    "fileStates": {
+        "RPGTest Tileset.tsx": {
+            "scaleInDock": 90,
+            "scaleInEditor": 1
+        },
+        "test_dungeon.tmx": {
+            "scale": 64,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 12.6640625,
+                "y": 8.9140625
+            }
+        }
+    },
+    "last.exportedFilePath": "C:/Godot/Projects/RPGTest/res/dungeons/dungeons",
+    "last.imagePath": "C:/Godot/Projects/RPGTest/res/dungeons/tilemap",
+    "map.height": 16,
+    "map.lastUsedExportFilter": "JSON map files (*.tmj *.json)",
+    "map.lastUsedFormat": "tmx",
+    "map.tileHeight": 1,
+    "map.tileWidth": 1,
+    "map.width": 16,
+    "openFiles": [
+        "test_dungeon.tmx"
+    ],
+    "project": "dungeon_generation.tiled-project",
+    "recentFiles": [
+        "test_dungeon.tmx",
+        "RPGTest Tileset.tsx"
+    ],
+    "tileset.lastUsedFormat": "tsx",
+    "tileset.tileSize": {
+        "height": 1,
+        "width": 1
+    }
+}

@@ -21,3 +21,7 @@ BattleView="*res://scripts/game/battle/battle_view.gd"
 BattlePresenter="*res://scripts/game/battle/battle_presenter.gd"
 BattleManager="*res://scripts/game/battle/battle_manager.gd"
 LoadHelper="*res://scripts/common/load_helper.gd"
+
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/dungeon_generator/plugin.cfg")

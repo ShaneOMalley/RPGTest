@@ -1,0 +1,18 @@
+[gd_scene load_steps=3 format=3 uid="uid://dwv0jpyet2csc"]
+
+[ext_resource type="Texture2D" uid="uid://dgruuei2ogkri" path="res://icon.svg" id="1_ej05b"]
+[ext_resource type="Script" uid="uid://bm0ejw6gmchbm" path="res://addons/dungeon_generator/ui/import_dungeon.gd" id="2_6b7s2"]
+
+[node name="ImportDungeon" type="Button"]
+custom_minimum_size = Vector2(50, 0)
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = -1024.0
+offset_bottom = -520.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_vertical = 3
+icon = ExtResource("1_ej05b")
+expand_icon = true
+script = ExtResource("2_6b7s2")
