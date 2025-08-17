@@ -1,85 +1,316 @@
 @tool
 class_name DungeonSceneGenerator extends Node
 
-const GRID_SIZE := 10
-const WALL_HEIGHT := 10
-const FLOOR_THICKNESS := 1
-const WALL_THICKNESS := 1
+const GRID_SIZE := 10.0
+const WALL_HEIGHT := 10.0
+const FLOOR_THICKNESS := 1.0
+const WALL_THICKNESS := 1.0
 
-static func create_box(position: Vector3, size: Vector3) -> MeshInstance3D:
+# If these bits are set, then movement can happen between this square and the neighboring square
+const MOVEMENT_FLAG_UP := 1
+const MOVEMENT_FLAG_DOWN := 2
+const MOVEMENT_FLAG_LEFT := 4
+const MOVEMENT_FLAG_RIGHT := 8
+# If these bits are set, then skip test for ability to move to neighboring square (because it was already tested by that neigbhor, and movement is associative)
+const MOVEMENT_FLAG_UP_SKIPTEST := 16
+const MOVEMENT_FLAG_DOWN_SKIPTEST := 32
+const MOVEMENT_FLAG_LEFT_SKIPTEST := 64
+const MOVEMENT_FLAG_RIGHT_SKIPTEST := 128
+# var movement_data: Array[int]
+
+const GRID_TILE_FLOOR = 1
+const GRID_TILE_EMPTY = 2
+
+class WallData:
+    class Wall:
+        var start: Vector2i
+        var end: Vector2i
+
+        func _init(in_start: Vector2i, in_end: Vector2i):
+            start = in_start
+            end = in_end
+
+        func _to_string() -> String:
+            return "(%d, %d) -> (%d, %d)" % [start.x, start.y, end.x, end.y]
+
+    # The horizontal and vertical walls, indexed by their x and y values, respectively
+    var horizontal_walls: Dictionary[int, Array]
+    var vertical_walls: Dictionary[int, Array]
+
+static func create_box(position: Vector3, size: Vector3, name: String) -> MeshInstance3D:
     var mesh_instance := MeshInstance3D.new()
     var mesh := BoxMesh.new()
-    mesh_instance.mesh = mesh
 
+    mesh_instance.name = name
+    mesh_instance.mesh = mesh
     mesh_instance.position = position
     mesh.size = size
 
     return mesh_instance
 
-static func create_wall(grid_offset: Vector2, grid_start: Vector2, grid_end: Vector2) -> MeshInstance3D:
-    # var grid_start_x = object.x + wall_data[i].x 
-    # var grid_end_x = object.x + wall_data[i + 1].x 
-    # var grid_start_y = object.y + wall_data[i].y 
-    # var grid_end_y = object.y + wall_data[i + 1].y 
+static var wall_counter = 0
+static func create_wall(grid_start: Vector2i, grid_end: Vector2i) -> MeshInstance3D:
     var width = WALL_THICKNESS + abs(grid_end.x - grid_start.x) * GRID_SIZE
     var length = WALL_THICKNESS + abs(grid_end.y - grid_start.y) * GRID_SIZE
-    var x = (grid_offset.x + (grid_start.x + grid_end.x) / 2) * GRID_SIZE
-    var y = (grid_offset.y + (grid_start.y + grid_end.y) / 2) * GRID_SIZE
-    return create_box(Vector3(x, WALL_HEIGHT / 2, y), Vector3(width, WALL_HEIGHT, length))
+    var x = ((grid_start.x + grid_end.x) / 2.0) * GRID_SIZE
+    var y = ((grid_start.y + grid_end.y) / 2.0) * GRID_SIZE
+    var name = "Wall%d" % wall_counter
+    wall_counter += 1
+    return create_box(Vector3(x, WALL_HEIGHT / 2, y), Vector3(width, WALL_HEIGHT, length), name)
 
 static func generate_dungeon(data: Variant) -> void:
     var scene = PackedScene.new()
+
     var root_node := Node3D.new()
+    var geometry_node := Node3D.new()
+    geometry_node.name = "Geometry"
+    var floors_node := Node3D.new()
+    floors_node.name = "Floors"
+    var walls_node := Node3D.new()
+    walls_node.name = "Walls"
+
+    root_node.add_child(geometry_node)
+    geometry_node.add_child(floors_node)
+    geometry_node.add_child(walls_node)
+
+    geometry_node.owner = root_node
+    floors_node.owner = root_node
+    walls_node.owner = root_node
 
     # Floor
-    var level_width = data.width * GRID_SIZE
-    var level_length = data.height * GRID_SIZE
-    var floor_box := create_box(Vector3(level_width / 2, 0, level_length / 2), Vector3(level_width, FLOOR_THICKNESS, level_length))
+    var floor_width = data.width * GRID_SIZE
+    var floor_length = data.height * GRID_SIZE
+    var floor_box := create_box(Vector3(floor_width / 2, 0, floor_length / 2), Vector3(floor_width, FLOOR_THICKNESS, floor_length), "Floor")
 
-    root_node.add_child(floor_box)
+    floors_node.add_child(floor_box)
     floor_box.owner = root_node
 
-    # Walls
+    # Organize Walls
     var object_group_data
+    var wall_data := WallData.new()
     for layer in data.layers:
         if layer.type == "objectgroup":
             object_group_data = layer
             break
-
     if object_group_data:
         for object in object_group_data.objects:
-            # var wall_data = object["polygon"]
-            var wall_data = object.polygon if object.has("polygon") else null
-            if !wall_data:
-                wall_data = object.polyline if object.has("polyline") else null
-            if wall_data:
-                for i in range(wall_data.size() - 1):
-                    # var grid_start_x = object.x + wall_data[i].x 
-                    # var grid_end_x = object.x + wall_data[i + 1].x 
-                    # var grid_start_y = object.y + wall_data[i].y 
-                    # var grid_end_y = object.y + wall_data[i + 1].y 
-                    # var width = (grid_end_x - grid_start_x) * GRID_SIZE
-                    # var length = (grid_end_y - grid_start_y) * GRID_SIZE
-                    # var x = ((grid_start_x + grid_end_x) / 2) * GRID_SIZE
-                    # var y = ((grid_start_y + grid_end_y) / 2) * GRID_SIZE
-                    var offset = Vector2(object.x, object.y)
-                    var start = Vector2(wall_data[i].x, wall_data[i].y)
-                    var end = Vector2(wall_data[i + 1].x, wall_data[i + 1].y)
-                    var wall_box = create_wall(offset, start, end)
-                    root_node.add_child(wall_box)
-                    wall_box.owner = root_node
+            var walls = object.polygon if object.has("polygon") else null
+            if !walls:
+                walls = object.polyline if object.has("polyline") else null
+            
+            if walls:
+                var last_index = walls.size() if object.has("polygon") else walls.size() - 1
+                for i in range(last_index):
+                    var next_index = (i + 1) % walls.size()
+                    var offset := Vector2i(object.x, object.y)
+                    var start := offset + Vector2i(walls[i].x, walls[i].y)
+                    var end := offset + Vector2i(walls[next_index].x, walls[next_index].y)
+                    var wall := WallData.Wall.new(start, end)
 
-            if object.has("polygon"):
-                var offset = Vector2(object.x, object.y)
-                var start = Vector2(wall_data[0].x, wall_data[0].y)
-                var end = Vector2(wall_data[-1].x, wall_data[-1].y)
-                var wall_box = create_wall(offset, start, end)
-                root_node.add_child(wall_box)
-                wall_box.owner = root_node
+                    if start.x == end.x:
+                        wall_data.vertical_walls.get_or_add(start.x, []).append(wall)
+                    elif start.y == end.y:
+                        wall_data.horizontal_walls.get_or_add(start.y, []).append(wall)
+                    else:
+                        push_error("There is a wall that is neither horizontal nor vertical")
 
+                    var walls_box := create_wall(start, end)
+                    walls_node.add_child(walls_box)
+                    walls_box.owner = root_node
+
+    # Build Movement Data
+    # var tile_data: Array[int]
+
+    var tile_layer_index = data.layers.find_custom(func(layer): return layer.type == "tilelayer")
+    var tile_layer = data.layers[tile_layer_index]
+    # for thing in data.layers:
+    #     print(thing.type == "tilelayer")
+    #     print("\n\n")
+
+    
+    var tile_data: Array = tile_layer.data
+    var map_width: int = tile_layer.width
+
+    var movement_data: Array[int]
+    movement_data.resize(tile_data.size())
+    movement_data.fill(0)
+
+    for tile_index in range(tile_data.size()):
+        var tile = tile_data[tile_index]
+        if tile == GRID_TILE_FLOOR:
+            var grid_x := tile_index % map_width
+            var grid_y := tile_index / map_width
+            var center_x := grid_x + 0.5
+            var center_y := grid_y + 0.5
+
+            var horizontal_walls = wall_data.horizontal_walls
+            var vertical_walls = wall_data.vertical_walls
+
+            # if horizontal_walls.has(y):
+            #     print (horizontal_walls[y])
+
+            # up
+            if !(movement_data[tile_index] & MOVEMENT_FLAG_UP_SKIPTEST):
+                if !horizontal_walls.has(grid_y) or !horizontal_walls[grid_y].any(func(wall): return sign(center_x - wall.start.x) != sign(center_x - wall.end.x)):
+
+                    var up_index := tile_index - map_width
+                    if movement_data.size() > up_index && tile_data[up_index] == GRID_TILE_FLOOR:
+                        movement_data[tile_index] |= MOVEMENT_FLAG_UP
+                        movement_data[up_index] |= MOVEMENT_FLAG_DOWN
+                        movement_data[up_index] |= MOVEMENT_FLAG_DOWN_SKIPTEST
+
+            # down
+            if !(movement_data[tile_index] & MOVEMENT_FLAG_DOWN_SKIPTEST):
+
+                # if grid_x == 1 and grid_y == 3:
+                #     print("%f, %f" % [center_x, center_y])
+                #     print(horizontal_walls[grid_y + 1])
+
+                if !horizontal_walls.has(grid_y + 1) or !horizontal_walls[grid_y + 1].any(func(wall): return sign(center_x - wall.start.x) != sign(center_x - wall.end.x)):
+
+                    var down_index := tile_index + map_width
+                    if movement_data.size() > down_index && tile_data[down_index] == GRID_TILE_FLOOR:
+                        movement_data[tile_index] |= MOVEMENT_FLAG_DOWN
+                        movement_data[down_index] |= MOVEMENT_FLAG_UP
+                        movement_data[down_index] |= MOVEMENT_FLAG_UP_SKIPTEST
+
+            # left
+            if !(movement_data[tile_index] & MOVEMENT_FLAG_LEFT_SKIPTEST):
+                if !vertical_walls.has(grid_x) or !vertical_walls[grid_x].any(func(wall): return sign(center_y - wall.start.y) != sign(center_y - wall.end.y)):
+
+                    var left_index := tile_index - 1
+                    if movement_data.size() >  left_index && tile_data[left_index] == GRID_TILE_FLOOR:
+                        movement_data[tile_index] |= MOVEMENT_FLAG_LEFT
+                        movement_data[left_index] |= MOVEMENT_FLAG_RIGHT
+                        movement_data[left_index] |= MOVEMENT_FLAG_RIGHT_SKIPTEST
+
+            # right
+            if !(movement_data[tile_index] & MOVEMENT_FLAG_RIGHT_SKIPTEST):
+                if !vertical_walls.has(grid_x + 1) or !vertical_walls[grid_x + 1].any(func(wall): return sign(center_y - wall.start.y) != sign(center_y - wall.end.y)):
+
+                    var right_index := tile_index + 1
+                    if movement_data.size() > right_index && tile_data[right_index] == GRID_TILE_FLOOR:
+                        movement_data[tile_index] |= MOVEMENT_FLAG_RIGHT
+                        movement_data[right_index] |= MOVEMENT_FLAG_LEFT
+                        movement_data[right_index] |= MOVEMENT_FLAG_LEFT_SKIPTEST
+
+            #     for wall in wall_data.horizontal_walls[y]:
+            #         if signi(x - wall.start.x) != signi(x - wall.end.x):
+            #             movement_data[tile_index] ^= MOVEMENT_FLAG_UP
+
+            #             var up_index := tile_index - map_width
+            #             if movement_data.has(up_index) && tile_data[up_index] == GRID_TILE_FLOOR:
+            #                 movement_data[up_index] ^= MOVEMENT_FLAG_DOWN
+            #                 movement_data[up_index] ^= MOVEMENT_FLAG_DOWN_SKIPTEST
+
+            # # down
+            # if !(movement_data[tile_index] & MOVEMENT_FLAG_DOWN_SKIPTEST) and wall_data.horizontal_walls.has(y + 1):
+            #     for wall in wall_data.horizontal_walls[y + 1]:
+            #         if signi(x - wall.start.x) != signi(x - wall.end.x):
+            #             movement_data[tile_index] ^= MOVEMENT_FLAG_DOWN
+
+            #             var down_index := tile_index + map_width
+            #             if movement_data.has(down_index) && tile_data[down_index] == GRID_TILE_FLOOR:
+            #                 movement_data[down_index] ^= MOVEMENT_FLAG_UP
+            #                 movement_data[down_index] ^= MOVEMENT_FLAG_UP_SKIPTEST
+
+            # # left
+            # if !(movement_data[tile_index] & MOVEMENT_FLAG_LEFT_SKIPTEST) and wall_data.horizontal_walls.has(x):
+            #     for wall in wall_data.horizontal_walls[x]:
+            #         if signi(x - wall.start.x) != signi(x - wall.end.x):
+            #             movement_data[tile_index] ^= MOVEMENT_FLAG_LEFT
+
+            #             var left_index := tile_index - 1
+            #             if movement_data.has(left_index) && tile_data[left_index] == GRID_TILE_FLOOR:
+            #                 movement_data[left_index] ^= MOVEMENT_FLAG_RIGHT
+            #                 movement_data[left_index] ^= MOVEMENT_FLAG_RIGHT_SKIPTEST
+
+            # # right
+            # if !(movement_data[tile_index] & MOVEMENT_FLAG_RIGHT_SKIPTEST) and wall_data.horizontal_walls.has(x + 1):
+            #     for wall in wall_data.horizontal_walls[x + 1]:
+            #         if signi(x - wall.start.x) != signi(x - wall.end.x):
+            #             movement_data[tile_index] ^= MOVEMENT_FLAG_RIGHT
+
+            #             var right_index := tile_index + 1
+            #             if movement_data.has(right_index) && tile_data[right_index] == GRID_TILE_FLOOR:
+            #                 movement_data[right_index] ^= MOVEMENT_FLAG_LEFT
+            #                 movement_data[right_index] ^= MOVEMENT_FLAG_LEFT_SKIPTEST
+
+
+    root_node.set_meta("movement_data", movement_data)
+
+    var debug_node := Node3D.new()
+    debug_node.name = "Debug"
+    root_node.add_child(debug_node)
+    debug_node.owner = root_node
+
+    # Drop Debug Cubes
+    for tile_index in movement_data.size():
+        var tile = movement_data[tile_index]
+        var x := tile_index % map_width
+        var y := tile_index / map_width
+
+        if tile & MOVEMENT_FLAG_UP:
+            var debug_box = create_box(Vector3((x + 0.5) * GRID_SIZE, FLOOR_THICKNESS, (y + 0.2) * GRID_SIZE), Vector3(0.5, 0.5, 3), str(tile_index))
+            debug_node.add_child(debug_box)
+            debug_box.owner = root_node
+        if tile & MOVEMENT_FLAG_DOWN:
+            var debug_box = create_box(Vector3((x + 0.5) * GRID_SIZE, FLOOR_THICKNESS, (y + 0.8) * GRID_SIZE), Vector3(0.5, 0.5, 3), str(tile_index))
+            debug_node.add_child(debug_box)
+            debug_box.owner = root_node
+        if tile & MOVEMENT_FLAG_LEFT:
+            var debug_box = create_box(Vector3((x + 0.2) * GRID_SIZE, FLOOR_THICKNESS, (y + 0.5) * GRID_SIZE), Vector3(3, 0.5, 0.5), str(tile_index))
+            debug_node.add_child(debug_box)
+            debug_box.owner = root_node
+        if tile & MOVEMENT_FLAG_RIGHT:
+            var debug_box = create_box(Vector3((x + 0.8) * GRID_SIZE, FLOOR_THICKNESS, (y + 0.5) * GRID_SIZE), Vector3(3, 0.5, 0.5), str(tile_index))
+            debug_node.add_child(debug_box)
+            debug_box.owner = root_node
+
+    # for x in wall_data.vertical_walls:
+    #     for wall in wall_data.horizontal_walls[y]:
+    #         create_wall(wall.start, wall.end)
+
+    # for y in wall_data.horizontal_walls:
+    #     for wall in wall_data.horizontal_walls[y]:
+    #         create_wall(wall.start, wall.end)
+
+    # Walls
+    # var object_group_data
+    # for layer in data.layers:
+    #     if layer.type == "objectgroup":
+    #         object_group_data = layer
+    #         break
+
+    # if object_group_data:
+    #     for object in object_group_data.objects:
+    #         # var wall_data = object["polygon"]
+    #         var wall_data = object.polygon if object.has("polygon") else null
+    #         if !wall_data:
+    #             wall_data = object.polyline if object.has("polyline") else null
+    #         if wall_data:
+    #             for i in range(wall_data.size() - 1):
+    #                 var offset = Vector2i(object.x, object.y)
+    #                 var start = Vector2i(wall_data[i].x, wall_data[i].y)
+    #                 var end = Vector2i(wall_data[i + 1].x, wall_data[i + 1].y)
+    #                 var wall_box = create_wall(offset, start, end)
+    #                 walls_node.add_child(wall_box)
+    #                 wall_box.owner = root_node
+
+    #         if object.has("polygon"):
+    #             var offset = Vector2i(object.x, object.y)
+    #             var start = Vector2i(wall_data[0].x, wall_data[0].y)
+    #             var end = Vector2i(wall_data[-1].x, wall_data[-1].y)
+    #             var wall_box = create_wall(offset, start, end)
+    #             walls_node.add_child(wall_box)
+    #             wall_box.owner = root_node
+
+    print("gonna save")
 
     var result = scene.pack(root_node)
     if result == OK:
-        var error = ResourceSaver.save(scene, "res://scenes/dungeons/dungeon.tscn")
+        var filename = Time.get_datetime_string_from_system().replace(":", "_")
+        print("saving %s" % filename)
+        var error = ResourceSaver.save(scene, "res://scenes/dungeon_geometry/%s.tscn" % filename)
         if error != OK:
             push_error("An error occured while saving the scene to disk")

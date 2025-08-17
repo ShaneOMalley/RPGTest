@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=3 uid="uid://bnt75gnnj88vc"]
+
+[ext_resource type="PackedScene" uid="uid://cwgl0m73j7c7h" path="res://game/dungeon_crawling/dungeon_player.tscn" id="2_jt7le"]
+[ext_resource type="PackedScene" uid="uid://panccpsck2wu" path="res://scenes/dungeon_geometry/2025-08-16T23_36_47.tscn" id="2_pldt6"]
+
+[node name="TestDungeon" type="Node3D"]
+
+[node name="DungeonPlayer" parent="." instance=ExtResource("2_jt7le")]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 15.327, 3.78039, 19.2843)
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.706829, -0.340086, -0.62027, 0.34876, -0.595331, 0.723842, -0.615435, -0.727957, -0.302189, 26.0246, 21.3665, 23.4521)
+
+[node name="DungeonGeometry" parent="." instance=ExtResource("2_pldt6")]
