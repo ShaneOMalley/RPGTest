@@ -16,7 +16,6 @@ const MOVEMENT_FLAG_UP_SKIPTEST := 16
 const MOVEMENT_FLAG_DOWN_SKIPTEST := 32
 const MOVEMENT_FLAG_LEFT_SKIPTEST := 64
 const MOVEMENT_FLAG_RIGHT_SKIPTEST := 128
-# var movement_data: Array[int]
 
 const GRID_TILE_FLOOR = 1
 const GRID_TILE_EMPTY = 2
@@ -37,7 +36,19 @@ class WallData:
     var horizontal_walls: Dictionary[int, Array]
     var vertical_walls: Dictionary[int, Array]
 
-static func create_box(position: Vector3, size: Vector3, name: String) -> MeshInstance3D:
+    func crosses_any_horizontal_wall(grid_x: int, grid_y: int, direction: int):
+        var center_x := grid_x + 0.5
+        var center_y := grid_y + 0.5
+
+        return horizontal_walls.has(grid_y + (1 if direction > 0 else 0)) and horizontal_walls[grid_y].any(func(wall): return sign(center_x - wall.start.x) != sign(center_x - wall.end.x))
+
+    func crosses_any_vertical_wall(grid_x: int, grid_y: int, direction: int):
+        var center_x := grid_x + 0.5
+        var center_y := grid_y + 0.5
+
+        return vertical_walls.has(grid_x + (1 if direction > 0 else 0)) and vertical_walls[grid_x].any(func(wall): return sign(center_y - wall.start.y) != sign(center_y - wall.end.y))
+
+static func create_box(position: Vector3, size: Vector3, name: String = "") -> MeshInstance3D:
     var mesh_instance := MeshInstance3D.new()
     var mesh := BoxMesh.new()
 
@@ -119,125 +130,53 @@ static func generate_dungeon(data: Variant) -> void:
                     walls_box.owner = root_node
 
     # Build Movement Data
-    # var tile_data: Array[int]
-
     var tile_layer_index = data.layers.find_custom(func(layer): return layer.type == "tilelayer")
     var tile_layer = data.layers[tile_layer_index]
-    # for thing in data.layers:
-    #     print(thing.type == "tilelayer")
-    #     print("\n\n")
-
     
     var tile_data: Array = tile_layer.data
-    var map_width: int = tile_layer.width
+    var grid_width: int = tile_layer.width
+    var num_tiles = tile_data.size()
 
     var movement_data: Array[int]
-    movement_data.resize(tile_data.size())
+    movement_data.resize(num_tiles)
     movement_data.fill(0)
 
-    for tile_index in range(tile_data.size()):
+    for tile_index in range(num_tiles):
         var tile = tile_data[tile_index]
         if tile == GRID_TILE_FLOOR:
-            var grid_x := tile_index % map_width
-            var grid_y := tile_index / map_width
-            var center_x := grid_x + 0.5
-            var center_y := grid_y + 0.5
-
-            var horizontal_walls = wall_data.horizontal_walls
-            var vertical_walls = wall_data.vertical_walls
-
-            # if horizontal_walls.has(y):
-            #     print (horizontal_walls[y])
+            var grid_x := tile_index % grid_width
+            var grid_y := tile_index / grid_width
 
             # up
-            if !(movement_data[tile_index] & MOVEMENT_FLAG_UP_SKIPTEST):
-                if !horizontal_walls.has(grid_y) or !horizontal_walls[grid_y].any(func(wall): return sign(center_x - wall.start.x) != sign(center_x - wall.end.x)):
-
-                    var up_index := tile_index - map_width
-                    if movement_data.size() > up_index && tile_data[up_index] == GRID_TILE_FLOOR:
-                        movement_data[tile_index] |= MOVEMENT_FLAG_UP
-                        movement_data[up_index] |= MOVEMENT_FLAG_DOWN
-                        movement_data[up_index] |= MOVEMENT_FLAG_DOWN_SKIPTEST
+            var up_index := tile_index - grid_width
+            if up_index < num_tiles and !(movement_data[tile_index] & MOVEMENT_FLAG_UP_SKIPTEST) and tile_data[up_index] == GRID_TILE_FLOOR and !wall_data.crosses_any_horizontal_wall(grid_x, grid_y, -1):
+                movement_data[tile_index] |= MOVEMENT_FLAG_UP
+                movement_data[up_index] |= MOVEMENT_FLAG_DOWN
+                movement_data[up_index] |= MOVEMENT_FLAG_DOWN_SKIPTEST
 
             # down
-            if !(movement_data[tile_index] & MOVEMENT_FLAG_DOWN_SKIPTEST):
-
-                # if grid_x == 1 and grid_y == 3:
-                #     print("%f, %f" % [center_x, center_y])
-                #     print(horizontal_walls[grid_y + 1])
-
-                if !horizontal_walls.has(grid_y + 1) or !horizontal_walls[grid_y + 1].any(func(wall): return sign(center_x - wall.start.x) != sign(center_x - wall.end.x)):
-
-                    var down_index := tile_index + map_width
-                    if movement_data.size() > down_index && tile_data[down_index] == GRID_TILE_FLOOR:
-                        movement_data[tile_index] |= MOVEMENT_FLAG_DOWN
-                        movement_data[down_index] |= MOVEMENT_FLAG_UP
-                        movement_data[down_index] |= MOVEMENT_FLAG_UP_SKIPTEST
+            var down_index := tile_index + grid_width
+            if down_index < num_tiles and !(movement_data[tile_index] & MOVEMENT_FLAG_DOWN_SKIPTEST) and tile_data[down_index] == GRID_TILE_FLOOR and !wall_data.crosses_any_horizontal_wall(grid_x, grid_y, +1):
+                    movement_data[tile_index] |= MOVEMENT_FLAG_DOWN
+                    movement_data[down_index] |= MOVEMENT_FLAG_UP
+                    movement_data[down_index] |= MOVEMENT_FLAG_UP_SKIPTEST
 
             # left
-            if !(movement_data[tile_index] & MOVEMENT_FLAG_LEFT_SKIPTEST):
-                if !vertical_walls.has(grid_x) or !vertical_walls[grid_x].any(func(wall): return sign(center_y - wall.start.y) != sign(center_y - wall.end.y)):
-
-                    var left_index := tile_index - 1
-                    if movement_data.size() >  left_index && tile_data[left_index] == GRID_TILE_FLOOR:
-                        movement_data[tile_index] |= MOVEMENT_FLAG_LEFT
-                        movement_data[left_index] |= MOVEMENT_FLAG_RIGHT
-                        movement_data[left_index] |= MOVEMENT_FLAG_RIGHT_SKIPTEST
+            var left_index := tile_index - 1
+            if left_index < num_tiles and !(movement_data[tile_index] & MOVEMENT_FLAG_LEFT_SKIPTEST) and tile_data[left_index] == GRID_TILE_FLOOR and !wall_data.crosses_any_vertical_wall(grid_x, grid_y, -1):
+                movement_data[tile_index] |= MOVEMENT_FLAG_LEFT
+                movement_data[left_index] |= MOVEMENT_FLAG_RIGHT
+                movement_data[left_index] |= MOVEMENT_FLAG_RIGHT_SKIPTEST
 
             # right
-            if !(movement_data[tile_index] & MOVEMENT_FLAG_RIGHT_SKIPTEST):
-                if !vertical_walls.has(grid_x + 1) or !vertical_walls[grid_x + 1].any(func(wall): return sign(center_y - wall.start.y) != sign(center_y - wall.end.y)):
-
-                    var right_index := tile_index + 1
-                    if movement_data.size() > right_index && tile_data[right_index] == GRID_TILE_FLOOR:
-                        movement_data[tile_index] |= MOVEMENT_FLAG_RIGHT
-                        movement_data[right_index] |= MOVEMENT_FLAG_LEFT
-                        movement_data[right_index] |= MOVEMENT_FLAG_LEFT_SKIPTEST
-
-            #     for wall in wall_data.horizontal_walls[y]:
-            #         if signi(x - wall.start.x) != signi(x - wall.end.x):
-            #             movement_data[tile_index] ^= MOVEMENT_FLAG_UP
-
-            #             var up_index := tile_index - map_width
-            #             if movement_data.has(up_index) && tile_data[up_index] == GRID_TILE_FLOOR:
-            #                 movement_data[up_index] ^= MOVEMENT_FLAG_DOWN
-            #                 movement_data[up_index] ^= MOVEMENT_FLAG_DOWN_SKIPTEST
-
-            # # down
-            # if !(movement_data[tile_index] & MOVEMENT_FLAG_DOWN_SKIPTEST) and wall_data.horizontal_walls.has(y + 1):
-            #     for wall in wall_data.horizontal_walls[y + 1]:
-            #         if signi(x - wall.start.x) != signi(x - wall.end.x):
-            #             movement_data[tile_index] ^= MOVEMENT_FLAG_DOWN
-
-            #             var down_index := tile_index + map_width
-            #             if movement_data.has(down_index) && tile_data[down_index] == GRID_TILE_FLOOR:
-            #                 movement_data[down_index] ^= MOVEMENT_FLAG_UP
-            #                 movement_data[down_index] ^= MOVEMENT_FLAG_UP_SKIPTEST
-
-            # # left
-            # if !(movement_data[tile_index] & MOVEMENT_FLAG_LEFT_SKIPTEST) and wall_data.horizontal_walls.has(x):
-            #     for wall in wall_data.horizontal_walls[x]:
-            #         if signi(x - wall.start.x) != signi(x - wall.end.x):
-            #             movement_data[tile_index] ^= MOVEMENT_FLAG_LEFT
-
-            #             var left_index := tile_index - 1
-            #             if movement_data.has(left_index) && tile_data[left_index] == GRID_TILE_FLOOR:
-            #                 movement_data[left_index] ^= MOVEMENT_FLAG_RIGHT
-            #                 movement_data[left_index] ^= MOVEMENT_FLAG_RIGHT_SKIPTEST
-
-            # # right
-            # if !(movement_data[tile_index] & MOVEMENT_FLAG_RIGHT_SKIPTEST) and wall_data.horizontal_walls.has(x + 1):
-            #     for wall in wall_data.horizontal_walls[x + 1]:
-            #         if signi(x - wall.start.x) != signi(x - wall.end.x):
-            #             movement_data[tile_index] ^= MOVEMENT_FLAG_RIGHT
-
-            #             var right_index := tile_index + 1
-            #             if movement_data.has(right_index) && tile_data[right_index] == GRID_TILE_FLOOR:
-            #                 movement_data[right_index] ^= MOVEMENT_FLAG_LEFT
-            #                 movement_data[right_index] ^= MOVEMENT_FLAG_LEFT_SKIPTEST
-
+            var right_index := tile_index + 1
+            if right_index < num_tiles and !(movement_data[tile_index] & MOVEMENT_FLAG_RIGHT_SKIPTEST) and tile_data[right_index] == GRID_TILE_FLOOR and !wall_data.crosses_any_vertical_wall(grid_x, grid_y, +1):
+                movement_data[tile_index] |= MOVEMENT_FLAG_RIGHT
+                movement_data[right_index] |= MOVEMENT_FLAG_LEFT
+                movement_data[right_index] |= MOVEMENT_FLAG_LEFT_SKIPTEST
 
     root_node.set_meta("movement_data", movement_data)
+    root_node.set_meta("grid_width", grid_width)
 
     var debug_node := Node3D.new()
     debug_node.name = "Debug"
@@ -247,70 +186,29 @@ static func generate_dungeon(data: Variant) -> void:
     # Drop Debug Cubes
     for tile_index in movement_data.size():
         var tile = movement_data[tile_index]
-        var x := tile_index % map_width
-        var y := tile_index / map_width
+        var x := tile_index % grid_width
+        var y := tile_index / grid_width
 
         if tile & MOVEMENT_FLAG_UP:
-            var debug_box = create_box(Vector3((x + 0.5) * GRID_SIZE, FLOOR_THICKNESS, (y + 0.2) * GRID_SIZE), Vector3(0.5, 0.5, 3), str(tile_index))
+            var debug_box = create_box(Vector3((x + 0.5) * GRID_SIZE, FLOOR_THICKNESS, (y + 0.2) * GRID_SIZE), Vector3(0.5, 0.5, 3))
             debug_node.add_child(debug_box)
             debug_box.owner = root_node
         if tile & MOVEMENT_FLAG_DOWN:
-            var debug_box = create_box(Vector3((x + 0.5) * GRID_SIZE, FLOOR_THICKNESS, (y + 0.8) * GRID_SIZE), Vector3(0.5, 0.5, 3), str(tile_index))
+            var debug_box = create_box(Vector3((x + 0.5) * GRID_SIZE, FLOOR_THICKNESS, (y + 0.8) * GRID_SIZE), Vector3(0.5, 0.5, 3))
             debug_node.add_child(debug_box)
             debug_box.owner = root_node
         if tile & MOVEMENT_FLAG_LEFT:
-            var debug_box = create_box(Vector3((x + 0.2) * GRID_SIZE, FLOOR_THICKNESS, (y + 0.5) * GRID_SIZE), Vector3(3, 0.5, 0.5), str(tile_index))
+            var debug_box = create_box(Vector3((x + 0.2) * GRID_SIZE, FLOOR_THICKNESS, (y + 0.5) * GRID_SIZE), Vector3(3, 0.5, 0.5))
             debug_node.add_child(debug_box)
             debug_box.owner = root_node
         if tile & MOVEMENT_FLAG_RIGHT:
-            var debug_box = create_box(Vector3((x + 0.8) * GRID_SIZE, FLOOR_THICKNESS, (y + 0.5) * GRID_SIZE), Vector3(3, 0.5, 0.5), str(tile_index))
+            var debug_box = create_box(Vector3((x + 0.8) * GRID_SIZE, FLOOR_THICKNESS, (y + 0.5) * GRID_SIZE), Vector3(3, 0.5, 0.5))
             debug_node.add_child(debug_box)
             debug_box.owner = root_node
-
-    # for x in wall_data.vertical_walls:
-    #     for wall in wall_data.horizontal_walls[y]:
-    #         create_wall(wall.start, wall.end)
-
-    # for y in wall_data.horizontal_walls:
-    #     for wall in wall_data.horizontal_walls[y]:
-    #         create_wall(wall.start, wall.end)
-
-    # Walls
-    # var object_group_data
-    # for layer in data.layers:
-    #     if layer.type == "objectgroup":
-    #         object_group_data = layer
-    #         break
-
-    # if object_group_data:
-    #     for object in object_group_data.objects:
-    #         # var wall_data = object["polygon"]
-    #         var wall_data = object.polygon if object.has("polygon") else null
-    #         if !wall_data:
-    #             wall_data = object.polyline if object.has("polyline") else null
-    #         if wall_data:
-    #             for i in range(wall_data.size() - 1):
-    #                 var offset = Vector2i(object.x, object.y)
-    #                 var start = Vector2i(wall_data[i].x, wall_data[i].y)
-    #                 var end = Vector2i(wall_data[i + 1].x, wall_data[i + 1].y)
-    #                 var wall_box = create_wall(offset, start, end)
-    #                 walls_node.add_child(wall_box)
-    #                 wall_box.owner = root_node
-
-    #         if object.has("polygon"):
-    #             var offset = Vector2i(object.x, object.y)
-    #             var start = Vector2i(wall_data[0].x, wall_data[0].y)
-    #             var end = Vector2i(wall_data[-1].x, wall_data[-1].y)
-    #             var wall_box = create_wall(offset, start, end)
-    #             walls_node.add_child(wall_box)
-    #             wall_box.owner = root_node
-
-    print("gonna save")
 
     var result = scene.pack(root_node)
     if result == OK:
         var filename = Time.get_datetime_string_from_system().replace(":", "_")
-        print("saving %s" % filename)
         var error = ResourceSaver.save(scene, "res://scenes/dungeon_geometry/%s.tscn" % filename)
         if error != OK:
             push_error("An error occured while saving the scene to disk")

@@ -1,0 +1,12 @@
+[gd_scene load_steps=2 format=3 uid="uid://d2xsxlshloq36"]
+
+[ext_resource type="Texture2D" uid="uid://cu5euh8qu4leh" path="res://res/sprites/player/player_portrait.png" id="1_w7e8y"]
+
+[node name="Minimap" type="TextureRect"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_w7e8y")
+stretch_mode = 2

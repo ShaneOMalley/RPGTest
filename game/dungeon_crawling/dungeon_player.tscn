@@ -1,5 +1,14 @@
-[gd_scene format=3 uid="uid://cwgl0m73j7c7h"]
+[gd_scene load_steps=2 format=3 uid="uid://cwgl0m73j7c7h"]
+
+[ext_resource type="Script" uid="uid://hxt7ptsjx5i6" path="res://scripts/game/dungeon_crawling/player/player_movement_controller.gd" id="1_jcc1l"]
 
 [node name="DungeonPlayer" type="Node3D"]
 
 [node name="Camera3D" type="Camera3D" parent="."]
+
+[node name="MovementController" type="Node" parent="."]
+script = ExtResource("1_jcc1l")
+movement_speed = 60.0
+rotation_speed = 7.0
+thud_distance_factor = 0.2
+thud_speed_factor = 0.1
