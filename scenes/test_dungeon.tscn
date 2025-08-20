@@ -8,7 +8,7 @@
 script = ExtResource("1_pldt6")
 
 [node name="DungeonPlayer" parent="." instance=ExtResource("2_jt7le")]
-transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 15.327, 3.78039, 15.4699)
+transform = Transform3D(-1, 0, -1.50996e-07, 0, 1, 0, 1.50996e-07, 0, -1, 15.327, 3.78039, 15.4699)
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(0.706829, -0.340086, -0.62027, 0.34876, -0.595331, 0.723842, -0.615435, -0.727957, -0.302189, 26.0246, 21.3665, 23.4521)

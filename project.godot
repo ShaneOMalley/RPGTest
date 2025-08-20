@@ -22,6 +22,8 @@ BattlePresenter="*res://scripts/game/battle/battle_presenter.gd"
 BattleManager="*res://scripts/game/battle/battle_manager.gd"
 LoadHelper="*res://scripts/common/load_helper.gd"
 DungeonManager="*res://scripts/game/dungeon_crawling/dungeon_manager.gd"
+DungeonCrawlingView="*res://scripts/game/dungeon_crawling/dungeon_crawling_view.gd"
+DungeonCrawlingPresenter="*res://scripts/game/dungeon_crawling/dungeon_crawling_presenter.gd"
 
 [editor_plugins]
 

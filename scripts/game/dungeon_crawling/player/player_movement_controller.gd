@@ -15,6 +15,11 @@ var _rotation_t: float
 @export var thud_distance_factor: float
 @export var thud_speed_factor: float
 
+signal on_move_started(target_position: Vector3)
+signal on_rotation_started(target_rotation: float)
+signal on_move_finished(target_position: Vector3)
+signal on_rotation_finished(target_rotation: float)
+
 enum GridMovementDirection { UP, RIGHT, DOWN, LEFT }
 
 func _start_movement(in_target_position: Vector3) -> void:
@@ -22,6 +27,8 @@ func _start_movement(in_target_position: Vector3) -> void:
 	_target_position = in_target_position
 	_movement_t = 0
 	_is_moving = true
+
+	on_move_started.emit(_target_position)
 
 func _start_wall_thud(in_target_position: Vector3) -> void:
 	_starting_position = (owner as Node3D).position
@@ -35,6 +42,8 @@ func _start_rotation(direction: ClockDirection) -> void:
 	_rotation_t = 0
 	_is_rotating = true
 
+	on_rotation_started.emit(_target_y_rotation)
+
 func _process(delta: float):
 	var node3d_owner := owner as Node3D
 
@@ -45,6 +54,7 @@ func _process(delta: float):
 
 		if is_equal_approx(_movement_t, 1):
 			_is_moving = false
+			on_move_finished.emit(_target_position)
 
 	elif _is_thudding:
 		var distance := (_target_position - _starting_position).length() * thud_distance_factor
@@ -63,6 +73,7 @@ func _process(delta: float):
 
 		if is_equal_approx(_rotation_t, 1):
 			_is_rotating = false
+			on_rotation_finished.emit(_target_y_rotation)
 
 	else:
 		const MOVEMENT_DEADZONE := 0.8
