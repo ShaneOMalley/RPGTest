@@ -9,11 +9,10 @@ func execute(in_target: BattleParticipant) -> void:
 	set_lifetime(1.2)
 
 func _apply_attack_effect():
-	var effect = BattleEffectAttack.new(_source, _target)
+	var effect := BattleEffectAttack.new(_source, _target)
+	effect.apply()
 
 	BattleManager.play_oneshot_fx(fx_affect_target, _target)
-
-	effect.apply()
 
 func is_valid_for_target(possible_target: BattleParticipant) -> bool:
 	return possible_target.affiliation != _source.affiliation

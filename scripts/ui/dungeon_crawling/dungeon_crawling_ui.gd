@@ -9,8 +9,8 @@ func minimap_surround_cell(grid_x: int, grid_y: int, up: bool, down: bool, left:
 func minimap_set_player_position(grid_x: int, grid_y: int):
     ($Minimap as Minimap).minimap_set_player_position(grid_x, grid_y)
 
-func minimap_set_player_rotation(rotation: float):
-    ($Minimap as Minimap).minimap_set_player_rotation(rotation)
+func minimap_set_player_rotation(in_rotation: float):
+    ($Minimap as Minimap).minimap_set_player_rotation(in_rotation)
 
 func test_draw_minimap() -> void:
     ($Minimap as Minimap).test_draw()

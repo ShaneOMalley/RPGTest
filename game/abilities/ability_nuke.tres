@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="BattleAbilityNuke" load_steps=4 format=3 uid="uid://caf6xhr3qko7k"]
+
+[ext_resource type="PackedScene" uid="uid://bvkr4e5f5ju3a" path="res://game/ui_fx/uifx_use_skill.tscn" id="1_f0vsq"]
+[ext_resource type="Script" uid="uid://cjtoeha0x8i8c" path="res://scripts/game/battle/abilities/battle_ability_nuke.gd" id="1_shos1"]
+[ext_resource type="PackedScene" uid="uid://dme81fha7jgl2" path="res://game/ui_fx/uifx_attack.tscn" id="2_yha56"]
+
+[resource]
+script = ExtResource("1_shos1")
+fx_activate = ExtResource("1_f0vsq")
+fx_affect_target = ExtResource("2_yha56")
+metadata/_custom_type_script = "uid://d4f1cetlvgfb"

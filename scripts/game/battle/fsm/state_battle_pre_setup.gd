@@ -1,29 +1,31 @@
 class_name StateBattlePreSetup extends FSMState
 
-func _add_participant(config_name: String, affiliation: BattleManager.Affiliation):
-	var participant = BattleParticipant.create_from_config(config_name)
-	participant.affiliation = affiliation
-	BattleManager.add_participant(participant)
+var encounter_group: Array[StringName]
 
 func _on_load_complete() -> void:
-	_add_participant(&"player", BattleManager.Affiliation.PLAYER)
-	_add_participant(&"ghoul", BattleManager.Affiliation.ENEMY)
-	_add_participant(&"goblin", BattleManager.Affiliation.ENEMY)
+	for participant_id in encounter_group:
+		var participant = BattleParticipant.create_from_config(participant_id)
+		participant.affiliation = BattleManager.Affiliation.ENEMY
+		BattleManager.add_participant(participant)
+
+	for player_participant in PlayerPartyManager.get_participants():
+		BattleManager.add_participant(player_participant)
 
 	BattleManager.set_is_finished_setting_up_participants(true)
 
 # var _test_on_ready: Signal
+const config_path: String = "res://res/data/battle_encounters.json"
 func on_enter() -> void:
-	# TODO: Add participants properly
-	# _test_on_ready = BattleParticipant.load_participants_async([&"player", &"ghoul", &"goblin"])
-	BattleParticipant.load_participants_async([&"player", &"ghoul", &"goblin"], _on_load_complete)
-	#  print("wtf")
-	#  print(_test_on_ready)
-	# _test_on_ready.connect(func(): print("test"))
-	# _test_on_ready.connect(_on_load_complete)
-	# var connections = _test_on_ready.get_connections()
-	pass
+	var encounter_group_id := BattleManager.get_encounter_group_id()
+
+	var file := FileAccess.open(config_path, FileAccess.READ)
+	var json = JSON.parse_string(file.get_as_text()) 
+	var data = json[&"encounter_groups"]
+
+	encounter_group.clear()
+	encounter_group.append_array(data[encounter_group_id])
+
+	BattleParticipant.load_participants_async(encounter_group, _on_load_complete)
 
 func on_exit() -> void:
 	BattleManager.complete_pre_setup()
-	pass

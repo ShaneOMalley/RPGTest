@@ -4,6 +4,12 @@ extends Node
 
 var dungeon_crawling_ui: UIDungeonCrawling
 
+func hide_ui() -> void:
+	dungeon_crawling_ui.hide()
+
+func show_ui() -> void:
+	dungeon_crawling_ui.show()
+
 # Update minimap
 func minimap_add_walls(grid_x: int, grid_y: int, up: bool, down: bool, left: bool, right: bool) -> void:
 	dungeon_crawling_ui.minimap_surround_cell(grid_x, grid_y, up, down, left, right, Color.WHITE)

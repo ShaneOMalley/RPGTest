@@ -7,6 +7,9 @@ const GRID_SIZE := 16
 const CELL_SURROUND_THICKNESS = 2
 
 func add_rect(x1: int, y1: int, x2: int, y2: int, color: Color, overwrite_existing_pixels: bool, padding: int = 0):
+	if !_image:
+		return
+
 	var half_padding := padding / 2
 	for i in range(x1 - half_padding, x2 + 1 + half_padding):
 		for j in range(y1 - half_padding, y2 + 1 + half_padding):

@@ -4,15 +4,15 @@ var _hp: int
 var _max_hp: int
 
 func populate(participant_name: String, hp: int, max_hp: int) -> void:
-	$Portrait.show()
-	$TextName.show()
-	$TextHP.show()
+	$Border/Portrait.show()
+	$Border/TextName.show()
+	$Border/TextHP.show()
 
-	$TextName.text = participant_name
-	$TextHP.text = "HP: %d/%d" % [hp, max_hp]
+	$Border/TextName.text = participant_name
+	$Border/TextHP.text = "HP: %d/%d" % [hp, max_hp]
 
 func update_hp(hp: int, max_hp: int) -> void:
-	$TextHP.text = "HP: %d/%d" % [hp, max_hp]
+	$Border/TextHP.text = "HP: %d/%d" % [hp, max_hp]
 	_hp = hp
 	_max_hp = max_hp
 
@@ -21,6 +21,6 @@ func handle_hit(damage: int) -> void:
 	# TODO: Hit effect, make lost health bar section
 
 func hide_info() -> void:
-	$Portrait.hide()
-	$TextName.hide()
-	$TextHP.hide()
+	$Border/Portrait.hide()
+	$Border/TextName.hide()
+	$Border/TextHP.hide()

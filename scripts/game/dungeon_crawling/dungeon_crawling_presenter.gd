@@ -20,10 +20,20 @@ func update_player_position(target_position: Vector3) -> void:
 func update_player_rotation(target_rotation: float) -> void:
 	DungeonCrawlingView.minimap_set_player_rotation(target_rotation)
 
-func on_dungeon_crawling_start() -> void:
+func on_dungeon_crawling_start(player_position: Vector3) -> void:
 	DungeonCrawlingView.setup_ui()
+	update_player_position(player_position)
+
+func on_battle_started() -> void:
+	DungeonCrawlingView.hide_ui()
+
+func on_battle_finished() -> void:
+	DungeonCrawlingView.show_ui()
 
 func _ready():
 	DungeonManager.on_player_move_started.connect(update_player_position)
 	DungeonManager.on_player_rotation_started.connect(update_player_rotation)
 	DungeonManager.on_dungeon_crawling_start.connect(on_dungeon_crawling_start)
+
+	BattleManager.on_battle_started.connect(on_battle_started)
+	BattleManager.on_battle_finished.connect(on_battle_finished)

@@ -8,7 +8,7 @@
 		"magic": 5,
 		"vitality": 6,
 
-		"abilities": ["attack", "pass"]
+		"abilities": ["attack", "nuke", "pass"]
 	},
 
 	"ghoul" :

@@ -15,15 +15,24 @@ grow_vertical = 2
 script = ExtResource("1_6je2w")
 enemy_template = ExtResource("1_02iql")
 
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.32549)
+
 [node name="EnemiesContainer" type="HBoxContainer" parent="."]
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
 offset_left = -50.0
-offset_top = 101.0
+offset_top = 218.0
 offset_right = 50.0
-offset_bottom = 201.0
+offset_bottom = 318.0
 grow_horizontal = 2
 
 [node name="Enemy" parent="EnemiesContainer" instance=ExtResource("1_02iql")]
@@ -64,7 +73,7 @@ anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
 offset_left = -404.0
-offset_top = -348.0
+offset_top = -272.0
 offset_right = 396.0
 offset_bottom = -100.0
 grow_horizontal = 2

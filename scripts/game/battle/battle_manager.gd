@@ -8,7 +8,9 @@ const MAX_TURNS: int = 5
 
 var participants: Array[BattleParticipant]
 
+signal on_battle_started
 signal on_battle_pre_setup_complete
+signal on_battle_finished
 signal on_battle_effect_applied(effect: BattleEffect)
 signal on_battle_fx_requested(fx: PackedScene, target: BattleParticipant)
 signal on_battle_player_turn_started(participant: BattleParticipant)
@@ -20,16 +22,20 @@ var _turns: Array[BattleTurn]
 # var _battle_time: float = 0
 var _state_machine: FSMBattle
 var _is_battle_active: bool = false
+var _encounter_group_id
 
 ## State getters
+func get_encounter_group_id() -> StringName:
+	return _encounter_group_id
+
 func get_participants() -> Array[BattleParticipant]:
 	return participants
 
 func get_is_battle_active() -> bool:
 	return _is_battle_active
 
-func get_participant(id: StringName) -> BattleParticipant:
-	var index := participants.find_custom((func(participant): return participant.id == id))
+func get_participant(uid: StringName) -> BattleParticipant:
+	var index := participants.find_custom((func(participant): return participant.uid == uid))
 	return participants[index]
 
 # TODO: Cache this instead of filtering each time it's called
@@ -53,9 +59,6 @@ func get_is_finished_setting_up_participants() -> bool:
 
 func set_is_finished_setting_up_participants(value: bool) -> void:
 	_is_finished_setting_up_participants = value
-
-func add_participant(participant: BattleParticipant) -> void:
-	participants.push_back(participant)
 
 ## Ability queueing
 class AbilityExecution:
@@ -90,6 +93,9 @@ func play_oneshot_fx(effect_prototype: PackedScene, target: BattleParticipant):
 	on_battle_fx_requested.emit(effect_prototype, target)
 
 ## Particpant Management
+func add_participant(participant: BattleParticipant) -> void:
+	participants.push_back(participant)
+
 func remove_participant(participant: BattleParticipant) -> void:
 	participants.erase(participant)
 	_turns = _turns.filter(func(turn: BattleTurn): return turn.participant != participant)
@@ -156,9 +162,12 @@ func _build_turns_list(num_turns: int):
 		_generate_normal_turn(_participant_frequency_tracker[fastest_participant], fastest_participant)
 		_participant_frequency_tracker[fastest_participant] += fastest_participant.get_turn_period()
 		
-func _setup_battle():
+func setup_battle(in_encounter_group_id: StringName):
 	# _test_add_participants()
 	# _build_turns_list(MAX_TURNS)
+
+	_encounter_group_id = in_encounter_group_id
+	participants.clear()
 	
 	_is_battle_active = true
 	_is_finished_setting_up_participants = false
@@ -169,9 +178,12 @@ func _setup_battle():
 	add_child(_state_machine)
 	_state_machine.start()
 
-func _cleanup_battle():
+	on_battle_started.emit()
+
+func finish_battle():
 	_state_machine.queue_free()
 	_is_battle_active = false
+	on_battle_finished.emit()
 
 func complete_pre_setup():
 	_build_turns_list(MAX_TURNS)
@@ -187,7 +199,7 @@ func _on_state_exited(id: StringName) -> void:
 
 func _process(_delta: float) -> void:
 	if Input.is_action_just_pressed("ui_right"):
-		_setup_battle()
+		setup_battle(&"test2")
 	
 # func _ready() -> void:
 # 	_setup_battle()

@@ -44,7 +44,7 @@ func _start_rotation(direction: ClockDirection) -> void:
 
 	on_rotation_started.emit(_target_y_rotation)
 
-func _process(delta: float):
+func _handle_movement(delta: float) -> bool:
 	var node3d_owner := owner as Node3D
 
 	if _is_moving:
@@ -56,7 +56,9 @@ func _process(delta: float):
 			_is_moving = false
 			on_move_finished.emit(_target_position)
 
-	elif _is_thudding:
+		return true
+
+	if _is_thudding:
 		var distance := (_target_position - _starting_position).length() * thud_distance_factor
 		# t values > 0.5 mean the thud is bringing the player back to its starting position
 		_movement_t = minf(1, _movement_t + delta * thud_speed_factor * movement_speed / (distance * 2))
@@ -66,7 +68,9 @@ func _process(delta: float):
 		if is_equal_approx(_movement_t, 1):
 			_is_thudding = false
 
-	elif _is_rotating:
+		return true
+
+	if _is_rotating:
 		_rotation_t = minf(1, _rotation_t + delta * rotation_speed / (PI / 2))
 		var rotation_angle := lerpf(_starting_y_rotation, _target_y_rotation, _rotation_t)
 		node3d_owner.rotation.y = rotation_angle
@@ -75,54 +79,65 @@ func _process(delta: float):
 			_is_rotating = false
 			on_rotation_finished.emit(_target_y_rotation)
 
-	else:
-		const MOVEMENT_DEADZONE := 0.8
-		var input_vector := Input.get_vector("player_left", "player_right", "player_backward", "player_forward")
-		var is_strafing := Input.is_action_pressed("player_strafe")
+		return true
 
-		var move_direction := -1
+	return false
 
-		if input_vector.y > MOVEMENT_DEADZONE:
-			move_direction = GridMovementDirection.UP
-		elif input_vector.y < -MOVEMENT_DEADZONE:
-			move_direction = GridMovementDirection.DOWN
-		elif input_vector.x > MOVEMENT_DEADZONE:
-			if is_strafing:
-				move_direction = GridMovementDirection.RIGHT
-			else:
-				_start_rotation(CLOCKWISE)
-		elif input_vector.x < -MOVEMENT_DEADZONE:
-			if is_strafing:
-				move_direction = GridMovementDirection.LEFT
-			else:
-				_start_rotation(COUNTERCLOCKWISE)
+func _handle_input(delta: float) -> void:
+	var node3d_owner := owner as Node3D
 
+	const MOVEMENT_DEADZONE := 0.8
+	var input_vector := Input.get_vector("player_left", "player_right", "player_backward", "player_forward")
+	var is_strafing := Input.is_action_pressed("player_strafe")
 
-		# Update grid movement position based on rotation
-		if move_direction != -1:
-			var offset = -roundi(node3d_owner.global_rotation.y / (PI / 2))
-			var adjusted_move_direction = wrap(move_direction + offset, 0, GridMovementDirection.size())
-			var grid_x := floori(node3d_owner.position.x / DungeonManager.GRID_SIZE)
-			var grid_y := floori(node3d_owner.position.z / DungeonManager.GRID_SIZE)
+	var move_direction := -1
 
-			match adjusted_move_direction:
-				GridMovementDirection.UP:
-					if DungeonManager.can_move_up(grid_x, grid_y):
-						_start_movement(owner.position + Vector3(0, 0, -DungeonManager.GRID_SIZE))
-					else:
-						_start_wall_thud(owner.position + Vector3(0, 0, -DungeonManager.GRID_SIZE * thud_distance_factor))
-				GridMovementDirection.DOWN:
-					if DungeonManager.can_move_down(grid_x, grid_y):
-						_start_movement(owner.position + Vector3(0, 0, DungeonManager.GRID_SIZE))
-					else:
-						_start_wall_thud(owner.position + Vector3(0, 0, DungeonManager.GRID_SIZE * thud_distance_factor))
-				GridMovementDirection.LEFT:
-					if DungeonManager.can_move_left(grid_x, grid_y):
-						_start_movement(owner.position + Vector3(-DungeonManager.GRID_SIZE, 0, 0))
-					else:
-						_start_wall_thud(owner.position + Vector3(-DungeonManager.GRID_SIZE * thud_distance_factor, 0, 0))
-				GridMovementDirection.RIGHT:
-					if DungeonManager.can_move_right(grid_x, grid_y):
-						_start_movement(owner.position + Vector3(DungeonManager.GRID_SIZE, 0, 0))
-					else:
-						_start_wall_thud(owner.position + Vector3(DungeonManager.GRID_SIZE * thud_distance_factor, 0, 0))
+	if input_vector.y > MOVEMENT_DEADZONE:
+		move_direction = GridMovementDirection.UP
+	elif input_vector.y < -MOVEMENT_DEADZONE:
+		move_direction = GridMovementDirection.DOWN
+	elif input_vector.x > MOVEMENT_DEADZONE:
+		if is_strafing:
+			move_direction = GridMovementDirection.RIGHT
+		else:
+			_start_rotation(CLOCKWISE)
+	elif input_vector.x < -MOVEMENT_DEADZONE:
+		if is_strafing:
+			move_direction = GridMovementDirection.LEFT
+		else:
+			_start_rotation(COUNTERCLOCKWISE)
+
+	# Update grid movement position based on rotation
+	if move_direction != -1:
+		var offset = -roundi(node3d_owner.global_rotation.y / (PI / 2))
+		var adjusted_move_direction = wrap(move_direction + offset, 0, GridMovementDirection.size())
+		var grid_x := floori(node3d_owner.position.x / DungeonManager.GRID_SIZE)
+		var grid_y := floori(node3d_owner.position.z / DungeonManager.GRID_SIZE)
+
+		match adjusted_move_direction:
+			GridMovementDirection.UP:
+				if DungeonManager.can_move_up(grid_x, grid_y):
+					_start_movement(owner.position + Vector3(0, 0, -DungeonManager.GRID_SIZE))
+				else:
+					_start_wall_thud(owner.position + Vector3(0, 0, -DungeonManager.GRID_SIZE * thud_distance_factor))
+			GridMovementDirection.DOWN:
+				if DungeonManager.can_move_down(grid_x, grid_y):
+					_start_movement(owner.position + Vector3(0, 0, DungeonManager.GRID_SIZE))
+				else:
+					_start_wall_thud(owner.position + Vector3(0, 0, DungeonManager.GRID_SIZE * thud_distance_factor))
+			GridMovementDirection.LEFT:
+				if DungeonManager.can_move_left(grid_x, grid_y):
+					_start_movement(owner.position + Vector3(-DungeonManager.GRID_SIZE, 0, 0))
+				else:
+					_start_wall_thud(owner.position + Vector3(-DungeonManager.GRID_SIZE * thud_distance_factor, 0, 0))
+			GridMovementDirection.RIGHT:
+				if DungeonManager.can_move_right(grid_x, grid_y):
+					_start_movement(owner.position + Vector3(DungeonManager.GRID_SIZE, 0, 0))
+				else:
+					_start_wall_thud(owner.position + Vector3(DungeonManager.GRID_SIZE * thud_distance_factor, 0, 0))
+
+func _process(delta: float):
+	var is_moving := _handle_movement(delta)
+
+	if !is_moving && !BattleManager.get_is_battle_active():
+		_handle_input(delta)

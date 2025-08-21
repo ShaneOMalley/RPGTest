@@ -1,24 +1,27 @@
 extends Node
 
-func on_pre_setup_complete() -> void:
+func on_battle_pre_setup_complete() -> void:
 	BattleView.setup_ui()
 
 	var enemies := BattleManager.get_enemies()
 	for enemy in enemies:
-		BattleView.setup_enemy(enemy.id, enemy.hp, enemy.max_hp)
+		BattleView.setup_enemy(enemy.uid, enemy.hp, enemy.max_hp)
 
 	var players := BattleManager.get_players()
 	for player in players:
-		BattleView.setup_player(player.id, player.hp, player.max_hp)
+		BattleView.setup_player(player.uid, player.hp, player.max_hp)
+
+func on_battle_finished() -> void:
+	BattleView.destroy_ui()
 
 func on_battle_effect_applied(battle_effect: BattleEffect) -> void:
 	var target = battle_effect.target
 
 	# TODO: Make this happen somewhere else; don't assume that 0 health means removal
 	if target.affiliation == BattleManager.Affiliation.ENEMY:
-		BattleView.update_enemy_hp(target.id, target.hp, target.max_hp)
+		BattleView.update_enemy_hp(target.uid, target.hp, target.max_hp)
 	elif target.affiliation == BattleManager.Affiliation.PLAYER:
-		BattleView.update_player_hp(target.id, target.hp, target.max_hp)
+		BattleView.update_player_hp(target.uid, target.hp, target.max_hp)
 
 	print(battle_effect.to_string())
 
@@ -36,7 +39,7 @@ func on_battle_player_turn_started(battle_participant: BattleParticipant) -> voi
 
 		var valid_participants = BattleManager.get_participants().filter(ability.is_valid_for_target)
 		for valid_participant in valid_participants:
-			battle_menu_entry.valid_participant_targets.append(valid_participant.id)
+			battle_menu_entry.valid_participant_targets.append(valid_participant.uid)
 
 		battle_menu_entries.append(battle_menu_entry)
 
@@ -47,22 +50,23 @@ func on_battle_player_turn_ended(_battle_participant: BattleParticipant) -> void
 
 func on_battle_particiant_removed(battle_participant: BattleParticipant) -> void:
 	if battle_participant.affiliation == BattleManager.Affiliation.ENEMY:
-		BattleView.remove_enemy(battle_participant.id)
+		BattleView.remove_enemy(battle_participant.uid)
 	elif battle_participant.affiliation == BattleManager.Affiliation.PLAYER:
-		BattleView.remove_player(battle_participant.id)
+		BattleView.remove_player(battle_participant.uid)
 	pass
 
 func on_battle_fx_requested(effect_prototype: PackedScene, target: BattleParticipant) -> void:
-	BattleView.play_oneshot_fx(effect_prototype, target.id)
+	BattleView.play_oneshot_fx(effect_prototype, target.uid)
 
-func on_ability_and_target_selected(ability_id: StringName, target_id: StringName) -> void:
+func on_ability_and_target_selected(ability_id: StringName, target_uid: StringName) -> void:
 	var current_participant := BattleManager.get_current_turn_participant()
 	var ability := current_participant.abilities[ability_id]
-	var target := BattleManager.get_participant(target_id)
+	var target := BattleManager.get_participant(target_uid)
 	BattleManager.queue_ability_execution(ability, target)
 
 func _ready():
-	BattleManager.on_battle_pre_setup_complete.connect(on_pre_setup_complete)
+	BattleManager.on_battle_pre_setup_complete.connect(on_battle_pre_setup_complete)
+	BattleManager.on_battle_finished.connect(on_battle_finished)
 	BattleManager.on_battle_effect_applied.connect(on_battle_effect_applied)
 	BattleManager.on_battle_fx_requested.connect(on_battle_fx_requested)
 	BattleManager.on_battle_player_turn_started.connect(on_battle_player_turn_started)

@@ -6,7 +6,8 @@ var max_mp: int
 var mp: int
 var affiliation: BattleManager.Affiliation
 # todo: pull stats from data asset
-var id: StringName
+var config_id: StringName
+var uid: StringName
 var strength: int
 var magic: int
 var agility: int
@@ -23,17 +24,27 @@ func _process(_delta: float):
 	pass
 
 func _to_string() -> String:
-	return "「%s」" % id
+	return "「%s」" % uid
+
+static var config_id_counters: Dictionary[StringName, int]
+static func create_unique_id(in_config_id: StringName) -> StringName:
+	var previous_count = config_id_counters.get_or_add(in_config_id, 0)
+	config_id_counters[in_config_id] = previous_count + 1
+	return "%s_%d" % [in_config_id, previous_count]
+
+static func clear_unique_id_counters() -> void:
+	config_id_counters.clear()
 
 const config_path: String = "res://res/data/battle_characters.json"
-static func create_from_config(in_id: StringName) -> BattleParticipant:
+static func create_from_config(in_config_id: StringName) -> BattleParticipant:
 	# TODO: Don't read JSON file and parse every time
 	var file := FileAccess.open(config_path, FileAccess.READ)
 	var json = JSON.parse_string(file.get_as_text()) 
-	var data = json[in_id]
+	var data = json[in_config_id]
 
-	var participant = BattleParticipant.new();
-	participant.id = in_id
+	var participant := BattleParticipant.new();
+	participant.config_id = in_config_id
+	participant.uid = create_unique_id(in_config_id)
 	participant.max_hp = data.max_hp
 	participant.hp = data.max_hp
 	participant.max_mp = data.max_mp
@@ -54,10 +65,10 @@ static func create_from_config(in_id: StringName) -> BattleParticipant:
 	return participant
 
 # static func load_participants_async(in_ids: Array[StringName]) -> Callable: # -> Signal
-static func load_participants_async(in_ids: Array[StringName], callback: Callable) -> void:
+static func load_participants_async(in_config_ids: Array[StringName], callback: Callable) -> void:
 	var all_ability_paths: Dictionary[String, bool]
 
-	for _id in in_ids:
+	for _id in in_config_ids:
 		# TODO: Don't read JSON file and parse every time
 		var file := FileAccess.open(config_path, FileAccess.READ)
 		var json = JSON.parse_string(file.get_as_text()) 

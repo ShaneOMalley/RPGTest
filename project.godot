@@ -24,6 +24,7 @@ LoadHelper="*res://scripts/common/load_helper.gd"
 DungeonManager="*res://scripts/game/dungeon_crawling/dungeon_manager.gd"
 DungeonCrawlingView="*res://scripts/game/dungeon_crawling/dungeon_crawling_view.gd"
 DungeonCrawlingPresenter="*res://scripts/game/dungeon_crawling/dungeon_crawling_presenter.gd"
+PlayerPartyManager="*res://scripts/game/player_party_manager.gd"
 
 [editor_plugins]
 

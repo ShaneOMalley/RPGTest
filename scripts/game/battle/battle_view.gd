@@ -1,32 +1,32 @@
 extends Node
 
-signal on_ability_and_target_selected(ability_id, target_id)
+signal on_ability_and_target_selected(ability_id, target_uid)
 
 var battle_ui: UIBattle
 
 # FX
-func play_oneshot_fx(effect_prototype: PackedScene, target_id: StringName):
-	battle_ui.play_oneshot_fx(effect_prototype, target_id)
+func play_oneshot_fx(effect_prototype: PackedScene, target_uid: StringName):
+	battle_ui.play_oneshot_fx(effect_prototype, target_uid)
 
 # Enemy
-func setup_enemy(id: StringName, hp: int, max_hp: int) -> void:
-	battle_ui.add_enemy(id, hp, max_hp)
+func setup_enemy(uid: StringName, hp: int, max_hp: int) -> void:
+	battle_ui.add_enemy(uid, hp, max_hp)
 
-func update_enemy_hp(id: StringName, hp: int, max_hp: int) -> void:
-	battle_ui.update_enemy_hp(id, hp, max_hp)
+func update_enemy_hp(uid: StringName, hp: int, max_hp: int) -> void:
+	battle_ui.update_enemy_hp(uid, hp, max_hp)
 
-func remove_enemy(id: StringName) -> void:
-	battle_ui.remove_enemy(id)
+func remove_enemy(uid: StringName) -> void:
+	battle_ui.remove_enemy(uid)
 
 # Player
-func setup_player(id: StringName, hp: int, max_hp: int) -> void:
-	battle_ui.add_player(id, hp, max_hp)
+func setup_player(uid: StringName, hp: int, max_hp: int) -> void:
+	battle_ui.add_player(uid, hp, max_hp)
 
-func update_player_hp(id: StringName, hp: int, max_hp: int) -> void:
-	battle_ui.update_player_hp(id, hp, max_hp)
+func update_player_hp(uid: StringName, hp: int, max_hp: int) -> void:
+	battle_ui.update_player_hp(uid, hp, max_hp)
 
-func remove_player(id: StringName) -> void:
-	battle_ui.remove_player(id)
+func remove_player(uid: StringName) -> void:
+	battle_ui.remove_player(uid)
 
 # Battle Menu
 func show_battle_menu(entries: Array[UIBattle.BattleMenuEntry]) -> void:
@@ -43,6 +43,7 @@ func setup_ui() -> void:
 	get_tree().root.add_child(battle_ui)
 
 	battle_ui.hide_all_players_info()
+	battle_ui.hide_battle_menu()
 
 func destroy_ui() -> void:
 	battle_ui.queue_free()

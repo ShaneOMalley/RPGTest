@@ -12,19 +12,18 @@ var _is_executing := false
 static var ability_class_registry: Dictionary[StringName, String] = {
 	"attack": "res://game/abilities/ability_attack.tres",
 	"pass": "res://game/abilities/ability_pass.tres",
+	"nuke": "res://game/abilities/ability_nuke.tres",
 }
 
 # TODO: Right now there is an assumption that the only execution context 
 # needed is an optional `_target`. There might be a more comprehensive struct
 # implemented later
-func execute(_in_target: BattleParticipant) -> void:
-	_target =_in_target
+func execute(in_target: BattleParticipant) -> void:
+	_target = in_target
 	_is_executing = true
-	pass
 
 func end() -> void:
 	_is_executing = false
-	pass
 
 func get_is_executing() -> bool:
 	return _is_executing
