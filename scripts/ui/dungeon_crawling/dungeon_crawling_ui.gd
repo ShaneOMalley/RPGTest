@@ -6,7 +6,7 @@ func minimap_fill_cell(grid_x: int, grid_y: int, color: Color):
 func minimap_surround_cell(grid_x: int, grid_y: int, up: bool, down: bool, left: bool, right: bool, color: Color):
     ($Minimap as Minimap).surround_cell(grid_x, grid_y, up, down, left, right, color)
 
-func minimap_set_player_position(grid_x: int, grid_y: int):
+func minimap_set_player_position(grid_x: float, grid_y: float):
     ($Minimap as Minimap).minimap_set_player_position(grid_x, grid_y)
 
 func minimap_set_player_rotation(in_rotation: float):

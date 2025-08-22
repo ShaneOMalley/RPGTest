@@ -6,14 +6,16 @@ func update_player_position(target_position: Vector3) -> void:
 	var grid_y := floori(target_position.z / DungeonManager.GRID_SIZE)
 	var movement_data = DungeonManager.get_movement_data_for_cell(grid_x, grid_y)
 
-	DungeonCrawlingView.minimap_add_floor(grid_x, grid_y)
-
 	var up: bool = (movement_data & DungeonManager.MOVEMENT_FLAG_UP) == 0
 	var down: bool = (movement_data & DungeonManager.MOVEMENT_FLAG_DOWN) == 0
 	var left: bool = (movement_data & DungeonManager.MOVEMENT_FLAG_LEFT) == 0
 	var right: bool = (movement_data & DungeonManager.MOVEMENT_FLAG_RIGHT) == 0
 
-	DungeonCrawlingView.minimap_add_walls(grid_x, grid_y, up, down, left, right)
+	DungeonCrawlingView.minimap_fill_cell(grid_x, grid_y, up, down, left, right)
+
+	# var normalized_x := target_position.x / DungeonManager.GRID_SIZE - 0.5
+	# var normalized_y := target_position.z / DungeonManager.GRID_SIZE - 0.5
+	# DungeonCrawlingView.minimap_set_player_position(normalized_x, normalized_y)
 
 	DungeonCrawlingView.minimap_set_player_position(grid_x, grid_y)
 
@@ -31,6 +33,7 @@ func on_battle_finished() -> void:
 	DungeonCrawlingView.show_ui()
 
 func _ready():
+	# DungeonManager.on_player_move.connect(update_player_position)
 	DungeonManager.on_player_move_started.connect(update_player_position)
 	DungeonManager.on_player_rotation_started.connect(update_player_rotation)
 	DungeonManager.on_dungeon_crawling_start.connect(on_dungeon_crawling_start)

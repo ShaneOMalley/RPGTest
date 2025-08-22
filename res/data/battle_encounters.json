@@ -10,9 +10,9 @@
     {
         "test_dungeon":
         [
-            { "encounter_group": "test1", "frequency": 0.2 },
-            { "encounter_group": "test2", "frequency": 0.4 },
-            { "encounter_group": "test3", "frequency": 0.4 }
+            { "encounter_group": "test1", "weight": 0.2 },
+            { "encounter_group": "test2", "weight": 0.4 },
+            { "encounter_group": "test3", "weight": 0.4 }
         ]
     }
 }

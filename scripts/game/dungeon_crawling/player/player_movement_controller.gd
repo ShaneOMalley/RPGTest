@@ -15,6 +15,7 @@ var _rotation_t: float
 @export var thud_distance_factor: float
 @export var thud_speed_factor: float
 
+signal on_move(current_position: Vector3)
 signal on_move_started(target_position: Vector3)
 signal on_rotation_started(target_rotation: float)
 signal on_move_finished(target_position: Vector3)
@@ -56,12 +57,14 @@ func _handle_movement(delta: float) -> bool:
 			_is_moving = false
 			on_move_finished.emit(_target_position)
 
+		on_move.emit(node3d_owner.position)
+
 		return true
 
 	if _is_thudding:
 		var distance := (_target_position - _starting_position).length() * thud_distance_factor
 		# t values > 0.5 mean the thud is bringing the player back to its starting position
-		_movement_t = minf(1, _movement_t + delta * thud_speed_factor * movement_speed / (distance * 2))
+		_movement_t = minf(1, _movement_t + (delta * thud_speed_factor * movement_speed) / (distance * 2))
 		var adjusted_t := minf(1, _movement_t * 2) - clampf(_movement_t * 2 - 1, 0, 1)
 		node3d_owner.position = lerp(_starting_position, _target_position, adjusted_t)
 
@@ -83,7 +86,7 @@ func _handle_movement(delta: float) -> bool:
 
 	return false
 
-func _handle_input(delta: float) -> void:
+func _handle_input(_delta: float) -> void:
 	var node3d_owner := owner as Node3D
 
 	const MOVEMENT_DEADZONE := 0.8

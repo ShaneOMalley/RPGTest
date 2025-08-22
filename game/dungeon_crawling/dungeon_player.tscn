@@ -10,7 +10,7 @@ script = ExtResource("1_4ykh0")
 
 [node name="MovementController" type="Node" parent="."]
 script = ExtResource("1_jcc1l")
-movement_speed = 60.0
-rotation_speed = 7.0
+movement_speed = 50.0
+rotation_speed = 6.0
 thud_distance_factor = 0.2
 thud_speed_factor = 0.1

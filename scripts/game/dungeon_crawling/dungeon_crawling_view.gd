@@ -1,6 +1,6 @@
 extends Node
 
-# var _filled_cells: Dictionary[int, bool]
+var _filled_cells: Dictionary[int, bool]
 
 var dungeon_crawling_ui: UIDungeonCrawling
 
@@ -11,18 +11,17 @@ func show_ui() -> void:
 	dungeon_crawling_ui.show()
 
 # Update minimap
-func minimap_add_walls(grid_x: int, grid_y: int, up: bool, down: bool, left: bool, right: bool) -> void:
-	dungeon_crawling_ui.minimap_surround_cell(grid_x, grid_y, up, down, left, right, Color.WHITE)
+func minimap_fill_cell(grid_x: int, grid_y: int, up: bool, down: bool, left: bool, right: bool) -> void:
+	var index := grid_x + grid_y * DungeonManager.get_grid_width()
+	if _filled_cells.get(index):
+		return
 
-func minimap_add_floor(grid_x: int, grid_y: int) -> void:
-	# var index := grid_x + grid_y * DungeonManager.get_grid_width()
-	# if !_filled_cells.get(index):
-	# 	_filled_cells[index] = true
-	# 	print("!!!")
-	
+	dungeon_crawling_ui.minimap_surround_cell(grid_x, grid_y, up, down, left, right, Color.WHITE)
 	dungeon_crawling_ui.minimap_fill_cell(grid_x, grid_y, Color.OLIVE)
 
-func minimap_set_player_position(grid_x: int, grid_y: int) -> void:
+	_filled_cells[index] = true
+
+func minimap_set_player_position(grid_x: float, grid_y: float) -> void:
 	dungeon_crawling_ui.minimap_set_player_position(grid_x, grid_y)
 
 func minimap_set_player_rotation(rotation: float) -> void:
