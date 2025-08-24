@@ -54,7 +54,7 @@ func _trigger_random_encounter() -> void:
 
 func _on_player_move_finished(target_position: Vector3) -> void:
 	_steps_until_next_encounter -= 1
-	if _steps_until_next_encounter <= 0:
+	if _steps_until_next_encounter <= 0 or Input.is_key_pressed(KEY_9):
 		_trigger_random_encounter()
 
 	on_player_move_finished.emit(target_position)

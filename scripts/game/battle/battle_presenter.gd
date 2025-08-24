@@ -1,6 +1,6 @@
 extends Node
 
-func on_battle_pre_setup_complete() -> void:
+func on_battle_ui_setup_requested() -> void:
 	BattleView.setup_ui()
 
 	var enemies := BattleManager.get_enemies()
@@ -64,8 +64,11 @@ func on_ability_and_target_selected(ability_id: StringName, target_uid: StringNa
 	var target := BattleManager.get_participant(target_uid)
 	BattleManager.queue_ability_execution(ability, target)
 
+func on_ui_setup_complete() -> void:
+	BattleManager.set_ui_setup_is_complete(true)
+
 func _ready():
-	BattleManager.on_battle_pre_setup_complete.connect(on_battle_pre_setup_complete)
+	BattleManager.on_battle_ui_setup_requested.connect(on_battle_ui_setup_requested)
 	BattleManager.on_battle_finished.connect(on_battle_finished)
 	BattleManager.on_battle_effect_applied.connect(on_battle_effect_applied)
 	BattleManager.on_battle_fx_requested.connect(on_battle_fx_requested)
@@ -74,3 +77,4 @@ func _ready():
 	BattleManager.on_battle_particiant_removed.connect(on_battle_particiant_removed)
 
 	BattleView.on_ability_and_target_selected.connect(on_ability_and_target_selected)
+	BattleView.on_ui_setup_complete.connect(on_ui_setup_complete)

@@ -3,6 +3,7 @@ class_name UIBattle extends Control
 @export var enemy_template: Resource
 
 signal on_ability_and_target_selected(ability_id, target_id)
+signal on_setup_complete()
 
 var _enemies: Dictionary[StringName, UIEnemy]
 var _battle_menu_entries : Array[UIBattleMenuEntry]
@@ -148,3 +149,9 @@ func make_ability_and_target_selection(ability_id: StringName, target_uid: Strin
 
 func hide_battle_menu() -> void:
 	$MenuContainer/BattleMenuBackground.hide()
+
+func fade_in() -> void:
+	$AnimationPlayer.play(&"battle_fade")
+
+func _ready():
+	$AnimationPlayer.animation_finished.connect(func(_anim): on_setup_complete.emit())

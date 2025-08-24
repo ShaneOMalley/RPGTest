@@ -11,7 +11,8 @@ func _on_load_complete() -> void:
 	for player_participant in PlayerPartyManager.get_participants():
 		BattleManager.add_participant(player_participant)
 
-	BattleManager.set_is_finished_setting_up_participants(true)
+	var timer := BattleManager.get_tree().create_timer(0.5)
+	timer.timeout.connect(func(): BattleManager.set_is_finished_setting_up_participants(true))
 
 # var _test_on_ready: Signal
 const config_path: String = "res://res/data/battle_encounters.json"

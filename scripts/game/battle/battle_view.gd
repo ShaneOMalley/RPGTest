@@ -1,8 +1,10 @@
 extends Node
 
 signal on_ability_and_target_selected(ability_id, target_uid)
+signal on_ui_setup_complete()
 
 var battle_ui: UIBattle
+var debug_battle_ui: Control
 
 # FX
 func play_oneshot_fx(effect_prototype: PackedScene, target_uid: StringName):
@@ -39,11 +41,17 @@ func hide_battle_menu() -> void:
 func setup_ui() -> void:
 	# TODO: Define this path in config (also, find out how to do config in Godot?)
 	battle_ui = preload("res://ui/battle/battle_ui.tscn").instantiate()
+	debug_battle_ui = preload("res://ui/battle/debug_battle.tscn").instantiate()
 	battle_ui.on_ability_and_target_selected.connect(on_ability_and_target_selected.emit)
+	battle_ui.on_setup_complete.connect(on_ui_setup_complete.emit)
 	get_tree().root.add_child(battle_ui)
+	get_tree().root.add_child(debug_battle_ui)
 
 	battle_ui.hide_all_players_info()
 	battle_ui.hide_battle_menu()
 
+	battle_ui.fade_in()
+
 func destroy_ui() -> void:
 	battle_ui.queue_free()
+	debug_battle_ui.queue_free()

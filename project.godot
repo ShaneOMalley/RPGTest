@@ -15,6 +15,10 @@ run/main_scene="uid://bnt75gnnj88vc"
 config/features=PackedStringArray("4.4", "Forward Plus")
 config/icon="res://icon.svg"
 
+[audio]
+
+buses/default_bus_layout=""
+
 [autoload]
 
 BattleView="*res://scripts/game/battle/battle_view.gd"

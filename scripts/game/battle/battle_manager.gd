@@ -10,6 +10,7 @@ var participants: Array[BattleParticipant]
 
 signal on_battle_started
 signal on_battle_pre_setup_complete
+signal on_battle_ui_setup_requested
 signal on_battle_finished
 signal on_battle_effect_applied(effect: BattleEffect)
 signal on_battle_fx_requested(fx: PackedScene, target: BattleParticipant)
@@ -59,6 +60,17 @@ func get_is_finished_setting_up_participants() -> bool:
 
 func set_is_finished_setting_up_participants(value: bool) -> void:
 	_is_finished_setting_up_participants = value
+
+## UI
+var _ui_setup_is_complete := false
+func get_ui_setup_is_complete() -> bool:
+	return _ui_setup_is_complete
+
+func set_ui_setup_is_complete(value: bool) -> void:
+	_ui_setup_is_complete = value
+
+func request_ui_setup():
+	on_battle_ui_setup_requested.emit()
 
 ## Ability queueing
 class AbilityExecution:
@@ -124,12 +136,13 @@ func test_get_player() -> BattleParticipant:
 # todo: support fallback time for units that come into battle mid-way
 func _get_next_normal_turn_time(participant: BattleParticipant):
 	var _participant_turns = _turns.filter(func(turn: BattleTurn): return turn.participant == participant)
-	if !_participant_turns.is_empty():
-		var last_participant_turn: BattleTurn = _participant_turns.back()
-		var period := participant.get_turn_period()
-		return last_participant_turn.time + period if last_participant_turn else period
+	# if !_participant_turns.is_empty():
 
-	return 0
+	var last_participant_turn: BattleTurn = _participant_turns.back()
+	var period := participant.get_turn_period()
+	return last_participant_turn.time + period if last_participant_turn else period
+
+	# return 0
 
 func _generate_normal_turn(time: float, participant: BattleParticipant):
 	# var last_participant_turn: BattleTurn = _turns.filter(func(turn: BattleTurn): return turn.participant == participant).back()
@@ -156,9 +169,11 @@ func _build_turns_list(num_turns: int):
 				best_participant = participant
 				lowest_score = score
 		return best_participant
-	
+
 	for i in range(num_turns):
 		var fastest_participant = find_fastest_participant.call()
+		var thing = fastest_participant.uid
+		print(thing)
 		_generate_normal_turn(_participant_frequency_tracker[fastest_participant], fastest_participant)
 		_participant_frequency_tracker[fastest_participant] += fastest_participant.get_turn_period()
 		
@@ -167,10 +182,10 @@ func setup_battle(in_encounter_group_id: StringName):
 	# _build_turns_list(MAX_TURNS)
 
 	_encounter_group_id = in_encounter_group_id
-	participants.clear()
 	
 	_is_battle_active = true
 	_is_finished_setting_up_participants = false
+	_ui_setup_is_complete = false
 
 	_state_machine = FSMBattle.new()
 	_state_machine.on_state_entered.connect(_on_state_entered)
@@ -181,6 +196,8 @@ func setup_battle(in_encounter_group_id: StringName):
 	on_battle_started.emit()
 
 func finish_battle():
+	_turns.clear()
+	participants.clear()
 	_state_machine.queue_free()
 	_is_battle_active = false
 	on_battle_finished.emit()

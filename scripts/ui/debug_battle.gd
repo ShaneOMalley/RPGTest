@@ -25,7 +25,7 @@ func _process(_delta: float) -> void:
 	$PanelContainer/FSMText.text = BattleManager._state_machine._current_state_name
 
 	# Turns
-	if (is_instance_valid(BattleManager.get_current_turn())):
+	if is_instance_valid(BattleManager.get_current_turn()):
 		var turns_string := ""
 		turns_string += "[color=yellow]%s[/color]    \n" % BattleManager.get_current_turn().to_string()
 		for turn: BattleTurn in BattleManager._turns:

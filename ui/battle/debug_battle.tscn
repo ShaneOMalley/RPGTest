@@ -18,7 +18,7 @@ layout_mode = 1
 offset_left = 10.0
 offset_top = 10.0
 offset_right = 1110.0
-offset_bottom = 410.0
+offset_bottom = 286.0
 
 [node name="BattleStateText" type="RichTextLabel" parent="PanelContainer"]
 layout_mode = 2

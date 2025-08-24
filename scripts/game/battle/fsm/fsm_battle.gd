@@ -2,6 +2,7 @@ class_name FSMBattle extends FiniteStateMachine
 
 func _init() -> void:
 	add_state("pre_setup", StateBattlePreSetup.new())
+	add_state("ui_setup", StateBattleUISetup.new())
 	add_state("turn_setup", StateBattleTurnSetup.new())
 	add_state("turn_decision_player", StateBattleTurnDecisionPlayer.new())
 	add_state("turn_decision_enemy", StateBattleTurnDecisionEnemy.new())
@@ -9,8 +10,8 @@ func _init() -> void:
 	add_state("turn_handle_death", StateBattleTurnHandleDeath.new())
 	add_state("turn_finish_battle", StateBattleFinishBattle.new())
 	
-	add_transition("pre_setup", "turn_setup", func(): return BattleManager.get_is_finished_setting_up_participants())
-
+	add_transition("pre_setup", "ui_setup", func(): return BattleManager.get_is_finished_setting_up_participants())
+	add_transition("ui_setup", "turn_setup", func(): return BattleManager.get_ui_setup_is_complete())
 	add_transition("turn_setup", "turn_decision_player", func(): return BattleManager.get_current_turn().get_affiliation() == BattleManager.Affiliation.PLAYER)
 	add_transition("turn_setup", "turn_decision_enemy", func(): return BattleManager.get_current_turn().get_affiliation() == BattleManager.Affiliation.ENEMY)
 	add_transition("turn_decision_player", "turn_ability", func(): return BattleManager.has_queued_ability())

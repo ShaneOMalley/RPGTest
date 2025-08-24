@@ -4,7 +4,7 @@
 		"max_hp": 100,
 		"max_mp": 30,
 		"strength": 10,
-		"agility": 14,
+		"agility": 11,
 		"magic": 5,
 		"vitality": 6,
 
@@ -16,7 +16,7 @@
 		"max_hp": 20,
 		"max_mp": 10,
 		"strength": 6,
-		"agility": 7,
+		"agility": 10,
 		"magic": 4,
 		"vitality": 1,
 
@@ -27,7 +27,7 @@
 		"max_hp": 17,
 		"max_mp": 0,
 		"strength": 4,
-		"agility": 8,
+		"agility": 10,
 		"magic": 5,
 		"vitality": 3,
 

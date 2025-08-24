@@ -1,11 +1,49 @@
-[gd_scene load_steps=5 format=3 uid="uid://by8ko4w2dgslh"]
+[gd_scene load_steps=8 format=3 uid="uid://by8ko4w2dgslh"]
 
 [ext_resource type="PackedScene" uid="uid://bk3tvyhf7s8eg" path="res://ui/battle/ui_enemy.tscn" id="1_02iql"]
 [ext_resource type="Script" uid="uid://pkhib2brsl7a" path="res://scripts/ui/ui_battle.gd" id="1_6je2w"]
 [ext_resource type="PackedScene" uid="uid://bqkxs2hin7pck" path="res://ui/battle/player_party_member.tscn" id="3_uml01"]
 [ext_resource type="Script" uid="uid://8qrnrxijldix" path="res://scripts/ui/battle/ui_battle_menu_entry.gd" id="3_wfc18"]
 
+[sub_resource type="Animation" id="Animation_uml01"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_m8v4j"]
+resource_name = "battle_start"
+length = 0.3
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.233333),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_3y3fr"]
+_data = {
+&"RESET": SubResource("Animation_uml01"),
+&"battle_fade": SubResource("Animation_m8v4j")
+}
+
 [node name="BattleUI" type="Control"]
+modulate = Color(1, 1, 1, 0)
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -110,3 +148,8 @@ script = ExtResource("3_wfc18")
 [node name="Padding2" type="Control" parent="MenuContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_3y3fr")
+}
