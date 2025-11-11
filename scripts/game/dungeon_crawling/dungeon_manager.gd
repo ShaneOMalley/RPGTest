@@ -80,8 +80,8 @@ func set_dungeon_scene(in_dungeon_scene: Node3D) -> void:
 	setup_encounter_data()
 
 	# TODO: Find some better way of handling dependencies
-	if _player:
-		on_dungeon_crawling_start.emit(_player.position)
+	#  if _player:
+	#  	on_dungeon_crawling_start.emit(_player.position)
 
 func set_player(in_player: Player) -> void:
 	_player = in_player
@@ -92,5 +92,15 @@ func set_player(in_player: Player) -> void:
 	_player.on_rotation_finished.connect(on_player_rotation_finished.emit)
 
 	# TODO: Find some better way of handling dependencies
-	if _dungeon_scene:
+	var timer := BattleManager.get_tree().create_timer(0.1)
+	timer.timeout.connect(func(): 
+		BattleManager.request_player_party_ui_setup()
 		on_dungeon_crawling_start.emit(_player.position)
+		)
+
+	# on_dungeon_crawling_start.emit.call_deferred(_player.position)
+	# BattleManager.request_player_party_ui_setup.call_deferred()
+
+	# TODO: Find some better way of handling dependencies
+	# if _dungeon_scene:
+	# 	on_dungeon_crawling_start.emit(_player.position)

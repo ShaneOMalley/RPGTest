@@ -7,9 +7,6 @@ signal on_setup_complete()
 
 var _enemies: Dictionary[StringName, UIEnemy]
 var _battle_menu_entries : Array[UIBattleMenuEntry]
-var _player_to_ui_index: Dictionary[StringName, int]
-
-const MAX_PLAYERS := 4
 
 class BattleMenuEntry:
 	var ability_id: StringName
@@ -19,15 +16,12 @@ class BattleMenuEntry:
 
 # Effects
 func play_oneshot_fx(effect_prototype: PackedScene, target_uid: StringName):
+	if !_enemies.has(target_uid):
+		return
+
 	# TODO: Instantiate this on a bespoke canvas just for UI_FXs
 	var effect := effect_prototype.instantiate() as UIFX
-	var element: Control
-
-	if _enemies.has(target_uid):
-		# effect.position = _enemies[target_id].position
-		element = _enemies[target_uid]
-	elif _player_to_ui_index.has(target_uid):
-		element = get_player_ui(_player_to_ui_index[target_uid])
+	var element := _enemies[target_uid]
 
 	effect.position = element.get_global_transform_with_canvas().get_origin() + element.size / 2
 	add_child(effect)
@@ -49,36 +43,6 @@ func update_enemy_hp(uid: StringName, hp: int, max_hp: int) -> void:
 func remove_enemy(uid: StringName) -> void:
 	if is_instance_valid(_enemies[uid]):
 		_enemies[uid].queue_free()
-
-# Player
-func get_player_ui(index: int) -> PlayerPartyMember:
-	match index:
-		0: return $PlayerPartyContainer/PlayerPartyMember1
-		1: return $PlayerPartyContainer/PlayerPartyMember2
-		2: return $PlayerPartyContainer/PlayerPartyMember3
-		3: return $PlayerPartyContainer/PlayerPartyMember4
-		_: return null
-
-func add_player(uid: StringName, hp: int, max_hp: int) -> void:
-	for index in range(MAX_PLAYERS):
-		if _player_to_ui_index.find_key(index) == null:
-			var player_ui = get_player_ui(index)
-			player_ui.populate(uid, hp, max_hp)
-			_player_to_ui_index[uid] = index
-			return
-
-func update_player_hp(uid: StringName, hp: int, max_hp: int) -> void:
-	var index = _player_to_ui_index[uid]
-	get_player_ui(index).update_hp(hp, max_hp)
-
-func remove_player(uid: StringName) -> void:
-	var index = _player_to_ui_index[uid]
-	get_player_ui(index).hide_info()
-	_player_to_ui_index.erase(uid)
-
-func hide_all_players_info() -> void:
-	for index in range(MAX_PLAYERS):
-		get_player_ui(index).hide_info()
 
 # Battle Menu
 func show_battle_menu(entries: Array[BattleMenuEntry]) -> void:

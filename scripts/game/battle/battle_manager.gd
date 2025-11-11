@@ -11,6 +11,7 @@ var participants: Array[BattleParticipant]
 signal on_battle_started
 signal on_battle_pre_setup_complete
 signal on_battle_ui_setup_requested
+signal on_player_party_ui_setup_requested
 signal on_battle_finished
 signal on_battle_effect_applied(effect: BattleEffect)
 signal on_battle_fx_requested(fx: PackedScene, target: BattleParticipant)
@@ -69,8 +70,11 @@ func get_ui_setup_is_complete() -> bool:
 func set_ui_setup_is_complete(value: bool) -> void:
 	_ui_setup_is_complete = value
 
-func request_ui_setup():
+func request_battle_ui_setup():
 	on_battle_ui_setup_requested.emit()
+
+func request_player_party_ui_setup():
+	on_player_party_ui_setup_requested.emit()
 
 ## Ability queueing
 class AbilityExecution:

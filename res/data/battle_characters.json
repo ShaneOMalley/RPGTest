@@ -3,7 +3,7 @@
 	{
 		"max_hp": 100,
 		"max_mp": 30,
-		"strength": 10,
+		"strength": 30,
 		"agility": 11,
 		"magic": 5,
 		"vitality": 6,

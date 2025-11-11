@@ -78,6 +78,7 @@ visible = false
 layout_mode = 2
 
 [node name="PlayerPartyContainer" type="HBoxContainer" parent="."]
+visible = false
 layout_mode = 1
 anchors_preset = 7
 anchor_left = 0.5

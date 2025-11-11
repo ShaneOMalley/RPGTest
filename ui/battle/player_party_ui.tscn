@@ -1,0 +1,40 @@
+[gd_scene load_steps=3 format=3 uid="uid://cfd7pgu3r6snw"]
+
+[ext_resource type="Script" uid="uid://dq7cq0jfvr1m7" path="res://scripts/ui/ui_player_party.gd" id="1_yuo5u"]
+[ext_resource type="PackedScene" uid="uid://bqkxs2hin7pck" path="res://ui/battle/player_party_member.tscn" id="3_h1vkm"]
+
+[node name="BattleUI" type="Control"]
+z_index = 1
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_yuo5u")
+
+[node name="PlayerPartyContainer" type="HBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -412.0
+offset_top = -94.0
+offset_right = 400.0
+grow_horizontal = 2
+grow_vertical = 0
+alignment = 1
+
+[node name="PlayerPartyMember1" parent="PlayerPartyContainer" instance=ExtResource("3_h1vkm")]
+layout_mode = 2
+
+[node name="PlayerPartyMember2" parent="PlayerPartyContainer" instance=ExtResource("3_h1vkm")]
+layout_mode = 2
+
+[node name="PlayerPartyMember3" parent="PlayerPartyContainer" instance=ExtResource("3_h1vkm")]
+layout_mode = 2
+
+[node name="PlayerPartyMember4" parent="PlayerPartyContainer" instance=ExtResource("3_h1vkm")]
+layout_mode = 2

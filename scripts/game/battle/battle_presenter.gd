@@ -1,18 +1,23 @@
 extends Node
 
 func on_battle_ui_setup_requested() -> void:
-	BattleView.setup_ui()
+	BattleView.setup_battle_ui()
 
 	var enemies := BattleManager.get_enemies()
 	for enemy in enemies:
 		BattleView.setup_enemy(enemy.uid, enemy.hp, enemy.max_hp)
 
-	var players := BattleManager.get_players()
+func on_player_party_ui_setup_requested() -> void:
+	BattleView.setup_player_party_ui()
+
+	BattleView.hide_all_players_info()
+
+	var players := PlayerPartyManager.get_participants()
 	for player in players:
 		BattleView.setup_player(player.uid, player.hp, player.max_hp)
 
 func on_battle_finished() -> void:
-	BattleView.destroy_ui()
+	BattleView.destroy_battle_ui()
 
 func on_battle_effect_applied(battle_effect: BattleEffect) -> void:
 	var target = battle_effect.target
@@ -69,6 +74,7 @@ func on_ui_setup_complete() -> void:
 
 func _ready():
 	BattleManager.on_battle_ui_setup_requested.connect(on_battle_ui_setup_requested)
+	BattleManager.on_player_party_ui_setup_requested.connect(on_player_party_ui_setup_requested)
 	BattleManager.on_battle_finished.connect(on_battle_finished)
 	BattleManager.on_battle_effect_applied.connect(on_battle_effect_applied)
 	BattleManager.on_battle_fx_requested.connect(on_battle_fx_requested)
