@@ -1,5 +1,8 @@
 class_name UIBattle extends Control
 
+# todo: delete PlayerPartyContainer from battle_ui.tscn
+
+# todo: try and remember why I amn't just using the duplicate template pattern for this
 @export var enemy_template: Resource
 
 signal on_ability_and_target_selected(ability_id, target_id)

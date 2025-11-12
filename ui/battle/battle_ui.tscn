@@ -1,9 +1,10 @@
-[gd_scene load_steps=8 format=3 uid="uid://by8ko4w2dgslh"]
+[gd_scene load_steps=9 format=3 uid="uid://by8ko4w2dgslh"]
 
 [ext_resource type="PackedScene" uid="uid://bk3tvyhf7s8eg" path="res://ui/battle/ui_enemy.tscn" id="1_02iql"]
 [ext_resource type="Script" uid="uid://pkhib2brsl7a" path="res://scripts/ui/ui_battle.gd" id="1_6je2w"]
 [ext_resource type="PackedScene" uid="uid://bqkxs2hin7pck" path="res://ui/battle/player_party_member.tscn" id="3_uml01"]
 [ext_resource type="Script" uid="uid://8qrnrxijldix" path="res://scripts/ui/battle/ui_battle_menu_entry.gd" id="3_wfc18"]
+[ext_resource type="PackedScene" uid="uid://dqaaps217u72n" path="res://ui/battle/turns_ui.tscn" id="5_uml01"]
 
 [sub_resource type="Animation" id="Animation_uml01"]
 length = 0.001
@@ -73,37 +74,6 @@ offset_right = 50.0
 offset_bottom = 318.0
 grow_horizontal = 2
 
-[node name="Enemy" parent="EnemiesContainer" instance=ExtResource("1_02iql")]
-visible = false
-layout_mode = 2
-
-[node name="PlayerPartyContainer" type="HBoxContainer" parent="."]
-visible = false
-layout_mode = 1
-anchors_preset = 7
-anchor_left = 0.5
-anchor_top = 1.0
-anchor_right = 0.5
-anchor_bottom = 1.0
-offset_left = -412.0
-offset_top = -94.0
-offset_right = 400.0
-grow_horizontal = 2
-grow_vertical = 0
-alignment = 1
-
-[node name="PlayerPartyMember1" parent="PlayerPartyContainer" instance=ExtResource("3_uml01")]
-layout_mode = 2
-
-[node name="PlayerPartyMember2" parent="PlayerPartyContainer" instance=ExtResource("3_uml01")]
-layout_mode = 2
-
-[node name="PlayerPartyMember3" parent="PlayerPartyContainer" instance=ExtResource("3_uml01")]
-layout_mode = 2
-
-[node name="PlayerPartyMember4" parent="PlayerPartyContainer" instance=ExtResource("3_uml01")]
-layout_mode = 2
-
 [node name="MenuContainer" type="HBoxContainer" parent="."]
 layout_mode = 1
 anchors_preset = 7
@@ -150,7 +120,48 @@ script = ExtResource("3_wfc18")
 layout_mode = 2
 size_flags_horizontal = 3
 
+[node name="PleaseDelete" type="Control" parent="."]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="PlayerPartyContainer" type="HBoxContainer" parent="PleaseDelete"]
+visible = false
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = 144.0
+offset_top = 514.0
+offset_right = 956.0
+offset_bottom = 608.0
+grow_horizontal = 2
+grow_vertical = 0
+alignment = 1
+
+[node name="PlayerPartyMember1" parent="PleaseDelete/PlayerPartyContainer" instance=ExtResource("3_uml01")]
+layout_mode = 2
+
+[node name="PlayerPartyMember2" parent="PleaseDelete/PlayerPartyContainer" instance=ExtResource("3_uml01")]
+layout_mode = 2
+
+[node name="PlayerPartyMember3" parent="PleaseDelete/PlayerPartyContainer" instance=ExtResource("3_uml01")]
+layout_mode = 2
+
+[node name="PlayerPartyMember4" parent="PleaseDelete/PlayerPartyContainer" instance=ExtResource("3_uml01")]
+layout_mode = 2
+
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
 &"": SubResource("AnimationLibrary_3y3fr")
 }
+
+[node name="TurnsUI" parent="." instance=ExtResource("5_uml01")]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_bottom = 0.0
+grow_horizontal = 0
+grow_vertical = 1

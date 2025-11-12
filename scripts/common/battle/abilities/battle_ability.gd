@@ -21,13 +21,35 @@ static var ability_class_registry: Dictionary[StringName, String] = {
 func execute(in_target: BattleParticipant) -> void:
 	_target = in_target
 	_is_executing = true
+	
+	# all abilities: shrink current turn
+	# todo: queue turn shrink
+	
+	var remove_turn := BattleTurn.TurnManipulation.new()
+	remove_turn.turn = BattleManager.get_current_turn()
+	remove_turn.anim_name = &"shrink"
+	remove_turn.type = BattleTurn.TurnManipulation.Type.REMOVE
+	# var shane = BattleManager
+	BattleManager.on_battle_ability_execute.emit(self, [remove_turn])
+
+func prepare(in_target: BattleParticipant) -> void:
+	_target = in_target
+	print("Preparing %s..." % resource_name)
+	
+	# todo: queue turn stuff
+	BattleManager.on_battle_ability_prepare_start.emit(self)
+	
+func cancel_prepare() -> void:
+	_target = null
+	
+	BattleManager.on_battle_ability_prepare_end.emit(self)
 
 func end() -> void:
 	_is_executing = false
 
 func get_is_executing() -> bool:
 	return _is_executing
-
+	
 # This function must be subclassed and return true for valid targets
 func is_valid_for_target(_possible_target: BattleParticipant) -> bool:
 	return true

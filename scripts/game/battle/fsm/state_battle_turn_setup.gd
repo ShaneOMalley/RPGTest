@@ -1,5 +1,5 @@
 class_name StateBattleTurnSetup extends FSMState
 
-# pop turn from list in BattleManager, make that next turn
+# go to next turn from list in BattleManager
 func on_enter() -> void:
 	BattleManager.goto_next_turn()

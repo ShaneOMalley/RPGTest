@@ -4,7 +4,7 @@ extends Node
 
 enum Affiliation { PLAYER, ENEMY }
 
-const MAX_TURNS: int = 5
+const MAX_TURNS: int = 10 # 5
 
 var participants: Array[BattleParticipant]
 
@@ -14,10 +14,14 @@ signal on_battle_ui_setup_requested
 signal on_player_party_ui_setup_requested
 signal on_battle_finished
 signal on_battle_effect_applied(effect: BattleEffect)
+signal on_battle_ability_execute(ability: BattleAbility, turn_manipulations: Array[BattleTurn.TurnManipulation])
+signal on_battle_ability_prepare_start(ability: BattleAbility, turn_manipulations: Array[BattleTurn.TurnManipulation])
+signal on_battle_ability_prepare_end(ability: BattleAbility, turn_manipulations: Array[BattleTurn.TurnManipulation])
 signal on_battle_fx_requested(fx: PackedScene, target: BattleParticipant)
 signal on_battle_player_turn_started(participant: BattleParticipant)
 signal on_battle_player_turn_ended(participant: BattleParticipant)
 signal on_battle_particiant_removed(participant: BattleParticipant)
+signal on_battle_turns_updated(turns: Array[BattleTurn])
 
 # todo: just make these public?
 var _turns: Array[BattleTurn]
@@ -116,12 +120,17 @@ func remove_participant(participant: BattleParticipant) -> void:
 	participants.erase(participant)
 	_turns = _turns.filter(func(turn: BattleTurn): return turn.participant != participant)
 	on_battle_particiant_removed.emit(participant)
+	on_battle_turns_updated.emit(_turns)
 
 ## Turn Management
 var _current_turn: BattleTurn
 func goto_next_turn() -> void:
-	_current_turn = _turns.pop_front()
+	if is_instance_valid(_current_turn):
+		_turns.pop_front()
+		
+	_current_turn = _turns.front()
 	_build_turns_list(MAX_TURNS - _turns.size())
+	on_battle_turns_updated.emit(_turns)
 
 func get_current_turn() -> BattleTurn:
 	return _current_turn
@@ -153,6 +162,7 @@ func _generate_normal_turn(time: float, participant: BattleParticipant):
 	# var period := participant.get_turn_period()
 	# var time := last_participant_turn.time + period if last_participant_turn else period
 	_turns.push_back(BattleTurn.new(time, participant, BattleTurn.TurnType.NORMAL))
+	on_battle_turns_updated.emit(_turns)
 
 var _participant_frequency_tracker: Dictionary[BattleParticipant, float]
 func _build_turns_list(num_turns: int):
