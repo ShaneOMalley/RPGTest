@@ -1,18 +1,23 @@
 {
-    "encounter_groups" :
-    {
-        "test1": ["ghoul", "goblin", "ghoul"],
-        "test2": ["goblin", "goblin"],
-        "test3": ["ghoul"]
-    },
+	"encounter_groups" :
+	{
+		"test1": ["ghoul", "goblin", "ghoul"],
+		"test2": ["goblin", "goblin"],
+		"test3": ["ghoul"]
+	},
 
-    "dungeon_encounter_data" :
-    {
-        "test_dungeon":
-        [
-            { "encounter_group": "test1", "weight": 0.2 },
-            { "encounter_group": "test2", "weight": 0.4 },
-            { "encounter_group": "test3", "weight": 0.4 }
-        ]
-    }
+	"dungeon_encounter_data" :
+	{
+		"test_dungeon":
+		[
+			{ "encounter_group": "test1", "weight": 0.2 },
+			{ "encounter_group": "test2", "weight": 0.4 },
+			{ "encounter_group": "test3", "weight": 0.4 }
+		],
+		
+		"test_single_ghoul" :
+		[
+			{ "encounter_group": "test3", "weight": 1 }
+		]
+	}
 }

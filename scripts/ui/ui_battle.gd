@@ -6,6 +6,9 @@ class_name UIBattle extends Control
 @export var enemy_template: Resource
 
 signal on_ability_and_target_selected(ability_id, target_id)
+signal on_ability_prepare(ability_id, target_id)
+signal on_ability_cancel(ability_id)
+signal on_ability_cancel_prepare(ability_id)
 signal on_setup_complete()
 
 var _enemies: Dictionary[StringName, UIEnemy]
@@ -63,6 +66,12 @@ func show_battle_menu(entries: Array[BattleMenuEntry]) -> void:
 
 		for connection in ui_entry.pressed.get_connections():
 			ui_entry.pressed.disconnect(connection.callable)
+			
+		for connection in ui_entry.mouse_entered.get_connections():
+			ui_entry.mouse_entered.disconnect(connection.callable)
+			
+		for connection in ui_entry.mouse_exited.get_connections():
+			ui_entry.mouse_exited.disconnect(connection.callable)
 
 		var entry := entries[index]
 
@@ -73,17 +82,20 @@ func show_battle_menu(entries: Array[BattleMenuEntry]) -> void:
 		# ui_entry.mouse_entered.connect(func(): print("mouse entered"))
 		# ui_entry.mouse_exited.connect(func(): print("mouse exited"))
 		ui_entry.disabled = !entry.can_activate
-		ui_entry.pressed.connect(func(): show_target_menu(entry.ability_id, entry.valid_participant_targets))
+		ui_entry.pressed.connect(func(): show_target_menu(entry.ability_id, entry.valid_participant_targets, entries))
 
 	for index in range(entries.size(), _battle_menu_entries.size()):
 		_battle_menu_entries[index].hide()
 
 	container.show()
 
-func show_target_menu(ability_id: StringName, valid_participant_targets: Array[StringName]) -> void:
+func show_target_menu(ability_id: StringName, valid_participant_targets: Array[StringName], previous_entries: Array[BattleMenuEntry]) -> void:
 	var container := $MenuContainer/BattleMenuBackground
+	
+	var options := valid_participant_targets.duplicate() as Array[StringName]
+	options.append(&"cancel")
 
-	for index in range(valid_participant_targets.size()):
+	for index in range(options.size()): # range(valid_participant_targets.size()):
 		var ui_entry: UIBattleMenuEntry
 
 		if index >= _battle_menu_entries.size():
@@ -93,24 +105,46 @@ func show_target_menu(ability_id: StringName, valid_participant_targets: Array[S
 		else:
 			ui_entry = _battle_menu_entries[index]
 
-		var target_uid := valid_participant_targets[index]
+		var target_uid := options[index] # valid_participant_targets[index]
 
 		for connection in ui_entry.pressed.get_connections():
 			ui_entry.pressed.disconnect(connection.callable)
 
 		ui_entry.show()
-		ui_entry.pressed.connect(func(): make_ability_and_target_selection(ability_id, target_uid) )
+		
+		if target_uid == &"cancel":
+			ui_entry.pressed.connect(func(): ability_cancel(ability_id, previous_entries))
+			ui_entry.mouse_entered.connect(func(): ability_cancel_prepare(ability_id))
+		else:
+			ui_entry.pressed.connect(func(): ability_select_target(ability_id, target_uid))
+			ui_entry.mouse_entered.connect(func(): ability_prepare(ability_id, target_uid))
+		
 		ui_entry.disabled = false
 		ui_entry.set_text(target_uid)
 
-	for index in range(valid_participant_targets.size(), _battle_menu_entries.size()):
+	# for index in range(valid_participant_targets.size(), _battle_menu_entries.size()):
+	for index in range(options.size(), _battle_menu_entries.size()):
 		_battle_menu_entries[index].hide()
 
 	_battle_menu_entries.front().grab_focus()
 
 	container.show()
-
-func make_ability_and_target_selection(ability_id: StringName, target_uid: StringName) -> void:
+	
+func ability_prepare(ability_id: StringName, target_uid: StringName) -> void:
+	print(" -- PREPARE")
+	on_ability_prepare.emit(ability_id, target_uid)
+	
+func ability_cancel(ability_id: StringName, previous_entries: Array[BattleMenuEntry]) -> void:
+	print(" -- CANCEL")
+	on_ability_cancel.emit(ability_id)
+	show_battle_menu(previous_entries)
+	
+func ability_cancel_prepare(ability_id: StringName) -> void:
+	print(" -- CANCEL PREPARE")
+	on_ability_cancel_prepare.emit(ability_id)
+	
+func ability_select_target(ability_id: StringName, target_uid: StringName) -> void:
+	print(" -- SELECT TARGET")
 	on_ability_and_target_selected.emit(ability_id, target_uid)
 	hide_battle_menu()
 

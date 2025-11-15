@@ -10,9 +10,19 @@ var _is_executing := false
 @export var fx_affect_target: PackedScene
 
 static var ability_class_registry: Dictionary[StringName, String] = {
+	# Common
 	"attack": "res://game/abilities/ability_attack.tres",
 	"pass": "res://game/abilities/ability_pass.tres",
+
+	# Chronomancer
+	"haste" : "res://game/abilities/ability_haste.tres",
+	"slow" : "res://game/abilities/ability_slow.tres",
+	"skip_turn" : "res://game/abilities/ability_skip_turn.tres",
+	"skip_many_turns" : "res://game/abilities/ability_skip_many_turns.tres",
+
+	# Debug
 	"nuke": "res://game/abilities/ability_nuke.tres",
+	"extra_turn": "res://game/abilities/ability_extra_turn.tres",
 }
 
 # TODO: Right now there is an assumption that the only execution context 
@@ -23,26 +33,27 @@ func execute(in_target: BattleParticipant) -> void:
 	_is_executing = true
 	
 	# all abilities: shrink current turn
-	# todo: queue turn shrink
-	
-	var remove_turn := BattleTurn.TurnManipulation.new()
-	remove_turn.turn = BattleManager.get_current_turn()
-	remove_turn.anim_name = &"shrink"
-	remove_turn.type = BattleTurn.TurnManipulation.Type.REMOVE
-	# var shane = BattleManager
-	BattleManager.on_battle_ability_execute.emit(self, [remove_turn])
+	var turn_manipulation := BattleTurn.TurnManipulation.new()
+	turn_manipulation.turns = [BattleManager.get_current_turn()]
+	turn_manipulation.anim_name = &"shrink"
+	turn_manipulation.type = BattleTurn.TurnManipulation.Type.REMOVE
+	BattleManager.on_battle_turn_manipulation.emit([turn_manipulation])
 
 func prepare(in_target: BattleParticipant) -> void:
 	_target = in_target
-	print("Preparing %s..." % resource_name)
+	print(" - Preparing %s..." % resource_name)
 	
 	# todo: queue turn stuff
-	BattleManager.on_battle_ability_prepare_start.emit(self)
+	# BattleManager.on_battle_ability_prepare_start.emit(self)
+	
+func cancel() -> void:
+	_target = null
+	print(" - Canceling Prepare %s!" % resource_name)
+	
+	# BattleManager.on_battle_ability_prepare_end.emit(self)
 	
 func cancel_prepare() -> void:
-	_target = null
-	
-	BattleManager.on_battle_ability_prepare_end.emit(self)
+	pass
 
 func end() -> void:
 	_is_executing = false

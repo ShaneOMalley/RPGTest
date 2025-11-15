@@ -46,9 +46,18 @@ func goto_state(new_state_name: StringName) -> void:
 	
 	_current_valid_transitions.clear()
 	_current_valid_transitions = _transitions.filter(filter_func)
+	
+var _is_blocked: bool
+func start_blocking_timer(time: float) -> void:
+	var timer := get_tree().create_timer(time)
+	_is_blocked = true
+	timer.timeout.connect(func(): self._is_blocked = false)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
+	if _is_blocked:
+		return
+		
 	var predicate := func(transition: Transition) -> bool:
 		return transition.condition.call()
 	

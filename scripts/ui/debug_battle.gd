@@ -12,12 +12,12 @@ func _process(_delta: float) -> void:
 	var battle_state_string := ""
 	battle_state_string += "-- ENEMIES --\n"
 	for enemy: BattleParticipant in enemies:
-		battle_state_string += "    %s %d/%d" % [enemy.to_string(), enemy.hp, enemy.max_hp]
+		battle_state_string += "    %s %d/%d" % [enemy.to_string(), enemy.get_attribute(&"_hp"), enemy.get_attribute(&"_max_hp")]
 	battle_state_string += "\n"
 
 	battle_state_string += "-- PLAYER --\n"
 	for player: BattleParticipant in players:
-		battle_state_string += "    %s %d/%d" % [player.to_string(), player.hp, player.max_hp]
+		battle_state_string += "    %s %d/%d" % [player.to_string(), player.get_attribute(&"_hp"), player.get_attribute(&"_max_hp")]
 
 	$PanelContainer/BattleStateText.text = battle_state_string
 

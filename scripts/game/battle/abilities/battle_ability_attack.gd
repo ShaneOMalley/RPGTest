@@ -8,7 +8,7 @@ func execute(in_target: BattleParticipant) -> void:
 	set_timer(0.4, _apply_attack_effect)
 	set_lifetime(1.2)
 
-func _apply_attack_effect():
+func _apply_attack_effect() -> void:
 	var effect := BattleEffectAttack.new(_source, _target)
 	effect.apply()
 

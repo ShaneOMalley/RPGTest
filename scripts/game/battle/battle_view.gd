@@ -1,6 +1,9 @@
 extends Node
 
 signal on_ability_and_target_selected(ability_id, target_uid)
+signal on_ability_prepare(ability_id, target_uid)
+signal on_ability_cancel(ability_id)
+signal on_ability_cancel_prepare(ability_id)
 signal on_ui_setup_complete()
 
 var battle_ui: UIBattle
@@ -8,7 +11,7 @@ var player_party_ui: UIPlayerParty
 var turns_ui: UIBattleTurns
 var debug_battle_ui: Control
 
-const USE_DEBUG_UI: bool = false
+const USE_DEBUG_UI := false
 
 # class TurnChange:
 # 	enum Type { REMOVE, INSERT, MOVE }
@@ -45,8 +48,14 @@ const USE_DEBUG_UI: bool = false
 func play_turn_animation(turn_uid: int, anim_name: StringName) -> void:
 	turns_ui.play_animation_for_turn(turn_uid, anim_name)
 		
-func add_turn(turn_uid: int, participant_name: String, affiliation: BattleManager.Affiliation) -> void:
-	turns_ui.add_turn(turn_uid, participant_name, affiliation)
+func add_turn(turn_uid: int, affiliation: BattleManager.Affiliation) -> void:
+	turns_ui.add_turn(turn_uid, affiliation)
+	
+func sort_turns(sorted_turn_uids: Array) -> void:
+	turns_ui.sort_turns(sorted_turn_uids)
+	
+func set_turn_text_and_time(turn_uid: int, text: String, time: float) -> void:
+	turns_ui.set_turn_text_and_time(turn_uid, text, time)
 	
 func delete_turn(turn_uid: int) -> void:
 	turns_ui.delete_turn(turn_uid)
@@ -97,6 +106,10 @@ func setup_battle_ui() -> void:
 		get_tree().root.add_child(debug_battle_ui)
 	
 	battle_ui.on_ability_and_target_selected.connect(on_ability_and_target_selected.emit)
+	battle_ui.on_ability_prepare.connect(on_ability_prepare.emit)
+	battle_ui.on_ability_cancel.connect(on_ability_cancel.emit)
+	battle_ui.on_ability_cancel_prepare.connect(on_ability_cancel_prepare.emit)
+	
 	battle_ui.on_setup_complete.connect(on_ui_setup_complete.emit)
 	get_tree().root.add_child(battle_ui)
 

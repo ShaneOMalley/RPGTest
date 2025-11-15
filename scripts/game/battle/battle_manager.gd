@@ -4,7 +4,7 @@ extends Node
 
 enum Affiliation { PLAYER, ENEMY }
 
-const MAX_TURNS: int = 10 # 5
+const MAX_TURNS: int = 15 # 5
 
 var participants: Array[BattleParticipant]
 
@@ -14,9 +14,10 @@ signal on_battle_ui_setup_requested
 signal on_player_party_ui_setup_requested
 signal on_battle_finished
 signal on_battle_effect_applied(effect: BattleEffect)
-signal on_battle_ability_execute(ability: BattleAbility, turn_manipulations: Array[BattleTurn.TurnManipulation])
-signal on_battle_ability_prepare_start(ability: BattleAbility, turn_manipulations: Array[BattleTurn.TurnManipulation])
-signal on_battle_ability_prepare_end(ability: BattleAbility, turn_manipulations: Array[BattleTurn.TurnManipulation])
+signal on_battle_turn_manipulation(turn_manipulations: Array[BattleTurn.TurnManipulation])
+# signal on_battle_ability_execute(ability: BattleAbility, turn_manipulations: Array[BattleTurn.TurnManipulation])
+# signal on_battle_ability_prepare_start(ability: BattleAbility, turn_manipulations: Array[BattleTurn.TurnManipulation])
+# signal on_battle_ability_prepare_cancel(ability: BattleAbility, turn_manipulations: Array[BattleTurn.TurnManipulation])
 signal on_battle_fx_requested(fx: PackedScene, target: BattleParticipant)
 signal on_battle_player_turn_started(participant: BattleParticipant)
 signal on_battle_player_turn_ended(participant: BattleParticipant)
@@ -25,10 +26,14 @@ signal on_battle_turns_updated(turns: Array[BattleTurn])
 
 # todo: just make these public?
 var _turns: Array[BattleTurn]
-# var _battle_time: float = 0
+var _battle_time: float = 0
 var _state_machine: FSMBattle
 var _is_battle_active: bool = false
 var _encounter_group_id
+
+## FSM
+func block_fsm(time: float) -> void:
+	_state_machine.start_blocking_timer(time)
 
 ## State getters
 func get_encounter_group_id() -> StringName:
@@ -107,7 +112,16 @@ func execute_queued_ability() -> void:
 	
 func clear_queued_ability() -> void:
 	_queued_ability_execution = null
+	
+func prepare_ability(in_ability: BattleAbility, in_target: BattleParticipant) -> void:
+	in_ability.prepare(in_target)
 
+func cancel_ability(in_ability: BattleAbility) -> void:
+	in_ability.cancel()
+	
+func cancel_prepare_ability(in_ability: BattleAbility) -> void:
+	in_ability.cancel_prepare()
+	
 ## FX Management
 func play_oneshot_fx(effect_prototype: PackedScene, target: BattleParticipant):
 	on_battle_fx_requested.emit(effect_prototype, target)
@@ -124,11 +138,15 @@ func remove_participant(participant: BattleParticipant) -> void:
 
 ## Turn Management
 var _current_turn: BattleTurn
+var _last_actual_turn_time_for_participant: Dictionary[BattleParticipant, float]
 func goto_next_turn() -> void:
 	if is_instance_valid(_current_turn):
 		_turns.pop_front()
 		
 	_current_turn = _turns.front()
+	_last_actual_turn_time_for_participant[_current_turn.participant] = _current_turn.time
+	_battle_time = _current_turn.time
+	
 	_build_turns_list(MAX_TURNS - _turns.size())
 	on_battle_turns_updated.emit(_turns)
 
@@ -137,6 +155,13 @@ func get_current_turn() -> BattleTurn:
 
 func get_current_turn_participant() -> BattleParticipant:
 	return _current_turn.participant
+	
+func get_next_turn_for_participant(participant: BattleParticipant) -> BattleTurn:
+	var index := _turns.find_custom(func(turn: BattleTurn): return turn.participant == participant)
+	return _turns[index]
+	
+func get_turns_for_participant(participant: BattleParticipant) -> Array[BattleTurn]:
+	return _turns.filter(func(turn: BattleTurn): return turn.participant == participant)
 	
 ## Test functions
 func test_get_random_enemy() -> BattleParticipant:
@@ -147,13 +172,74 @@ func test_get_player() -> BattleParticipant:
 
 # turn generation
 # todo: support fallback time for units that come into battle mid-way
-func _get_next_normal_turn_time(participant: BattleParticipant):
-	var _participant_turns = _turns.filter(func(turn: BattleTurn): return turn.participant == participant)
+func insert_turn(new_turn: BattleTurn) -> void:
+	var index := _turns.find_custom(func(turn): return turn.time > new_turn.time)
+	if index == -1:
+		_turns.push_back(new_turn)
+	else:
+		_turns.insert(index, new_turn)
+	
+	# This function is doing insertion sort, so no need to call `_sort_turns()`
+	_sort_turns()
+	on_battle_turns_updated.emit(_turns)
+	
+func remove_turn(turn: BattleTurn) -> void:
+	_turns.erase(turn)
+	on_battle_turns_updated.emit(_turns)
+	
+func recalculate_normal_turn_times(participant: BattleParticipant, turn_manipulation_anim: StringName = &"") -> void:
+	var last_turn_time := _last_actual_turn_time_for_participant.get(participant, 0.0) as float
+	
+	var period := participant.get_turn_period()
+	
+	# todo: support "linked turns" (turns that have time relative to another turn. e.g. repeated turns)
+	var participant_normal_turns = _turns.filter(func(turn):
+		return turn.participant == participant and turn.turn_type == BattleTurn.TurnType.NORMAL and turn != _current_turn
+	)
+		
+	for turn in participant_normal_turns:
+		turn.time = max(_battle_time,  last_turn_time + period)
+		last_turn_time = turn.time
+	
+	_sort_turns()
+	on_battle_turns_updated.emit(_turns)
+	
+	if turn_manipulation_anim:
+		var turn_manipulation := BattleTurn.TurnManipulation.new()
+		turn_manipulation.turns = participant_normal_turns # .duplicate()
+		turn_manipulation.anim_name = turn_manipulation_anim
+		turn_manipulation.type = BattleTurn.TurnManipulation.Type.RECALCULATE
+		BattleManager.on_battle_turn_manipulation.emit([turn_manipulation])
+	
+func _sort_turns() -> void:
+	# todo: support "linked turns" (turns that have time relative to another turn. e.g. repeated turns)
+	_turns.sort_custom(func(a, b): return a.time < b.time)
+
+func _get_next_normal_turn_time(participant: BattleParticipant) -> float:
+	var _participant_turns = _turns.filter(func(turn: BattleTurn):
+		return turn.participant == participant and turn.turn_type == BattleTurn.TurnType.NORMAL
+	)
 	# if !_participant_turns.is_empty():
 
 	var last_participant_turn: BattleTurn = _participant_turns.back()
 	var period := participant.get_turn_period()
-	return last_participant_turn.time + period if last_participant_turn else period
+	
+	# Support for nuking participant from turns list and recalculating mid-battle. Maybe don't do it this way:
+	# if is_instance_valid(last_participant_turn):
+	# 	return last_participant_turn.time + period
+	# elif _last_actual_turn_time_for_participant.has(participant):
+	# 	_last_actual_turn_time_for_participant[participant] + period
+	# 	return last_participant_turn.time + period if last_participant_turn else period
+	# 	period
+	# else
+	# 	period
+	
+	if is_instance_valid(last_participant_turn):
+		return last_participant_turn.time + period
+	else:
+		return _last_actual_turn_time_for_participant.get(participant, 0.0) + period
+		
+	# return last_participant_turn.time + period if last_participant_turn else period
 
 	# return 0
 
@@ -162,39 +248,39 @@ func _generate_normal_turn(time: float, participant: BattleParticipant):
 	# var period := participant.get_turn_period()
 	# var time := last_participant_turn.time + period if last_participant_turn else period
 	_turns.push_back(BattleTurn.new(time, participant, BattleTurn.TurnType.NORMAL))
+	_sort_turns()
 	on_battle_turns_updated.emit(_turns)
 
-var _participant_frequency_tracker: Dictionary[BattleParticipant, float]
+var _participant_next_turn_time: Dictionary[BattleParticipant, float]
 func _build_turns_list(num_turns: int):
 	# var filter_func = func(battle_turn: BattleTurn) -> bool:
 	# 	return battle_turn.turn_type != BattleTurn.TurnType.NORMAL
 	# _turns.filter(filter_func)
 
-	_participant_frequency_tracker.clear()
+	_participant_next_turn_time.clear()
 	for participant in participants:
-		_participant_frequency_tracker[participant] = _get_next_normal_turn_time(participant) # participant.get_turn_period()
+		_participant_next_turn_time[participant] = _get_next_normal_turn_time(participant) # participant.get_turn_period()
 
-	var find_fastest_participant = func():
+	var find_soonest_participant = func():
 		var lowest_score := 10000.0
-		var best_participant: BattleParticipant
-		for participant in _participant_frequency_tracker:
-			var score = _participant_frequency_tracker[participant]
+		var soonest_participant: BattleParticipant
+		for participant in _participant_next_turn_time:
+			var score = _participant_next_turn_time[participant]
 			if score < lowest_score:
-				best_participant = participant
+				soonest_participant = participant
 				lowest_score = score
-		return best_participant
+		return soonest_participant
 
 	for i in range(num_turns):
-		var fastest_participant = find_fastest_participant.call()
-		var thing = fastest_participant.uid
-		print(thing)
-		_generate_normal_turn(_participant_frequency_tracker[fastest_participant], fastest_participant)
-		_participant_frequency_tracker[fastest_participant] += fastest_participant.get_turn_period()
+		var soonest_participant = find_soonest_participant.call()
+		_generate_normal_turn(_participant_next_turn_time[soonest_participant], soonest_participant)
+		_participant_next_turn_time[soonest_participant] += soonest_participant.get_turn_period()
 		
 func setup_battle(in_encounter_group_id: StringName):
 	# _test_add_participants()
 	# _build_turns_list(MAX_TURNS)
 
+	_battle_time = 0.0
 	_encounter_group_id = in_encounter_group_id
 	
 	_is_battle_active = true

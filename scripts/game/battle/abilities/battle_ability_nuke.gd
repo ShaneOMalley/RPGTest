@@ -4,7 +4,8 @@ class BattleEffectNuke extends BattleEffect:
 	func _init(in_source: BattleParticipant, in_target: BattleParticipant) -> void:
 		super._init(in_source, in_target)
 		var damage := 1000
-		_modifiers.append(BattleEffectModifier.new("hp", -damage, Operator.ADDITIVE))
+		
+		_modifiers.append(BattleEffectModifier.new(&"_hp", -damage, Operator.ADDITIVE))
 
 func execute(in_target: BattleParticipant) -> void:
 	super.execute(in_target)

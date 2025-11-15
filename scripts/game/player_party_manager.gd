@@ -19,6 +19,12 @@ func add_participants_async(ids: Array[StringName], callback := Callable()) -> v
 
 func get_participants() -> Array[BattleParticipant]:
 	return _participants
+	
+func on_battle_finished() -> void:
+	for participant in _participants:
+		participant.remove_all_effects()
 
 func _ready():
-	add_participants_async([&"player"])
+	add_participants_async([&"player", &"player"])
+	
+	BattleManager.on_battle_finished.connect(on_battle_finished)

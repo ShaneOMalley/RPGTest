@@ -66,7 +66,7 @@ func setup_encounter_data() -> void:
 	var data = JSON.parse_string(json_file.get_as_text())
 
 	# TODO: Decide on non-hardcoded way of doing this
-	const dungeon_id := &"test_dungeon"
+	const dungeon_id := &"test_dungeon" # &"test_single_ghoul"
 
 	var encounter_data := (data.dungeon_encounter_data[dungeon_id] as Array)
 	for entry in encounter_data:
@@ -92,7 +92,7 @@ func set_player(in_player: Player) -> void:
 	_player.on_rotation_finished.connect(on_player_rotation_finished.emit)
 
 	# TODO: Find some better way of handling dependencies
-	var timer := BattleManager.get_tree().create_timer(0.1)
+	var timer := BattleManager.get_tree().create_timer(0.2)
 	timer.timeout.connect(func(): 
 		BattleManager.request_player_party_ui_setup()
 		on_dungeon_crawling_start.emit(_player.position)

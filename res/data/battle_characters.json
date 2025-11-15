@@ -8,7 +8,18 @@
 		"magic": 5,
 		"vitality": 6,
 
-		"abilities": ["attack", "nuke", "pass"]
+		"abilities": ["attack", "nuke", "extra_turn", "pass", "haste", "slow"]
+	},
+	"player_chronomancer" :
+	{
+		"max_hp": 100,
+		"max_mp": 30,
+		"strength": 30,
+		"agility": 11,
+		"magic": 10,
+		"vitality": 6,
+
+		"abilities": ["attack", "nuke", "haste", "slow", "skip_turn", "skip_many_turns", "pass"]
 	},
 
 	"ghoul" :

@@ -1,24 +1,64 @@
 class_name BattleParticipant extends Node
 
-var max_hp: int
-var hp: int
-var max_mp: int
-var mp: int
 var affiliation: BattleManager.Affiliation
-# todo: pull stats from data asset
 var config_id: StringName
 var uid: StringName
-var strength: int
-var magic: int
-var agility: int
-var vitality: int
 
 var abilities: Dictionary[StringName, BattleAbility]
+var active_effects: Array[BattleEffect]
+
+# Instant Attributes: Should only be affected by INSTANT effects
+var _hp: int
+var _mp: int
+
+# Duration Attributes: Should only be affected by DURATION effects
+var _max_hp: int
+var _max_mp: int
+var _strength: int
+var _magic: int
+var _agility: int
+var _vitality: int
+
+# Attributes
+func get_attribute(attribute_id: StringName) -> Variant:
+	var base = get(attribute_id)
+	
+	assert(base != null, "%s has no attribute named \"%s\"" % [name, base])
+	
+	var multiplier = active_effects.reduce(func(accum, effect):
+		var total_for_effect := 0.0
+		
+		for modifier in effect._modifiers:
+			if modifier.attribute == attribute_id and modifier.operator == BattleEffect.Operator.MULTIPLY:
+				total_for_effect += modifier.magnitude - 1.0
+				
+		return accum + total_for_effect
+	, 1.0)
+	
+	var additive = active_effects.reduce(func(accum, effect):
+		var total_for_effect := 0.0
+		
+		for modifier in effect._modifiers:
+			if modifier.attribute == attribute_id and modifier.operator == BattleEffect.Operator.ADDITIVE:
+				total_for_effect += modifier.magnitude
+		return accum + total_for_effect
+	, 0.0)
+	
+	return (base + additive) * multiplier
+	
+func add_effect(battle_effect: BattleEffect) -> void:
+	active_effects.append(battle_effect)
+	
+func remove_effect(battle_effect: BattleEffect) -> void:
+	active_effects.erase(battle_effect)
+	
+func remove_all_effects() -> void:
+	active_effects.clear()
 
 # todo: make this scale with enemies somehow?
 func get_turn_period() -> float:
 	# return 25 - agility ** 0.7
-	return 30 - agility
+	return max(1,  30 - get_attribute(&"_agility"))
 
 func _process(_delta: float):
 	pass
@@ -45,14 +85,14 @@ static func create_from_config(in_config_id: StringName) -> BattleParticipant:
 	var participant := BattleParticipant.new();
 	participant.config_id = in_config_id
 	participant.uid = create_unique_id(in_config_id)
-	participant.max_hp = data.max_hp
-	participant.hp = data.max_hp
-	participant.max_mp = data.max_mp
-	participant.mp = data.max_mp
-	participant.strength = data.strength
-	participant.magic = data.magic
-	participant.agility = data.agility
-	participant.vitality = data.vitality
+	participant._max_hp = data.max_hp
+	participant._hp = data.max_hp
+	participant._max_mp = data.max_mp
+	participant._mp = data.max_mp
+	participant._strength = data.strength
+	participant._magic = data.magic
+	participant._agility = data.agility
+	participant._vitality = data.vitality
 
 	if data.abilities:
 		for ability_id in data.abilities:

@@ -3,8 +3,8 @@
 # todo: support restrictions in special turns. i.e. power up -> generate turn where you can only attack
 
 enum TurnType { 
-	NORMAL,		# Will be re-calculated
-	SPECIAL,	# Will not be re-calculated
+	NORMAL,		# Turn time uill be recalculated based on agility
+	SPECIAL,	# Turn time uill not be recalculated
 }
 
 var uid: int
@@ -27,8 +27,9 @@ func _to_string() -> String:
 	return "T: %7.1f, %10s" % [time, participant]
 
 class TurnManipulation:
-	enum Type { CREATE, REMOVE }
+	# todo: remove this
+	enum Type { CREATE, REMOVE, RECALCULATE }
 
-	var turn: BattleTurn
+	var turns: Array[BattleTurn]
 	var anim_name: StringName
 	var type: Type

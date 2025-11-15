@@ -3,21 +3,21 @@ class_name BattleEffect extends Node
 # Note: only instantaneous additive effects for now
 
 # TODO: Support status effects and other _duration effects
-enum Duration { INSTANT }
+enum Duration { INSTANT, DURATION }
 
 # TODO: Support multiplicative
-enum Operator { ADDITIVE }
+enum Operator { ADDITIVE, MULTIPLY }
 
 class BattleEffectModifier:
-
 	var attribute: StringName
-	var magnitude: int
+	var magnitude: float
 	var operator: Operator = Operator.ADDITIVE
 
-	func _init(in_attribute: StringName, in_magnitude: int, in_operator: Operator) -> void:
+	func _init(in_attribute: StringName, in_magnitude: float, in_operator: Operator) -> void:
 		attribute = in_attribute
 		magnitude = in_magnitude
 		operator = in_operator
+		# todo: assert that this effect's duration makes sense to apply to this modifier
 
 var source: BattleParticipant
 var target: BattleParticipant
@@ -32,10 +32,17 @@ func apply() -> void:
 			if modifier.operator == Operator.ADDITIVE:
 				var current = target.get(modifier.attribute)
 				target.set(modifier.attribute, current + modifier.magnitude)
+	elif _duration == Duration.DURATION:
+		target.add_effect(self)
+
 	# TODO: Support status effects and other _duration effects
 	# TODO: Support multiplicative
 	BattleManager.on_battle_effect_applied.emit(self)
-
+	
+func remove() -> void:
+	if _duration == Duration.DURATION:
+		target.remove_effect(self)
+		
 func _to_string() -> String:
 	var result := "source=%s target=%s\n" % [source.to_string(), target.to_string()]
 	for modifier in _modifiers:
