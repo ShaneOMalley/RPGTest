@@ -1,0 +1,39 @@
+[gd_scene load_steps=4 format=3 uid="uid://dqaaps217u72n"]
+
+[ext_resource type="PackedScene" uid="uid://wc4i4knheswh" path="res://ui/battle/turn_ui.tscn" id="1_j1qbe"]
+[ext_resource type="Script" uid="uid://dbgo7fx000jn4" path="res://scripts/ui/battle/ui_battle_turns.gd" id="1_nsvah"]
+[ext_resource type="Texture2D" uid="uid://b6pktj3tccjx4" path="res://res/ui/battle/turns_mask.png" id="2_ggh1i"]
+
+[node name="TurnsUI" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_nsvah")
+
+[node name="Mask" type="TextureRect" parent="."]
+clip_children = 1
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -213.0
+offset_top = 20.0
+offset_right = -13.0
+offset_bottom = 470.0
+grow_horizontal = 0
+pivot_offset = Vector2(150, 0)
+texture = ExtResource("2_ggh1i")
+
+[node name="TurnsContainer" type="VBoxContainer" parent="Mask"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 320.0
+grow_horizontal = 2
+theme_override_constants/separation = 0
+
+[node name="TurnPrototype" parent="Mask/TurnsContainer" instance=ExtResource("1_j1qbe")]
+layout_mode = 2

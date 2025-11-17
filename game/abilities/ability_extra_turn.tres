@@ -1,0 +1,7 @@
+[gd_resource type="Resource" script_class="BattleAbilityExtraTurn" load_steps=2 format=3 uid="uid://buo6qu4t8m1cf"]
+
+[ext_resource type="Script" uid="uid://c5rgvgc8tiyfo" path="res://scripts/game/battle/abilities/battle_ability_extra_turn.gd" id="1_s56qf"]
+
+[resource]
+script = ExtResource("1_s56qf")
+metadata/_custom_type_script = "uid://d4f1cetlvgfb"

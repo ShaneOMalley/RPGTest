@@ -1,0 +1,7 @@
+[gd_resource type="Resource" script_class="BattleAbilitySkipTurn" load_steps=2 format=3 uid="uid://cuc8d5wmi8uq5"]
+
+[ext_resource type="Script" uid="uid://dyxbg1a63kiku" path="res://res/data/battle_ability_skip_turn.gd" id="1_sthjc"]
+
+[resource]
+script = ExtResource("1_sthjc")
+metadata/_custom_type_script = "uid://d4f1cetlvgfb"

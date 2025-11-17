@@ -1,0 +1,7 @@
+[gd_resource type="Resource" script_class="BattleAbilityHaste" load_steps=2 format=3 uid="uid://0r871e4wwkb2"]
+
+[ext_resource type="Script" uid="uid://t1enidw8kob4" path="res://scripts/game/battle/abilities/battle_ability_haste.gd" id="1_cp0lk"]
+
+[resource]
+script = ExtResource("1_cp0lk")
+metadata/_custom_type_script = "uid://d4f1cetlvgfb"
