@@ -1,0 +1,8 @@
+[gd_scene load_steps=3 format=3 uid="uid://b0xnx0i4ibphq"]
+
+[ext_resource type="PackedScene" uid="uid://bnt75gnnj88vc" path="res://scenes/base_dungeon.tscn" id="1_wkh1s"]
+[ext_resource type="PackedScene" uid="uid://1482nt2cfst0" path="res://scenes/dungeon_geometry/dungeon_2.tscn" id="2_0yt7l"]
+
+[node name="TestDungeon" instance=ExtResource("1_wkh1s")]
+
+[node name="Node3D" parent="GeometryParent" index="0" instance=ExtResource("2_0yt7l")]

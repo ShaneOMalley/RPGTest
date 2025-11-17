@@ -74,8 +74,9 @@ func setup_encounter_data() -> void:
 
 func set_dungeon_scene(in_dungeon_scene: Node3D) -> void:
 	_dungeon_scene = in_dungeon_scene
-	_movement_data = _dungeon_scene.find_child("DungeonGeometry").get_meta("movement_data")
-	_grid_width = _dungeon_scene.find_child("DungeonGeometry").get_meta("grid_width")
+	var geometry := _dungeon_scene.find_child("GeometryParent").get_child(0)
+	_movement_data = geometry.get_meta("movement_data")
+	_grid_width = geometry.get_meta("grid_width")
 	_reset_steps_counter()
 	setup_encounter_data()
 

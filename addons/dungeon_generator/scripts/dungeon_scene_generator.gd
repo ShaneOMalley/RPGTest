@@ -40,13 +40,15 @@ class WallData:
 		var center_x := grid_x + 0.5
 		var center_y := grid_y + 0.5
 
-		return horizontal_walls.has(grid_y + (1 if direction > 0 else 0)) and horizontal_walls[grid_y].any(func(wall): return sign(center_x - wall.start.x) != sign(center_x - wall.end.x))
+		var row = grid_y + (1 if direction > 0 else 0);
+		return horizontal_walls.has(row) and horizontal_walls[row].any(func(wall): return sign(center_x - wall.start.x) != sign(center_x - wall.end.x))
 
 	func crosses_any_vertical_wall(grid_x: int, grid_y: int, direction: int):
 		var center_x := grid_x + 0.5
 		var center_y := grid_y + 0.5
 
-		return vertical_walls.has(grid_x + (1 if direction > 0 else 0)) and vertical_walls[grid_x].any(func(wall): return sign(center_y - wall.start.y) != sign(center_y - wall.end.y))
+		var column = grid_x + (1 if direction > 0 else 0)
+		return vertical_walls.has(column) and vertical_walls[column].any(func(wall): return sign(center_y - wall.start.y) != sign(center_y - wall.end.y))
 
 static func create_box(position: Vector3, size: Vector3, name: String = "") -> MeshInstance3D:
 	var mesh_instance := MeshInstance3D.new()
