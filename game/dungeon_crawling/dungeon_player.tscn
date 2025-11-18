@@ -1,7 +1,34 @@
-[gd_scene load_steps=3 format=3 uid="uid://cwgl0m73j7c7h"]
+[gd_scene load_steps=7 format=3 uid="uid://cwgl0m73j7c7h"]
 
 [ext_resource type="Script" uid="uid://dcl6ugw6tipms" path="res://scripts/game/dungeon_crawling/player/player.gd" id="1_4ykh0"]
 [ext_resource type="Script" uid="uid://hxt7ptsjx5i6" path="res://scripts/game/dungeon_crawling/player/player_movement_controller.gd" id="1_jcc1l"]
+[ext_resource type="Script" uid="uid://bjpf0t1twlhmb" path="res://scripts/game/dungeon_crawling/player/player_interaction_controller.gd" id="3_fckbk"]
+
+[sub_resource type="Animation" id="Animation_r7oow"]
+length = 0.001
+tracks/0/type = "position_3d"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = PackedFloat32Array(0, 1, 0, 0, 0)
+
+[sub_resource type="Animation" id="Animation_fckbk"]
+resource_name = "drop_in"
+tracks/0/type = "position_3d"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = PackedFloat32Array(-1, 1, 0, 0, 0, 0, 1, 0, 6.175, 0, 0.166667, 1, 0, -1, 0, 0.433333, 1, 0, 0, 0)
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_axtc2"]
+_data = {
+&"RESET": SubResource("Animation_r7oow"),
+&"drop_in": SubResource("Animation_fckbk")
+}
 
 [node name="DungeonPlayer" type="Node3D"]
 script = ExtResource("1_4ykh0")
@@ -14,3 +41,13 @@ movement_speed = 50.0
 rotation_speed = 6.0
 thud_distance_factor = 0.2
 thud_speed_factor = 0.1
+
+[node name="InteractionController" type="Node" parent="."]
+script = ExtResource("3_fckbk")
+metadata/_custom_type_script = "uid://bjpf0t1twlhmb"
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+root_node = NodePath("../Camera3D")
+libraries = {
+&"": SubResource("AnimationLibrary_axtc2")
+}

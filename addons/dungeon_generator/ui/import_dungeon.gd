@@ -24,4 +24,4 @@ func _onpressed():
 
 func _enter_tree() -> void:
 	pressed.connect(_onpressed)
-	print("READY")
+	print("import_dungeon tool _enter_tree")

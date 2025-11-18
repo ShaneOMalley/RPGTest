@@ -17,5 +17,44 @@ layout_mode = 0
 anchors_preset = 0
 anchor_right = 0.0
 anchor_bottom = 0.0
+offset_top = 55.0
+offset_bottom = 55.0
 grow_horizontal = 1
 grow_vertical = 1
+
+[node name="InteractionText" type="RichTextLabel" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = 199.0
+offset_top = -109.0
+offset_right = -199.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/normal_font_size = 42
+text = "Test interaction text"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="DungeonNameText" type="RichTextLabel" parent="."]
+layout_mode = 0
+offset_left = 10.0
+offset_right = 514.0
+offset_bottom = 39.0
+theme_override_font_sizes/normal_font_size = 28
+text = "The greybox dimension"
+vertical_alignment = 1
+
+[node name="DungeonFloorText" type="RichTextLabel" parent="."]
+layout_mode = 0
+offset_left = 10.0
+offset_top = 37.0
+offset_right = 514.0
+offset_bottom = 59.0
+theme_override_font_sizes/normal_font_size = 18
+text = "Floor 1/3"
+scroll_active = false
+vertical_alignment = 1

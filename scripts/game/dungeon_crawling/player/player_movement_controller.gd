@@ -21,8 +21,6 @@ signal on_rotation_started(target_rotation: float)
 signal on_move_finished(target_position: Vector3)
 signal on_rotation_finished(target_rotation: float)
 
-enum GridMovementDirection { UP, RIGHT, DOWN, LEFT }
-
 func _start_movement(in_target_position: Vector3) -> void:
 	_starting_position = (owner as Node3D).position
 	_target_position = in_target_position
@@ -90,50 +88,50 @@ func _handle_input(_delta: float) -> void:
 	var node3d_owner := owner as Node3D
 
 	const MOVEMENT_DEADZONE := 0.8
-	var input_vector := Input.get_vector("player_left", "player_right", "player_backward", "player_forward")
-	var is_strafing := Input.is_action_pressed("player_strafe")
+	var input_vector := Input.get_vector(&"player_left", &"player_right", &"player_backward", &"player_forward")
+	var is_strafing := Input.is_action_pressed(&"player_strafe")
 
 	var move_direction := -1
 
 	if input_vector.y > MOVEMENT_DEADZONE:
-		move_direction = GridMovementDirection.UP
+		move_direction = Player.Direction.UP
 	elif input_vector.y < -MOVEMENT_DEADZONE:
-		move_direction = GridMovementDirection.DOWN
+		move_direction = Player.Direction.DOWN
 	elif input_vector.x > MOVEMENT_DEADZONE:
 		if is_strafing:
-			move_direction = GridMovementDirection.RIGHT
+			move_direction = Player.Direction.RIGHT
 		else:
 			_start_rotation(CLOCKWISE)
 	elif input_vector.x < -MOVEMENT_DEADZONE:
 		if is_strafing:
-			move_direction = GridMovementDirection.LEFT
+			move_direction = Player.Direction.LEFT
 		else:
 			_start_rotation(COUNTERCLOCKWISE)
 
 	# Update grid movement position based on rotation
 	if move_direction != -1:
 		var offset = -roundi(node3d_owner.global_rotation.y / (PI / 2))
-		var adjusted_move_direction = wrap(move_direction + offset, 0, GridMovementDirection.size())
+		var adjusted_move_direction = wrap(move_direction + offset, 0, Player.Direction.size())
 		var grid_x := floori(node3d_owner.position.x / DungeonManager.GRID_SIZE)
 		var grid_y := floori(node3d_owner.position.z / DungeonManager.GRID_SIZE)
 
 		match adjusted_move_direction:
-			GridMovementDirection.UP:
+			Player.Direction.UP:
 				if DungeonManager.can_move_up(grid_x, grid_y):
 					_start_movement(owner.position + Vector3(0, 0, -DungeonManager.GRID_SIZE))
 				else:
 					_start_wall_thud(owner.position + Vector3(0, 0, -DungeonManager.GRID_SIZE * thud_distance_factor))
-			GridMovementDirection.DOWN:
+			Player.Direction.DOWN:
 				if DungeonManager.can_move_down(grid_x, grid_y):
 					_start_movement(owner.position + Vector3(0, 0, DungeonManager.GRID_SIZE))
 				else:
 					_start_wall_thud(owner.position + Vector3(0, 0, DungeonManager.GRID_SIZE * thud_distance_factor))
-			GridMovementDirection.LEFT:
+			Player.Direction.LEFT:
 				if DungeonManager.can_move_left(grid_x, grid_y):
 					_start_movement(owner.position + Vector3(-DungeonManager.GRID_SIZE, 0, 0))
 				else:
 					_start_wall_thud(owner.position + Vector3(-DungeonManager.GRID_SIZE * thud_distance_factor, 0, 0))
-			GridMovementDirection.RIGHT:
+			Player.Direction.RIGHT:
 				if DungeonManager.can_move_right(grid_x, grid_y):
 					_start_movement(owner.position + Vector3(DungeonManager.GRID_SIZE, 0, 0))
 				else:

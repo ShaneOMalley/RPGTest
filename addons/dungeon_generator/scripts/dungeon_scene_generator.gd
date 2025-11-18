@@ -9,7 +9,8 @@ const WALL_THICKNESS := 1.0
 const DOOR_WIDTH := GRID_SIZE * 0.5
 const DOOR_HEIGHT := GRID_SIZE * 0.7
 const DOOR_THICKNESS := GRID_SIZE * 0.1
-	
+
+enum Direction { UP, RIGHT, DOWN, LEFT }
 
 # If these bits are set, then movement can happen between this square and the neighboring square
 const MOVEMENT_FLAG_UP := 1
@@ -74,7 +75,7 @@ static func create_wall(grid_start: Vector2i, grid_end: Vector2i) -> MeshInstanc
 	wall_counter += 1
 	return create_box(Vector3(x, WALL_HEIGHT / 2, y), Vector3(width, WALL_HEIGHT, length), name)
 	
-static func create_door(grid_x: int, grid_y: int, side: Side) -> MeshInstance3D:
+static func create_door(grid_x: int, grid_y: int, direction: Direction) -> MeshInstance3D:
 	var center: Vector3
 	var rotation: float
 	const size := Vector3(DOOR_WIDTH, DOOR_HEIGHT, DOOR_THICKNESS)
@@ -82,20 +83,20 @@ static func create_door(grid_x: int, grid_y: int, side: Side) -> MeshInstance3D:
 	center.y = FLOOR_THICKNESS + DOOR_HEIGHT / 2
 	const door_offset_from_wall = (WALL_THICKNESS / 2 + DOOR_THICKNESS / 2)
 	
-	match side:
-		SIDE_LEFT:
+	match direction:
+		Direction.LEFT:
 			center.x = grid_x * GRID_SIZE + door_offset_from_wall
 			center.z = (grid_y + 0.5) * GRID_SIZE
 			rotation = - PI / 2
-		SIDE_RIGHT:
+		Direction.RIGHT:
 			center.x = (grid_x + 1) * GRID_SIZE - door_offset_from_wall
 			center.z = (grid_y + 0.5) * GRID_SIZE
 			rotation = PI / 2
-		SIDE_TOP:
+		Direction.UP:
 			center.x = (grid_x + 0.5) * GRID_SIZE
 			center.z = grid_y * GRID_SIZE + door_offset_from_wall
 			rotation = 0
-		SIDE_BOTTOM:
+		Direction.DOWN:
 			center.x = (grid_x + 0.5) * GRID_SIZE
 			center.z = (grid_y + 1) * GRID_SIZE - door_offset_from_wall
 			rotation = PI 
@@ -145,7 +146,9 @@ static func generate_dungeon(data: Variant) -> void:
 		if layer.type == "objectgroup":
 			object_group_data = layer
 			break
-			
+	
+	var interactable_data: Dictionary[Vector2i, Dictionary] # Dictionary[Vector2i, Dictionary[Direction, Array[StringName]]]
+	
 	var wall_data := WallData.new()
 	if object_group_data:
 		for object in object_group_data.objects:
@@ -188,21 +191,24 @@ static func generate_dungeon(data: Variant) -> void:
 				var a = relative_y - relative_x
 				var b = relative_y + relative_x - 1
 				
-				var side: Side
+				var direction: Direction
 				if a > 0:
 					if b > 0:
-						side = SIDE_BOTTOM
+						direction = Direction.DOWN
 					else:
-						side = SIDE_LEFT
+						direction = Direction.LEFT
 				else:
 					if b > 0:
-						side = SIDE_RIGHT
+						direction = Direction.RIGHT
 					else:
-						side = SIDE_TOP
+						direction = Direction.UP
 						
-				var door_box := create_door(grid_x, grid_y, side)
+				var door_box := create_door(grid_x, grid_y, direction)
 				doors_node.add_child(door_box)
 				door_box.owner = root_node
+				
+				var cell_interactable_data = interactable_data.get_or_add(Vector2i(grid_x, grid_y), {})
+				cell_interactable_data.get_or_add(direction, []).append(&"downstairs")
 
 	# Build Movement Data
 	var tile_layer_index = data.layers.find_custom(func(layer): return layer.type == "tilelayer")
@@ -250,8 +256,9 @@ static func generate_dungeon(data: Variant) -> void:
 				movement_data[right_index] |= MOVEMENT_FLAG_LEFT
 				movement_data[right_index] |= MOVEMENT_FLAG_LEFT_SKIPTEST
 
-	root_node.set_meta("movement_data", movement_data)
-	root_node.set_meta("grid_width", grid_width)
+	root_node.set_meta(&"movement_data", movement_data)
+	root_node.set_meta(&"grid_width", grid_width)
+	root_node.set_meta(&"interactable_data", interactable_data)
 
 	var debug_node := Node3D.new()
 	debug_node.name = "Debug"
