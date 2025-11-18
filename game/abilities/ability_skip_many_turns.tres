@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="BattleAbilitySkipManyTurns" load_steps=2 format=3 uid="uid://cfwfwd7bnvnsu"]
 
-[ext_resource type="Script" uid="uid://nrpk0iv60lhf" path="res://res/data/battle_ability_skip_many_turns.gd" id="1_3c5jt"]
+[ext_resource type="Script" uid="uid://nrpk0iv60lhf" path="res://scripts/game/battle/abilities/battle_ability_skip_many_turns.gd" id="1_3c5jt"]
 
 [resource]
 script = ExtResource("1_3c5jt")

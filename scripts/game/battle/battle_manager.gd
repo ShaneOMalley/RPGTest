@@ -314,9 +314,9 @@ func _on_state_exited(id: StringName) -> void:
 	if id == &"turn_decision_player":
 		on_battle_player_turn_ended.emit(get_current_turn_participant())
 
-func _process(_delta: float) -> void:
-	if Input.is_action_just_pressed("ui_right"):
-		setup_battle(&"test2")
+# func _process(_delta: float) -> void:
+# 	if Input.is_action_just_pressed("ui_right"):
+# 		setup_battle(&"test2")
 	
 # func _ready() -> void:
 # 	_setup_battle()

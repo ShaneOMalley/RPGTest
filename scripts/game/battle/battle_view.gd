@@ -124,6 +124,9 @@ func destroy_battle_ui() -> void:
 		debug_battle_ui.queue_free()
 
 func setup_player_party_ui() -> void:
+	if player_party_ui:
+		destroy_player_party_ui()
+	
 	player_party_ui = preload("res://ui/battle/player_party_ui.tscn").instantiate()
 	get_tree().root.add_child(player_party_ui)
 

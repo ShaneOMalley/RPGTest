@@ -4,7 +4,7 @@ const GRID_SIZE := 10.0
 const ENCOUNTER_STEPS_MIN := 20
 const ENCOUNTER_STEPS_MAX := 30
 
-# If these bits are set, then movement can happen between this square and the neighboring square
+# If these bits are set, then movement can happen between this square and the neighboring square in that direction
 const MOVEMENT_FLAG_UP := 1
 const MOVEMENT_FLAG_DOWN := 2
 const MOVEMENT_FLAG_LEFT := 4
@@ -13,9 +13,13 @@ const MOVEMENT_FLAG_RIGHT := 8
 var _movement_data: Array[int]
 var _grid_width: int
 var _encounter_data_weighted: Dictionary[StringName, float]
-var _dungeon_scene: Node3D
 var _player: Player
 var _steps_until_next_encounter: int
+
+var _current_dungeon_data: DungeonData
+var _floors: Array[PackedScene]
+var _current_scene: Node3D
+var _current_floor_index: int
 
 signal on_player_move(target_position: Vector3)
 signal on_player_move_started(target_position: Vector3)
@@ -23,6 +27,7 @@ signal on_player_move_finished(target_position: Vector3)
 signal on_player_rotation_started(target_rotation: float)
 signal on_player_rotation_finished(target_rotation: float)
 signal on_dungeon_crawling_start(player_position: Vector3)
+signal on_dungeon_floor_start()
 
 func get_grid_width() -> int:
 	return _grid_width;
@@ -61,28 +66,32 @@ func _on_player_move_finished(target_position: Vector3) -> void:
 
 # Setup
 const config_path: String = "res://res/data/battle_encounters.json"
-func setup_encounter_data() -> void:
+func _setup_encounter_data(encounter_id: StringName) -> void:
 	var json_file := FileAccess.open(config_path, FileAccess.READ)
 	var data = JSON.parse_string(json_file.get_as_text())
 
 	# TODO: Decide on non-hardcoded way of doing this
-	const dungeon_id := &"test_dungeon" # &"test_single_ghoul"
-
-	var encounter_data := (data.dungeon_encounter_data[dungeon_id] as Array)
+	var encounter_data := (data.dungeon_encounter_data[encounter_id] as Array)
 	for entry in encounter_data:
 		_encounter_data_weighted[entry.encounter_group] = entry.weight
 
-func set_dungeon_scene(in_dungeon_scene: Node3D) -> void:
-	_dungeon_scene = in_dungeon_scene
-	var geometry := _dungeon_scene.find_child("GeometryParent").get_child(0)
+func set_dungeon_floor_index(in_index: int) -> void:
+	if _current_scene:
+		_current_scene.queue_free()
+	
+	_current_floor_index = in_index
+	_current_scene = _floors[in_index].instantiate()
+	
+	get_tree().root.add_child(_current_scene)
+	
+	var geometry := _current_scene.find_child("GeometryParent").get_child(0)
 	_movement_data = geometry.get_meta("movement_data")
 	_grid_width = geometry.get_meta("grid_width")
+	
+	_setup_encounter_data(_current_dungeon_data.encounter_data_per_floor[in_index])
 	_reset_steps_counter()
-	setup_encounter_data()
-
-	# TODO: Find some better way of handling dependencies
-	#  if _player:
-	#  	on_dungeon_crawling_start.emit(_player.position)
+	
+	on_dungeon_floor_start.emit()
 
 func set_player(in_player: Player) -> void:
 	_player = in_player
@@ -91,17 +100,26 @@ func set_player(in_player: Player) -> void:
 	_player.on_move_finished.connect(_on_player_move_finished)
 	_player.on_rotation_started.connect(on_player_rotation_started.emit)
 	_player.on_rotation_finished.connect(on_player_rotation_finished.emit)
+	
+	BattleManager.request_player_party_ui_setup()
+	on_dungeon_crawling_start.emit(_player.position)
 
-	# TODO: Find some better way of handling dependencies
-	var timer := BattleManager.get_tree().create_timer(0.2)
-	timer.timeout.connect(func(): 
-		BattleManager.request_player_party_ui_setup()
-		on_dungeon_crawling_start.emit(_player.position)
-		)
+const _dungeon_data_resource_path := "res://game/dungeon_crawling/dungeon_data_test.tres"
+func _ready():
+	# todo: find non-blocking way of loading
+	_current_dungeon_data = load(_dungeon_data_resource_path).duplicate() as DungeonData
+	var possible_floors = _current_dungeon_data.dungeon_scenes.duplicate()
+	possible_floors.shuffle()
+	
+	var num_floors = _current_dungeon_data.num_floors
+	while num_floors > 0:
+		_floors.append(possible_floors.pop_front())
+		num_floors -= 1
+	
+	set_dungeon_floor_index(0)
 
-	# on_dungeon_crawling_start.emit.call_deferred(_player.position)
-	# BattleManager.request_player_party_ui_setup.call_deferred()
-
-	# TODO: Find some better way of handling dependencies
-	# if _dungeon_scene:
-	# 	on_dungeon_crawling_start.emit(_player.position)
+func _process(delta: float) -> void:
+	if Input.is_action_just_pressed(&"ui_right"):
+		_current_floor_index += 1
+		_current_floor_index %= _floors.size()
+		set_dungeon_floor_index(_current_floor_index)

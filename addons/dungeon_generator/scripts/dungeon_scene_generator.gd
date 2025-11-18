@@ -6,6 +6,11 @@ const WALL_HEIGHT := 10.0
 const FLOOR_THICKNESS := 1.0
 const WALL_THICKNESS := 1.0
 
+const DOOR_WIDTH := GRID_SIZE * 0.5
+const DOOR_HEIGHT := GRID_SIZE * 0.7
+const DOOR_THICKNESS := GRID_SIZE * 0.1
+	
+
 # If these bits are set, then movement can happen between this square and the neighboring square
 const MOVEMENT_FLAG_UP := 1
 const MOVEMENT_FLAG_DOWN := 2
@@ -38,13 +43,11 @@ class WallData:
 
 	func crosses_any_horizontal_wall(grid_x: int, grid_y: int, direction: int):
 		var center_x := grid_x + 0.5
-		var center_y := grid_y + 0.5
 
 		var row = grid_y + (1 if direction > 0 else 0);
 		return horizontal_walls.has(row) and horizontal_walls[row].any(func(wall): return sign(center_x - wall.start.x) != sign(center_x - wall.end.x))
 
 	func crosses_any_vertical_wall(grid_x: int, grid_y: int, direction: int):
-		var center_x := grid_x + 0.5
 		var center_y := grid_y + 0.5
 
 		var column = grid_x + (1 if direction > 0 else 0)
@@ -70,6 +73,40 @@ static func create_wall(grid_start: Vector2i, grid_end: Vector2i) -> MeshInstanc
 	var name = "Wall%d" % wall_counter
 	wall_counter += 1
 	return create_box(Vector3(x, WALL_HEIGHT / 2, y), Vector3(width, WALL_HEIGHT, length), name)
+	
+static func create_door(grid_x: int, grid_y: int, side: Side) -> MeshInstance3D:
+	var center: Vector3
+	var rotation: float
+	const size := Vector3(DOOR_WIDTH, DOOR_HEIGHT, DOOR_THICKNESS)
+	
+	center.y = FLOOR_THICKNESS + DOOR_HEIGHT / 2
+	const door_offset_from_wall = (WALL_THICKNESS / 2 + DOOR_THICKNESS / 2)
+	
+	match side:
+		SIDE_LEFT:
+			center.x = grid_x * GRID_SIZE + door_offset_from_wall
+			center.z = (grid_y + 0.5) * GRID_SIZE
+			rotation = - PI / 2
+		SIDE_RIGHT:
+			center.x = (grid_x + 1) * GRID_SIZE - door_offset_from_wall
+			center.z = (grid_y + 0.5) * GRID_SIZE
+			rotation = PI / 2
+		SIDE_TOP:
+			center.x = (grid_x + 0.5) * GRID_SIZE
+			center.z = grid_y * GRID_SIZE + door_offset_from_wall
+			rotation = 0
+		SIDE_BOTTOM:
+			center.x = (grid_x + 0.5) * GRID_SIZE
+			center.z = (grid_y + 1) * GRID_SIZE - door_offset_from_wall
+			rotation = PI 
+			
+	var door := create_box(center, size)
+	var material := StandardMaterial3D.new()
+	material.albedo_color = Color.GOLD
+	door.material_override = material
+	door.rotate_object_local(Vector3.UP, rotation)
+			
+	return door
 
 static func generate_dungeon(data: Variant) -> void:
 	var scene = PackedScene.new()
@@ -81,14 +118,18 @@ static func generate_dungeon(data: Variant) -> void:
 	floors_node.name = "Floors"
 	var walls_node := Node3D.new()
 	walls_node.name = "Walls"
+	var doors_node := Node3D.new()
+	doors_node.name = "Doors"
 
 	root_node.add_child(geometry_node)
 	geometry_node.add_child(floors_node)
 	geometry_node.add_child(walls_node)
+	geometry_node.add_child(doors_node)
 
 	geometry_node.owner = root_node
 	floors_node.owner = root_node
 	walls_node.owner = root_node
+	doors_node.owner = root_node
 
 	# Floor
 	var floor_width = data.width * GRID_SIZE
@@ -100,16 +141,23 @@ static func generate_dungeon(data: Variant) -> void:
 
 	# Organize Walls
 	var object_group_data
-	var wall_data := WallData.new()
 	for layer in data.layers:
 		if layer.type == "objectgroup":
 			object_group_data = layer
 			break
+			
+	var wall_data := WallData.new()
 	if object_group_data:
 		for object in object_group_data.objects:
-			var walls = object.polygon if object.has("polygon") else null
-			if !walls:
-				walls = object.polyline if object.has("polyline") else null
+			# var walls = object.polygon if object.has("polygon") else null
+			# if !walls:
+			# 	walls = object.polyline if object.has("polyline") else null
+			
+			var walls
+			if object.has("polygon"):
+				walls = object.polygon
+			if object.has("polyline"):
+				walls = object.polyline
 			
 			if walls:
 				var last_index = walls.size() if object.has("polygon") else walls.size() - 1
@@ -127,9 +175,34 @@ static func generate_dungeon(data: Variant) -> void:
 					else:
 						push_error("There is a wall that is neither horizontal nor vertical")
 
-					var walls_box := create_wall(start, end)
-					walls_node.add_child(walls_box)
-					walls_box.owner = root_node
+					var wall_box := create_wall(start, end)
+					walls_node.add_child(wall_box)
+					wall_box.owner = root_node
+					
+			if object.name == "downstairs":
+				var grid_x := floor(object.x)
+				var grid_y := floor(object.y)
+				var relative_x = fmod(object.x, 1)
+				var relative_y = fmod(object.y, 1)
+				
+				var a = relative_y - relative_x
+				var b = relative_y + relative_x - 1
+				
+				var side: Side
+				if a > 0:
+					if b > 0:
+						side = SIDE_BOTTOM
+					else:
+						side = SIDE_LEFT
+				else:
+					if b > 0:
+						side = SIDE_RIGHT
+					else:
+						side = SIDE_TOP
+						
+				var door_box := create_door(grid_x, grid_y, side)
+				doors_node.add_child(door_box)
+				door_box.owner = root_node
 
 	# Build Movement Data
 	var tile_layer_index = data.layers.find_custom(func(layer): return layer.type == "tilelayer")

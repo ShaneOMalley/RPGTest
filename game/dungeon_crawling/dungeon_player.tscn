@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://cwgl0m73j7c7h"]
 
-[ext_resource type="Script" uid="uid://dcl6ugw6tipms" path="res://game/dungeon_crawling/player.gd" id="1_4ykh0"]
+[ext_resource type="Script" uid="uid://dcl6ugw6tipms" path="res://scripts/game/dungeon_crawling/player/player.gd" id="1_4ykh0"]
 [ext_resource type="Script" uid="uid://hxt7ptsjx5i6" path="res://scripts/game/dungeon_crawling/player/player_movement_controller.gd" id="1_jcc1l"]
 
 [node name="DungeonPlayer" type="Node3D"]

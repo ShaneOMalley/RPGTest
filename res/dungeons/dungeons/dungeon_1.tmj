@@ -306,6 +306,30 @@
                  "width":0,
                  "x":6,
                  "y":3
+                }, 
+                {
+                 "height":0,
+                 "id":18,
+                 "name":"downstairs",
+                 "point":true,
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":6.86667,
+                 "y":11.5111
+                }, 
+                {
+                 "height":0,
+                 "id":19,
+                 "name":"spawn",
+                 "point":true,
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":1.52222,
+                 "y":1.16667
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -314,7 +338,7 @@
          "y":0
         }],
  "nextlayerid":4,
- "nextobjectid":18,
+ "nextobjectid":20,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.11.2",
