@@ -281,6 +281,9 @@ func setup_battle(in_encounter_group_id: StringName):
 	# _build_turns_list(MAX_TURNS)
 
 	_battle_time = 0.0
+	_current_turn = null
+	_last_actual_turn_time_for_participant.clear()
+	
 	_encounter_group_id = in_encounter_group_id
 	
 	_is_battle_active = true
