@@ -13,6 +13,7 @@ signal on_battle_pre_setup_complete
 signal on_battle_ui_setup_requested
 signal on_player_party_ui_setup_requested
 signal on_battle_finished
+signal on_message_requested(message: String)
 signal on_battle_effect_applied(effect: BattleEffect)
 signal on_battle_turn_manipulation(turn_manipulations: Array[BattleTurn.TurnManipulation])
 # signal on_battle_ability_execute(ability: BattleAbility, turn_manipulations: Array[BattleTurn.TurnManipulation])
@@ -84,6 +85,10 @@ func request_battle_ui_setup():
 
 func request_player_party_ui_setup():
 	on_player_party_ui_setup_requested.emit()
+
+# Message UI
+func request_message(message: String) -> void:
+	on_message_requested.emit(message);
 
 ## Ability queueing
 class AbilityExecution:

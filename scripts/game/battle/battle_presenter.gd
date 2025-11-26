@@ -28,6 +28,10 @@ func on_ui_setup_complete() -> void:
 func on_battle_finished() -> void:
 	_previous_battle_turns.clear()
 	BattleView.destroy_battle_ui()
+	
+# Message UI
+func on_message_requested(message: String) -> void:
+	BattleView.show_message(message)
 
 # Battle Abilities and Effects
 func on_ability_prepare(ability_id: StringName, target_uid: StringName) -> void:
@@ -147,6 +151,9 @@ func _ready():
 	BattleManager.on_battle_ui_setup_requested.connect(on_battle_ui_setup_requested)
 	BattleManager.on_player_party_ui_setup_requested.connect(on_player_party_ui_setup_requested)
 	BattleManager.on_battle_finished.connect(on_battle_finished)
+	
+	BattleManager.on_message_requested.connect(on_message_requested)
+	
 	BattleManager.on_battle_effect_applied.connect(on_battle_effect_applied)
 	
 	BattleManager.on_battle_turn_manipulation.connect(on_battle_turn_manipulation)

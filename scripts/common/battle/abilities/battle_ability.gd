@@ -83,6 +83,12 @@ func set_lifetime(lifetime: float) -> void:
 
 func initialize(in_source: BattleParticipant = null) -> void:
 	_source = in_source
+	
+func get_message() -> String:
+	return ""
+
+func show_message() -> void:
+	BattleManager.request_message(get_message())
 
 # func _init(in_source: BattleParticipant = null) -> void:
 # 	_source = in_source

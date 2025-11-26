@@ -46,7 +46,7 @@ func remove() -> void:
 func _to_string() -> String:
 	var result := "source=%s target=%s\n" % [source.to_string(), target.to_string()]
 	for modifier in _modifiers:
-		var operator_string = {Operator.ADDITIVE : "additive"}.get(modifier.operator)
+		var operator_string = {Operator.ADDITIVE : "additive", Operator.MULTIPLY : "multiply"}.get(modifier.operator)
 		result += "-- attribute: %s, magnitude=%d, operator=%s\n" % [modifier.attribute, modifier.magnitude, operator_string]
 	return result
 

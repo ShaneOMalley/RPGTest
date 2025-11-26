@@ -21,6 +21,11 @@ func _apply_attack_effect():
 		effect.apply()
 
 		BattleManager.play_oneshot_fx(fx_affect_target, enemy_participant)
+		
+	set_timer(0.2, show_message)
 
 func is_valid_for_target(possible_target: BattleParticipant) -> bool:
 	return possible_target == _source
+	
+func get_message() -> String:
+	return "%s drops a nuke" % _source.get_display_name()

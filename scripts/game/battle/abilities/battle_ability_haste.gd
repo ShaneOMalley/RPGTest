@@ -6,6 +6,7 @@ func execute(in_target: BattleParticipant) -> void:
 	super.execute(in_target)
 	
 	set_lifetime(1.3)
+	show_message()
 
 func prepare(in_target: BattleParticipant) -> void:
 	# remove agility modifier from other participant
@@ -43,3 +44,6 @@ func cancel_prepare() -> void:
 
 func is_valid_for_target(_possible_target: BattleParticipant) -> bool:
 	return true
+	
+func get_message() -> String:
+	return "%s speeds %s up" % [_source.get_display_name(), _target.get_display_name()]

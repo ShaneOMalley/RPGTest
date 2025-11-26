@@ -65,7 +65,10 @@ func _process(_delta: float):
 
 func _to_string() -> String:
 	return "「%s」" % uid
-
+	
+func get_display_name() -> String:
+	return config_id
+	
 static var config_id_counters: Dictionary[StringName, int]
 static func create_unique_id(in_config_id: StringName) -> StringName:
 	var previous_count = config_id_counters.get_or_add(in_config_id, 0)

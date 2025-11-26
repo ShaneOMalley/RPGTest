@@ -87,6 +87,10 @@ func remove_player(uid: StringName) -> void:
 
 func hide_all_players_info() -> void:
 	player_party_ui.hide_all_players_info()
+	
+# Message UI
+func show_message(message: String) -> void:
+	player_party_ui.show_message(message)
 
 # Battle Menu
 func show_battle_menu(entries: Array[UIBattle.BattleMenuEntry]) -> void:

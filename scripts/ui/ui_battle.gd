@@ -88,6 +88,9 @@ func show_battle_menu(entries: Array[BattleMenuEntry]) -> void:
 		_battle_menu_entries[index].hide()
 
 	container.show()
+	
+func hide_battle_menu() -> void:
+	$MenuContainer/BattleMenuBackground.hide()
 
 func show_target_menu(ability_id: StringName, valid_participant_targets: Array[StringName], previous_entries: Array[BattleMenuEntry]) -> void:
 	var container := $MenuContainer/BattleMenuBackground
@@ -147,9 +150,6 @@ func ability_select_target(ability_id: StringName, target_uid: StringName) -> vo
 	print(" -- SELECT TARGET")
 	on_ability_and_target_selected.emit(ability_id, target_uid)
 	hide_battle_menu()
-
-func hide_battle_menu() -> void:
-	$MenuContainer/BattleMenuBackground.hide()
 
 func fade_in() -> void:
 	$AnimationPlayer.play(&"battle_fade")

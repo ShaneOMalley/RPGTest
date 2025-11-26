@@ -45,3 +45,15 @@ func remove_player(uid: StringName) -> void:
 func hide_all_players_info() -> void:
 	for index in range(MAX_PLAYERS):
 		get_player_ui(index).hide_info()
+
+func show_message(message: String) -> void:
+	($MessageBox as Control).show()
+	($MessageBox/Text as RichTextLabel).text = message
+	($MessageBox/Timer as Timer).start(1.1)
+
+func _ready() -> void:
+	var message_box := ($MessageBox as Control)
+	message_box.hide()
+	
+	var timer := ($MessageBox/Timer as Timer)
+	timer.timeout.connect(message_box.hide)
