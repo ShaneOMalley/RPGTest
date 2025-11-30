@@ -7,10 +7,10 @@ class BattleEffectNuke extends BattleEffect:
 		
 		_modifiers.append(BattleEffectModifier.new(&"_hp", -damage, Operator.ADDITIVE))
 
-func execute(in_target: BattleParticipant) -> void:
+func execute(in_target: BattleParticipant, in_turn_target: BattleTurn = null) -> void:
 	super.execute(in_target)
 
-	BattleManager.play_oneshot_fx(fx_activate, _source)
+	BattleManager.play_fx(fx_activate, _source)
 
 	set_timer(0.4, _apply_attack_effect)
 	set_lifetime(1.2)
@@ -20,7 +20,7 @@ func _apply_attack_effect():
 		var effect := BattleEffectNuke.new(_source, enemy_participant)
 		effect.apply()
 
-		BattleManager.play_oneshot_fx(fx_affect_target, enemy_participant)
+		BattleManager.play_fx(fx_affect_target, enemy_participant)
 		
 	set_timer(0.2, show_message)
 

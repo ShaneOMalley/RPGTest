@@ -2,7 +2,7 @@
 
 var _agility_effect: BattleEffectSlow
 
-func execute(in_target: BattleParticipant) -> void:
+func execute(in_target: BattleParticipant, in_turn_target: BattleTurn = null) -> void:
 	super.execute(in_target)
 	
 	set_lifetime(1.3)

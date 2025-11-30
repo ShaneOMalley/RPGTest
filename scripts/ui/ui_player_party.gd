@@ -4,17 +4,36 @@ var _player_to_ui_index: Dictionary[StringName, int]
 
 const MAX_PLAYERS := 4
 
+class FXInstance:
+	var target_uid: StringName
+	var prototype: PackedScene
+	var instance: UIFX
+	
+	func _init(in_target_uid: StringName, in_prototype: PackedScene, in_instance: UIFX) -> void:
+		target_uid = in_target_uid
+		prototype = in_prototype
+		instance = in_instance
+		
+var _fx_instances: Array[FXInstance]
+
 # Effects
-func play_oneshot_fx(effect_prototype: PackedScene, target_uid: StringName):
+func play_fx(effect_prototype: PackedScene, target_uid: StringName):
 	if !_player_to_ui_index.has(target_uid):
 		return
 
 	# TODO: Instantiate this on a bespoke canvas just for UI_FXs
-	var effect := effect_prototype.instantiate() as UIFX
+	var instance := effect_prototype.instantiate() as UIFX
 	var element := get_player_ui(_player_to_ui_index[target_uid])
 
-	effect.position = element.get_global_transform_with_canvas().get_origin() + element.size / 2
-	add_child(effect)
+	instance.position = element.get_global_transform_with_canvas().get_origin() + element.size / 2
+	add_child(instance)
+	
+	_fx_instances.append(FXInstance.new(target_uid, effect_prototype, instance))
+	
+func stop_fx(effect_prototype: PackedScene, target_uid: StringName) -> void:
+	var results := _fx_instances.filter(func(entry): return entry.target_uid == target_uid and entry.prototype == effect_prototype)
+	results.map(func(entry): entry.instance.queue_free())
+	_fx_instances = _fx_instances.filter(func(entry): return !results.has(entry))
 
 # Player
 func get_player_ui(index: int) -> PlayerPartyMember:

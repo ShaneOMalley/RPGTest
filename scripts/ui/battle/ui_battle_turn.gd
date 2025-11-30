@@ -1,12 +1,20 @@
-class_name UIBattleTurn extends ColorRect
+class_name UIBattleTurn extends Button
 
 var uid: int
 
 func set_background_color(in_color: Color) -> void:
-	($Background as ColorRect).color = in_color
+	self_modulate = in_color
 
-func set_text(text: String) -> void:
-	($Text as RichTextLabel).set_text(text)
+func set_turn_text(in_text: String) -> void:
+	($Text as RichTextLabel).set_text(in_text)
+	
+func set_modifier_text(in_text: String) -> void:
+	var label := ($ModifierText as RichTextLabel)
+	if in_text.is_empty():
+		label.hide()
+	else:
+		label.show()
+		label.set_text(in_text)
 	
 func set_time(time: float) -> void:
 	($DebugTime as RichTextLabel).set_text("%0.2f" % time)

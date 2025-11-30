@@ -8,7 +8,7 @@
 		"magic": 5,
 		"vitality": 6,
 
-		"abilities": ["attack", "nuke", "extra_turn", "pass", "haste", "slow"]
+		"abilities": ["attack", "nuke", "extra_turn", "skip_turn", "pass", "haste", "slow"]
 	},
 	"player_chronomancer" :
 	{

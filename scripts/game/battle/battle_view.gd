@@ -1,10 +1,12 @@
 extends Node
 
-signal on_ability_and_target_selected(ability_id, target_uid)
+signal on_ability_and_target_selected(ability_id, target_uid, turn_uid)
 signal on_ability_prepare(ability_id, target_uid)
 signal on_ability_cancel(ability_id)
 signal on_ability_cancel_prepare(ability_id)
 signal on_ui_setup_complete()
+signal on_turn_hovered(turn_uid: int)
+signal on_turn_unhovered(turn_uid: int)
 
 var battle_ui: UIBattle
 var player_party_ui: UIPlayerParty
@@ -54,16 +56,22 @@ func add_turn(turn_uid: int, affiliation: BattleManager.Affiliation) -> void:
 func sort_turns(sorted_turn_uids: Array) -> void:
 	turns_ui.sort_turns(sorted_turn_uids)
 	
-func set_turn_text_and_time(turn_uid: int, text: String, time: float) -> void:
-	turns_ui.set_turn_text_and_time(turn_uid, text, time)
+func set_turn_text_and_time(turn_uid: int, text: String, modifier_text: String, time: float) -> void:
+	turns_ui.set_turn_text_and_time(turn_uid, text, modifier_text, time)
 	
 func delete_turn(turn_uid: int) -> void:
 	turns_ui.delete_turn(turn_uid)
 	
 # FX
-func play_oneshot_fx(effect_prototype: PackedScene, target_uid: StringName):
-	battle_ui.play_oneshot_fx(effect_prototype, target_uid)
-	player_party_ui.play_oneshot_fx(effect_prototype, target_uid)
+func play_fx(effect_prototype: PackedScene, target_uid: StringName) -> void:
+	# Just attempt to play for both enemies and player characters
+	battle_ui.play_fx(effect_prototype, target_uid)
+	player_party_ui.play_fx(effect_prototype, target_uid)
+	
+func stop_fx(effect_prototype: PackedScene, target_uid: StringName) -> void:
+	# Just attempt to stop for both enemies and player characters
+	battle_ui.stop_fx(effect_prototype, target_uid)
+	player_party_ui.stop_fx(effect_prototype, target_uid)
 
 # Enemy
 func setup_enemy(uid: StringName, hp: int, max_hp: int) -> void:
@@ -113,6 +121,9 @@ func setup_battle_ui() -> void:
 	battle_ui.on_ability_prepare.connect(on_ability_prepare.emit)
 	battle_ui.on_ability_cancel.connect(on_ability_cancel.emit)
 	battle_ui.on_ability_cancel_prepare.connect(on_ability_cancel_prepare.emit)
+	
+	turns_ui.on_turn_hovered.connect(on_turn_hovered.emit)
+	turns_ui.on_turn_unhovered.connect(on_turn_unhovered.emit)
 	
 	battle_ui.on_setup_complete.connect(on_ui_setup_complete.emit)
 	get_tree().root.add_child(battle_ui)

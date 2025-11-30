@@ -19,8 +19,9 @@ signal on_battle_turn_manipulation(turn_manipulations: Array[BattleTurn.TurnMani
 # signal on_battle_ability_execute(ability: BattleAbility, turn_manipulations: Array[BattleTurn.TurnManipulation])
 # signal on_battle_ability_prepare_start(ability: BattleAbility, turn_manipulations: Array[BattleTurn.TurnManipulation])
 # signal on_battle_ability_prepare_cancel(ability: BattleAbility, turn_manipulations: Array[BattleTurn.TurnManipulation])
-signal on_battle_fx_requested(fx: PackedScene, target: BattleParticipant)
-signal on_battle_player_turn_started(participant: BattleParticipant)
+signal on_battle_fx_requested(effect_prototype: PackedScene, target: BattleParticipant)
+signal on_battle_fx_stop_requested(effect_prototype: PackedScene, target: BattleParticipant)
+signal on_battle_player_turn_started(participant: BattleParticipant, battle_turn: BattleTurn)
 signal on_battle_player_turn_ended(participant: BattleParticipant)
 signal on_battle_particiant_removed(participant: BattleParticipant)
 signal on_battle_turns_updated(turns: Array[BattleTurn])
@@ -94,23 +95,25 @@ func request_message(message: String) -> void:
 class AbilityExecution:
 	var ability: BattleAbility
 	var target: BattleParticipant
+	var turn_target: BattleTurn
 
-	func _init(in_ability: BattleAbility, in_target: BattleParticipant) -> void:
+	func _init(in_ability: BattleAbility, in_target: BattleParticipant, in_turn_target: BattleTurn = null) -> void:
 		ability = in_ability
 		target = in_target
+		turn_target = in_turn_target
 
 	func execute() -> void:
-		ability.execute(target)
+		ability.execute(target, turn_target)
 
 var _queued_ability_execution: AbilityExecution
-func queue_ability_execution(in_ability: BattleAbility, in_target: BattleParticipant) -> void:
-	_queued_ability_execution = AbilityExecution.new(in_ability, in_target)
+func queue_ability_execution(in_ability: BattleAbility, in_target: BattleParticipant, in_turn_target: BattleTurn = null) -> void:
+	_queued_ability_execution = AbilityExecution.new(in_ability, in_target, in_turn_target)
 	
 func has_queued_ability() -> bool:
 	return _queued_ability_execution != null
 
 func has_executing_ability() -> bool:
-	return _queued_ability_execution and  _queued_ability_execution.ability.get_is_executing()
+	return _queued_ability_execution and _queued_ability_execution.ability.get_is_executing()
 
 func execute_queued_ability() -> void:
 	_queued_ability_execution.execute()
@@ -128,9 +131,12 @@ func cancel_prepare_ability(in_ability: BattleAbility) -> void:
 	in_ability.cancel_prepare()
 	
 ## FX Management
-func play_oneshot_fx(effect_prototype: PackedScene, target: BattleParticipant):
+func play_fx(effect_prototype: PackedScene, target: BattleParticipant):
 	on_battle_fx_requested.emit(effect_prototype, target)
-
+	
+func stop_fx(effect_prototype: PackedScene, target: BattleParticipant):
+	on_battle_fx_stop_requested.emit(effect_prototype, target)
+	
 ## Particpant Management
 func add_participant(participant: BattleParticipant) -> void:
 	participants.push_back(participant)
@@ -167,6 +173,9 @@ func get_next_turn_for_participant(participant: BattleParticipant) -> BattleTurn
 	
 func get_turns_for_participant(participant: BattleParticipant) -> Array[BattleTurn]:
 	return _turns.filter(func(turn: BattleTurn): return turn.participant == participant)
+	
+func force_update_turns():
+	on_battle_turns_updated.emit(_turns)
 	
 ## Test functions
 func test_get_random_enemy() -> BattleParticipant:
@@ -316,7 +325,7 @@ func complete_pre_setup():
 
 func _on_state_entered(id: StringName) -> void:
 	if id == &"turn_decision_player":
-		on_battle_player_turn_started.emit(get_current_turn_participant())
+		on_battle_player_turn_started.emit(get_current_turn_participant(), _current_turn)
 
 func _on_state_exited(id: StringName) -> void:
 	if id == &"turn_decision_player":

@@ -1,9 +1,20 @@
 ﻿class_name BattleAbilitySkipTurn extends BattleAbility
 
-# Called when the node enters the scene tree for the first time.
-func _ready() -> void:
-	pass # Replace with function body.
+func execute(in_target: BattleParticipant, in_turn_target: BattleTurn = null) -> void:
+	super.execute(in_target, in_turn_target)
+	
+	in_turn_target.turn_modifier = BattleTurn.TurnModifierPass
+	BattleManager.force_update_turns()
+	
+	set_lifetime(1.5)
+	set_timer(0.2, show_message)
+	
+func is_valid_for_target(_possible_target: BattleParticipant) -> bool:
+	return false
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
-	pass
+func requires_turn_target() -> bool:
+	return true
+	
+func get_message() -> String:
+	return "%s is doing skip turn for turn %d!" % [_source.get_display_name(), _turn_target.uid]
+	

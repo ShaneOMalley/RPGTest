@@ -5,32 +5,54 @@ class_name UIBattle extends Control
 # todo: try and remember why I amn't just using the duplicate template pattern for this
 @export var enemy_template: Resource
 
-signal on_ability_and_target_selected(ability_id, target_id)
+signal on_ability_and_target_selected(ability_id, target_id, turn_target_uid)
 signal on_ability_prepare(ability_id, target_id)
 signal on_ability_cancel(ability_id)
 signal on_ability_cancel_prepare(ability_id)
 signal on_setup_complete()
 
+var turns_ui: UIBattleTurns
+
+class FXInstance:
+	var target_uid: StringName
+	var prototype: PackedScene
+	var instance: UIFX
+	
+	func _init(in_target_uid: StringName, in_prototype: PackedScene, in_instance: UIFX) -> void:
+		target_uid = in_target_uid
+		prototype = in_prototype
+		instance = in_instance
+		
 var _enemies: Dictionary[StringName, UIEnemy]
 var _battle_menu_entries : Array[UIBattleMenuEntry]
+var _fx_instances: Array[FXInstance]
 
 class BattleMenuEntry:
 	var ability_id: StringName
 	var ability_string: String
 	var can_activate: bool
 	var valid_participant_targets: Array[StringName]
+	var requires_turn_target: bool
 
 # Effects
-func play_oneshot_fx(effect_prototype: PackedScene, target_uid: StringName):
+
+func play_fx(effect_prototype: PackedScene, target_uid: StringName) -> void:
 	if !_enemies.has(target_uid):
 		return
 
 	# TODO: Instantiate this on a bespoke canvas just for UI_FXs
-	var effect := effect_prototype.instantiate() as UIFX
+	var instance := effect_prototype.instantiate() as UIFX
 	var element := _enemies[target_uid]
 
-	effect.position = element.get_global_transform_with_canvas().get_origin() + element.size / 2
-	add_child(effect)
+	instance.position = element.get_global_transform_with_canvas().get_origin() + element.size / 2
+	add_child(instance)
+	
+	_fx_instances.append(FXInstance.new(target_uid, effect_prototype, instance))
+	
+func stop_fx(effect_prototype: PackedScene, target_uid: StringName) -> void:
+	var results := _fx_instances.filter(func(entry): return entry.target_uid == target_uid and entry.prototype == effect_prototype)
+	results.map(func(entry): entry.instance.queue_free())
+	_fx_instances = _fx_instances.filter(func(entry): return !results.has(entry))
 
 # Enemy
 func add_enemy(uid: StringName, hp: int, max_hp: int) -> void:
@@ -53,6 +75,9 @@ func remove_enemy(uid: StringName) -> void:
 # Battle Menu
 func show_battle_menu(entries: Array[BattleMenuEntry]) -> void:
 	var container := $MenuContainer/BattleMenuBackground
+	
+	for connection in turns_ui.on_turn_pressed.get_connections():
+		turns_ui.on_turn_pressed.disconnect(connection.callable)
 
 	for index in range(entries.size()):
 		var ui_entry: UIBattleMenuEntry
@@ -82,7 +107,7 @@ func show_battle_menu(entries: Array[BattleMenuEntry]) -> void:
 		# ui_entry.mouse_entered.connect(func(): print("mouse entered"))
 		# ui_entry.mouse_exited.connect(func(): print("mouse exited"))
 		ui_entry.disabled = !entry.can_activate
-		ui_entry.pressed.connect(func(): show_target_menu(entry.ability_id, entry.valid_participant_targets, entries))
+		ui_entry.pressed.connect(func(): show_target_menu(entry.ability_id, entry.valid_participant_targets, entries, entry.requires_turn_target))
 
 	for index in range(entries.size(), _battle_menu_entries.size()):
 		_battle_menu_entries[index].hide()
@@ -92,12 +117,12 @@ func show_battle_menu(entries: Array[BattleMenuEntry]) -> void:
 func hide_battle_menu() -> void:
 	$MenuContainer/BattleMenuBackground.hide()
 
-func show_target_menu(ability_id: StringName, valid_participant_targets: Array[StringName], previous_entries: Array[BattleMenuEntry]) -> void:
+func show_target_menu(ability_id: StringName, valid_participant_targets: Array[StringName], previous_entries: Array[BattleMenuEntry], requires_turn_target: bool = false) -> void:
 	var container := $MenuContainer/BattleMenuBackground
 	
 	var options := valid_participant_targets.duplicate() as Array[StringName]
 	options.append(&"cancel")
-
+	
 	for index in range(options.size()): # range(valid_participant_targets.size()):
 		var ui_entry: UIBattleMenuEntry
 
@@ -119,12 +144,15 @@ func show_target_menu(ability_id: StringName, valid_participant_targets: Array[S
 			ui_entry.pressed.connect(func(): ability_cancel(ability_id, previous_entries))
 			ui_entry.mouse_entered.connect(func(): ability_cancel_prepare(ability_id))
 		else:
-			ui_entry.pressed.connect(func(): ability_select_target(ability_id, target_uid))
 			ui_entry.mouse_entered.connect(func(): ability_prepare(ability_id, target_uid))
+			ui_entry.pressed.connect(func(): ability_select_target(ability_id, target_uid))
 		
 		ui_entry.disabled = false
 		ui_entry.set_text(target_uid)
-
+		
+	if requires_turn_target:
+		turns_ui.on_turn_pressed.connect(func(turn_uid): ability_select_target(ability_id, &"", turn_uid))
+	
 	# for index in range(valid_participant_targets.size(), _battle_menu_entries.size()):
 	for index in range(options.size(), _battle_menu_entries.size()):
 		_battle_menu_entries[index].hide()
@@ -146,13 +174,18 @@ func ability_cancel_prepare(ability_id: StringName) -> void:
 	print(" -- CANCEL PREPARE")
 	on_ability_cancel_prepare.emit(ability_id)
 	
-func ability_select_target(ability_id: StringName, target_uid: StringName) -> void:
+func ability_select_target(ability_id: StringName, target_uid: StringName, turn_target_uid: int = -1) -> void:
 	print(" -- SELECT TARGET")
-	on_ability_and_target_selected.emit(ability_id, target_uid)
+	on_ability_and_target_selected.emit(ability_id, target_uid, turn_target_uid)
+	
+	for connection in turns_ui.on_turn_pressed.get_connections():
+		turns_ui.on_turn_pressed.disconnect(connection.callable)
+	
 	hide_battle_menu()
 
 func fade_in() -> void:
 	$AnimationPlayer.play(&"battle_fade")
 
 func _ready():
+	turns_ui = $TurnsUI as UIBattleTurns
 	$AnimationPlayer.animation_finished.connect(func(_anim): on_setup_complete.emit())

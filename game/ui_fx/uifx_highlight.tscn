@@ -1,11 +1,11 @@
-[gd_scene load_steps=5 format=3 uid="uid://cbssyre83ci4j"]
+[gd_scene load_steps=5 format=3 uid="uid://72gw0awik7vs"]
 
-[ext_resource type="Script" uid="uid://ccj4csqnfquqi" path="res://scripts/ui/ui_fx.gd" id="1_rhu86"]
-[ext_resource type="Texture2D" uid="uid://bt72qjcmn2x0e" path="res://res/particles/textures/pass.png" id="2_mhcbh"]
+[ext_resource type="Script" uid="uid://ccj4csqnfquqi" path="res://scripts/ui/ui_fx.gd" id="1_auwxj"]
+[ext_resource type="Texture2D" uid="uid://dtx8u7aqo0kph" path="res://res/particles/textures/highlight.png" id="2_auwxj"]
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_rhu86"]
 particles_animation = true
-particles_anim_h_frames = 3
+particles_anim_h_frames = 1
 particles_anim_v_frames = 1
 particles_anim_loop = false
 
@@ -23,13 +23,12 @@ layout_mode = 3
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
-script = ExtResource("1_rhu86")
+script = ExtResource("1_auwxj")
 metadata/_custom_type_script = "uid://ccj4csqnfquqi"
 
 [node name="GPUParticles2D" type="GPUParticles2D" parent="."]
 material = SubResource("CanvasItemMaterial_rhu86")
 amount = 1
-texture = ExtResource("2_mhcbh")
-lifetime = 1.06
-one_shot = true
+texture = ExtResource("2_auwxj")
+lifetime = 600.0
 process_material = SubResource("ParticleProcessMaterial_6yudg")

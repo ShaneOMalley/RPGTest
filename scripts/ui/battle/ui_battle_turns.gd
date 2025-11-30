@@ -2,6 +2,10 @@ class_name UIBattleTurns extends Control
 
 const NUM_VISIBLE_TURNS: int = 6
 
+signal on_turn_hovered(turn_uid: int)
+signal on_turn_unhovered(turn_uid: int)
+signal on_turn_pressed(turn_uid: int)
+
 var _ui_turn_entries: Array[UIBattleTurn]
 var _uid_to_ui_turn: Dictionary[int, UIBattleTurn]
 
@@ -14,9 +18,9 @@ func add_turn(turn_uid: int, affiliation: BattleManager.Affiliation) -> void:
 	
 	var color: Color
 	if (affiliation == BattleManager.Affiliation.PLAYER):
-		color = Color.DARK_OLIVE_GREEN
+		color = Color.GREEN
 	elif (affiliation == BattleManager.Affiliation.ENEMY):
-		color = Color.CRIMSON
+		color = Color.RED
 	else:
 		assert(false, "Affiliation color not supported for %s" % affiliation)
 		
@@ -24,6 +28,10 @@ func add_turn(turn_uid: int, affiliation: BattleManager.Affiliation) -> void:
 		
 	_uid_to_ui_turn[turn_uid] = entry
 	_ui_turn_entries.append(entry)
+	
+	entry.mouse_entered.connect(func(): on_turn_hovered.emit(turn_uid))
+	entry.mouse_exited.connect(func(): on_turn_unhovered.emit(turn_uid))
+	entry.pressed.connect(func(): on_turn_pressed.emit(turn_uid))
 	
 func sort_turns(sorted_turn_uids: Array) -> void:
 	var container := $Mask/TurnsContainer as Container
@@ -42,12 +50,13 @@ func sort_turns(sorted_turn_uids: Array) -> void:
 			
 		container.move_child(entry, index)
 		
-func set_turn_text_and_time(turn_uid: int, text: String, time: float) -> void:
+func set_turn_text_and_time(turn_uid: int, text: String, modifier_text: String, time: float) -> void:
 	var entry := _uid_to_ui_turn[turn_uid]
 	if !is_instance_valid(entry):
 		return
 		
-	entry.set_text(text)
+	entry.set_modifier_text(modifier_text)
+	entry.set_turn_text(text)
 	entry.set_time(time)
 
 func delete_turn(turn_uid: int) -> void:

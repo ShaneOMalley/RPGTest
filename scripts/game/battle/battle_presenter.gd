@@ -50,11 +50,36 @@ func on_ability_cancel_prepare(ability_id: StringName) -> void:
 	var ability := current_participant.abilities[ability_id]
 	BattleManager.cancel_prepare_ability(ability)
 
-func on_ability_and_target_selected(ability_id: StringName, target_uid: StringName) -> void:
+func on_ability_and_target_selected(ability_id: StringName, target_uid: StringName, turn_uid: int) -> void:
 	var current_participant := BattleManager.get_current_turn_participant()
 	var ability := current_participant.abilities[ability_id]
 	var target := BattleManager.get_participant(target_uid)
-	BattleManager.queue_ability_execution(ability, target)
+	
+	var turn_target: BattleTurn = null
+	if turn_uid != -1:
+		var index = BattleManager._turns.find_custom(func(turn): return turn.uid == turn_uid)
+		if index != -1:
+			turn_target = BattleManager._turns[index]
+			
+	BattleManager.queue_ability_execution(ability, target, turn_target)
+	
+func on_turn_hovered(turn_uid: int) -> void:
+	var highlight_fx_template = preload("res://game/ui_fx/uifx_highlight.tscn")
+	var index = BattleManager._turns.find_custom(func(turn): return turn.uid == turn_uid)
+	if index == -1:
+		return
+		
+	var participant = BattleManager._turns[index].participant
+	BattleManager.play_fx(highlight_fx_template, participant)
+	
+func on_turn_unhovered(turn_uid: int) -> void:
+	var highlight_fx_template = preload("res://game/ui_fx/uifx_highlight.tscn")
+	var index = BattleManager._turns.find_custom(func(turn): return turn.uid == turn_uid)
+	if index == -1:
+		return
+		
+	var participant = BattleManager._turns[index].participant
+	BattleManager.stop_fx(highlight_fx_template, participant)
 
 func on_battle_effect_applied(battle_effect: BattleEffect) -> void:
 	var target = battle_effect.target
@@ -75,7 +100,10 @@ func on_battle_turn_manipulation(turn_manipulations: Array) -> void:
 
 # Battle FX
 func on_battle_fx_requested(effect_prototype: PackedScene, target: BattleParticipant) -> void:
-	BattleView.play_oneshot_fx(effect_prototype, target.uid)
+	BattleView.play_fx(effect_prototype, target.uid)
+	
+func on_battle_fx_stop_requested(effect_prototype: PackedScene, target: BattleParticipant) -> void:
+	BattleView.stop_fx(effect_prototype, target.uid)
 
 # Turns
 func on_battle_turns_updated(turns: Array[BattleTurn]) -> void:
@@ -109,30 +137,34 @@ func on_battle_turns_updated(turns: Array[BattleTurn]) -> void:
 	
 	for turn in turns:
 		# BattleView.add_turn(new_turn.uid, new_turn.participant.uid, new_turn.participant.affiliation)
-		var control_string = "%s: uid: %d" % [turn.participant.uid, turn.time]
-		BattleView.set_turn_text_and_time(turn.uid, control_string, turn.time)
-	
+		var control_string = "%s: uid: %d" % [turn.participant.uid, turn.uid]
+		var turn_modifier := turn.turn_modifier
+		var modifier_text: String = "skipping!" if (turn_modifier and turn_modifier.type == BattleTurn.TurnModifier.Type.SKIP) else ""
+		BattleView.set_turn_text_and_time(turn.uid, control_string, modifier_text, turn.time)
+		
 	BattleView.sort_turns(sorted_turn_uids)
 	
 	_previous_battle_turns = turns.duplicate()
 
-func on_battle_player_turn_started(battle_participant: BattleParticipant) -> void:
+func on_battle_player_turn_started(battle_participant: BattleParticipant, battle_turn: BattleTurn) -> void:
 	var battle_menu_entries: Array[UIBattle.BattleMenuEntry]
 
 	var abilities := battle_participant.abilities
 	for ability_id in abilities:
-		var ability := abilities[ability_id]
+		if battle_turn.is_ability_allowed(ability_id):
+			var ability := abilities[ability_id]
 
-		var battle_menu_entry := UIBattle.BattleMenuEntry.new()
-		battle_menu_entry.ability_id = ability_id
-		battle_menu_entry.ability_string = ability_id
-		battle_menu_entry.can_activate = ability.can_activate()
+			var battle_menu_entry: UIBattle.BattleMenuEntry = UIBattle.BattleMenuEntry.new()
+			battle_menu_entry.ability_id = ability_id
+			battle_menu_entry.ability_string = ability_id
+			battle_menu_entry.can_activate = ability.can_activate()
+			battle_menu_entry.requires_turn_target = ability.requires_turn_target()
 
-		var valid_participants = BattleManager.get_participants().filter(ability.is_valid_for_target)
-		for valid_participant in valid_participants:
-			battle_menu_entry.valid_participant_targets.append(valid_participant.uid)
+			var valid_participants = BattleManager.get_participants().filter(ability.is_valid_for_target)
+			for valid_participant in valid_participants:
+				battle_menu_entry.valid_participant_targets.append(valid_participant.uid)
 
-		battle_menu_entries.append(battle_menu_entry)
+			battle_menu_entries.append(battle_menu_entry)
 
 	BattleView.show_battle_menu(battle_menu_entries)
 
@@ -162,12 +194,17 @@ func _ready():
 	# BattleManager.on_battle_ability_prepare_cancel.connect(on_battle_ability_prepare_end)
 	
 	BattleManager.on_battle_fx_requested.connect(on_battle_fx_requested)
+	BattleManager.on_battle_fx_stop_requested.connect(on_battle_fx_stop_requested)
+	
 	BattleManager.on_battle_player_turn_started.connect(on_battle_player_turn_started)
 	BattleManager.on_battle_player_turn_ended.connect(on_battle_player_turn_ended)
 	BattleManager.on_battle_particiant_removed.connect(on_battle_particiant_removed)
 	BattleManager.on_battle_turns_updated.connect(on_battle_turns_updated)
 
 	BattleView.on_ability_and_target_selected.connect(on_ability_and_target_selected)
+	
+	BattleView.on_turn_hovered.connect(on_turn_hovered)
+	BattleView.on_turn_unhovered.connect(on_turn_unhovered)
 	
 	BattleView.on_ability_prepare.connect(on_ability_prepare)
 	BattleView.on_ability_cancel.connect(on_ability_cancel)

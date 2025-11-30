@@ -2,6 +2,7 @@ class_name BattleAbility extends Resource
 
 var _source: BattleParticipant
 var _target: BattleParticipant
+var _turn_target: BattleTurn
 var _is_executing := false
 # var _valid_targets: Array[BattleParticipant]
 
@@ -28,8 +29,10 @@ static var ability_class_registry: Dictionary[StringName, String] = {
 # TODO: Right now there is an assumption that the only execution context 
 # needed is an optional `_target`. There might be a more comprehensive struct
 # implemented later
-func execute(in_target: BattleParticipant) -> void:
+func execute(in_target: BattleParticipant, in_turn_target: BattleTurn = null) -> void:
 	_target = in_target
+	_turn_target = in_turn_target
+	
 	_is_executing = true
 	
 	# all abilities: shrink current turn
@@ -64,9 +67,15 @@ func get_is_executing() -> bool:
 # This function must be subclassed and return true for valid targets
 func is_valid_for_target(_possible_target: BattleParticipant) -> bool:
 	return true
+	
+func requires_turn_target() -> bool:
+	return false
 
 # Returns whether this ability can currently activate
 func can_activate() -> bool:
+	if requires_turn_target():
+		return true
+		
 	for participant in BattleManager.get_participants():
 		if is_valid_for_target(participant):
 			return true
