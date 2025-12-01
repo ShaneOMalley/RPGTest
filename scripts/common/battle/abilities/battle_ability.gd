@@ -6,6 +6,8 @@ var _turn_target: BattleTurn
 var _is_executing := false
 # var _valid_targets: Array[BattleParticipant]
 
+signal on_end()
+
 # TODO: Find some way of statically typing this. Is it possible?
 @export var fx_activate: PackedScene
 @export var fx_affect_target: PackedScene
@@ -20,6 +22,8 @@ static var ability_class_registry: Dictionary[StringName, String] = {
 	"slow" : "res://game/abilities/ability_slow.tres",
 	"skip_turn" : "res://game/abilities/ability_skip_turn.tres",
 	"skip_many_turns" : "res://game/abilities/ability_skip_many_turns.tres",
+	"repeat_turn" : "res://game/abilities/ability_repeat_turn.tres",
+	"repeating_turn" : "res://game/abilities/ability_repeating_turn.tres",
 
 	# Debug
 	"nuke": "res://game/abilities/ability_nuke.tres",
@@ -42,8 +46,9 @@ func execute(in_target: BattleParticipant, in_turn_target: BattleTurn = null) ->
 	turn_manipulation.type = BattleTurn.TurnManipulation.Type.REMOVE
 	BattleManager.on_battle_turn_manipulation.emit([turn_manipulation])
 
-func prepare(in_target: BattleParticipant) -> void:
+func prepare(in_target: BattleParticipant, in_turn_target: BattleTurn = null) -> void:
 	_target = in_target
+	_turn_target = in_turn_target
 	print(" - Preparing %s..." % resource_name)
 	
 	# todo: queue turn stuff
@@ -60,6 +65,7 @@ func cancel_prepare() -> void:
 
 func end() -> void:
 	_is_executing = false
+	on_end.emit()
 
 func get_is_executing() -> bool:
 	return _is_executing
@@ -70,6 +76,11 @@ func is_valid_for_target(_possible_target: BattleParticipant) -> bool:
 	
 func requires_turn_target() -> bool:
 	return false
+	
+# This handles case where turn is repeated, but the original target is no longer valid
+# return in format: [target: Participant, turn_target: BattleTurn]
+func find_fallback_target() -> Array:
+	return []
 
 # Returns whether this ability can currently activate
 func can_activate() -> bool:

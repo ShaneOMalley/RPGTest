@@ -6,7 +6,7 @@ class_name UIBattle extends Control
 @export var enemy_template: Resource
 
 signal on_ability_and_target_selected(ability_id, target_id, turn_target_uid)
-signal on_ability_prepare(ability_id, target_id)
+signal on_ability_prepare(ability_id, target_id, turn_target_uid)
 signal on_ability_cancel(ability_id)
 signal on_ability_cancel_prepare(ability_id)
 signal on_setup_complete()
@@ -76,8 +76,7 @@ func remove_enemy(uid: StringName) -> void:
 func show_battle_menu(entries: Array[BattleMenuEntry]) -> void:
 	var container := $MenuContainer/BattleMenuBackground
 	
-	for connection in turns_ui.on_turn_pressed.get_connections():
-		turns_ui.on_turn_pressed.disconnect(connection.callable)
+	clear_turns_ui_connections()
 
 	for index in range(entries.size()):
 		var ui_entry: UIBattleMenuEntry
@@ -141,17 +140,18 @@ func show_target_menu(ability_id: StringName, valid_participant_targets: Array[S
 		ui_entry.show()
 		
 		if target_uid == &"cancel":
-			ui_entry.pressed.connect(func(): ability_cancel(ability_id, previous_entries))
-			ui_entry.mouse_entered.connect(func(): ability_cancel_prepare(ability_id))
+			ui_entry.pressed.connect(ability_cancel.bind(ability_id, previous_entries))
+			ui_entry.mouse_entered.connect(ability_cancel_prepare.bind(ability_id))
 		else:
-			ui_entry.mouse_entered.connect(func(): ability_prepare(ability_id, target_uid))
-			ui_entry.pressed.connect(func(): ability_select_target(ability_id, target_uid))
+			ui_entry.mouse_entered.connect(ability_prepare.bind(-1, ability_id, target_uid))
+			ui_entry.pressed.connect(ability_select_target.bind(-1, ability_id, target_uid))
 		
 		ui_entry.disabled = false
 		ui_entry.set_text(target_uid)
 		
 	if requires_turn_target:
-		turns_ui.on_turn_pressed.connect(func(turn_uid): ability_select_target(ability_id, &"", turn_uid))
+		turns_ui.on_turn_pressed.connect(ability_select_target.bind(ability_id, &""))
+		turns_ui.on_turn_hovered.connect(ability_prepare.bind(ability_id, &""))
 	
 	# for index in range(valid_participant_targets.size(), _battle_menu_entries.size()):
 	for index in range(options.size(), _battle_menu_entries.size()):
@@ -161,9 +161,9 @@ func show_target_menu(ability_id: StringName, valid_participant_targets: Array[S
 
 	container.show()
 	
-func ability_prepare(ability_id: StringName, target_uid: StringName) -> void:
+func ability_prepare(turn_target_uid: int, ability_id: StringName, target_uid: StringName) -> void:
 	print(" -- PREPARE")
-	on_ability_prepare.emit(ability_id, target_uid)
+	on_ability_prepare.emit(ability_id, target_uid, turn_target_uid)
 	
 func ability_cancel(ability_id: StringName, previous_entries: Array[BattleMenuEntry]) -> void:
 	print(" -- CANCEL")
@@ -174,14 +174,25 @@ func ability_cancel_prepare(ability_id: StringName) -> void:
 	print(" -- CANCEL PREPARE")
 	on_ability_cancel_prepare.emit(ability_id)
 	
-func ability_select_target(ability_id: StringName, target_uid: StringName, turn_target_uid: int = -1) -> void:
+func ability_select_target(turn_target_uid: int, ability_id: StringName, target_uid: StringName) -> void:
 	print(" -- SELECT TARGET")
 	on_ability_and_target_selected.emit(ability_id, target_uid, turn_target_uid)
 	
-	for connection in turns_ui.on_turn_pressed.get_connections():
-		turns_ui.on_turn_pressed.disconnect(connection.callable)
-	
+	clear_turns_ui_connections()
 	hide_battle_menu()
+	
+func clear_turns_ui_connections() -> void:
+	for connection in turns_ui.on_turn_pressed.get_connections():
+		if connection.callable.get_object() == self:
+			turns_ui.on_turn_pressed.disconnect(connection.callable)
+		
+	for connection in turns_ui.on_turn_hovered.get_connections():
+		if connection.callable.get_object() == self:
+			turns_ui.on_turn_hovered.disconnect(connection.callable)
+		
+	for connection in turns_ui.on_turn_unhovered.get_connections():
+		if connection.callable.get_object() == self:
+			turns_ui.on_turn_unhovered.disconnect(connection.callable)
 
 func fade_in() -> void:
 	$AnimationPlayer.play(&"battle_fade")

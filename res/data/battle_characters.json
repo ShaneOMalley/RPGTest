@@ -8,7 +8,7 @@
 		"magic": 5,
 		"vitality": 6,
 
-		"abilities": ["attack", "nuke", "extra_turn", "skip_turn", "pass", "haste", "slow"]
+		"abilities": ["attack", "nuke", "extra_turn", "skip_turn", "repeat_turn", "pass", "haste", "slow", "repeating_turn"]
 	},
 	"player_chronomancer" :
 	{
@@ -19,7 +19,7 @@
 		"magic": 10,
 		"vitality": 6,
 
-		"abilities": ["attack", "nuke", "haste", "slow", "skip_turn", "skip_many_turns", "pass"]
+		"abilities": ["attack", "nuke", "haste", "slow", "skip_turn", "repeat_turn", "skip_many_turns", "pass", "repeating_turn"]
 	},
 
 	"ghoul" :
@@ -31,7 +31,7 @@
 		"magic": 4,
 		"vitality": 1,
 
-		"abilities": ["attack", "pass"]
+		"abilities": ["attack", "pass", "repeating_turn"]
 	},
 	"goblin" :
 	{
@@ -42,6 +42,6 @@
 		"magic": 5,
 		"vitality": 3,
 
-		"abilities": ["attack", "pass"]
+		"abilities": ["attack", "pass", "repeating_turn"]
 	}
 }

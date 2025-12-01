@@ -1,7 +1,7 @@
 extends Node
 
-signal on_ability_and_target_selected(ability_id, target_uid, turn_uid)
-signal on_ability_prepare(ability_id, target_uid)
+signal on_ability_and_target_selected(ability_id, target_uid, turn_target_uid)
+signal on_ability_prepare(ability_id, target_uid, turn_target_uid)
 signal on_ability_cancel(ability_id)
 signal on_ability_cancel_prepare(ability_id)
 signal on_ui_setup_complete()

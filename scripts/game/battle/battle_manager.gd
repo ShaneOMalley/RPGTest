@@ -16,13 +16,13 @@ signal on_battle_finished
 signal on_message_requested(message: String)
 signal on_battle_effect_applied(effect: BattleEffect)
 signal on_battle_turn_manipulation(turn_manipulations: Array[BattleTurn.TurnManipulation])
-# signal on_battle_ability_execute(ability: BattleAbility, turn_manipulations: Array[BattleTurn.TurnManipulation])
+signal on_battle_ability_execute(turn_uid: int, ability_execution_info: AbilityExecution)
 # signal on_battle_ability_prepare_start(ability: BattleAbility, turn_manipulations: Array[BattleTurn.TurnManipulation])
 # signal on_battle_ability_prepare_cancel(ability: BattleAbility, turn_manipulations: Array[BattleTurn.TurnManipulation])
 signal on_battle_fx_requested(effect_prototype: PackedScene, target: BattleParticipant)
 signal on_battle_fx_stop_requested(effect_prototype: PackedScene, target: BattleParticipant)
-signal on_battle_player_turn_started(participant: BattleParticipant, battle_turn: BattleTurn)
-signal on_battle_player_turn_ended(participant: BattleParticipant)
+signal on_request_show_battle_menu(participant: BattleParticipant, battle_turn: BattleTurn)
+signal on_request_hide_battle_menu(participant: BattleParticipant)
 signal on_battle_particiant_removed(participant: BattleParticipant)
 signal on_battle_turns_updated(turns: Array[BattleTurn])
 
@@ -81,12 +81,18 @@ func get_ui_setup_is_complete() -> bool:
 func set_ui_setup_is_complete(value: bool) -> void:
 	_ui_setup_is_complete = value
 
-func request_battle_ui_setup():
+func request_battle_ui_setup() -> void:
 	on_battle_ui_setup_requested.emit()
 
-func request_player_party_ui_setup():
+func request_player_party_ui_setup() -> void:
 	on_player_party_ui_setup_requested.emit()
+	
+func request_show_battle_menu() -> void:
+	on_request_show_battle_menu.emit(get_current_turn_participant(), _current_turn)
 
+func request_hide_battle_menu() -> void:
+	on_request_hide_battle_menu.emit(get_current_turn_participant())
+	
 # Message UI
 func request_message(message: String) -> void:
 	on_message_requested.emit(message);
@@ -116,13 +122,15 @@ func has_executing_ability() -> bool:
 	return _queued_ability_execution and _queued_ability_execution.ability.get_is_executing()
 
 func execute_queued_ability() -> void:
+	_current_turn.ability_execution_info = _queued_ability_execution
 	_queued_ability_execution.execute()
+	on_battle_ability_execute.emit(_current_turn.uid, _queued_ability_execution)
 	
 func clear_queued_ability() -> void:
 	_queued_ability_execution = null
 	
-func prepare_ability(in_ability: BattleAbility, in_target: BattleParticipant) -> void:
-	in_ability.prepare(in_target)
+func prepare_ability(in_ability: BattleAbility, in_target: BattleParticipant, in_turn_target: BattleTurn = null) -> void:
+	in_ability.prepare(in_target, in_turn_target)
 
 func cancel_ability(in_ability: BattleAbility) -> void:
 	in_ability.cancel()
@@ -167,6 +175,12 @@ func get_current_turn() -> BattleTurn:
 func get_current_turn_participant() -> BattleParticipant:
 	return _current_turn.participant
 	
+func get_turn_with_uid(turn_uid: int) -> BattleTurn:
+	var index = BattleManager._turns.find_custom(func(turn): return turn.uid == turn_uid)
+	if index != -1:
+		return _turns[index]
+	return null
+	
 func get_next_turn_for_participant(participant: BattleParticipant) -> BattleTurn:
 	var index := _turns.find_custom(func(turn: BattleTurn): return turn.participant == participant)
 	return _turns[index]
@@ -201,17 +215,20 @@ func remove_turn(turn: BattleTurn) -> void:
 	_turns.erase(turn)
 	on_battle_turns_updated.emit(_turns)
 	
+func recalculate_all_turn_times(participant: BattleParticipant, turn_manipulation_anim: StringName = &"") -> void:
+	recalculate_normal_turn_times(participant, turn_manipulation_anim)
+	recalculate_linked_turn_times(participant, turn_manipulation_anim)
+	
 func recalculate_normal_turn_times(participant: BattleParticipant, turn_manipulation_anim: StringName = &"") -> void:
 	var last_turn_time := _last_actual_turn_time_for_participant.get(participant, 0.0) as float
 	
 	var period := participant.get_turn_period()
 	
-	# todo: support "linked turns" (turns that have time relative to another turn. e.g. repeated turns)
 	var participant_normal_turns = _turns.filter(func(turn):
 		return turn.participant == participant and turn.turn_type == BattleTurn.TurnType.NORMAL and turn != _current_turn
 	)
 		
-	for turn in participant_normal_turns:
+	for turn: BattleTurn in participant_normal_turns:
 		turn.time = max(_battle_time,  last_turn_time + period)
 		last_turn_time = turn.time
 	
@@ -220,11 +237,29 @@ func recalculate_normal_turn_times(participant: BattleParticipant, turn_manipula
 	
 	if turn_manipulation_anim:
 		var turn_manipulation := BattleTurn.TurnManipulation.new()
-		turn_manipulation.turns = participant_normal_turns # .duplicate()
+		turn_manipulation.turns = participant_normal_turns
 		turn_manipulation.anim_name = turn_manipulation_anim
 		turn_manipulation.type = BattleTurn.TurnManipulation.Type.RECALCULATE
 		BattleManager.on_battle_turn_manipulation.emit([turn_manipulation])
+
+func recalculate_linked_turn_times(participant: BattleParticipant, turn_manipulation_anim: StringName =  &"") -> void:
+	var participant_linked_turns = _turns.filter(func(turn):
+		return turn.participant == participant and turn.turn_type == BattleTurn.TurnType.LINKED and turn != _current_turn
+	)
 	
+	for turn: BattleTurn in participant_linked_turns:
+		turn.time = turn.linked_turn.time + turn.time_offset_from_linked_turn
+		
+	_sort_turns()
+	on_battle_turns_updated.emit(_turns)
+	
+	if turn_manipulation_anim:
+		var turn_manipulation := BattleTurn.TurnManipulation.new()
+		turn_manipulation.turns = participant_linked_turns
+		turn_manipulation.anim_name = turn_manipulation_anim
+		turn_manipulation.type = BattleTurn.TurnManipulation.Type.RECALCULATE
+		BattleManager.on_battle_turn_manipulation.emit([turn_manipulation])
+
 func _sort_turns() -> void:
 	# todo: support "linked turns" (turns that have time relative to another turn. e.g. repeated turns)
 	_turns.sort_custom(func(a, b): return a.time < b.time)
@@ -324,12 +359,14 @@ func complete_pre_setup():
 	on_battle_pre_setup_complete.emit()
 
 func _on_state_entered(id: StringName) -> void:
-	if id == &"turn_decision_player":
-		on_battle_player_turn_started.emit(get_current_turn_participant(), _current_turn)
-
+	pass
+	# if id == &"turn_decision_player":
+	# 	on_battle_player_turn_started.emit(get_current_turn_participant(), _current_turn)
+		
 func _on_state_exited(id: StringName) -> void:
-	if id == &"turn_decision_player":
-		on_battle_player_turn_ended.emit(get_current_turn_participant())
+	pass
+	# if id == &"turn_decision_player":
+	# 	on_battle_player_turn_ended.emit(get_current_turn_participant())
 
 # func _process(_delta: float) -> void:
 # 	if Input.is_action_just_pressed("ui_right"):

@@ -20,6 +20,10 @@ func _apply_attack_effect() -> void:
 	
 func is_valid_for_target(possible_target: BattleParticipant) -> bool:
 	return possible_target.affiliation != _source.affiliation
+	
+func find_fallback_target() -> Array:
+	var possible_targets = BattleManager.participants.filter(func(participant): return is_valid_for_target(participant))
+	return [possible_targets.pick_random(), null]
 
 func get_message() -> String:
 	return "%s attacks %s for %d damage!" % [_source.get_display_name(), _target.get_display_name(), effect.damage]

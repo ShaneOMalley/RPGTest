@@ -8,7 +8,7 @@ func execute(in_target: BattleParticipant, in_turn_target: BattleTurn = null) ->
 	set_lifetime(1.3)
 	show_message()
 
-func prepare(in_target: BattleParticipant) -> void:
+func prepare(in_target: BattleParticipant, in_turn_target: BattleTurn = null) -> void:
 	# remove agility modifier from other participant
 	if is_instance_valid(_agility_effect) and _agility_effect.target !=  in_target:
 		var old_target = _agility_effect.target
@@ -16,7 +16,7 @@ func prepare(in_target: BattleParticipant) -> void:
 		_agility_effect = null
 		
 		# recalculate turns
-		BattleManager.recalculate_normal_turn_times(old_target)
+		BattleManager.recalculate_all_turn_times(old_target)
 	
 	# apply agility modifier
 	if !is_instance_valid(_agility_effect):
@@ -24,9 +24,9 @@ func prepare(in_target: BattleParticipant) -> void:
 		_agility_effect.apply()
 	
 		# recalculate turns
-		BattleManager.recalculate_normal_turn_times(in_target, &"grow")
+		BattleManager.recalculate_all_turn_times(in_target, &"grow")
 	
-	super.prepare(in_target)
+	super.prepare(in_target, in_turn_target)
 
 func cancel() -> void:
 	super.cancel()
@@ -38,7 +38,7 @@ func cancel_prepare() -> void:
 		_agility_effect = null
 		
 		# recalculate turns
-		BattleManager.recalculate_normal_turn_times(_target)
+		BattleManager.recalculate_all_turn_times(_target)
 	
 	super.cancel_prepare()
 

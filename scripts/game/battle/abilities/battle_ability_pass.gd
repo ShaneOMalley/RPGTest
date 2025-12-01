@@ -1,7 +1,7 @@
 class_name BattleAbilityPass extends BattleAbility
 
 func execute(in_target: BattleParticipant, in_turn_target: BattleTurn = null) -> void:
-	super.execute(in_target)
+	super.execute(in_target, in_turn_target)
 
 	BattleManager.play_fx(fx_activate, _source)
 

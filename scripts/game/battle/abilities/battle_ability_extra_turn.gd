@@ -7,11 +7,11 @@ func execute(in_target: BattleParticipant, in_turn_target: BattleTurn = null) ->
 	
 	set_lifetime(1.3)
 	
-func prepare(in_target: BattleParticipant) -> void:
+func prepare(in_target: BattleParticipant, in_turn_target: BattleTurn = null) -> void:
 	# create move
 	# play grow animation
 	
-	if is_instance_valid(_created_turn) && _created_turn.participant != in_target:
+	if is_instance_valid(_created_turn) and _created_turn.participant != in_target:
 		BattleManager.remove_turn(_created_turn)
 		_created_turn = null
 	#var new_target := !is_instance_valid(_created_turn) or _created_turn
@@ -27,7 +27,7 @@ func prepare(in_target: BattleParticipant) -> void:
 		create_turn.type = BattleTurn.TurnManipulation.Type.CREATE
 		BattleManager.on_battle_turn_manipulation.emit([create_turn])
 		
-	super.prepare(in_target)
+	super.prepare(in_target, in_turn_target)
 
 func cancel() -> void:
 	# play shrink animation
@@ -43,9 +43,10 @@ func cancel() -> void:
 	
 	super.cancel()
 	
-func is_valid_for_target(possible_target: BattleParticipant) -> bool:
-	return possible_target.affiliation == _source.affiliation
-	
 func end() -> void:
 	super.end()
 	_created_turn = null
+
+func is_valid_for_target(possible_target: BattleParticipant) -> bool:
+	return possible_target.affiliation == _source.affiliation
+

@@ -34,11 +34,12 @@ func on_message_requested(message: String) -> void:
 	BattleView.show_message(message)
 
 # Battle Abilities and Effects
-func on_ability_prepare(ability_id: StringName, target_uid: StringName) -> void:
+func on_ability_prepare(ability_id: StringName, target_uid: StringName, in_turn_target_uid: int) -> void:
 	var current_participant := BattleManager.get_current_turn_participant()
 	var ability := current_participant.abilities[ability_id]
 	var target := BattleManager.get_participant(target_uid)
-	BattleManager.prepare_ability(ability, target)
+	var turn_target := BattleManager.get_turn_with_uid(in_turn_target_uid)
+	BattleManager.prepare_ability(ability, target, turn_target)
 	
 func on_ability_cancel(ability_id: StringName) -> void:
 	var current_participant := BattleManager.get_current_turn_participant()
@@ -50,17 +51,11 @@ func on_ability_cancel_prepare(ability_id: StringName) -> void:
 	var ability := current_participant.abilities[ability_id]
 	BattleManager.cancel_prepare_ability(ability)
 
-func on_ability_and_target_selected(ability_id: StringName, target_uid: StringName, turn_uid: int) -> void:
+func on_ability_and_target_selected(ability_id: StringName, target_uid: StringName, turn_target_uid: int) -> void:
 	var current_participant := BattleManager.get_current_turn_participant()
 	var ability := current_participant.abilities[ability_id]
 	var target := BattleManager.get_participant(target_uid)
-	
-	var turn_target: BattleTurn = null
-	if turn_uid != -1:
-		var index = BattleManager._turns.find_custom(func(turn): return turn.uid == turn_uid)
-		if index != -1:
-			turn_target = BattleManager._turns[index]
-			
+	var turn_target := BattleManager.get_turn_with_uid(turn_target_uid)
 	BattleManager.queue_ability_execution(ability, target, turn_target)
 	
 func on_turn_hovered(turn_uid: int) -> void:
@@ -139,14 +134,20 @@ func on_battle_turns_updated(turns: Array[BattleTurn]) -> void:
 		# BattleView.add_turn(new_turn.uid, new_turn.participant.uid, new_turn.participant.affiliation)
 		var control_string = "%s: uid: %d" % [turn.participant.uid, turn.uid]
 		var turn_modifier := turn.turn_modifier
-		var modifier_text: String = "skipping!" if (turn_modifier and turn_modifier.type == BattleTurn.TurnModifier.Type.SKIP) else ""
+		var modifier_text: String 
+		if turn_modifier:
+			if turn_modifier.type == BattleTurn.TurnModifier.Type.SKIP:
+				modifier_text = "skipping!"
+			if turn_modifier.type == BattleTurn.TurnModifier.Type.REPEAT:
+				modifier_text = "repeating!"
+				
 		BattleView.set_turn_text_and_time(turn.uid, control_string, modifier_text, turn.time)
 		
 	BattleView.sort_turns(sorted_turn_uids)
 	
 	_previous_battle_turns = turns.duplicate()
 
-func on_battle_player_turn_started(battle_participant: BattleParticipant, battle_turn: BattleTurn) -> void:
+func on_request_show_battle_menu(battle_participant: BattleParticipant, battle_turn: BattleTurn) -> void:
 	var battle_menu_entries: Array[UIBattle.BattleMenuEntry]
 
 	var abilities := battle_participant.abilities
@@ -168,7 +169,7 @@ func on_battle_player_turn_started(battle_participant: BattleParticipant, battle
 
 	BattleView.show_battle_menu(battle_menu_entries)
 
-func on_battle_player_turn_ended(_battle_participant: BattleParticipant) -> void:
+func on_request_hide_battle_menu(_battle_participant: BattleParticipant) -> void:
 	BattleView.hide_battle_menu()
 
 # Misc
@@ -196,8 +197,8 @@ func _ready():
 	BattleManager.on_battle_fx_requested.connect(on_battle_fx_requested)
 	BattleManager.on_battle_fx_stop_requested.connect(on_battle_fx_stop_requested)
 	
-	BattleManager.on_battle_player_turn_started.connect(on_battle_player_turn_started)
-	BattleManager.on_battle_player_turn_ended.connect(on_battle_player_turn_ended)
+	BattleManager.on_request_show_battle_menu.connect(on_request_show_battle_menu)
+	BattleManager.on_request_hide_battle_menu.connect(on_request_hide_battle_menu)
 	BattleManager.on_battle_particiant_removed.connect(on_battle_particiant_removed)
 	BattleManager.on_battle_turns_updated.connect(on_battle_turns_updated)
 
