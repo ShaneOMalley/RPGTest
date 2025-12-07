@@ -3,9 +3,11 @@ class_name BattleAbilitySkipTurn extends BattleAbility
 func execute(in_target: BattleParticipant, in_turn_target: BattleTurn = null) -> void:
 	super.execute(in_target, in_turn_target)
 	
+	
 	in_turn_target.turn_modifier = BattleTurn.TurnModifierSkip.new()
 	BattleManager.force_update_turns()
 	
+	BattleManager.play_animation(&"casting", _source)
 	set_lifetime(1.5)
 	set_timer(0.2, show_message)
 	

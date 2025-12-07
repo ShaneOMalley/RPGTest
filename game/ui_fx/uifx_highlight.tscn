@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://72gw0awik7vs"]
 
-[ext_resource type="Script" uid="uid://ccj4csqnfquqi" path="res://scripts/ui/ui_fx.gd" id="1_auwxj"]
+[ext_resource type="Script" uid="uid://ccj4csqnfquqi" path="res://scripts/ui/battle/ui_fx.gd" id="1_auwxj"]
 [ext_resource type="Texture2D" uid="uid://dtx8u7aqo0kph" path="res://res/particles/textures/highlight.png" id="2_auwxj"]
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_rhu86"]

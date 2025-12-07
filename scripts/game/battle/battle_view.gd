@@ -72,6 +72,11 @@ func stop_fx(effect_prototype: PackedScene, target_uid: StringName) -> void:
 	# Just attempt to stop for both enemies and player characters
 	battle_ui.stop_fx(effect_prototype, target_uid)
 	player_party_ui.stop_fx(effect_prototype, target_uid)
+	
+# Battle Animation
+func play_animation(anim_id: StringName, target_uid: StringName) -> void:
+	battle_ui.play_animation(anim_id, target_uid)
+	player_party_ui.play_animation(anim_id, target_uid)
 
 # Enemy
 func setup_enemy(uid: StringName, hp: int, max_hp: int) -> void:
@@ -133,7 +138,8 @@ func setup_battle_ui() -> void:
 	battle_ui.fade_in()
 
 func destroy_battle_ui() -> void:
-	battle_ui.queue_free()
+	if battle_ui:
+		battle_ui.queue_free()
 	
 	if USE_DEBUG_UI:
 		debug_battle_ui.queue_free()

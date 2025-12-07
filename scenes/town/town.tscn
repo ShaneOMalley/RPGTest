@@ -1,0 +1,24 @@
+[gd_scene load_steps=2 format=3 uid="uid://b2gin2qs78ro3"]
+
+[ext_resource type="Texture2D" uid="uid://6prdnqhgvw16" path="res://res/town.png" id="1_n11nm"]
+
+[node name="Town" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TextureRect" type="TextureRect" parent="."]
+self_modulate = Color(0.579691, 0.579691, 0.579691, 1)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_n11nm")
+expand_mode = 2
+
+[node name="UI" type="Node" parent="."]

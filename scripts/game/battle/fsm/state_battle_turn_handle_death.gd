@@ -21,9 +21,9 @@ func on_enter() -> void:
 			
 	BattleManager.on_battle_turn_manipulation.emit([turn_manipulation])
 	
-	set_timer(0.6, func(): _remove_participants(dead_participants))
+	set_timer(0.6, func(): _kill_participants(dead_participants))
 	BattleManager.block_fsm(1)
 
-func _remove_participants(participants: Array[BattleParticipant]) -> void:
+func _kill_participants(participants: Array[BattleParticipant]) -> void:
 	for participant in participants:
-		BattleManager.remove_participant(participant)
+		BattleManager.kill_participant(participant)

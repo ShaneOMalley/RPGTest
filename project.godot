@@ -29,6 +29,8 @@ DungeonManager="*res://scripts/game/dungeon_crawling/dungeon_manager.gd"
 DungeonCrawlingView="*res://scripts/game/dungeon_crawling/dungeon_crawling_view.gd"
 DungeonCrawlingPresenter="*res://scripts/game/dungeon_crawling/dungeon_crawling_presenter.gd"
 PlayerPartyManager="*res://scripts/game/player_party_manager.gd"
+TownManager="*res://scripts/game/town_manager.gd"
+AnimationCallbackManager="*res://scripts/common/animation_callback_manager.gd"
 
 [editor_plugins]
 

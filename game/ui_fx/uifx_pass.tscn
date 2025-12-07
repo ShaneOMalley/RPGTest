@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://cbssyre83ci4j"]
 
-[ext_resource type="Script" uid="uid://ccj4csqnfquqi" path="res://scripts/ui/ui_fx.gd" id="1_rhu86"]
+[ext_resource type="Script" uid="uid://ccj4csqnfquqi" path="res://scripts/ui/battle/ui_fx.gd" id="1_rhu86"]
 [ext_resource type="Texture2D" uid="uid://bt72qjcmn2x0e" path="res://res/particles/textures/pass.png" id="2_mhcbh"]
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_rhu86"]

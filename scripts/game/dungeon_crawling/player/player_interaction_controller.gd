@@ -59,6 +59,9 @@ func _ready() -> void:
 	(owner as Player).on_rotation_finished.connect(_on_player_rotation_finished)
 
 func _process(delta: float) -> void:
+	if BattleManager.get_is_battle_active():
+		return
+	
 	if Input.is_action_just_pressed(&"player_interact"):
 		for interactable in _valid_interactables:
 			interactable.execute()

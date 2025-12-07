@@ -34,6 +34,9 @@ func update_player_interactables(interactables: Array) -> void:
 func on_dungeon_crawling_start(player_position: Vector3) -> void:
 	DungeonCrawlingView.setup_ui()
 	update_player_position(player_position)
+	
+func on_dungeon_crawling_finished() -> void:
+	DungeonCrawlingView.destroy_ui()
 
 func on_battle_started() -> void:
 	DungeonCrawlingView.hide_ui()
@@ -47,6 +50,7 @@ func _ready():
 	DungeonManager.on_player_rotation_started.connect(update_player_rotation)
 	DungeonManager.on_player_interactables_updated.connect(update_player_interactables)
 	DungeonManager.on_dungeon_crawling_start.connect(on_dungeon_crawling_start)
+	DungeonManager.on_dungeon_crawling_finished.connect(on_dungeon_crawling_finished)
 	DungeonManager.on_dungeon_floor_start.connect(update_floor_progress)
 
 	BattleManager.on_battle_started.connect(on_battle_started)

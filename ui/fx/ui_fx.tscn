@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://4pnu33r3kmwg"]
 
-[ext_resource type="Script" uid="uid://ccj4csqnfquqi" path="res://scripts/ui/ui_fx.gd" id="1_g6kow"]
+[ext_resource type="Script" uid="uid://ccj4csqnfquqi" path="res://scripts/ui/battle/ui_fx.gd" id="1_g6kow"]
 
 [node name="UIFX" type="Control"]
 layout_mode = 3

@@ -16,7 +16,7 @@ class FXInstance:
 		
 var _fx_instances: Array[FXInstance]
 
-# Effects
+# FX
 func play_fx(effect_prototype: PackedScene, target_uid: StringName):
 	if !_player_to_ui_index.has(target_uid):
 		return
@@ -34,6 +34,14 @@ func stop_fx(effect_prototype: PackedScene, target_uid: StringName) -> void:
 	var results := _fx_instances.filter(func(entry): return entry.target_uid == target_uid and entry.prototype == effect_prototype)
 	results.map(func(entry): entry.instance.queue_free())
 	_fx_instances = _fx_instances.filter(func(entry): return !results.has(entry))
+	
+# Animation
+func play_animation(anim_id: StringName, target_uid: StringName) -> void:
+	if !_player_to_ui_index.has(target_uid):
+		return
+
+	var element := get_player_ui(_player_to_ui_index[target_uid])
+	element.play_animation(anim_id)
 
 # Player
 func get_player_ui(index: int) -> PlayerPartyMember:

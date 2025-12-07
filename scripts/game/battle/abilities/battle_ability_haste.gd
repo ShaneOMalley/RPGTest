@@ -5,6 +5,8 @@ var _agility_effect: BattleEffectHaste
 func execute(in_target: BattleParticipant, in_turn_target: BattleTurn = null) -> void:
 	super.execute(in_target)
 	
+	BattleManager.play_animation(&"casting", _source)
+	
 	set_lifetime(1.3)
 	show_message()
 

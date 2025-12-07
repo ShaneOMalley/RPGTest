@@ -5,6 +5,7 @@ var _created_turn: BattleTurn
 func execute(in_target: BattleParticipant, in_turn_target: BattleTurn = null) -> void:
 	super.execute(in_target, in_turn_target)
 	
+	BattleManager.play_animation(&"casting", _source)
 	set_lifetime(1.3)
 	show_message()
 	

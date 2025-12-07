@@ -23,11 +23,15 @@ func on_player_party_ui_setup_requested() -> void:
 
 func on_ui_setup_complete() -> void:
 	BattleManager.set_ui_setup_is_complete(true)
-
+	
 # Tear Down
 func on_battle_finished() -> void:
 	_previous_battle_turns.clear()
 	BattleView.destroy_battle_ui()
+	
+func on_dungeon_crawling_finished() -> void:
+	BattleView.destroy_battle_ui()
+	BattleView.destroy_player_party_ui()
 	
 # Message UI
 func on_message_requested(message: String) -> void:
@@ -99,7 +103,11 @@ func on_battle_fx_requested(effect_prototype: PackedScene, target: BattlePartici
 	
 func on_battle_fx_stop_requested(effect_prototype: PackedScene, target: BattleParticipant) -> void:
 	BattleView.stop_fx(effect_prototype, target.uid)
-
+	
+# Battle Animation
+func on_battle_animation_requested(anim_id: StringName, target: BattleParticipant) -> void:
+	BattleView.play_animation(anim_id, target.uid)
+	
 # Turns
 func on_battle_turns_updated(turns: Array[BattleTurn]) -> void:
 	if !is_instance_valid(BattleView.turns_ui):
@@ -196,12 +204,13 @@ func _ready():
 	
 	BattleManager.on_battle_fx_requested.connect(on_battle_fx_requested)
 	BattleManager.on_battle_fx_stop_requested.connect(on_battle_fx_stop_requested)
+	BattleManager.on_battle_animation_requested.connect(on_battle_animation_requested)
 	
 	BattleManager.on_request_show_battle_menu.connect(on_request_show_battle_menu)
 	BattleManager.on_request_hide_battle_menu.connect(on_request_hide_battle_menu)
 	BattleManager.on_battle_particiant_removed.connect(on_battle_particiant_removed)
 	BattleManager.on_battle_turns_updated.connect(on_battle_turns_updated)
-
+	
 	BattleView.on_ability_and_target_selected.connect(on_ability_and_target_selected)
 	
 	BattleView.on_turn_hovered.connect(on_turn_hovered)
@@ -212,3 +221,6 @@ func _ready():
 	BattleView.on_ability_cancel_prepare.connect(on_ability_cancel_prepare)
 	
 	BattleView.on_ui_setup_complete.connect(on_ui_setup_complete)
+	
+	DungeonManager.on_dungeon_crawling_finished.connect(on_dungeon_crawling_finished)
+

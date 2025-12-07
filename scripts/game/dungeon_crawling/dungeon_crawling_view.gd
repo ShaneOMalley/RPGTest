@@ -41,3 +41,8 @@ func setup_ui() -> void:
 	dungeon_crawling_ui = preload("res://ui/dungeon_crawling/dungeon_crawling_ui.tscn").instantiate()
 	# get_tree().root.add_child.call_deferred(dungeon_crawling_ui)
 	get_tree().root.add_child(dungeon_crawling_ui)
+
+func destroy_ui() -> void:
+	if dungeon_crawling_ui:
+		dungeon_crawling_ui.queue_free()
+		_filled_cells.clear()

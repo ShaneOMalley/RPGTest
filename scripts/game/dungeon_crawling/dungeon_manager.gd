@@ -30,6 +30,7 @@ signal on_player_rotation_started(target_rotation: float)
 signal on_player_rotation_finished(target_rotation: float)
 signal on_player_interactables_updated(interactables: Array)
 signal on_dungeon_crawling_start(player_position: Vector3)
+signal on_dungeon_crawling_finished()
 signal on_dungeon_floor_start(current_floor_number: int, num_floors: int)
 
 func get_grid_width() -> int:
@@ -96,6 +97,8 @@ func set_dungeon_floor_index(in_index: int) -> void:
 	
 	_current_floor_index = in_index
 	_current_scene = _floors[in_index].instantiate()
+	# get_tree().change_scene_to_packed(_floors[in_index])
+	# await Engine.get_main_loop().process_frame # Stinky. There doesn't seem to be signal for scene change in Godot 4.4
 	
 	var geometry := _current_scene.find_child(&"GeometryParent").get_child(0)
 	_movement_data = geometry.get_meta(&"movement_data")
@@ -111,8 +114,11 @@ func set_dungeon_floor_index(in_index: int) -> void:
 	
 func goto_next_floor() -> void:
 	_current_floor_index += 1
-	_current_floor_index %= _floors.size()
-	set_dungeon_floor_index(_current_floor_index)
+	if _current_floor_index >= _floors.size():
+		end_dungeon_crawling()
+		TownManager.enter_town_scene()
+	else:
+		set_dungeon_floor_index(_current_floor_index)
 
 func set_player(in_player: Player) -> void:
 	_player = in_player
@@ -125,14 +131,15 @@ func set_player(in_player: Player) -> void:
 	
 	BattleManager.request_player_party_ui_setup()
 	on_dungeon_crawling_start.emit(_player.position)
-
+	
 const _dungeon_data_resource_path := "res://game/dungeon_crawling/dungeon_data_test.tres"
-func _ready():
+func reset() -> void:
 	# todo: find non-blocking way of loading
 	_current_dungeon_data = load(_dungeon_data_resource_path).duplicate() as DungeonData
 	var possible_floors = _current_dungeon_data.dungeon_scenes.duplicate()
 	possible_floors.shuffle()
 	
+	_floors.clear()
 	var num_floors = _current_dungeon_data.num_floors
 	while num_floors > 0:
 		_floors.append(possible_floors.pop_front())
@@ -140,6 +147,12 @@ func _ready():
 	
 	_current_floor_index = -1
 
-func _process(delta: float) -> void:
-	if Input.is_action_just_pressed(&"ui_right"):
-		goto_next_floor()
+func end_dungeon_crawling() -> void:
+	on_dungeon_crawling_finished.emit()
+
+# func _ready():
+# 	reset()
+
+# func _process(delta: float) -> void:
+# 	if Input.is_action_just_pressed(&"ui_right"):
+# 		goto_next_floor()

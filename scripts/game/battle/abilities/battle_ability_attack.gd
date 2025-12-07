@@ -6,9 +6,11 @@ func execute(in_target: BattleParticipant, in_turn_target: BattleTurn = null) ->
 	super.execute(in_target)
 
 	BattleManager.play_fx(fx_activate, _source)
+	BattleManager.play_animation(&"attack", _source)
 
 	set_timer(0.4, _apply_attack_effect)
 	set_lifetime(1.9)
+	# AnimationCallbackManager.get_event_signal(&"on_animation_finished").connect(func(anim_id): if anim_id == "attack": end())
 
 func _apply_attack_effect() -> void:
 	effect = BattleEffectAttack.new(_source, _target)

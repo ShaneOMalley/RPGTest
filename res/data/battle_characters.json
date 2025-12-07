@@ -31,7 +31,10 @@
 		"magic": 4,
 		"vitality": 1,
 
-		"abilities": ["attack", "pass", "repeating_turn"]
+		"abilities": ["attack", "pass", "repeating_turn"],
+		
+		"gold_reward_min": 50,
+		"gold_reward_max": 56
 	},
 	"goblin" :
 	{
@@ -42,6 +45,9 @@
 		"magic": 5,
 		"vitality": 3,
 
-		"abilities": ["attack", "pass", "repeating_turn"]
+		"abilities": ["attack", "pass", "repeating_turn"],
+		
+		"gold_reward_min": 40,
+		"gold_reward_max": 44
 	}
 }

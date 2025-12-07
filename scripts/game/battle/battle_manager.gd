@@ -21,6 +21,7 @@ signal on_battle_ability_execute(turn_uid: int, ability_execution_info: AbilityE
 # signal on_battle_ability_prepare_cancel(ability: BattleAbility, turn_manipulations: Array[BattleTurn.TurnManipulation])
 signal on_battle_fx_requested(effect_prototype: PackedScene, target: BattleParticipant)
 signal on_battle_fx_stop_requested(effect_prototype: PackedScene, target: BattleParticipant)
+signal on_battle_animation_requested(anim_id: StringName, target: BattleParticipant)
 signal on_request_show_battle_menu(participant: BattleParticipant, battle_turn: BattleTurn)
 signal on_request_hide_battle_menu(participant: BattleParticipant)
 signal on_battle_particiant_removed(participant: BattleParticipant)
@@ -32,6 +33,7 @@ var _battle_time: float = 0
 var _state_machine: FSMBattle
 var _is_battle_active: bool = false
 var _encounter_group_id
+var _current_battle_rewards: Dictionary[StringName, int]
 
 ## FSM
 func block_fsm(time: float) -> void:
@@ -50,7 +52,7 @@ func get_is_battle_active() -> bool:
 func get_participant(uid: StringName) -> BattleParticipant:
 	var index := participants.find_custom((func(participant): return participant.uid == uid))
 	return participants[index]
-
+	
 # TODO: Cache this instead of filtering each time it's called
 func get_enemies() -> Array[BattleParticipant]:
 	# var filter_enemies := func(participant: BattleParticipant) -> bool:
@@ -72,6 +74,9 @@ func get_is_finished_setting_up_participants() -> bool:
 
 func set_is_finished_setting_up_participants(value: bool) -> void:
 	_is_finished_setting_up_participants = value
+	
+func get_rewards() -> Dictionary[StringName, int]:
+	return _current_battle_rewards
 
 ## UI
 var _ui_setup_is_complete := false
@@ -145,15 +150,23 @@ func play_fx(effect_prototype: PackedScene, target: BattleParticipant):
 func stop_fx(effect_prototype: PackedScene, target: BattleParticipant):
 	on_battle_fx_stop_requested.emit(effect_prototype, target)
 	
+## Animation Management
+func play_animation(anim_id: StringName, target: BattleParticipant):
+	on_battle_animation_requested.emit(anim_id, target)
+	
 ## Particpant Management
 func add_participant(participant: BattleParticipant) -> void:
 	participants.push_back(participant)
 
-func remove_participant(participant: BattleParticipant) -> void:
+func kill_participant(participant: BattleParticipant) -> void:
 	participants.erase(participant)
 	_turns = _turns.filter(func(turn: BattleTurn): return turn.participant != participant)
 	on_battle_particiant_removed.emit(participant)
 	on_battle_turns_updated.emit(_turns)
+	
+	if participant.affiliation == Affiliation.ENEMY:
+		_current_battle_rewards.get_or_add(&"gold", 0)
+		_current_battle_rewards[&"gold"] += participant.generate_gold_reward()
 
 ## Turn Management
 var _current_turn: BattleTurn
@@ -352,6 +365,7 @@ func finish_battle():
 	participants.clear()
 	_state_machine.queue_free()
 	_is_battle_active = false
+	_current_battle_rewards.clear()
 	on_battle_finished.emit()
 
 func complete_pre_setup():
@@ -359,9 +373,9 @@ func complete_pre_setup():
 	on_battle_pre_setup_complete.emit()
 
 func _on_state_entered(id: StringName) -> void:
-	pass
-	# if id == &"turn_decision_player":
-	# 	on_battle_player_turn_started.emit(get_current_turn_participant(), _current_turn)
+	if id == &"turn_decision_player":
+		pass	
+		# on_battle_player_turn_started.emit(get_current_turn_participant(), _current_turn)
 		
 func _on_state_exited(id: StringName) -> void:
 	pass

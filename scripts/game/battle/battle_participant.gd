@@ -19,6 +19,9 @@ var _magic: int
 var _agility: int
 var _vitality: int
 
+var _gold_reward_min: int
+var _gold_reward_max: int
+
 # Attributes
 func get_attribute(attribute_id: StringName) -> Variant:
 	var base = get(attribute_id)
@@ -59,6 +62,9 @@ func remove_all_effects() -> void:
 func get_turn_period() -> float:
 	# return 25 - agility ** 0.7
 	return max(1,  30 - get_attribute(&"_agility"))
+	
+func generate_gold_reward() -> int:
+	return randi_range(_gold_reward_min, _gold_reward_max)
 
 func _process(_delta: float):
 	pass
@@ -96,6 +102,13 @@ static func create_from_config(in_config_id: StringName) -> BattleParticipant:
 	participant._magic = data.magic
 	participant._agility = data.agility
 	participant._vitality = data.vitality
+	
+	if data.has(&"gold_reward_min") and data.has(&"gold_reward_max"):
+		participant._gold_reward_min = data.gold_reward_min
+		participant._gold_reward_max = data.gold_reward_max
+	else:
+		participant._gold_reward_min = 0
+		participant._gold_reward_max = 0
 
 	if data.abilities:
 		for ability_id in data.abilities:

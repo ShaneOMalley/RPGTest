@@ -24,3 +24,15 @@ func hide_info() -> void:
 	$Border/Portrait.hide()
 	$Border/TextName.hide()
 	$Border/TextHP.hide()
+	
+func _ready() -> void:
+	# ($Border/AnimationPlayer as AnimationPlayer).animation_started.connect(AnimationCallbackManager.on_animation_started)
+	# ($Border/AnimationPlayer as AnimationPlayer).animation_finished.connect(AnimationCallbackManager.on_animation_finished)
+	var animation_player := $Border/AnimationPlayer as AnimationPlayer
+	animation_player.animation_finished.connect(func(anim_id): animation_player.play(&"RESET"))
+	
+func play_animation(anim_id: StringName) -> void:
+	($Border/AnimationPlayer as AnimationPlayer).play(anim_id)
+	
+func handle_animation_event(event_id: StringName) -> void:
+	AnimationCallbackManager.raise_event(event_id)

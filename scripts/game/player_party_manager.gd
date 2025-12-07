@@ -1,6 +1,10 @@
 extends Node
 
+# Party participants
 var _participants: Array[BattleParticipant]
+
+# Inventory and stuff
+var gold: int = 200
 
 func _on_load_complete(participant_ids: Array[StringName]) -> void:
 	for participant_id in participant_ids:
@@ -25,6 +29,7 @@ func on_battle_finished() -> void:
 		participant.remove_all_effects()
 
 func _ready():
-	add_participants_async([&"player", &"player"])
+	# add_participants_async([&"player", &"player"])
+	add_participants_async([&"player"])
 	
 	BattleManager.on_battle_finished.connect(on_battle_finished)

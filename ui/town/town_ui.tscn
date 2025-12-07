@@ -1,0 +1,57 @@
+[gd_scene load_steps=2 format=3 uid="uid://cojkedoquhitj"]
+
+[ext_resource type="Script" uid="uid://cfuxbv0xcaimf" path="res://scripts/ui/town/ui_town.gd" id="1_76fhd"]
+
+[node name="TownUI" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_76fhd")
+
+[node name="Menu" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -221.0
+offset_top = -102.0
+offset_right = 221.0
+offset_bottom = 102.0
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 1
+
+[node name="StartDungeon" type="Button" parent="Menu"]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+text = "Start Dungeon"
+
+[node name="Recruitment" type="Button" parent="Menu"]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+text = "Recruitment"
+
+[node name="Shop" type="Button" parent="Menu"]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+disabled = true
+text = "Shop"
+
+[node name="Healing" type="Button" parent="Menu"]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+disabled = true
+text = "Healing
+"
+
+[node name="Back" type="Button" parent="Menu"]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+disabled = true
+text = "Back
+"

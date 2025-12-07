@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://bvkr4e5f5ju3a"]
 
-[ext_resource type="Script" uid="uid://ccj4csqnfquqi" path="res://scripts/ui/ui_fx.gd" id="1_hrm4t"]
+[ext_resource type="Script" uid="uid://ccj4csqnfquqi" path="res://scripts/ui/battle/ui_fx.gd" id="1_hrm4t"]
 [ext_resource type="Texture2D" uid="uid://btmwxnis6anps" path="res://res/particles/textures/use_skill.png" id="1_lr1an"]
 [ext_resource type="Material" uid="uid://dfwv8i15bbsal" path="res://res/particles/process_materials/test_particle_process_material.tres" id="2_hrm4t"]
 

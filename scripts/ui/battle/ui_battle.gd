@@ -34,8 +34,7 @@ class BattleMenuEntry:
 	var valid_participant_targets: Array[StringName]
 	var requires_turn_target: bool
 
-# Effects
-
+# FX
 func play_fx(effect_prototype: PackedScene, target_uid: StringName) -> void:
 	if !_enemies.has(target_uid):
 		return
@@ -53,7 +52,11 @@ func stop_fx(effect_prototype: PackedScene, target_uid: StringName) -> void:
 	var results := _fx_instances.filter(func(entry): return entry.target_uid == target_uid and entry.prototype == effect_prototype)
 	results.map(func(entry): entry.instance.queue_free())
 	_fx_instances = _fx_instances.filter(func(entry): return !results.has(entry))
-
+	
+# Animation
+func play_animation(anim_id: StringName, target_uid: StringName) -> void:
+	pass
+	
 # Enemy
 func add_enemy(uid: StringName, hp: int, max_hp: int) -> void:
 	var ui_enemy := enemy_template.instantiate() as UIEnemy

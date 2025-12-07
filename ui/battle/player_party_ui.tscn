@@ -1,9 +1,9 @@
 [gd_scene load_steps=3 format=3 uid="uid://cfd7pgu3r6snw"]
 
-[ext_resource type="Script" uid="uid://dq7cq0jfvr1m7" path="res://scripts/ui/ui_player_party.gd" id="1_yuo5u"]
+[ext_resource type="Script" uid="uid://dq7cq0jfvr1m7" path="res://scripts/ui/battle/ui_player_party.gd" id="1_yuo5u"]
 [ext_resource type="PackedScene" uid="uid://bqkxs2hin7pck" path="res://ui/battle/player_party_member.tscn" id="3_h1vkm"]
 
-[node name="BattleUI" type="Control"]
+[node name="PlayerPartyUI" type="Control"]
 z_index = 1
 layout_mode = 3
 anchors_preset = 15

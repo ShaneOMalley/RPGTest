@@ -1,0 +1,13 @@
+class_name UITown extends Control
+
+func _start_dungeon() -> void:
+	TownManager.remove_town_scene()
+	DungeonManager.reset()
+	DungeonManager.goto_next_floor()
+	
+func _do_recruitment() -> void:
+	TownManager.show_town_ui(preload("res://ui/town/town_recruitment_ui.tscn"))
+
+func _ready() -> void:
+	($Menu/StartDungeon as Button).pressed.connect(_start_dungeon)
+	($Menu/Recruitment as Button).pressed.connect(_do_recruitment)
