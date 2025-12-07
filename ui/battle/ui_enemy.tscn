@@ -1,13 +1,105 @@
-[gd_scene load_steps=3 format=3 uid="uid://bk3tvyhf7s8eg"]
+[gd_scene load_steps=13 format=3 uid="uid://bk3tvyhf7s8eg"]
 
-[ext_resource type="Texture2D" uid="uid://xoit6n18vqp2" path="res://res/sprites/enemies/test_enemy_idle_1.png" id="1_bhddf"]
+[ext_resource type="Texture2D" uid="uid://bdgoqeacsqwy" path="res://res/sprites/enemies/enemy_spritesheet.png" id="1_eavtk"]
 [ext_resource type="Script" uid="uid://dml8tis66ysy5" path="res://scripts/ui/battle/ui_enemy.gd" id="2_8aegp"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_eavtk"]
+atlas = ExtResource("1_eavtk")
+region = Rect2(0, 0, 256, 256)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_o8aqn"]
+atlas = ExtResource("1_eavtk")
+region = Rect2(0, 0, 256, 256)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dt4d7"]
+atlas = ExtResource("1_eavtk")
+region = Rect2(256, 0, 256, 256)
+
+[sub_resource type="Animation" id="Animation_mhbw2"]
+resource_name = "idle"
+length = 0.4
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [SubResource("AtlasTexture_o8aqn"), SubResource("AtlasTexture_dt4d7")]
+}
+
+[sub_resource type="Animation" id="Animation_jm0lq"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [SubResource("AtlasTexture_eavtk")]
+}
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mhbw2"]
+atlas = ExtResource("1_eavtk")
+region = Rect2(256, 256, 256, 256)
+
+[sub_resource type="Animation" id="Animation_ijsio"]
+resource_name = "getting_hit"
+length = 0.7
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [SubResource("AtlasTexture_mhbw2")]
+}
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jm0lq"]
+atlas = ExtResource("1_eavtk")
+region = Rect2(0, 256, 256, 256)
+
+[sub_resource type="Animation" id="Animation_eavtk"]
+resource_name = "attack"
+length = 0.7
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [SubResource("AtlasTexture_jm0lq")]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_ijsio"]
+_data = {
+&"RESET": SubResource("Animation_jm0lq"),
+&"attack": SubResource("Animation_eavtk"),
+&"getting_hit": SubResource("Animation_ijsio"),
+&"idle": SubResource("Animation_mhbw2")
+}
 
 [node name="Enemy" type="TextureRect"]
 custom_minimum_size = Vector2(100, 100)
 offset_right = 100.0
 offset_bottom = 100.0
-texture = ExtResource("1_bhddf")
+texture = SubResource("AtlasTexture_eavtk")
 expand_mode = 2
 script = ExtResource("2_8aegp")
 
@@ -31,3 +123,8 @@ text = "test/test
 "
 fit_content = true
 autowrap_mode = 0
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_ijsio")
+}

@@ -55,7 +55,11 @@ func stop_fx(effect_prototype: PackedScene, target_uid: StringName) -> void:
 	
 # Animation
 func play_animation(anim_id: StringName, target_uid: StringName) -> void:
-	pass
+	if !_enemies.has(target_uid):
+		return
+		
+	var element := _enemies[target_uid]
+	element.play_animation(anim_id)
 	
 # Enemy
 func add_enemy(uid: StringName, hp: int, max_hp: int) -> void:

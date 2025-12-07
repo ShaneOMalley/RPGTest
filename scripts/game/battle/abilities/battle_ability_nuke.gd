@@ -20,8 +20,9 @@ func _apply_attack_effect():
 	for enemy_participant in BattleManager.get_enemies():
 		var effect := BattleEffectNuke.new(_source, enemy_participant)
 		effect.apply()
-
+		
 		BattleManager.play_fx(fx_affect_target, enemy_participant)
+		BattleManager.play_animation(&"getting_hit", enemy_participant)
 		
 	set_timer(0.2, show_message)
 

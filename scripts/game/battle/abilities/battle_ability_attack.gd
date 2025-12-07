@@ -17,6 +17,7 @@ func _apply_attack_effect() -> void:
 	effect.apply()
 
 	BattleManager.play_fx(fx_affect_target, _target)
+	BattleManager.play_animation(&"getting_hit", _target)
 	
 	set_timer(0.3, show_message)
 	
