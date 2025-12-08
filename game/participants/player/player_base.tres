@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="ParticipantData" load_steps=3 format=3 uid="uid://ofck1fcxw341"]
+
+[ext_resource type="PackedScene" uid="uid://dlts5y3fepqfr" path="res://ui/battle/character_graphics/character_graphics_player_base.tscn" id="1_thryr"]
+[ext_resource type="Script" uid="uid://gg7drsvm21dh" path="res://scripts/game/battle/participants/participant_data.gd" id="2_806aw"]
+
+[resource]
+script = ExtResource("2_806aw")
+character_graphics = ExtResource("1_thryr")
+metadata/_custom_type_script = "uid://gg7drsvm21dh"

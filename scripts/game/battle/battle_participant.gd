@@ -19,6 +19,8 @@ var _magic: int
 var _agility: int
 var _vitality: int
 
+var participant_data: ParticipantData
+
 var _gold_reward_min: int
 var _gold_reward_max: int
 
@@ -103,6 +105,9 @@ static func create_from_config(in_config_id: StringName) -> BattleParticipant:
 	participant._agility = data.agility
 	participant._vitality = data.vitality
 	
+	# Blocking load is fine, because load_participants_async would have been called for this participant
+	participant.participant_data = load(data.participant_data_path)
+	
 	if data.has(&"gold_reward_min") and data.has(&"gold_reward_max"):
 		participant._gold_reward_min = data.gold_reward_min
 		participant._gold_reward_max = data.gold_reward_max
@@ -110,6 +115,7 @@ static func create_from_config(in_config_id: StringName) -> BattleParticipant:
 		participant._gold_reward_min = 0
 		participant._gold_reward_max = 0
 
+	# Blocking load is fine, because load_participants_async would have been called for this participant
 	if data.abilities:
 		for ability_id in data.abilities:
 			var ability_resource_path := BattleAbility.ability_class_registry[ability_id]
@@ -122,17 +128,19 @@ static func create_from_config(in_config_id: StringName) -> BattleParticipant:
 
 # static func load_participants_async(in_ids: Array[StringName]) -> Callable: # -> Signal
 static func load_participants_async(in_config_ids: Array[StringName], callback: Callable) -> void:
-	var all_ability_paths: Dictionary[String, bool]
+	var all_paths_to_load: Dictionary[String, bool]
 
+	# TODO: Don't read JSON file and parse every time
+	var file := FileAccess.open(config_path, FileAccess.READ)
+	var json = JSON.parse_string(file.get_as_text()) 
 	for _id in in_config_ids:
-		# TODO: Don't read JSON file and parse every time
-		var file := FileAccess.open(config_path, FileAccess.READ)
-		var json = JSON.parse_string(file.get_as_text()) 
 		var data = json[_id]
 
 		if data.abilities:
 			for ability_id in data.abilities:
 				var ability_resource_path := BattleAbility.ability_class_registry[ability_id]
-				all_ability_paths[ability_resource_path] = true
+				all_paths_to_load[ability_resource_path] = true
+				
+		all_paths_to_load[data.participant_data_path] = true
 
-	LoadHelper.load_multiple_async(all_ability_paths.keys(), callback)
+	LoadHelper.load_multiple_async(all_paths_to_load.keys(), callback)

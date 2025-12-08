@@ -52,11 +52,11 @@ func get_player_ui(index: int) -> PlayerPartyMember:
 		3: return $PlayerPartyContainer/PlayerPartyMember4
 		_: return null
 
-func add_player(uid: StringName, hp: int, max_hp: int) -> void:
+func add_player(uid: StringName, character_graphics: PackedScene, hp: int, max_hp: int) -> void:
 	for index in range(MAX_PLAYERS):
 		if _player_to_ui_index.find_key(index) == null:
 			var player_ui = get_player_ui(index)
-			player_ui.populate(uid, hp, max_hp)
+			player_ui.populate(uid, character_graphics, hp, max_hp)
 			_player_to_ui_index[uid] = index
 			return
 

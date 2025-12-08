@@ -62,7 +62,7 @@ func play_animation(anim_id: StringName, target_uid: StringName) -> void:
 	element.play_animation(anim_id)
 	
 # Enemy
-func add_enemy(uid: StringName, hp: int, max_hp: int) -> void:
+func add_enemy(uid: StringName, character_graphics: PackedScene, hp: int, max_hp: int) -> void:
 	var ui_enemy := enemy_template.instantiate() as UIEnemy
 	assert(ui_enemy)
 
@@ -70,7 +70,7 @@ func add_enemy(uid: StringName, hp: int, max_hp: int) -> void:
 
 	$EnemiesContainer.add_child(ui_enemy)
 
-	ui_enemy.populate(uid, hp, max_hp)
+	ui_enemy.populate(uid, character_graphics, hp, max_hp)
 
 func update_enemy_hp(uid: StringName, hp: int, max_hp: int) -> void:
 	_enemies[uid].update_hp(hp, max_hp)

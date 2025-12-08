@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="ParticipantData" load_steps=3 format=3 uid="uid://dnxkxjgxsk5sy"]
+
+[ext_resource type="Script" uid="uid://gg7drsvm21dh" path="res://scripts/game/battle/participants/participant_data.gd" id="1_28bjt"]
+[ext_resource type="PackedScene" uid="uid://b22i4uqv6m2a0" path="res://ui/battle/character_graphics/character_graphics_enemy.tscn" id="1_t871p"]
+
+[resource]
+script = ExtResource("1_28bjt")
+character_graphics = ExtResource("1_t871p")
+metadata/_custom_type_script = "uid://gg7drsvm21dh"

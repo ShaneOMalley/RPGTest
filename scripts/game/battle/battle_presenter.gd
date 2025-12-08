@@ -8,7 +8,7 @@ func on_battle_ui_setup_requested() -> void:
 
 	var enemies := BattleManager.get_enemies()
 	for enemy in enemies:
-		BattleView.setup_enemy(enemy.uid, enemy.get_attribute(&"_hp"), enemy.get_attribute(&"_max_hp"))
+		BattleView.setup_enemy(enemy.uid, enemy.participant_data.character_graphics, enemy.get_attribute(&"_hp"), enemy.get_attribute(&"_max_hp"))
 		
 	on_battle_turns_updated(BattleManager._turns)
 
@@ -19,7 +19,7 @@ func on_player_party_ui_setup_requested() -> void:
 
 	var players := PlayerPartyManager.get_participants()
 	for player in players:
-		BattleView.setup_player(player.uid, player.get_attribute(&"_hp"), player.get_attribute(&"_max_hp"))
+		BattleView.setup_player(player.uid, player.participant_data.character_graphics, player.get_attribute(&"_hp"), player.get_attribute(&"_max_hp"))
 
 func on_ui_setup_complete() -> void:
 	BattleManager.set_ui_setup_is_complete(true)
@@ -130,7 +130,7 @@ func on_battle_turns_updated(turns: Array[BattleTurn]) -> void:
 			# 	BattleView.add_turn(new_turn.uid, new_turn.participant.uid, new_turn.participant.affiliation, previous_turn_uid)
 			
 			# BattleView.add_turn(new_turn.uid, new_turn.participant.uid, new_turn.participant.affiliation)
-			BattleView.add_turn(new_turn.uid, new_turn.participant.affiliation)
+			BattleView.add_turn(new_turn.uid, new_turn.participant.participant_data.character_graphics, new_turn.participant.affiliation)
 	
 	# TODO: Check if map maintains order, if not: uncomment next line
 	# var variant_turns: Array[Variant] = turns.duplicate()
@@ -223,4 +223,3 @@ func _ready():
 	BattleView.on_ui_setup_complete.connect(on_ui_setup_complete)
 	
 	DungeonManager.on_dungeon_crawling_finished.connect(on_dungeon_crawling_finished)
-

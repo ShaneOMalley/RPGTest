@@ -9,7 +9,7 @@ signal on_turn_pressed(turn_uid: int)
 var _ui_turn_entries: Array[UIBattleTurn]
 var _uid_to_ui_turn: Dictionary[int, UIBattleTurn]
 
-func add_turn(turn_uid: int, affiliation: BattleManager.Affiliation) -> void:
+func add_turn(turn_uid: int, character_graphics: PackedScene, affiliation: BattleManager.Affiliation) -> void:
 	# var entry := $TurnsContainer/TurnPrototype.duplicate() as UIBattleTurn
 	var container := $Mask/TurnsContainer as Container
 	var entry := (container.find_child("TurnPrototype").duplicate() as UIBattleTurn)
@@ -25,6 +25,7 @@ func add_turn(turn_uid: int, affiliation: BattleManager.Affiliation) -> void:
 		assert(false, "Affiliation color not supported for %s" % affiliation)
 		
 	entry.set_background_color(color)
+	entry.set_character_graphics(character_graphics)
 		
 	_uid_to_ui_turn[turn_uid] = entry
 	_ui_turn_entries.append(entry)

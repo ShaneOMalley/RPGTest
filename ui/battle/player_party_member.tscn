@@ -1,113 +1,7 @@
-[gd_scene load_steps=14 format=3 uid="uid://bqkxs2hin7pck"]
+[gd_scene load_steps=3 format=3 uid="uid://bqkxs2hin7pck"]
 
 [ext_resource type="Script" uid="uid://btad75yi38nmu" path="res://scripts/ui/battle/ui_player_party_member.gd" id="1_0iy02"]
-[ext_resource type="Texture2D" uid="uid://vloy3ncnucuq" path="res://res/sprites/player/base_spritesheet.png" id="2_0iy02"]
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_8jyqn"]
-atlas = ExtResource("2_0iy02")
-region = Rect2(0, 0, 1024, 1024)
-
-[sub_resource type="Animation" id="Animation_q7btx"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Portrait:texture")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [SubResource("AtlasTexture_8jyqn")]
-}
-
-[sub_resource type="Animation" id="Animation_iknl0"]
-resource_name = "idle"
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Portrait:texture")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [SubResource("AtlasTexture_8jyqn")]
-}
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_iknl0"]
-atlas = ExtResource("2_0iy02")
-region = Rect2(1024, 0, 1024, 1024)
-
-[sub_resource type="Animation" id="Animation_0iy02"]
-resource_name = "getting_hit"
-length = 0.7
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Portrait:texture")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [SubResource("AtlasTexture_iknl0")]
-}
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_q7btx"]
-atlas = ExtResource("2_0iy02")
-region = Rect2(0, 1024, 1024, 1024)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_0iy02"]
-atlas = ExtResource("2_0iy02")
-region = Rect2(1024, 1024, 1024, 1024)
-
-[sub_resource type="Animation" id="Animation_8jyqn"]
-resource_name = "casting"
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Portrait:texture")
-tracks/0/interp = 0
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.533333),
-"transitions": PackedFloat32Array(1, 1),
-"update": 1,
-"values": [SubResource("AtlasTexture_q7btx"), SubResource("AtlasTexture_0iy02")]
-}
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_b1ssk"]
-atlas = ExtResource("2_0iy02")
-region = Rect2(0, 2048, 1024, 1024)
-
-[sub_resource type="Animation" id="Animation_5a1n6"]
-resource_name = "attack"
-length = 0.7
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Portrait:texture")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [SubResource("AtlasTexture_b1ssk")]
-}
-
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_b1ssk"]
-_data = {
-&"RESET": SubResource("Animation_q7btx"),
-&"attack": SubResource("Animation_5a1n6"),
-&"casting": SubResource("Animation_8jyqn"),
-&"getting_hit": SubResource("Animation_0iy02"),
-&"idle": SubResource("Animation_iknl0")
-}
+[ext_resource type="PackedScene" uid="uid://dlts5y3fepqfr" path="res://ui/battle/character_graphics/character_graphics_player_base.tscn" id="2_0iy02"]
 
 [node name="ColorRect" type="ColorRect"]
 custom_minimum_size = Vector2(200, 94)
@@ -127,18 +21,25 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0.507972, 0.507972, 0.507972, 1)
 
-[node name="Portrait" type="TextureRect" parent="Border"]
-layout_mode = 1
-anchors_preset = 4
-anchor_top = 0.5
-anchor_bottom = 0.5
-offset_left = 7.0
-offset_top = -40.0
-offset_right = 87.0
-offset_bottom = 40.0
-grow_vertical = 2
-texture = SubResource("AtlasTexture_8jyqn")
-expand_mode = 1
+[node name="CharacterGraphicsParent" type="Control" parent="Border"]
+anchors_preset = 0
+offset_left = 5.0
+offset_top = 5.0
+offset_right = 85.0
+offset_bottom = 85.0
+
+[node name="CharacterGraphics" parent="Border/CharacterGraphicsParent" instance=ExtResource("2_0iy02")]
+visible = false
+layout_mode = 0
+anchors_preset = 0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_left = 5.0
+offset_top = 5.0
+offset_right = 85.0
+offset_bottom = 85.0
+grow_horizontal = 1
+grow_vertical = 1
 
 [node name="TextName" type="RichTextLabel" parent="Border"]
 layout_mode = 1
@@ -167,8 +68,3 @@ offset_bottom = 56.0
 grow_horizontal = 0
 text = "HP test/test
 "
-
-[node name="AnimationPlayer" type="AnimationPlayer" parent="Border"]
-libraries = {
-&"": SubResource("AnimationLibrary_b1ssk")
-}

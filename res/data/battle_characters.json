@@ -8,7 +8,9 @@
 		"magic": 5,
 		"vitality": 6,
 
-		"abilities": ["attack", "nuke", "extra_turn", "skip_turn", "repeat_turn", "pass", "haste", "slow", "repeating_turn"]
+		"participant_data_path": "res://game/participants/player/player_base.tres",
+
+		"abilities": ["attack", "nuke", "extra_turn", "skip_turn", "repeat_turn", "pass", "haste", "slow", "repeating_turn"],
 	},
 	"player_chronomancer" :
 	{
@@ -18,6 +20,8 @@
 		"agility": 11,
 		"magic": 10,
 		"vitality": 6,
+
+		"participant_data_path": "res://game/participants/player/player_base.tres",
 
 		"abilities": ["attack", "nuke", "haste", "slow", "skip_turn", "repeat_turn", "skip_many_turns", "pass", "repeating_turn"]
 	},
@@ -30,6 +34,8 @@
 		"agility": 10,
 		"magic": 4,
 		"vitality": 1,
+
+		"participant_data_path": "res://game/participants/enemies/enemy_goblin.tres",
 
 		"abilities": ["attack", "pass", "repeating_turn"],
 		
@@ -44,6 +50,8 @@
 		"agility": 10,
 		"magic": 5,
 		"vitality": 3,
+
+		"participant_data_path": "res://game/participants/enemies/enemy_goblin.tres",
 
 		"abilities": ["attack", "pass", "repeating_turn"],
 		

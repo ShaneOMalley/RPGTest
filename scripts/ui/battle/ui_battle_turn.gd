@@ -1,9 +1,15 @@
 class_name UIBattleTurn extends Button
 
 var uid: int
+var _character_graphics_instance: UICharacterGraphics
 
 func set_background_color(in_color: Color) -> void:
 	self_modulate = in_color
+	
+func set_character_graphics(character_graphics: PackedScene) -> void:
+	_character_graphics_instance = character_graphics.instantiate()
+	_character_graphics_instance.play_animation(&"still")
+	$CharacterGraphicsParent.add_child(_character_graphics_instance)
 
 func set_turn_text(in_text: String) -> void:
 	($Text as RichTextLabel).set_text(in_text)

@@ -1,0 +1,20 @@
+[gd_scene load_steps=4 format=3 uid="uid://bl4r5viwx6r1i"]
+
+[ext_resource type="Texture2D" uid="uid://vloy3ncnucuq" path="res://res/sprites/player/base_spritesheet.png" id="1_scnsc"]
+[ext_resource type="Script" uid="uid://do1jqpr34ibt2" path="res://scripts/ui/battle/ui_character_graphics.gd" id="2_yvle5"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8jyqn"]
+atlas = ExtResource("1_scnsc")
+region = Rect2(0, 0, 1024, 1024)
+
+[node name="CharacterGraphicsBase" type="TextureRect"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture = SubResource("AtlasTexture_8jyqn")
+expand_mode = 1
+script = ExtResource("2_yvle5")

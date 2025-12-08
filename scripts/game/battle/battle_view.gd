@@ -50,8 +50,8 @@ const USE_DEBUG_UI := false
 func play_turn_animation(turn_uid: int, anim_name: StringName) -> void:
 	turns_ui.play_animation_for_turn(turn_uid, anim_name)
 		
-func add_turn(turn_uid: int, affiliation: BattleManager.Affiliation) -> void:
-	turns_ui.add_turn(turn_uid, affiliation)
+func add_turn(turn_uid: int, character_graphics: PackedScene, affiliation: BattleManager.Affiliation) -> void:
+	turns_ui.add_turn(turn_uid, character_graphics, affiliation)
 	
 func sort_turns(sorted_turn_uids: Array) -> void:
 	turns_ui.sort_turns(sorted_turn_uids)
@@ -79,8 +79,8 @@ func play_animation(anim_id: StringName, target_uid: StringName) -> void:
 	player_party_ui.play_animation(anim_id, target_uid)
 
 # Enemy
-func setup_enemy(uid: StringName, hp: int, max_hp: int) -> void:
-	battle_ui.add_enemy(uid, hp, max_hp)
+func setup_enemy(uid: StringName, character_graphics: PackedScene, hp: int, max_hp: int) -> void:
+	battle_ui.add_enemy(uid, character_graphics, hp, max_hp)
 
 func update_enemy_hp(uid: StringName, hp: int, max_hp: int) -> void:
 	battle_ui.update_enemy_hp(uid, hp, max_hp)
@@ -89,8 +89,8 @@ func remove_enemy(uid: StringName) -> void:
 	battle_ui.remove_enemy(uid)
 
 # Player
-func setup_player(uid: StringName, hp: int, max_hp: int) -> void:
-	player_party_ui.add_player(uid, hp, max_hp)
+func setup_player(uid: StringName, character_graphics: PackedScene, hp: int, max_hp: int) -> void:
+	player_party_ui.add_player(uid, character_graphics, hp, max_hp)
 
 func update_player_hp(uid: StringName, hp: int, max_hp: int) -> void:
 	player_party_ui.update_player_hp(uid, hp, max_hp)
