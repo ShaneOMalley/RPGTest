@@ -19,7 +19,11 @@ func on_player_party_ui_setup_requested() -> void:
 
 	var players := PlayerPartyManager.get_participants()
 	for player in players:
-		BattleView.setup_player(player.uid, player.participant_data.character_graphics, player.get_attribute(&"_hp"), player.get_attribute(&"_max_hp"))
+		var hp = player.get_attribute(&"_hp")
+		var max_hp = player.get_attribute(&"_max_hp")
+		var sp = player.get_attribute(&"_sp")
+		var max_sp = player.get_attribute(&"_max_sp")
+		BattleView.setup_player(player.uid, player.participant_data.character_graphics, hp, max_hp, sp, max_sp)
 
 func on_ui_setup_complete() -> void:
 	BattleManager.set_ui_setup_is_complete(true)
@@ -97,6 +101,11 @@ func on_battle_turn_manipulation(turn_manipulations: Array) -> void:
 		for turn in turn_manipulation.turns:
 			BattleView.play_turn_animation(turn.uid, turn_manipulation.anim_name)
 
+func on_battle_ability_execute(turn_uid: int, ability_execution_info: BattleManager.AbilityExecution) -> void:
+	var participant := BattleManager.get_turn_with_uid(turn_uid).participant
+	if participant.affiliation == BattleManager.Affiliation.PLAYER:
+		BattleView.update_player_sp(participant.uid, participant.get_attribute(&"_sp"), participant.get_attribute(&"_max_sp"))
+
 # Battle FX
 func on_battle_fx_requested(effect_prototype: PackedScene, target: BattleParticipant) -> void:
 	BattleView.play_fx(effect_prototype, target.uid)
@@ -166,6 +175,7 @@ func on_request_show_battle_menu(battle_participant: BattleParticipant, battle_t
 			var battle_menu_entry: UIBattle.BattleMenuEntry = UIBattle.BattleMenuEntry.new()
 			battle_menu_entry.ability_id = ability_id
 			battle_menu_entry.ability_string = ability_id
+			battle_menu_entry.ability_sp_cost = ability.sp_cost
 			battle_menu_entry.can_activate = ability.can_activate()
 			battle_menu_entry.requires_turn_target = ability.requires_turn_target()
 
@@ -198,7 +208,7 @@ func _ready():
 	BattleManager.on_battle_effect_applied.connect(on_battle_effect_applied)
 	
 	BattleManager.on_battle_turn_manipulation.connect(on_battle_turn_manipulation)
-	# BattleManager.on_battle_ability_execute.connect(on_battle_ability_execute)
+	BattleManager.on_battle_ability_execute.connect(on_battle_ability_execute)
 	# BattleManager.on_battle_ability_prepare_start.connect(on_battle_ability_prepare_start)
 	# BattleManager.on_battle_ability_prepare_cancel.connect(on_battle_ability_prepare_end)
 	

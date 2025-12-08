@@ -21,14 +21,19 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0.507972, 0.507972, 0.507972, 1)
 
-[node name="CharacterGraphicsParent" type="Control" parent="Border"]
+[node name="Content" type="Control" parent="Border"]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="CharacterGraphicsParent" type="Control" parent="Border/Content"]
 anchors_preset = 0
 offset_left = 5.0
 offset_top = 5.0
 offset_right = 85.0
 offset_bottom = 85.0
 
-[node name="CharacterGraphics" parent="Border/CharacterGraphicsParent" instance=ExtResource("2_0iy02")]
+[node name="CharacterGraphics" parent="Border/Content/CharacterGraphicsParent" instance=ExtResource("2_0iy02")]
 visible = false
 layout_mode = 0
 anchors_preset = 0
@@ -41,14 +46,14 @@ offset_bottom = 85.0
 grow_horizontal = 1
 grow_vertical = 1
 
-[node name="TextName" type="RichTextLabel" parent="Border"]
+[node name="TextName" type="RichTextLabel" parent="Border/Content"]
 layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0
-offset_left = -103.0
+offset_left = 53.0
 offset_top = 9.0
-offset_right = -3.0
+offset_right = 153.0
 offset_bottom = 33.0
 grow_horizontal = 0
 text = "Somalia
@@ -56,15 +61,28 @@ text = "Somalia
 "
 scroll_active = false
 
-[node name="TextHP" type="RichTextLabel" parent="Border"]
+[node name="TextHP" type="RichTextLabel" parent="Border/Content"]
 layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0
-offset_left = -103.0
+offset_left = 53.0
 offset_top = 31.0
-offset_right = -3.0
+offset_right = 153.0
 offset_bottom = 56.0
+grow_horizontal = 0
+text = "HP test/test
+"
+
+[node name="TextSP" type="RichTextLabel" parent="Border/Content"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = 53.0
+offset_top = 50.0
+offset_right = 153.0
+offset_bottom = 75.0
 grow_horizontal = 0
 text = "HP test/test
 "

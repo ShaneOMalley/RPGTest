@@ -89,11 +89,14 @@ func remove_enemy(uid: StringName) -> void:
 	battle_ui.remove_enemy(uid)
 
 # Player
-func setup_player(uid: StringName, character_graphics: PackedScene, hp: int, max_hp: int) -> void:
-	player_party_ui.add_player(uid, character_graphics, hp, max_hp)
+func setup_player(uid: StringName, character_graphics: PackedScene, hp: int, max_hp: int, sp: int, max_sp: int) -> void:
+	player_party_ui.add_player(uid, character_graphics, hp, max_hp, sp, max_sp)
 
 func update_player_hp(uid: StringName, hp: int, max_hp: int) -> void:
 	player_party_ui.update_player_hp(uid, hp, max_hp)
+	
+func update_player_sp(uid: StringName, sp: int, max_sp: int) -> void:
+	player_party_ui.update_player_sp(uid, sp, max_sp)
 
 func remove_player(uid: StringName) -> void:
 	player_party_ui.remove_player(uid)

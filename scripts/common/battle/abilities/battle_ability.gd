@@ -11,6 +11,7 @@ signal on_end()
 # TODO: Find some way of statically typing this. Is it possible?
 @export var fx_activate: PackedScene
 @export var fx_affect_target: PackedScene
+@export var sp_cost: int = 0
 
 static var ability_class_registry: Dictionary[StringName, String] = {
 	# Common
@@ -38,6 +39,7 @@ func execute(in_target: BattleParticipant, in_turn_target: BattleTurn = null) ->
 	_turn_target = in_turn_target
 	
 	_is_executing = true
+	consume_sp()
 	
 	# all abilities: shrink current turn
 	var turn_manipulation := BattleTurn.TurnManipulation.new()
@@ -77,6 +79,9 @@ func is_valid_for_target(_possible_target: BattleParticipant) -> bool:
 func requires_turn_target() -> bool:
 	return false
 	
+func get_message() -> String:
+	return ""
+	
 # This handles case where turn is repeated, but the original target is no longer valid
 # return in format: [target: Participant, turn_target: BattleTurn]
 func find_fallback_target() -> Array:
@@ -84,12 +89,16 @@ func find_fallback_target() -> Array:
 
 # Returns whether this ability can currently activate
 func can_activate() -> bool:
+	if sp_cost > 0 and sp_cost > _source.get_attribute(&"_sp"):
+		return false
+		
 	if requires_turn_target():
 		return true
 		
 	for participant in BattleManager.get_participants():
 		if is_valid_for_target(participant):
 			return true
+			
 	return false
 
 # Helper function for calling a callable after a certain amount of time
@@ -103,12 +112,19 @@ func set_lifetime(lifetime: float) -> void:
 
 func initialize(in_source: BattleParticipant = null) -> void:
 	_source = in_source
-	
-func get_message() -> String:
-	return ""
 
 func show_message() -> void:
 	BattleManager.request_message(get_message())
+	
+class BattleEffectConsumeSP extends BattleEffect:
+	func _init(in_source: BattleParticipant, in_target: BattleParticipant, sp_cost: int) -> void:
+		super._init(in_source, in_target)
+		_duration = Duration.INSTANT
+		_modifiers.append(BattleEffectModifier.new(&"_sp", -sp_cost, Operator.ADDITIVE))
+	
+func consume_sp() -> void:
+	var effect := BattleEffectConsumeSP.new(_source, _source, sp_cost)
+	effect.apply()
 
 # func _init(in_source: BattleParticipant = null) -> void:
 # 	_source = in_source

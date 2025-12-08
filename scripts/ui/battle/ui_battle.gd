@@ -30,6 +30,7 @@ var _fx_instances: Array[FXInstance]
 class BattleMenuEntry:
 	var ability_id: StringName
 	var ability_string: String
+	var ability_sp_cost: int
 	var can_activate: bool
 	var valid_participant_targets: Array[StringName]
 	var requires_turn_target: bool
@@ -107,7 +108,10 @@ func show_battle_menu(entries: Array[BattleMenuEntry]) -> void:
 		var entry := entries[index]
 
 		ui_entry.show()
-		ui_entry.set_text(entry.ability_string)
+		if entry.ability_sp_cost > 0:
+			ui_entry.set_text("%s (SP: %d)" % [entry.ability_string, entry.ability_sp_cost])
+		else:
+			ui_entry.set_text(entry.ability_string)
 		# ui_entry.focus_entered.connect(func(): print("focus entered"))
 		# ui_entry.focus_exited.connect(func(): print("focus exited"))
 		# ui_entry.mouse_entered.connect(func(): print("mouse entered"))

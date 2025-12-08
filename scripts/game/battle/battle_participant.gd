@@ -9,11 +9,11 @@ var active_effects: Array[BattleEffect]
 
 # Instant Attributes: Should only be affected by INSTANT effects
 var _hp: int
-var _mp: int
+var _sp: int
 
 # Duration Attributes: Should only be affected by DURATION effects
 var _max_hp: int
-var _max_mp: int
+var _max_sp: int
 var _strength: int
 var _magic: int
 var _agility: int
@@ -98,8 +98,8 @@ static func create_from_config(in_config_id: StringName) -> BattleParticipant:
 	participant.uid = create_unique_id(in_config_id)
 	participant._max_hp = data.max_hp
 	participant._hp = data.max_hp
-	participant._max_mp = data.max_mp
-	participant._mp = data.max_mp
+	participant._max_sp = data.max_sp
+	participant._sp = data.max_sp
 	participant._strength = data.strength
 	participant._magic = data.magic
 	participant._agility = data.agility
