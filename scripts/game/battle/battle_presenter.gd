@@ -174,6 +174,7 @@ func on_request_show_battle_menu(battle_participant: BattleParticipant, battle_t
 
 			var battle_menu_entry: UIBattle.BattleMenuEntry = UIBattle.BattleMenuEntry.new()
 			battle_menu_entry.ability_id = ability_id
+			battle_menu_entry.category = BattleAbility.ability_categories[ability_id]
 			battle_menu_entry.ability_string = ability_id
 			battle_menu_entry.ability_sp_cost = ability.sp_cost
 			battle_menu_entry.can_activate = ability.can_activate()

@@ -15,20 +15,42 @@ signal on_end()
 
 static var ability_class_registry: Dictionary[StringName, String] = {
 	# Common
-	"attack": "res://game/abilities/ability_attack.tres",
-	"pass": "res://game/abilities/ability_pass.tres",
+	&"attack": "res://game/abilities/ability_attack.tres",
+	&"pass": "res://game/abilities/ability_pass.tres",
 
 	# Chronomancer
-	"haste" : "res://game/abilities/ability_haste.tres",
-	"slow" : "res://game/abilities/ability_slow.tres",
-	"skip_turn" : "res://game/abilities/ability_skip_turn.tres",
-	"skip_many_turns" : "res://game/abilities/ability_skip_many_turns.tres",
-	"repeat_turn" : "res://game/abilities/ability_repeat_turn.tres",
-	"repeating_turn" : "res://game/abilities/ability_repeating_turn.tres",
+	&"haste" : "res://game/abilities/ability_haste.tres",
+	&"slow" : "res://game/abilities/ability_slow.tres",
+	&"skip_turn" : "res://game/abilities/ability_skip_turn.tres",
+	&"skip_many_turns" : "res://game/abilities/ability_skip_many_turns.tres",
+	&"repeat_turn" : "res://game/abilities/ability_repeat_turn.tres",
+	
+	# Misc
+	&"repeating_turn" : "res://game/abilities/ability_repeating_turn.tres",
 
 	# Debug
-	"nuke": "res://game/abilities/ability_nuke.tres",
-	"extra_turn": "res://game/abilities/ability_extra_turn.tres",
+	&"nuke": "res://game/abilities/ability_nuke.tres",
+	&"extra_turn": "res://game/abilities/ability_extra_turn.tres",
+}
+
+static var ability_categories: Dictionary[StringName, StringName] = {
+	# Common
+	&"attack": &"",
+	&"pass": &"",
+
+	# Chronomancer
+	&"haste": &"magic",
+	&"slow": &"magic",
+	&"skip_turn": &"magic",
+	&"skip_many_turns": &"magic",
+	&"repeat_turn": &"magic",
+
+	# Debug
+	&"nuke": &"debug",
+	&"extra_turn": &"debug",
+
+	# Forced
+	&"repeating_turn": &"",
 }
 
 # TODO: Right now there is an assumption that the only execution context 
