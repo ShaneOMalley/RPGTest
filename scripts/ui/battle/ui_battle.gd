@@ -124,7 +124,7 @@ func show_battle_menu(entries: Array[BattleMenuEntry], current_category: StringN
 				text = "%s (SP: %d)" % [entry.ability_string, entry.ability_sp_cost]
 			else:
 				text = entry.ability_string
-			var on_pressed := func(): show_target_menu(entry.ability_id, entry.valid_participant_targets, entries, entry.requires_turn_target)
+			var on_pressed := func(): show_target_menu(entry.ability_id, entry.category, entry.valid_participant_targets, entries, entry.requires_turn_target)
 			_make_menu_button(text, !entry.can_activate, Callable(), on_pressed)
 		elif current_category == &"":
 			# make category buttons
@@ -140,7 +140,7 @@ func show_battle_menu(entries: Array[BattleMenuEntry], current_category: StringN
 				
 	$MenuContainer/BattleMenuBackground.show()
 	
-func show_target_menu(ability_id: StringName, valid_participant_targets: Array[StringName], previous_entries: Array[BattleMenuEntry], requires_turn_target: bool = false) -> void:
+func show_target_menu(ability_id: StringName, ability_category: StringName, valid_participant_targets: Array[StringName], previous_entries: Array[BattleMenuEntry], requires_turn_target: bool = false) -> void:
 	_hide_all_menu_buttons()
 	
 	var options := valid_participant_targets.duplicate() as Array[StringName]
@@ -152,7 +152,7 @@ func show_target_menu(ability_id: StringName, valid_participant_targets: Array[S
 		var pressed_callback: Callable
 		var mouse_entered_callback: Callable
 		if target_uid == &"cancel":
-			pressed_callback = ability_cancel.bind(ability_id, previous_entries)
+			pressed_callback = ability_cancel.bind(ability_id, previous_entries, ability_category)
 			mouse_entered_callback = ability_cancel_prepare.bind(ability_id)
 		else:
 			mouse_entered_callback = ability_prepare.bind(-1, ability_id, target_uid)
@@ -175,10 +175,10 @@ func ability_prepare(turn_target_uid: int, ability_id: StringName, target_uid: S
 	print(" -- PREPARE")
 	on_ability_prepare.emit(ability_id, target_uid, turn_target_uid)
 	
-func ability_cancel(ability_id: StringName, previous_entries: Array[BattleMenuEntry]) -> void:
+func ability_cancel(ability_id: StringName, previous_entries: Array[BattleMenuEntry], ability_category: StringName) -> void:
 	print(" -- CANCEL")
 	on_ability_cancel.emit(ability_id)
-	show_battle_menu(previous_entries)
+	show_battle_menu(previous_entries, ability_category)
 	
 func ability_cancel_prepare(ability_id: StringName) -> void:
 	print(" -- CANCEL PREPARE")
