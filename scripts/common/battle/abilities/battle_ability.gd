@@ -4,6 +4,7 @@ var _source: BattleParticipant
 var _target: BattleParticipant
 var _turn_target: BattleTurn
 var _is_executing := false
+var _consumable_item_id: StringName
 # var _valid_targets: Array[BattleParticipant]
 
 signal on_end()
@@ -27,6 +28,9 @@ static var ability_class_registry: Dictionary[StringName, String] = {
 	
 	# Misc
 	&"repeating_turn" : "res://game/abilities/ability_repeating_turn.tres",
+	
+	# Items
+	&"potion" : "res://game/abilities/ability_potion.tres",
 
 	# Debug
 	&"nuke": "res://game/abilities/ability_nuke.tres",
@@ -43,7 +47,12 @@ static var ability_categories: Dictionary[StringName, StringName] = {
 	&"slow": &"magic",
 	&"skip_turn": &"magic",
 	&"skip_many_turns": &"magic",
+	
+	# Misc
 	&"repeat_turn": &"magic",
+	
+	# Items
+	&"potion" : &"item",
 
 	# Debug
 	&"nuke": &"debug",
@@ -61,7 +70,11 @@ func execute(in_target: BattleParticipant, in_turn_target: BattleTurn = null) ->
 	_turn_target = in_turn_target
 	
 	_is_executing = true
+	
+	# todo: make player not consume resources if their turn is being repeated
 	consume_sp()
+	if _consumable_item_id != &"":
+		PlayerPartyManager.inventory.remove_item(_consumable_item_id)
 	
 	# all abilities: shrink current turn
 	var turn_manipulation := BattleTurn.TurnManipulation.new()
@@ -122,6 +135,12 @@ func can_activate() -> bool:
 			return true
 			
 	return false
+	
+func is_hidden() -> bool:
+	if _consumable_item_id == &"":
+		return false
+		
+	return !PlayerPartyManager.inventory.items.has(_consumable_item_id)
 
 # Helper function for calling a callable after a certain amount of time
 func set_timer(time: float, callable: Callable) -> void:

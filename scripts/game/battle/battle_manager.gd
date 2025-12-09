@@ -374,17 +374,17 @@ func complete_pre_setup():
 
 func _on_state_entered(id: StringName) -> void:
 	if id == &"turn_decision_player":
-		pass	
+		pass
 		# on_battle_player_turn_started.emit(get_current_turn_participant(), _current_turn)
-		
+
 func _on_state_exited(id: StringName) -> void:
 	pass
 	# if id == &"turn_decision_player":
 	# 	on_battle_player_turn_ended.emit(get_current_turn_participant())
 
-# func _process(_delta: float) -> void:
-# 	if Input.is_action_just_pressed("ui_right"):
-# 		setup_battle(&"test2")
-	
+func _process(_delta: float) -> void:
+	if Input.is_action_just_pressed(&"ui_left"):
+		PlayerPartyManager.inventory.add_item(&"potion")
+
 # func _ready() -> void:
 # 	_setup_battle()

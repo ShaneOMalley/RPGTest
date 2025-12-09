@@ -164,6 +164,21 @@ func on_battle_turns_updated(turns: Array[BattleTurn]) -> void:
 	
 	_previous_battle_turns = turns.duplicate()
 
+func _create_battle_menu_entry(ability_id: StringName, ability: BattleAbility) -> UIBattle.BattleMenuEntry:
+	var battle_menu_entry: UIBattle.BattleMenuEntry = UIBattle.BattleMenuEntry.new()
+	battle_menu_entry.ability_id = ability_id
+	battle_menu_entry.category = BattleAbility.ability_categories[ability_id]
+	battle_menu_entry.ability_string = ability_id
+	battle_menu_entry.ability_sp_cost = ability.sp_cost
+	battle_menu_entry.can_activate = ability.can_activate()
+	battle_menu_entry.requires_turn_target = ability.requires_turn_target()
+
+	var valid_participants = BattleManager.get_participants().filter(ability.is_valid_for_target)
+	for valid_participant in valid_participants:
+		battle_menu_entry.valid_participant_targets.append(valid_participant.uid)
+		
+	return battle_menu_entry
+
 func on_request_show_battle_menu(battle_participant: BattleParticipant, battle_turn: BattleTurn) -> void:
 	var battle_menu_entries: Array[UIBattle.BattleMenuEntry]
 
@@ -171,20 +186,18 @@ func on_request_show_battle_menu(battle_participant: BattleParticipant, battle_t
 	for ability_id in abilities:
 		if battle_turn.is_ability_allowed(ability_id):
 			var ability := abilities[ability_id]
-
-			var battle_menu_entry: UIBattle.BattleMenuEntry = UIBattle.BattleMenuEntry.new()
-			battle_menu_entry.ability_id = ability_id
-			battle_menu_entry.category = BattleAbility.ability_categories[ability_id]
-			battle_menu_entry.ability_string = ability_id
-			battle_menu_entry.ability_sp_cost = ability.sp_cost
-			battle_menu_entry.can_activate = ability.can_activate()
-			battle_menu_entry.requires_turn_target = ability.requires_turn_target()
-
-			var valid_participants = BattleManager.get_participants().filter(ability.is_valid_for_target)
-			for valid_participant in valid_participants:
-				battle_menu_entry.valid_participant_targets.append(valid_participant.uid)
-
-			battle_menu_entries.append(battle_menu_entry)
+			if !ability.is_hidden():
+				var battle_menu_entry := _create_battle_menu_entry(ability_id, ability)
+				battle_menu_entries.append(battle_menu_entry)
+	
+	# for item_id in PlayerPartyManager.inventory.items:
+	# 	var ability_id := PlayerPartyInventory.get_item_ability_id(item_id)
+	# 	var ability := PlayerPartyInventory.instantiate_item_ability(item_id, battle_participant)
+	# 	# smelly
+	# 	ability._source = battle_participant
+	# 	
+	# 	var battle_menu_entry := _create_battle_menu_entry(ability_id, ability)
+	# 	battle_menu_entries.append(battle_menu_entry)
 
 	BattleView.show_battle_menu(battle_menu_entries)
 

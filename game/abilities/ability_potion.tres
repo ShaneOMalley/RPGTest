@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="BattleAbilityPotion" load_steps=4 format=3 uid="uid://b150rr5l5ueuo"]
+
+[ext_resource type="PackedScene" uid="uid://bvkr4e5f5ju3a" path="res://game/ui_fx/uifx_use_skill.tscn" id="1_0r1np"]
+[ext_resource type="Script" uid="uid://dyjh2b4u6em5y" path="res://scripts/game/battle/abilities/battle_ability_potion.gd" id="1_p6hf3"]
+[ext_resource type="PackedScene" uid="uid://dme81fha7jgl2" path="res://game/ui_fx/uifx_attack.tscn" id="2_67kqu"]
+
+[resource]
+script = ExtResource("1_p6hf3")
+fx_activate = ExtResource("1_0r1np")
+fx_affect_target = ExtResource("2_67kqu")
+sp_cost = 0
