@@ -105,8 +105,8 @@ func hide_all_players_info() -> void:
 	player_party_ui.hide_all_players_info()
 	
 # Message UI
-func show_message(message: String) -> void:
-	player_party_ui.show_message(message)
+func show_message(message: String, duration: float) -> void:
+	player_party_ui.show_message(message, duration)
 
 # Battle Menu
 func show_battle_menu(entries: Array[UIBattle.BattleMenuEntry]) -> void:

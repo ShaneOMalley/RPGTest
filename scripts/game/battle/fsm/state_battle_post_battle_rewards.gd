@@ -6,5 +6,5 @@ func on_enter() -> void:
 	
 	PlayerPartyManager.inventory.gold += gold
 	
-	BattleManager.request_message("you got %d gold!" % gold)
+	BattleManager.request_message("you got %d gold!" % gold, 1.1)
 	BattleManager.block_fsm(1.1)

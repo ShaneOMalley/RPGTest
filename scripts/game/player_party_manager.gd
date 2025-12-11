@@ -9,7 +9,6 @@ func on_new_item_added(item_id: StringName) -> void:
 		var ability_id := PlayerPartyInventory.get_item_ability_id(item_id)
 		var ability := PlayerPartyInventory.instantiate_item_ability(item_id, participant)
 		participant.abilities[ability_id] = ability
-		participant.temp_item_abilities.append(ability_id)
 
 func on_item_depleted(item_id: StringName) -> void:
 	# do nothig for now (to accommodate use item -> repeat turn trick)

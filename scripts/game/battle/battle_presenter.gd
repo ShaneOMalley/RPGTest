@@ -38,8 +38,8 @@ func on_dungeon_crawling_finished() -> void:
 	BattleView.destroy_player_party_ui()
 	
 # Message UI
-func on_message_requested(message: String) -> void:
-	BattleView.show_message(message)
+func on_message_requested(message: String, duration: float) -> void:
+	BattleView.show_message(message, duration)
 
 # Battle Abilities and Effects
 func on_ability_prepare(ability_id: StringName, target_uid: StringName, in_turn_target_uid: int) -> void:
@@ -168,7 +168,7 @@ func _create_battle_menu_entry(ability_id: StringName, ability: BattleAbility) -
 	var battle_menu_entry: UIBattle.BattleMenuEntry = UIBattle.BattleMenuEntry.new()
 	battle_menu_entry.ability_id = ability_id
 	battle_menu_entry.category = BattleAbility.ability_categories[ability_id]
-	battle_menu_entry.ability_string = ability_id
+	battle_menu_entry.ability_string = ability.get_display_name()
 	battle_menu_entry.ability_sp_cost = ability.sp_cost
 	battle_menu_entry.can_activate = ability.can_activate()
 	battle_menu_entry.requires_turn_target = ability.requires_turn_target()

@@ -15,8 +15,10 @@ var _movement_data: Array[int]
 var _grid_width: int
 
 var _encounter_data_weighted: Dictionary[StringName, float]
+var _treasure_data_weighted: Dictionary[StringName, float]
 var _player: Player
 var _steps_until_next_encounter: int
+var _player_movement_is_blocked: bool
 
 var _current_dungeon_data: DungeonData
 var _floors: Array[PackedScene]
@@ -37,6 +39,14 @@ func get_grid_width() -> int:
 	return _grid_width;
 
 # Player Movement
+func block_player_movement(duration: float) -> void:
+	var timer := get_tree().create_timer(duration)
+	_player_movement_is_blocked = true
+	timer.timeout.connect(func(): _player_movement_is_blocked = false)
+	
+func get_player_movement_is_blocked() -> bool:
+	return _player_movement_is_blocked
+
 func get_movement_data_for_cell(x: int, y: int) -> int:
 	return _movement_data[x + y * _grid_width]
 
@@ -60,6 +70,11 @@ func _trigger_random_encounter() -> void:
 	var encounter_id := (Utils.pick_random_weighted(_encounter_data_weighted) as StringName)
 	BattleManager.setup_battle(encounter_id)
 	_reset_steps_counter()
+	
+func _get_random_treasure() -> StringName:
+	var treasure_id := (Utils.pick_random_weighted(_treasure_data_weighted) as StringName)
+	PlayerPartyManager.inventory.add_item(treasure_id)
+	return treasure_id
 
 func _on_player_move_finished(target_position: Vector3) -> void:
 	_steps_until_next_encounter -= 1
@@ -69,18 +84,30 @@ func _on_player_move_finished(target_position: Vector3) -> void:
 	on_player_move_finished.emit(target_position)
 
 # Setup
-const config_path: String = "res://res/data/battle_encounters.json"
 func _setup_encounter_data(encounter_id: StringName) -> void:
+	const config_path: String = "res://res/data/battle_encounters.json"
 	var json_file := FileAccess.open(config_path, FileAccess.READ)
 	var data = JSON.parse_string(json_file.get_as_text())
 
-	# TODO: Decide on non-hardcoded way of doing this
 	var encounter_data := (data.dungeon_encounter_data[encounter_id] as Array)
 	for entry in encounter_data:
 		_encounter_data_weighted[entry.encounter_group] = entry.weight
-		
+
+func _setup_treasure_data(treasure_table_id: String) -> void:
+	const config_path: String = "res://res/data/dungeon_treasure.json"
+	var json_file := FileAccess.open(config_path, FileAccess.READ)
+	var data = JSON.parse_string(json_file.get_as_text())
+
+	var treasure_data := (data.treasure_tables[treasure_table_id] as Array)
+	for entry in treasure_data:
+		_treasure_data_weighted[entry.item] = entry.weight
+	
 func _setup_interactable_data(in_interactable_data: Dictionary[Vector2i, Dictionary]) -> void:
 	interactable_data.clear()
+	
+	# var thing: Array[Node] = _current_scene.get_children(true).filter(func(child): return child is DungeonTreasure)
+	# jank
+	var treasures = _current_scene.find_child(&"GeometryParent").get_child(0).find_child(&"Geometry").find_child(&"Treasure").get_children()
 	
 	for position in in_interactable_data:
 		interactable_data[position] = {}
@@ -90,6 +117,12 @@ func _setup_interactable_data(in_interactable_data: Dictionary[Vector2i, Diction
 				match interactable_id:
 					&"downstairs":
 						interactable_data[position][direction].append(DungeonInteractable.new(goto_next_floor, "[E] Go Downstairs"))
+					&"treasure":
+						var cell_position := Vector3(position.x * GRID_SIZE, 0, position.y * GRID_SIZE)
+						var comp := func(a, b): return a.position.distance_to(cell_position) < b.position.distance_to(cell_position)
+						treasures.sort_custom(comp)
+						var closest_treasure: DungeonTreasure = treasures.front()
+						interactable_data[position][direction].append(DungeonInteractable.new(get_treasure.bind(closest_treasure), "[E] Open Chest"))
 
 func set_dungeon_floor_index(in_index: int) -> void:
 	if _current_scene:
@@ -107,6 +140,7 @@ func set_dungeon_floor_index(in_index: int) -> void:
 	get_tree().root.add_child(_current_scene)
 	
 	_setup_encounter_data(_current_dungeon_data.encounter_data_per_floor[in_index])
+	_setup_treasure_data(_current_dungeon_data.treasure_data_per_floor[in_index])
 	_setup_interactable_data(geometry.get_meta(&"interactable_data"))
 	_reset_steps_counter()
 	
@@ -119,6 +153,12 @@ func goto_next_floor() -> void:
 		TownManager.enter_town_scene()
 	else:
 		set_dungeon_floor_index(_current_floor_index)
+		
+func get_treasure(closest_treasure: DungeonTreasure) -> void:
+	var treasure_id := _get_random_treasure()
+	BattleManager.request_message("You got a %s!" % treasure_id, 1.1)
+	DungeonManager.block_player_movement(1.1)
+	closest_treasure.open()
 
 func set_player(in_player: Player) -> void:
 	_player = in_player
@@ -144,7 +184,7 @@ func reset() -> void:
 	while num_floors > 0:
 		_floors.append(possible_floors.pop_front())
 		num_floors -= 1
-	
+		
 	_current_floor_index = -1
 
 func end_dungeon_crawling() -> void:

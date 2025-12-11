@@ -140,5 +140,5 @@ func _handle_input(_delta: float) -> void:
 func _process(delta: float):
 	var is_moving := _handle_movement(delta)
 
-	if !is_moving && !BattleManager.get_is_battle_active():
+	if !is_moving && !BattleManager.get_is_battle_active() && !DungeonManager.get_player_movement_is_blocked():
 		_handle_input(delta)

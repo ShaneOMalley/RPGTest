@@ -12,4 +12,8 @@ encounter_data_per_floor = Dictionary[int, StringName]({
 0: &"test_dungeon",
 1: &"test_dungeon"
 })
+treasure_data_per_floor = Dictionary[int, StringName]({
+0: &"test",
+1: &"test"
+})
 metadata/_custom_type_script = "uid://dgfgrijh0v11f"

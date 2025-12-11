@@ -14,9 +14,9 @@ class InventoryItemData:
 	func instantiate_ability_from_template(source: BattleParticipant) -> BattleAbility:
 		if !is_instance_valid(_ability_template):
 			var ability_resource_path := BattleAbility.ability_class_registry[ability_id]
-			_ability_template = load(ability_resource_path) as BattleAbility
+			_ability_template = load(ability_resource_path).duplicate() as BattleAbility
 		var ability_instance := _ability_template.duplicate()
-		ability_instance._source = source
+		ability_instance.initialize(source, ability_id)
 		ability_instance._consumable_item_id = item_id
 		return ability_instance
 		

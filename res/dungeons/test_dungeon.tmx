@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.11.2" orientation="orthogonal" renderorder="right-down" width="16" height="16" tilewidth="1" tileheight="1" infinite="0" nextlayerid="4" nextobjectid="16">
+<map version="1.10" tiledversion="1.11.2" orientation="orthogonal" renderorder="right-down" width="16" height="16" tilewidth="1" tileheight="1" infinite="0" nextlayerid="4" nextobjectid="18">
  <editorsettings>
   <export target="dungeons/test_dungeon.tmj" format="json"/>
  </editorsettings>
@@ -41,6 +41,12 @@
    <polyline points="0,0 0,2"/>
   </object>
   <object id="15" name="spawn" x="1.48889" y="1.15556">
+   <point/>
+  </object>
+  <object id="16" name="treasure" x="3.48889" y="6.14444">
+   <point/>
+  </object>
+  <object id="17" name="treasure" x="8.53333" y="8.86667">
    <point/>
   </object>
  </objectgroup>

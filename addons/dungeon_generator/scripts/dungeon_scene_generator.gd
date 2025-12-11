@@ -87,7 +87,7 @@ static func create_door(grid_x: int, grid_y: int, direction: Direction) -> MeshI
 		Direction.LEFT:
 			center.x = grid_x * GRID_SIZE + door_offset_from_wall
 			center.z = (grid_y + 0.5) * GRID_SIZE
-			rotation = - PI / 2
+			rotation = -PI / 2
 		Direction.RIGHT:
 			center.x = (grid_x + 1) * GRID_SIZE - door_offset_from_wall
 			center.z = (grid_y + 0.5) * GRID_SIZE
@@ -106,8 +106,57 @@ static func create_door(grid_x: int, grid_y: int, direction: Direction) -> MeshI
 	material.albedo_color = Color.GOLD
 	door.material_override = material
 	door.rotate_object_local(Vector3.UP, rotation)
-			
+	
 	return door
+	
+const treasure_scene_path := "res://game/dungeon_crawling/dungeon_treasure.tscn"
+static func create_treasure(grid_x: int, grid_y: int, direction: Direction) -> Node3D:
+	var treasure := (preload(treasure_scene_path).instantiate() as Node3D)
+	
+	treasure.position.x = grid_x * GRID_SIZE
+	treasure.position.z = grid_y * GRID_SIZE
+	
+	const chest_offset_from_wall = GRID_SIZE * 0.2
+	
+	match direction:
+		Direction.LEFT:
+			treasure.position.x += chest_offset_from_wall
+			treasure.position.z += 0.5 * GRID_SIZE
+			treasure.rotation.y = -PI / 2
+		Direction.RIGHT:
+			treasure.position.x += GRID_SIZE - chest_offset_from_wall
+			treasure.position.z += 0.5 * GRID_SIZE
+			treasure.rotation.y = PI / 2
+		Direction.UP:
+			treasure.position.x += 0.5 * GRID_SIZE
+			treasure.position.z += chest_offset_from_wall
+			treasure.rotation.y = 0
+		Direction.DOWN:
+			treasure.position.x += 0.5 * GRID_SIZE
+			treasure.position.z += GRID_SIZE - chest_offset_from_wall
+			treasure.rotation.y = PI 
+	
+	return treasure
+	
+static func get_relative_direction_in_cell(object_x: float, object_y: float) -> Direction:
+	var relative_x = fmod(object_x, 1)
+	var relative_y = fmod(object_y, 1)
+	
+	var a = relative_y - relative_x
+	var b = relative_y + relative_x - 1
+	
+	print("a: %f, b: %f" % [a, b])
+	
+	if a > 0:
+		if b > 0:
+			return Direction.DOWN
+		else:
+			return Direction.LEFT
+	else:
+		if b > 0:
+			return Direction.RIGHT
+		else:
+			return Direction.UP
 
 static func generate_dungeon(data: Variant) -> void:
 	var scene = PackedScene.new()
@@ -121,16 +170,20 @@ static func generate_dungeon(data: Variant) -> void:
 	walls_node.name = "Walls"
 	var doors_node := Node3D.new()
 	doors_node.name = "Doors"
+	var treasures_node := Node3D.new()
+	treasures_node.name = "Treasure"
 
 	root_node.add_child(geometry_node)
 	geometry_node.add_child(floors_node)
 	geometry_node.add_child(walls_node)
 	geometry_node.add_child(doors_node)
+	geometry_node.add_child(treasures_node)
 
 	geometry_node.owner = root_node
 	floors_node.owner = root_node
 	walls_node.owner = root_node
 	doors_node.owner = root_node
+	treasures_node.owner = root_node
 
 	# Floor
 	var floor_width = data.width * GRID_SIZE
@@ -185,30 +238,28 @@ static func generate_dungeon(data: Variant) -> void:
 			if object.name == "downstairs":
 				var grid_x := floor(object.x)
 				var grid_y := floor(object.y)
-				var relative_x = fmod(object.x, 1)
-				var relative_y = fmod(object.y, 1)
+				var direction := get_relative_direction_in_cell(object.x, object.y)
 				
-				var a = relative_y - relative_x
-				var b = relative_y + relative_x - 1
-				
-				var direction: Direction
-				if a > 0:
-					if b > 0:
-						direction = Direction.DOWN
-					else:
-						direction = Direction.LEFT
-				else:
-					if b > 0:
-						direction = Direction.RIGHT
-					else:
-						direction = Direction.UP
-						
 				var door_box := create_door(grid_x, grid_y, direction)
 				doors_node.add_child(door_box)
 				door_box.owner = root_node
 				
 				var cell_interactable_data = interactable_data.get_or_add(Vector2i(grid_x, grid_y), {})
 				cell_interactable_data.get_or_add(direction, []).append(&"downstairs")
+				
+			if object.name == "treasure":
+				var grid_x := floor(object.x)
+				var grid_y := floor(object.y)
+				var direction := get_relative_direction_in_cell(object.x, object.y)
+				print("FUCK YOU")
+				print(direction)
+				
+				var treasure := create_treasure(grid_x, grid_y, direction)
+				treasures_node.add_child(treasure)
+				treasure.owner = root_node
+				
+				var cell_interactable_data = interactable_data.get_or_add(Vector2i(grid_x, grid_y), {})
+				cell_interactable_data.get_or_add(direction, []).append(&"treasure")
 
 	# Build Movement Data
 	var tile_layer_index = data.layers.find_custom(func(layer): return layer.type == "tilelayer")
@@ -291,6 +342,6 @@ static func generate_dungeon(data: Variant) -> void:
 	var result = scene.pack(root_node)
 	if result == OK:
 		var filename = Time.get_datetime_string_from_system().replace(":", "_")
-		var error = ResourceSaver.save(scene, "res://scenes/dungeon_geometry/%s.tscn" % filename)
+		var error = ResourceSaver.save(scene, "res://scenes/dungeon/dungeon_geometry/%s.tscn" % filename)
 		if error != OK:
-			push_error("An error occured while saving the scene to disk")
+			push_error("An error occured while saving the scene to disk: %d" % error)

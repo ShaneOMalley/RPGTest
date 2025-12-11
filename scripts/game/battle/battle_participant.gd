@@ -120,8 +120,8 @@ static func create_from_config(in_config_id: StringName) -> BattleParticipant:
 		for ability_id in data.abilities:
 			var ability_resource_path := BattleAbility.ability_class_registry[ability_id]
 			# This is smelly. It would be better to refactor so that resources are read-only, and there is a separate "instance" ("spec" in GAS terminology)
-			var ability = load(ability_resource_path).duplicate() as BattleAbility
-			ability.initialize(participant)
+			var ability := load(ability_resource_path).duplicate() as BattleAbility
+			ability.initialize(participant, ability_id)
 			participant.abilities[ability_id] = ability
 
 	return participant

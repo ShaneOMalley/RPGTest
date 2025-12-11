@@ -13,7 +13,7 @@ signal on_battle_pre_setup_complete
 signal on_battle_ui_setup_requested
 signal on_player_party_ui_setup_requested
 signal on_battle_finished
-signal on_message_requested(message: String)
+signal on_message_requested(message: String, duration: float)
 signal on_battle_effect_applied(effect: BattleEffect)
 signal on_battle_turn_manipulation(turn_manipulations: Array[BattleTurn.TurnManipulation])
 signal on_battle_ability_execute(turn_uid: int, ability_execution_info: AbilityExecution)
@@ -99,8 +99,8 @@ func request_hide_battle_menu() -> void:
 	on_request_hide_battle_menu.emit(get_current_turn_participant())
 	
 # Message UI
-func request_message(message: String) -> void:
-	on_message_requested.emit(message);
+func request_message(message: String, duration: float) -> void:
+	on_message_requested.emit(message, duration);
 
 ## Ability queueing
 class AbilityExecution:

@@ -1,5 +1,6 @@
 class_name BattleAbility extends Resource
 
+var _ability_id: StringName
 var _source: BattleParticipant
 var _target: BattleParticipant
 var _turn_target: BattleTurn
@@ -25,7 +26,7 @@ static var ability_class_registry: Dictionary[StringName, String] = {
 	&"skip_turn" : "res://game/abilities/ability_skip_turn.tres",
 	&"skip_many_turns" : "res://game/abilities/ability_skip_many_turns.tres",
 	&"repeat_turn" : "res://game/abilities/ability_repeat_turn.tres",
-	
+
 	# Misc
 	&"repeating_turn" : "res://game/abilities/ability_repeating_turn.tres",
 	
@@ -117,6 +118,13 @@ func requires_turn_target() -> bool:
 func get_message() -> String:
 	return ""
 	
+func get_display_name() -> String:
+	if _consumable_item_id == &"":
+		return _ability_id
+		
+	var consumable_item_count = PlayerPartyManager.inventory.items.get(_consumable_item_id, 0)
+	return "%s (x%d)" % [_ability_id, consumable_item_count]
+	
 # This handles case where turn is repeated, but the original target is no longer valid
 # return in format: [target: Participant, turn_target: BattleTurn]
 func find_fallback_target() -> Array:
@@ -151,11 +159,12 @@ func set_timer(time: float, callable: Callable) -> void:
 func set_lifetime(lifetime: float) -> void:
 	set_timer(lifetime, end)
 
-func initialize(in_source: BattleParticipant = null) -> void:
+func initialize(in_source: BattleParticipant, in_ability_id: StringName) -> void:
 	_source = in_source
+	_ability_id = in_ability_id
 
 func show_message() -> void:
-	BattleManager.request_message(get_message())
+	BattleManager.request_message(get_message(), 1.1)
 	
 class BattleEffectConsumeSP extends BattleEffect:
 	func _init(in_source: BattleParticipant, in_target: BattleParticipant, sp_cost: int) -> void:
@@ -166,6 +175,3 @@ class BattleEffectConsumeSP extends BattleEffect:
 func consume_sp() -> void:
 	var effect := BattleEffectConsumeSP.new(_source, _source, sp_cost)
 	effect.apply()
-
-# func _init(in_source: BattleParticipant = null) -> void:
-# 	_source = in_source
