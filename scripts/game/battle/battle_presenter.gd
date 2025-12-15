@@ -4,7 +4,8 @@ var _previous_battle_turns: Array[BattleTurn]
 
 # Setup
 func on_battle_ui_setup_requested() -> void:
-	BattleView.setup_battle_ui()
+	BattleView.show_battle_ui()
+	BattleView.clear_enemies()
 
 	var enemies := BattleManager.get_enemies()
 	for enemy in enemies:
@@ -12,12 +13,13 @@ func on_battle_ui_setup_requested() -> void:
 		
 	on_battle_turns_updated(BattleManager._turns)
 
-func on_player_party_ui_setup_requested() -> void:
-	BattleView.setup_player_party_ui()
+func on_player_party_updated(participants: Array[BattleParticipant]) -> void:
+	if !BattleView.ui_is_setup:
+		return
 
 	BattleView.hide_all_players_info()
 
-	var players := PlayerPartyManager.get_participants()
+	var players := participants
 	for player in players:
 		var hp = player.get_attribute(&"_hp")
 		var max_hp = player.get_attribute(&"_max_hp")
@@ -25,17 +27,21 @@ func on_player_party_ui_setup_requested() -> void:
 		var max_sp = player.get_attribute(&"_max_sp")
 		BattleView.setup_player(player.uid, player.participant_data.character_graphics, hp, max_hp, sp, max_sp)
 
-func on_ui_setup_complete() -> void:
-	BattleManager.set_ui_setup_is_complete(true)
+func on_battle_fade_complete() -> void:
+	BattleManager.set_battle_fade_complete(true)
 	
 # Tear Down
 func on_battle_finished() -> void:
 	_previous_battle_turns.clear()
-	BattleView.destroy_battle_ui()
+	BattleView.hide_battle_ui()
+	
+func on_dungeon_crawling_start(_player_position: Vector3) -> void:
+	BattleView.setup_battle_ui()
+	BattleView.show_ui()
+	BattleView.hide_battle_ui()
 	
 func on_dungeon_crawling_finished() -> void:
-	BattleView.destroy_battle_ui()
-	BattleView.destroy_player_party_ui()
+	BattleView.hide_ui()
 	
 # Message UI
 func on_message_requested(message: String, duration: float) -> void:
@@ -164,8 +170,8 @@ func on_battle_turns_updated(turns: Array[BattleTurn]) -> void:
 	
 	_previous_battle_turns = turns.duplicate()
 
-func _create_battle_menu_entry(ability_id: StringName, ability: BattleAbility) -> UIBattle.BattleMenuEntry:
-	var battle_menu_entry: UIBattle.BattleMenuEntry = UIBattle.BattleMenuEntry.new()
+func _create_battle_menu_entry(ability_id: StringName, ability: BattleAbility) -> UIBattleMenu.BattleMenuEntry:
+	var battle_menu_entry: UIBattleMenu.BattleMenuEntry = UIBattleMenu.BattleMenuEntry.new()
 	battle_menu_entry.ability_id = ability_id
 	battle_menu_entry.category = BattleAbility.ability_categories[ability_id]
 	battle_menu_entry.ability_string = ability.get_display_name()
@@ -180,7 +186,7 @@ func _create_battle_menu_entry(ability_id: StringName, ability: BattleAbility) -
 	return battle_menu_entry
 
 func on_request_show_battle_menu(battle_participant: BattleParticipant, battle_turn: BattleTurn) -> void:
-	var battle_menu_entries: Array[UIBattle.BattleMenuEntry]
+	var battle_menu_entries: Array[UIBattleMenu.BattleMenuEntry]
 
 	var abilities := battle_participant.abilities
 	for ability_id in abilities:
@@ -214,7 +220,6 @@ func on_battle_particiant_removed(battle_participant: BattleParticipant) -> void
 
 func _ready():
 	BattleManager.on_battle_ui_setup_requested.connect(on_battle_ui_setup_requested)
-	BattleManager.on_player_party_ui_setup_requested.connect(on_player_party_ui_setup_requested)
 	BattleManager.on_battle_finished.connect(on_battle_finished)
 	
 	BattleManager.on_message_requested.connect(on_message_requested)
@@ -244,6 +249,10 @@ func _ready():
 	BattleView.on_ability_cancel.connect(on_ability_cancel)
 	BattleView.on_ability_cancel_prepare.connect(on_ability_cancel_prepare)
 	
-	BattleView.on_ui_setup_complete.connect(on_ui_setup_complete)
+	BattleView.on_battle_fade_complete.connect(on_battle_fade_complete)
+	BattleView.on_ui_setup.connect(func(): on_player_party_updated(PlayerPartyManager.get_participants()))
 	
+	PlayerPartyManager.on_player_party_updated.connect(on_player_party_updated)
+	
+	DungeonManager.on_dungeon_crawling_start.connect(on_dungeon_crawling_start)
 	DungeonManager.on_dungeon_crawling_finished.connect(on_dungeon_crawling_finished)

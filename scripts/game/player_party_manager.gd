@@ -1,5 +1,7 @@
 extends Node
 
+signal on_player_party_updated(participants: Array[BattleParticipant])
+
 # Party participants
 var _participants: Array[BattleParticipant]
 var inventory: PlayerPartyInventory
@@ -19,6 +21,7 @@ func _on_load_complete(participant_ids: Array[StringName]) -> void:
 		for item_id in PlayerPartyManager.inventory.items:
 			PlayerPartyInventory.grant_item_ability_to_particpant(item_id, participant)
 		_participants.append(participant)
+	on_player_party_updated.emit(_participants)
 
 func clear_participants() -> void:
 	_participants.clear()

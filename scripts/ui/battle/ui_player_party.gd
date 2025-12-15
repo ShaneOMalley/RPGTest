@@ -77,6 +77,7 @@ func hide_all_players_info() -> void:
 	for index in range(MAX_PLAYERS):
 		get_player_ui(index).hide_info()
 
+# Message
 func show_message(message: String, duration: float) -> void:
 	($MessageBox as Control).show()
 	($MessageBox/Text as RichTextLabel).text = message

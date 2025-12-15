@@ -11,7 +11,7 @@ var participants: Array[BattleParticipant]
 signal on_battle_started
 signal on_battle_pre_setup_complete
 signal on_battle_ui_setup_requested
-signal on_player_party_ui_setup_requested
+# signal on_player_party_ui_setup_requested
 signal on_battle_finished
 signal on_message_requested(message: String, duration: float)
 signal on_battle_effect_applied(effect: BattleEffect)
@@ -79,19 +79,16 @@ func get_rewards() -> Dictionary[StringName, int]:
 	return _current_battle_rewards
 
 ## UI
-var _ui_setup_is_complete := false
-func get_ui_setup_is_complete() -> bool:
-	return _ui_setup_is_complete
+var _ui_battle_fade_is_complete := false
+func get_ui_battle_fade_is_complete() -> bool:
+	return _ui_battle_fade_is_complete
 
-func set_ui_setup_is_complete(value: bool) -> void:
-	_ui_setup_is_complete = value
+func set_battle_fade_complete(value: bool) -> void:
+	_ui_battle_fade_is_complete = value
 
 func request_battle_ui_setup() -> void:
 	on_battle_ui_setup_requested.emit()
 
-func request_player_party_ui_setup() -> void:
-	on_player_party_ui_setup_requested.emit()
-	
 func request_show_battle_menu() -> void:
 	on_request_show_battle_menu.emit(get_current_turn_participant(), _current_turn)
 
@@ -350,7 +347,7 @@ func setup_battle(in_encounter_group_id: StringName):
 	
 	_is_battle_active = true
 	_is_finished_setting_up_participants = false
-	_ui_setup_is_complete = false
+	_ui_battle_fade_is_complete = false
 
 	_state_machine = FSMBattle.new()
 	_state_machine.on_state_entered.connect(_on_state_entered)

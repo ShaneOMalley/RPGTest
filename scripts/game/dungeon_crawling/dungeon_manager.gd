@@ -168,8 +168,6 @@ func set_player(in_player: Player) -> void:
 	_player.on_rotation_started.connect(on_player_rotation_started.emit)
 	_player.on_rotation_finished.connect(on_player_rotation_finished.emit)
 	_player.on_interactables_updated.connect(on_player_interactables_updated.emit)
-	
-	BattleManager.request_player_party_ui_setup()
 	on_dungeon_crawling_start.emit(_player.position)
 	
 const _dungeon_data_resource_path := "res://game/dungeon_crawling/dungeon_data_test.tres"
