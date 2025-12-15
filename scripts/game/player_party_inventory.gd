@@ -12,6 +12,8 @@ class InventoryItemData:
 		ability_id = in_ability_id
 		
 	func instantiate_ability_from_template(source: BattleParticipant) -> BattleAbility:
+		assert(ability_id)
+			
 		if !is_instance_valid(_ability_template):
 			var ability_resource_path := BattleAbility.ability_class_registry[ability_id]
 			_ability_template = load(ability_resource_path).duplicate() as BattleAbility
@@ -21,19 +23,29 @@ class InventoryItemData:
 		return ability_instance
 		
 	func preload_ability() -> void:
-		var ability_resource_path := BattleAbility.ability_class_registry[ability_id]
-		LoadHelper.load_multiple_async([ability_resource_path], Callable())
+		if ability_id != &"":
+			var ability_resource_path := BattleAbility.ability_class_registry[ability_id]
+			LoadHelper.load_multiple_async([ability_resource_path], Callable())
 		
 	func unload_ability() -> void:
 		_ability_template = null
 
-static var item_data: Dictionary[StringName, InventoryItemData] = { &"potion": InventoryItemData.new(&"potion", &"potion") }
+static var item_data: Dictionary[StringName, InventoryItemData] = { 
+	&"potion": InventoryItemData.new(&"potion", &"potion"),
+	&"dud": InventoryItemData.new(&"dud", &""),
+}
 
 static func get_item_ability_id(item_id: StringName) -> StringName:
 	return item_data[item_id].ability_id
 	
-static func instantiate_item_ability(item_id: StringName, source: BattleParticipant) -> BattleAbility:
-	return item_data[item_id].instantiate_ability_from_template(source)
+static func grant_item_ability_to_particpant(item_id: StringName, participant: BattleParticipant) -> void:
+	var item := item_data[item_id]
+	var ability_id = item.ability_id
+	if ability_id == &"":
+		return
+		
+	var ability := item.instantiate_ability_from_template(participant)
+	participant.abilities[ability_id] = ability
 	
 var gold: int = 200
 var items: Dictionary[StringName, int]

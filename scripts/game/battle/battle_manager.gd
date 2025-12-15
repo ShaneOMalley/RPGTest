@@ -385,6 +385,7 @@ func _on_state_exited(id: StringName) -> void:
 func _process(_delta: float) -> void:
 	if Input.is_action_just_pressed(&"ui_left"):
 		PlayerPartyManager.inventory.add_item(&"potion")
+		PlayerPartyManager.inventory.add_item(&"dud")
 
 # func _ready() -> void:
 # 	_setup_battle()
