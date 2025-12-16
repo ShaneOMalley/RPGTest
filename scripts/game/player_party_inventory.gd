@@ -70,6 +70,9 @@ func remove_item(item_id: StringName) -> void:
 		items.erase(item_id)
 		item_data[item_id].unload_ability()
 		item_depleted.emit(item_id)
+		
+func get_item_count(item_id: StringName) -> int:
+	return items.get(item_id, 0)
 
 func get_all_item_ability_ids() -> Array[StringName]:
 	var unique_ability_ids: Dictionary[StringName, bool]

@@ -59,10 +59,14 @@ func _ready() -> void:
 	(owner as Player).on_rotation_finished.connect(_on_player_rotation_finished)
 
 func _process(delta: float) -> void:
-	if BattleManager.get_is_battle_active():
+	if DungeonManager.get_player_input_blocked():
 		return
 	
 	if Input.is_action_just_pressed(&"player_interact"):
 		for interactable in _valid_interactables:
 			interactable.execute()
 			on_execute_interaction.emit(interactable)
+			
+	# TODO: Find more suitable place for this. Maybe have generic "player action" input listener
+	if Input.is_action_just_pressed(&"player_menu"):
+		BattleManager.request_out_of_combat_menu()

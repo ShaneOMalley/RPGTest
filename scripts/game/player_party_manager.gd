@@ -35,6 +35,10 @@ func add_participants_async(ids: Array[StringName], callback := Callable()) -> v
 func get_participants() -> Array[BattleParticipant]:
 	return _participants
 	
+func get_participant_with_uid(uid: StringName) -> BattleParticipant:
+	var index := _participants.find_custom((func(participant): return participant.uid == uid))
+	return _participants[index]
+	
 func on_battle_finished() -> void:
 	for participant in _participants:
 		participant.remove_all_effects()

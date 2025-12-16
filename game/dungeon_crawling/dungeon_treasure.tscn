@@ -1,0 +1,59 @@
+[gd_scene load_steps=8 format=3 uid="uid://b6xqiihxxqb2v"]
+
+[ext_resource type="Script" uid="uid://3gnt7lptwwoo" path="res://scripts/game/dungeon_crawling/dungeon_treasure.gd" id="1_t4uta"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_n1c2l"]
+albedo_color = Color(1, 0.564706, 0, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_n1c2l"]
+
+[sub_resource type="PrismMesh" id="PrismMesh_n1c2l"]
+
+[sub_resource type="Animation" id="Animation_t4uta"]
+length = 0.001
+tracks/0/type = "rotation_3d"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Pivot")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = PackedFloat32Array(0, 1, 0, 0, 0, 1)
+
+[sub_resource type="Animation" id="Animation_n1c2l"]
+resource_name = "open"
+tracks/0/type = "rotation_3d"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Pivot")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = PackedFloat32Array(0.0333333, 1, 0, 0, 0, 1, 0.3, 1, -0.5, 0, 0, 0.866)
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_t4uta"]
+_data = {
+&"RESET": SubResource("Animation_t4uta"),
+&"open": SubResource("Animation_n1c2l")
+}
+
+[node name="DungeonTreasure" type="Node3D"]
+transform = Transform3D(1.925, 0, 0, 0, 1.925, 0, 0, 0, 1.925, 0, 0, 0)
+script = ExtResource("1_t4uta")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1.8, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.702189, 0)
+material_override = SubResource("StandardMaterial3D_n1c2l")
+mesh = SubResource("BoxMesh_n1c2l")
+
+[node name="Pivot" type="Node3D" parent="."]
+transform = Transform3D(1.8, 0, 0, 0, 0.496783, 0, 0, 0, 1, 0, 1.21627, -0.503804)
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="Pivot"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.83477e-15, 0.47875, 0.504563)
+material_override = SubResource("StandardMaterial3D_n1c2l")
+mesh = SubResource("PrismMesh_n1c2l")
+skeleton = NodePath("../../MeshInstance3D")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_t4uta")
+}

@@ -72,6 +72,18 @@ func on_ability_and_target_selected(ability_id: StringName, target_uid: StringNa
 	var turn_target := BattleManager.get_turn_with_uid(turn_target_uid)
 	BattleManager.queue_ability_execution(ability, target, turn_target)
 	
+func on_ability_out_of_combat_execute(ability_id: StringName, source_id: StringName, target_id: StringName) -> void:
+	var source := PlayerPartyManager.get_participant_with_uid(source_id)
+	var ability := source.abilities[ability_id]
+	var target := PlayerPartyManager.get_participant_with_uid(target_id)
+	BattleManager.execute_ability_out_of_combat(ability, source, target)
+	
+func on_battle_menu_show() -> void:
+	DungeonManager.set_player_input_blocked_reason(&"battle_menu", true)
+	
+func on_battle_menu_hide() -> void:
+	DungeonManager.set_player_input_blocked_reason(&"battle_menu", false)
+	
 func on_turn_hovered(turn_uid: int) -> void:
 	var highlight_fx_template = preload("res://game/ui_fx/uifx_highlight.tscn")
 	var index = BattleManager._turns.find_custom(func(turn): return turn.uid == turn_uid)
@@ -170,45 +182,56 @@ func on_battle_turns_updated(turns: Array[BattleTurn]) -> void:
 	
 	_previous_battle_turns = turns.duplicate()
 
-func _create_battle_menu_entry(ability_id: StringName, ability: BattleAbility) -> UIBattleMenu.BattleMenuEntry:
-	var battle_menu_entry: UIBattleMenu.BattleMenuEntry = UIBattleMenu.BattleMenuEntry.new()
-	battle_menu_entry.ability_id = ability_id
-	battle_menu_entry.category = BattleAbility.ability_categories[ability_id]
-	battle_menu_entry.ability_string = ability.get_display_name()
-	battle_menu_entry.ability_sp_cost = ability.sp_cost
-	battle_menu_entry.can_activate = ability.can_activate()
-	battle_menu_entry.requires_turn_target = ability.requires_turn_target()
-
-	var valid_participants = BattleManager.get_participants().filter(ability.is_valid_for_target)
-	for valid_participant in valid_participants:
-		battle_menu_entry.valid_participant_targets.append(valid_participant.uid)
-		
-	return battle_menu_entry
-
 func on_request_show_battle_menu(battle_participant: BattleParticipant, battle_turn: BattleTurn) -> void:
-	var battle_menu_entries: Array[UIBattleMenu.BattleMenuEntry]
+	var entries: Array[UIBattleMenu.BattleMenuEntry]
 
 	var abilities := battle_participant.abilities
 	for ability_id in abilities:
 		if battle_turn.is_ability_allowed(ability_id):
 			var ability := abilities[ability_id]
 			if !ability.is_hidden():
-				var battle_menu_entry := _create_battle_menu_entry(ability_id, ability)
-				battle_menu_entries.append(battle_menu_entry)
+				var entry: UIBattleMenu.BattleMenuEntry = UIBattleMenu.BattleMenuEntry.new()
+				entry.ability_id = ability_id
+				entry.category = BattleAbility.ability_categories[ability_id]
+				entry.ability_string = ability.get_display_name()
+				entry.ability_sp_cost = ability.sp_cost
+				entry.can_activate = ability.can_activate()
+				entry.requires_turn_target = ability.requires_turn_target()
+
+				var valid_participants = BattleManager.get_participants().filter(ability.is_valid_for_target)
+				for valid_participant in valid_participants:
+					entry.valid_participant_targets.append(valid_participant.uid)
+		
+				entries.append(entry)
 	
-	# for item_id in PlayerPartyManager.inventory.items:
-	# 	var ability_id := PlayerPartyInventory.get_item_ability_id(item_id)
-	# 	var ability := PlayerPartyInventory.instantiate_item_ability(item_id, battle_participant)
-	# 	# smelly
-	# 	ability._source = battle_participant
-	# 	
-	# 	var battle_menu_entry := _create_battle_menu_entry(ability_id, ability)
-	# 	battle_menu_entries.append(battle_menu_entry)
+	BattleView.show_battle_menu(entries)
 
-	BattleView.show_battle_menu(battle_menu_entries)
-
-func on_request_hide_battle_menu(_battle_participant: BattleParticipant) -> void:
+func on_request_hide_battle_menu() -> void:
 	BattleView.hide_battle_menu()
+
+func on_request_out_of_combat_menu() -> void:
+	var entries: Array[UIBattleMenu.OutOfCombatAbilityEntry]
+	
+	for participant in PlayerPartyManager.get_participants():
+		for ability_id in participant.abilities:
+			var ability := participant.abilities[ability_id]
+			if ability.can_execute_out_of_combat():
+				var entry: UIBattleMenu.OutOfCombatAbilityEntry = UIBattleMenu.OutOfCombatAbilityEntry.new()
+				entry.ability_id = ability_id
+				entry.source_id = participant.uid
+				entry.category_id = BattleAbility.ability_categories[ability_id]
+				entry.display_name_func = ability.get_display_name
+				entry.valid_participant_targets_func = func():
+					var results: Array[StringName]
+					for valid_participant in PlayerPartyManager.get_participants().filter(ability.is_valid_for_target):
+						results.append(valid_participant.uid)
+					return results
+				entry.valid_for_target_func = func(target_uid): return ability.is_valid_for_target(PlayerPartyManager.get_participant_with_uid(target_uid))
+				entry.can_activate_func = func(): return !PlayerPartyManager.get_participants().filter(ability.is_valid_for_target).is_empty() and ability.has_enough_resources()
+				
+				entries.append(entry)
+	
+	BattleView.show_out_of_combat_menu(entries)
 
 # Misc
 func on_battle_particiant_removed(battle_participant: BattleParticipant) -> void:
@@ -236,11 +259,15 @@ func _ready():
 	BattleManager.on_battle_animation_requested.connect(on_battle_animation_requested)
 	
 	BattleManager.on_request_show_battle_menu.connect(on_request_show_battle_menu)
+	BattleManager.on_request_out_of_combat_menu.connect(on_request_out_of_combat_menu)
 	BattleManager.on_request_hide_battle_menu.connect(on_request_hide_battle_menu)
 	BattleManager.on_battle_particiant_removed.connect(on_battle_particiant_removed)
 	BattleManager.on_battle_turns_updated.connect(on_battle_turns_updated)
 	
 	BattleView.on_ability_and_target_selected.connect(on_ability_and_target_selected)
+	BattleView.on_ability_out_of_combat_execute.connect(on_ability_out_of_combat_execute)
+	BattleView.on_battle_menu_show.connect(on_battle_menu_show)
+	BattleView.on_battle_menu_hide.connect(on_battle_menu_hide)
 	
 	BattleView.on_turn_hovered.connect(on_turn_hovered)
 	BattleView.on_turn_unhovered.connect(on_turn_unhovered)

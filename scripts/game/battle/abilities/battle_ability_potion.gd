@@ -2,7 +2,9 @@ class_name BattleAbilityPotion extends BattleAbility
 
 var effect: BattleEffectHealing
 
-func execute(in_target: BattleParticipant, in_turn_target: BattleTurn = null) -> void:
+const HEAL_AMOUNT: int = 50
+
+func execute(in_target: BattleParticipant, _in_turn_target: BattleTurn = null) -> void:
 	super.execute(in_target)
 	
 	BattleManager.play_fx(fx_activate, _source)
@@ -12,7 +14,7 @@ func execute(in_target: BattleParticipant, in_turn_target: BattleTurn = null) ->
 	set_lifetime(1.9)
 
 func _apply_healing_effect() -> void:
-	effect = BattleEffectHealing.new(_source, _target, 50)
+	effect = BattleEffectHealing.new(_source, _target, HEAL_AMOUNT)
 	effect.apply()
 
 	BattleManager.play_fx(fx_affect_target, _target)
@@ -28,3 +30,11 @@ func find_fallback_target() -> Array:
 
 func get_message() -> String:
 	return "%s heals %s for %d hp!" % [_source.get_display_name(), _target.get_display_name(), effect.hp]
+
+func execute_out_of_combat(_in_source: BattleParticipant, _in_target: BattleParticipant) -> void:
+	super.execute_out_of_combat(_in_source, _in_target)
+	effect = BattleEffectHealing.new(_in_source, _in_target, HEAL_AMOUNT)
+	effect.apply()
+
+func can_execute_out_of_combat() -> bool:
+	return true

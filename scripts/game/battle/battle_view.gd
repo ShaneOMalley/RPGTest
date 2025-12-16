@@ -1,6 +1,7 @@
 extends Node
 
 signal on_ability_and_target_selected(ability_id, target_uid, turn_target_uid)
+signal on_ability_out_of_combat_execute(ability_id, target_id, turn_target_uid)
 signal on_ability_prepare(ability_id, target_uid, turn_target_uid)
 signal on_ability_cancel(ability_id)
 signal on_ability_cancel_prepare(ability_id)
@@ -8,6 +9,8 @@ signal on_battle_fade_complete()
 signal on_ui_setup()
 signal on_turn_hovered(turn_uid: int)
 signal on_turn_unhovered(turn_uid: int)
+signal on_battle_menu_show()
+signal on_battle_menu_hide()
 
 var battle_ui: UIBattle
 var enemies_ui: UIBattleEnemies
@@ -21,7 +24,7 @@ const USE_DEBUG_UI := false
 
 func play_turn_animation(turn_uid: int, anim_name: StringName) -> void:
 	turns_ui.play_animation_for_turn(turn_uid, anim_name)
-		
+	
 func add_turn(turn_uid: int, character_graphics: PackedScene, affiliation: BattleManager.Affiliation) -> void:
 	turns_ui.add_turn(turn_uid, character_graphics, affiliation)
 	
@@ -89,7 +92,16 @@ func show_battle_menu(entries: Array[UIBattleMenu.BattleMenuEntry]) -> void:
 
 func hide_battle_menu() -> void:
 	battle_menu_ui.hide_battle_menu()
-
+	
+func show_out_of_combat_menu(entries: Array[UIBattleMenu.OutOfCombatAbilityEntry]) -> void:
+	battle_menu_ui.show_out_of_combat_menu(entries)
+	
+func on_battle_menu_visibility_changed() -> void:
+	if battle_menu_ui.visible:
+		on_battle_menu_show.emit()
+	else:
+		on_battle_menu_hide.emit()
+	
 # UI Management
 func setup_battle_ui() -> void:
 	# TODO: Define this path in config (also, find out how to do config in Godot?)
@@ -103,10 +115,12 @@ func setup_battle_ui() -> void:
 		debug_battle_ui = preload("res://ui/battle/debug_battle.tscn").instantiate()
 		get_tree().root.add_child(debug_battle_ui)
 	
+	battle_menu_ui.on_ability_out_of_combat_execute.connect(on_ability_out_of_combat_execute.emit)
 	battle_menu_ui.on_ability_and_target_selected.connect(on_ability_and_target_selected.emit)
 	battle_menu_ui.on_ability_prepare.connect(on_ability_prepare.emit)
 	battle_menu_ui.on_ability_cancel.connect(on_ability_cancel.emit)
 	battle_menu_ui.on_ability_cancel_prepare.connect(on_ability_cancel_prepare.emit)
+	battle_menu_ui.visibility_changed.connect(on_battle_menu_visibility_changed)
 	battle_menu_ui.hide_battle_menu()
 	
 	turns_ui.on_turn_hovered.connect(on_turn_hovered.emit)

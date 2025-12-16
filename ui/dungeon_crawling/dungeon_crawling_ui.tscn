@@ -10,6 +10,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 script = ExtResource("1_yiy6p")
 
 [node name="Minimap" parent="." instance=ExtResource("1_a368d")]
@@ -21,6 +22,7 @@ offset_top = 55.0
 offset_bottom = 55.0
 grow_horizontal = 1
 grow_vertical = 1
+mouse_filter = 2
 
 [node name="InteractionText" type="RichTextLabel" parent="."]
 visible = false
@@ -34,6 +36,7 @@ offset_top = -109.0
 offset_right = -199.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 theme_override_font_sizes/normal_font_size = 42
 text = "Test interaction text"
 horizontal_alignment = 1
@@ -44,6 +47,7 @@ layout_mode = 0
 offset_left = 10.0
 offset_right = 514.0
 offset_bottom = 39.0
+mouse_filter = 2
 theme_override_font_sizes/normal_font_size = 28
 text = "The greybox dimension"
 vertical_alignment = 1
@@ -54,6 +58,7 @@ offset_left = 10.0
 offset_top = 37.0
 offset_right = 514.0
 offset_bottom = 59.0
+mouse_filter = 2
 theme_override_font_sizes/normal_font_size = 18
 text = "Floor 1/3"
 scroll_active = false

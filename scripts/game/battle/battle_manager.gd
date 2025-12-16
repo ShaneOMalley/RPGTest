@@ -23,7 +23,8 @@ signal on_battle_fx_requested(effect_prototype: PackedScene, target: BattleParti
 signal on_battle_fx_stop_requested(effect_prototype: PackedScene, target: BattleParticipant)
 signal on_battle_animation_requested(anim_id: StringName, target: BattleParticipant)
 signal on_request_show_battle_menu(participant: BattleParticipant, battle_turn: BattleTurn)
-signal on_request_hide_battle_menu(participant: BattleParticipant)
+signal on_request_out_of_combat_menu()
+signal on_request_hide_battle_menu()
 signal on_battle_particiant_removed(participant: BattleParticipant)
 signal on_battle_turns_updated(turns: Array[BattleTurn])
 
@@ -31,7 +32,6 @@ signal on_battle_turns_updated(turns: Array[BattleTurn])
 var _turns: Array[BattleTurn]
 var _battle_time: float = 0
 var _state_machine: FSMBattle
-var _is_battle_active: bool = false
 var _encounter_group_id
 var _current_battle_rewards: Dictionary[StringName, int]
 
@@ -45,9 +45,6 @@ func get_encounter_group_id() -> StringName:
 
 func get_participants() -> Array[BattleParticipant]:
 	return participants
-
-func get_is_battle_active() -> bool:
-	return _is_battle_active
 
 func get_participant(uid: StringName) -> BattleParticipant:
 	var index := participants.find_custom((func(participant): return participant.uid == uid))
@@ -93,7 +90,10 @@ func request_show_battle_menu() -> void:
 	on_request_show_battle_menu.emit(get_current_turn_participant(), _current_turn)
 
 func request_hide_battle_menu() -> void:
-	on_request_hide_battle_menu.emit(get_current_turn_participant())
+	on_request_hide_battle_menu.emit()
+	
+func request_out_of_combat_menu() -> void:
+	on_request_out_of_combat_menu.emit()
 	
 # Message UI
 func request_message(message: String, duration: float) -> void:
@@ -139,6 +139,9 @@ func cancel_ability(in_ability: BattleAbility) -> void:
 	
 func cancel_prepare_ability(in_ability: BattleAbility) -> void:
 	in_ability.cancel_prepare()
+	
+func execute_ability_out_of_combat(in_ability: BattleAbility, in_source: BattleParticipant, in_target: BattleParticipant) -> void:
+	in_ability.execute_out_of_combat(in_source, in_target)
 	
 ## FX Management
 func play_fx(effect_prototype: PackedScene, target: BattleParticipant):
@@ -338,6 +341,7 @@ func _build_turns_list(num_turns: int):
 func setup_battle(in_encounter_group_id: StringName):
 	# _test_add_participants()
 	# _build_turns_list(MAX_TURNS)
+	DungeonManager.set_player_input_blocked_reason(&"battle", true)
 
 	_battle_time = 0.0
 	_current_turn = null
@@ -345,7 +349,6 @@ func setup_battle(in_encounter_group_id: StringName):
 	
 	_encounter_group_id = in_encounter_group_id
 	
-	_is_battle_active = true
 	_is_finished_setting_up_participants = false
 	_ui_battle_fade_is_complete = false
 
@@ -358,10 +361,11 @@ func setup_battle(in_encounter_group_id: StringName):
 	on_battle_started.emit()
 
 func finish_battle():
+	DungeonManager.set_player_input_blocked_reason(&"battle", false)
+	
 	_turns.clear()
 	participants.clear()
 	_state_machine.queue_free()
-	_is_battle_active = false
 	_current_battle_rewards.clear()
 	on_battle_finished.emit()
 

@@ -18,7 +18,6 @@ var _encounter_data_weighted: Dictionary[StringName, float]
 var _treasure_data_weighted: Dictionary[StringName, float]
 var _player: Player
 var _steps_until_next_encounter: int
-var _player_movement_is_blocked: bool
 
 var _current_dungeon_data: DungeonData
 var _floors: Array[PackedScene]
@@ -39,14 +38,13 @@ func get_grid_width() -> int:
 	return _grid_width;
 
 # Player Movement
-func block_player_movement(duration: float) -> void:
+static var player_input_block_uid: int = 0
+func block_player_input_for_duration(duration: float) -> void:
 	var timer := get_tree().create_timer(duration)
-	_player_movement_is_blocked = true
-	timer.timeout.connect(func(): _player_movement_is_blocked = false)
+	set_player_input_blocked_reason(player_input_block_uid, true)
+	timer.timeout.connect(set_player_input_blocked_reason.bind(player_input_block_uid, false))
+	player_input_block_uid += 1
 	
-func get_player_movement_is_blocked() -> bool:
-	return _player_movement_is_blocked
-
 func get_movement_data_for_cell(x: int, y: int) -> int:
 	return _movement_data[x + y * _grid_width]
 
@@ -157,7 +155,7 @@ func goto_next_floor() -> void:
 func get_treasure(closest_treasure: DungeonTreasure) -> void:
 	var treasure_id := _get_random_treasure()
 	BattleManager.request_message("You got a %s!" % treasure_id, 1.1)
-	DungeonManager.block_player_movement(1.1)
+	DungeonManager.block_player_input_for_duration(1.1)
 	closest_treasure.open()
 
 func set_player(in_player: Player) -> void:
@@ -187,6 +185,14 @@ func reset() -> void:
 
 func end_dungeon_crawling() -> void:
 	on_dungeon_crawling_finished.emit()
+	
+var _player_input_blocked_reasons: Dictionary[Variant, bool]
+func get_player_input_blocked() -> bool:
+	return _player_input_blocked_reasons.values().has(true)
+	
+func set_player_input_blocked_reason(reason: Variant, blocked: bool) -> void:
+	_player_input_blocked_reasons[reason] = blocked
+	
 
 # func _ready():
 # 	reset()

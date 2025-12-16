@@ -2,7 +2,7 @@ extends Control
 
 func _process(_delta: float) -> void:
 
-	if !BattleManager.get_is_battle_active():
+	if !is_instance_valid(BattleManager._state_machine):
 		return
 
 	# Battle State

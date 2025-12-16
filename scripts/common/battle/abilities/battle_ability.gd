@@ -73,9 +73,7 @@ func execute(in_target: BattleParticipant, in_turn_target: BattleTurn = null) ->
 	_is_executing = true
 	
 	# todo: make player not consume resources if their turn is being repeated
-	consume_sp()
-	if _consumable_item_id != &"":
-		PlayerPartyManager.inventory.remove_item(_consumable_item_id)
+	consume_resources()
 	
 	# all abilities: shrink current turn
 	var turn_manipulation := BattleTurn.TurnManipulation.new()
@@ -83,6 +81,12 @@ func execute(in_target: BattleParticipant, in_turn_target: BattleTurn = null) ->
 	turn_manipulation.anim_name = &"shrink"
 	turn_manipulation.type = BattleTurn.TurnManipulation.Type.REMOVE
 	BattleManager.on_battle_turn_manipulation.emit([turn_manipulation])
+	
+func execute_out_of_combat(_in_source: BattleParticipant, _in_target: BattleParticipant) -> void:
+	consume_resources()
+	
+func can_execute_out_of_combat() -> bool:
+	return false
 
 func prepare(in_target: BattleParticipant, in_turn_target: BattleTurn = null) -> void:
 	_target = in_target
@@ -165,6 +169,19 @@ func initialize(in_source: BattleParticipant, in_ability_id: StringName) -> void
 
 func show_message() -> void:
 	BattleManager.request_message(get_message(), 1.1)
+	
+func consume_resources() -> void:
+	consume_sp()
+	if _consumable_item_id != &"":
+		PlayerPartyManager.inventory.remove_item(_consumable_item_id)
+		
+func has_enough_resources() -> bool:
+	if sp_cost > 0:
+		return _source.get_attribute(&"_sp") >= 0
+	elif _consumable_item_id != &"":
+		return PlayerPartyManager.inventory.get_item_count(_consumable_item_id) > 0
+	else:
+		return true
 	
 class BattleEffectConsumeSP extends BattleEffect:
 	func _init(in_source: BattleParticipant, in_target: BattleParticipant, sp_cost: int) -> void:
