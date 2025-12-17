@@ -7,5 +7,6 @@ func disconnect_all() -> void:
 	for connection in mouse_entered.get_connections():
 		mouse_entered.disconnect(connection.callable)
 		
-	for connection in mouse_exited.get_connections():
-		mouse_exited.disconnect(connection.callable)
+	for connection in focus_entered.get_connections():
+		focus_entered.disconnect(connection.callable)
+		

@@ -11,3 +11,4 @@ func _do_recruitment() -> void:
 func _ready() -> void:
 	($Menu/StartDungeon as Button).pressed.connect(_start_dungeon)
 	($Menu/Recruitment as Button).pressed.connect(_do_recruitment)
+	($Menu/StartDungeon as Button).grab_focus()

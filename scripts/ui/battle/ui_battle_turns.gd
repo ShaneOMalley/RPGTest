@@ -23,10 +23,10 @@ func add_turn(turn_uid: int, character_graphics: PackedScene, affiliation: Battl
 		color = Color.RED
 	else:
 		assert(false, "Affiliation color not supported for %s" % affiliation)
-		
+	
 	entry.set_background_color(color)
 	entry.set_character_graphics(character_graphics)
-		
+	
 	_uid_to_ui_turn[turn_uid] = entry
 	_ui_turn_entries.append(entry)
 	
@@ -77,6 +77,9 @@ func delete_turn(turn_uid: int) -> void:
 func play_animation_for_turn(turn_uid: int, anim_name: StringName) -> void:
 	var turn_ui := _uid_to_ui_turn[turn_uid]
 	turn_ui.play_animation(anim_name)
+	
+func get_top_turn_button() -> Button:
+	return _ui_turn_entries.front()
 	
 func reset_animation_for_turn() -> void:
 	pass

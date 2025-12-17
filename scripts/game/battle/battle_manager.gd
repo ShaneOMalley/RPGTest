@@ -195,7 +195,7 @@ func get_turn_with_uid(turn_uid: int) -> BattleTurn:
 	return null
 	
 func get_next_turn_for_participant(participant: BattleParticipant) -> BattleTurn:
-	var index := _turns.find_custom(func(turn: BattleTurn): return turn.participant == participant)
+	var index := _turns.find_custom(func(turn: BattleTurn): return turn.participant == participant and turn != _current_turn)
 	return _turns[index]
 	
 func get_turns_for_participant(participant: BattleParticipant) -> Array[BattleTurn]:
@@ -384,9 +384,10 @@ func _on_state_exited(id: StringName) -> void:
 	# 	on_battle_player_turn_ended.emit(get_current_turn_participant())
 
 func _process(_delta: float) -> void:
-	if Input.is_action_just_pressed(&"ui_left"):
-		PlayerPartyManager.inventory.add_item(&"potion")
-		PlayerPartyManager.inventory.add_item(&"dud")
-
+	pass
+	# if Input.is_action_just_pressed(&"ui_left"):
+	# 	PlayerPartyManager.inventory.add_item(&"potion")
+	# 	PlayerPartyManager.inventory.add_item(&"dud")
+	
 # func _ready() -> void:
 # 	_setup_battle()

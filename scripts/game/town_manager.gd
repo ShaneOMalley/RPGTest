@@ -41,9 +41,9 @@ func show_town_ui(ui_scene: PackedScene) -> void:
 func reset() -> void:
 	current_recruit_data.clear()
 		
-# func _ready() -> void:
-# 	enter_town_scene()
+func _ready() -> void:
+	enter_town_scene.call_deferred()
 
-func _process(delta: float) -> void:
-	if Input.is_action_just_pressed(&"ui_right"):
-		enter_town_scene()
+# func _process(delta: float) -> void:
+	# if Input.is_action_just_pressed(&"ui_right"):
+	# 	enter_town_scene()

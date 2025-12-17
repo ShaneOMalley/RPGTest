@@ -47,4 +47,5 @@ func go_back() -> void:
 func _ready() -> void:
 	$Menu/RecruitCharacterTemplate.hide()
 	($Menu/Back as Button).pressed.connect(go_back)
+	($Menu/Back as Button).grab_focus()
 	setup_ui()

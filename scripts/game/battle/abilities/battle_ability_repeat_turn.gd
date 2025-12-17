@@ -11,6 +11,9 @@ func execute(in_target: BattleParticipant, in_turn_target: BattleTurn = null) ->
 	
 func prepare(in_target: BattleParticipant, in_turn_target: BattleTurn = null) -> void:
 	
+	# hack until turn_target feature is removed
+	in_turn_target = BattleManager.get_next_turn_for_participant(in_target)
+	
 	if is_instance_valid(_created_turn) and _created_turn.uid != in_turn_target.uid and in_turn_target.uid != _created_turn.linked_turn.uid:
 		BattleManager.remove_turn(_created_turn)
 		_created_turn = null
@@ -42,6 +45,10 @@ func cancel() -> void:
 	super.cancel()
 	
 func cancel_prepare() -> void:
+	if is_instance_valid(_created_turn):
+		BattleManager.remove_turn(_created_turn)
+		_created_turn = null
+	
 	super.cancel_prepare()
 	
 func end() -> void:
@@ -49,11 +56,8 @@ func end() -> void:
 	_created_turn = null
 	
 func is_valid_for_target(_possible_target: BattleParticipant) -> bool:
-	return false
-	
-func requires_turn_target() -> bool:
 	return true
-
+	
 func get_message() -> String:
-	return "%s will repeat their turn!" % _turn_target.participant.get_display_name()
+	return "%s will repeat whatever they do next!" % _target.get_display_name()
 	
