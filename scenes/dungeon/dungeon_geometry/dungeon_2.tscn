@@ -1,440 +1,622 @@
-[gd_scene load_steps=144 format=3 uid="uid://vptx1gpxdpgu"]
+[gd_scene load_steps=200 format=3 uid="uid://dmhtgc2sslmxo"]
 
-[sub_resource type="BoxMesh" id="BoxMesh_djj65"]
+[ext_resource type="PackedScene" uid="uid://b6xqiihxxqb2v" path="res://game/dungeon_crawling/dungeon_treasure.tscn" id="1_vm0dq"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_n0gcf"]
 size = Vector3(160, 1, 160)
 
-[sub_resource type="BoxMesh" id="BoxMesh_dyj8p"]
+[sub_resource type="BoxMesh" id="BoxMesh_ka6nn"]
+size = Vector3(1, 10, 31)
+
+[sub_resource type="BoxMesh" id="BoxMesh_vl4hu"]
+size = Vector3(31, 10, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_16wk7"]
+size = Vector3(1, 10, 21)
+
+[sub_resource type="BoxMesh" id="BoxMesh_3w5th"]
+size = Vector3(11, 10, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_qw7if"]
+size = Vector3(1, 10, 31)
+
+[sub_resource type="BoxMesh" id="BoxMesh_doe5g"]
+size = Vector3(11, 10, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_ebsic"]
+size = Vector3(1, 10, 31)
+
+[sub_resource type="BoxMesh" id="BoxMesh_0spyt"]
+size = Vector3(31, 10, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_37ti3"]
+size = Vector3(1, 10, 11)
+
+[sub_resource type="BoxMesh" id="BoxMesh_uiara"]
+size = Vector3(21, 10, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_027yk"]
+size = Vector3(1, 10, 21)
+
+[sub_resource type="BoxMesh" id="BoxMesh_ghprc"]
+size = Vector3(11, 10, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_ytfn7"]
+size = Vector3(1, 10, 11)
+
+[sub_resource type="BoxMesh" id="BoxMesh_p8kq3"]
+size = Vector3(21, 10, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_8ltv1"]
+size = Vector3(1, 10, 31)
+
+[sub_resource type="BoxMesh" id="BoxMesh_5esfa"]
+size = Vector3(11, 10, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_3e68i"]
+size = Vector3(1, 10, 11)
+
+[sub_resource type="BoxMesh" id="BoxMesh_vxjsu"]
+size = Vector3(11, 10, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_vh4ci"]
+size = Vector3(1, 10, 11)
+
+[sub_resource type="BoxMesh" id="BoxMesh_ttf5t"]
+size = Vector3(11, 10, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_kp0hs"]
+size = Vector3(1, 10, 61)
+
+[sub_resource type="BoxMesh" id="BoxMesh_s7bnn"]
+size = Vector3(31, 10, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_pl5wn"]
+size = Vector3(1, 10, 11)
+
+[sub_resource type="BoxMesh" id="BoxMesh_ah6un"]
+size = Vector3(41, 10, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_ukmhm"]
+size = Vector3(1, 10, 91)
+
+[sub_resource type="BoxMesh" id="BoxMesh_d47y1"]
+size = Vector3(11, 10, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_pr3hw"]
+size = Vector3(1, 10, 21)
+
+[sub_resource type="BoxMesh" id="BoxMesh_dmcj4"]
+size = Vector3(31, 10, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_i81lr"]
+size = Vector3(1, 10, 21)
+
+[sub_resource type="BoxMesh" id="BoxMesh_7njt7"]
+size = Vector3(11, 10, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_lk01f"]
+size = Vector3(1, 10, 11)
+
+[sub_resource type="BoxMesh" id="BoxMesh_egmgg"]
+size = Vector3(31, 10, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_i4y12"]
+size = Vector3(1, 10, 11)
+
+[sub_resource type="BoxMesh" id="BoxMesh_7e4w0"]
+size = Vector3(11, 10, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_2arcn"]
+size = Vector3(1, 10, 21)
+
+[sub_resource type="BoxMesh" id="BoxMesh_rqv01"]
+size = Vector3(31, 10, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_0lwda"]
+size = Vector3(1, 10, 11)
+
+[sub_resource type="BoxMesh" id="BoxMesh_rr0mk"]
+size = Vector3(21, 10, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_hqsdk"]
+size = Vector3(1, 10, 11)
+
+[sub_resource type="BoxMesh" id="BoxMesh_pct3e"]
+size = Vector3(21, 10, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_h3yng"]
+size = Vector3(1, 10, 21)
+
+[sub_resource type="BoxMesh" id="BoxMesh_pojdh"]
+size = Vector3(11, 10, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_cscee"]
 size = Vector3(1, 10, 41)
 
-[sub_resource type="BoxMesh" id="BoxMesh_hro85"]
-size = Vector3(31, 10, 1)
+[sub_resource type="BoxMesh" id="BoxMesh_owjae"]
+size = Vector3(21, 10, 1)
 
-[sub_resource type="BoxMesh" id="BoxMesh_nytt0"]
-size = Vector3(1, 10, 11)
-
-[sub_resource type="BoxMesh" id="BoxMesh_jty05"]
-size = Vector3(11, 10, 1)
-
-[sub_resource type="BoxMesh" id="BoxMesh_huwpj"]
+[sub_resource type="BoxMesh" id="BoxMesh_g0xos"]
 size = Vector3(1, 10, 31)
 
-[sub_resource type="BoxMesh" id="BoxMesh_csstl"]
+[sub_resource type="BoxMesh" id="BoxMesh_h5exu"]
 size = Vector3(11, 10, 1)
 
-[sub_resource type="BoxMesh" id="BoxMesh_ayvfe"]
-size = Vector3(1, 10, 31)
-
-[sub_resource type="BoxMesh" id="BoxMesh_vj7x2"]
-size = Vector3(31, 10, 1)
-
-[sub_resource type="BoxMesh" id="BoxMesh_y7bwi"]
+[sub_resource type="BoxMesh" id="BoxMesh_mcrd5"]
 size = Vector3(1, 10, 11)
 
-[sub_resource type="BoxMesh" id="BoxMesh_t1lqb"]
-size = Vector3(21, 10, 1)
-
-[sub_resource type="BoxMesh" id="BoxMesh_upds3"]
+[sub_resource type="BoxMesh" id="BoxMesh_hh6a0"]
 size = Vector3(1, 10, 21)
 
-[sub_resource type="BoxMesh" id="BoxMesh_w50rj"]
+[sub_resource type="BoxMesh" id="BoxMesh_oowxf"]
 size = Vector3(11, 10, 1)
 
-[sub_resource type="BoxMesh" id="BoxMesh_3jyv6"]
-size = Vector3(1, 10, 11)
-
-[sub_resource type="BoxMesh" id="BoxMesh_bjsuk"]
-size = Vector3(21, 10, 1)
-
-[sub_resource type="BoxMesh" id="BoxMesh_ajdor"]
-size = Vector3(1, 10, 51)
-
-[sub_resource type="BoxMesh" id="BoxMesh_8ufy5"]
-size = Vector3(11, 10, 1)
-
-[sub_resource type="BoxMesh" id="BoxMesh_bg3os"]
-size = Vector3(1, 10, 21)
-
-[sub_resource type="BoxMesh" id="BoxMesh_xufp7"]
-size = Vector3(31, 10, 1)
-
-[sub_resource type="BoxMesh" id="BoxMesh_seulh"]
-size = Vector3(1, 10, 11)
-
-[sub_resource type="BoxMesh" id="BoxMesh_ymo84"]
-size = Vector3(21, 10, 1)
-
-[sub_resource type="BoxMesh" id="BoxMesh_jqa1p"]
-size = Vector3(1, 10, 11)
-
-[sub_resource type="BoxMesh" id="BoxMesh_8f5hg"]
-size = Vector3(31, 10, 1)
-
-[sub_resource type="BoxMesh" id="BoxMesh_emtjx"]
-size = Vector3(1, 10, 31)
-
-[sub_resource type="BoxMesh" id="BoxMesh_7j2ym"]
-size = Vector3(11, 10, 1)
-
-[sub_resource type="BoxMesh" id="BoxMesh_mg2a6"]
-size = Vector3(1, 10, 11)
-
-[sub_resource type="BoxMesh" id="BoxMesh_lm1mw"]
-size = Vector3(11, 10, 1)
-
-[sub_resource type="BoxMesh" id="BoxMesh_wg65c"]
-size = Vector3(1, 10, 21)
-
-[sub_resource type="BoxMesh" id="BoxMesh_jbg1v"]
-size = Vector3(11, 10, 1)
-
-[sub_resource type="BoxMesh" id="BoxMesh_ehb3s"]
-size = Vector3(1, 10, 21)
-
-[sub_resource type="BoxMesh" id="BoxMesh_738ii"]
-size = Vector3(11, 10, 1)
-
-[sub_resource type="BoxMesh" id="BoxMesh_pefny"]
-size = Vector3(21, 10, 1)
-
-[sub_resource type="BoxMesh" id="BoxMesh_mvqu8"]
-size = Vector3(1, 10, 11)
-
-[sub_resource type="BoxMesh" id="BoxMesh_32fcg"]
-size = Vector3(1, 10, 11)
-
-[sub_resource type="BoxMesh" id="BoxMesh_wdnw1"]
-size = Vector3(1, 10, 11)
-
-[sub_resource type="BoxMesh" id="BoxMesh_bqdjv"]
-size = Vector3(1, 10, 11)
-
-[sub_resource type="BoxMesh" id="BoxMesh_4ue7b"]
-size = Vector3(21, 10, 1)
-
-[sub_resource type="BoxMesh" id="BoxMesh_y8k1m"]
-size = Vector3(11, 10, 1)
-
-[sub_resource type="BoxMesh" id="BoxMesh_m75i4"]
-size = Vector3(1, 10, 11)
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_skeao"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_0ceyb"]
 albedo_color = Color(1, 0.843137, 0, 1)
 
-[sub_resource type="BoxMesh" id="BoxMesh_be62m"]
+[sub_resource type="BoxMesh" id="BoxMesh_g01vg"]
 size = Vector3(5, 7, 1)
 
-[sub_resource type="BoxMesh" id="BoxMesh_dwb0d"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_sc1ck"]
+albedo_color = Color(1, 0.843137, 0, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_1wrs6"]
+size = Vector3(5, 7, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_hd1ml"]
+albedo_color = Color(1, 0.843137, 0, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_r4lsb"]
+size = Vector3(5, 7, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_4rpi1"]
 size = Vector3(0.5, 0.5, 3)
 
-[sub_resource type="BoxMesh" id="BoxMesh_vadok"]
+[sub_resource type="BoxMesh" id="BoxMesh_wslof"]
 size = Vector3(0.5, 0.5, 3)
 
-[sub_resource type="BoxMesh" id="BoxMesh_o1tpl"]
+[sub_resource type="BoxMesh" id="BoxMesh_70ely"]
 size = Vector3(3, 0.5, 0.5)
 
-[sub_resource type="BoxMesh" id="BoxMesh_5nfpl"]
+[sub_resource type="BoxMesh" id="BoxMesh_fkt22"]
 size = Vector3(0.5, 0.5, 3)
 
-[sub_resource type="BoxMesh" id="BoxMesh_4v8w7"]
+[sub_resource type="BoxMesh" id="BoxMesh_4jver"]
 size = Vector3(3, 0.5, 0.5)
 
-[sub_resource type="BoxMesh" id="BoxMesh_5j3vd"]
+[sub_resource type="BoxMesh" id="BoxMesh_wupox"]
 size = Vector3(3, 0.5, 0.5)
 
-[sub_resource type="BoxMesh" id="BoxMesh_ybt7b"]
+[sub_resource type="BoxMesh" id="BoxMesh_jocbg"]
+size = Vector3(0.5, 0.5, 3)
+
+[sub_resource type="BoxMesh" id="BoxMesh_pawi3"]
 size = Vector3(3, 0.5, 0.5)
 
-[sub_resource type="BoxMesh" id="BoxMesh_0pq8m"]
+[sub_resource type="BoxMesh" id="BoxMesh_apft1"]
+size = Vector3(0.5, 0.5, 3)
+
+[sub_resource type="BoxMesh" id="BoxMesh_u6ng7"]
 size = Vector3(3, 0.5, 0.5)
 
-[sub_resource type="BoxMesh" id="BoxMesh_ps1q4"]
+[sub_resource type="BoxMesh" id="BoxMesh_gekbi"]
 size = Vector3(0.5, 0.5, 3)
 
-[sub_resource type="BoxMesh" id="BoxMesh_vyhfv"]
+[sub_resource type="BoxMesh" id="BoxMesh_1nb2h"]
 size = Vector3(3, 0.5, 0.5)
 
-[sub_resource type="BoxMesh" id="BoxMesh_6ieh5"]
-size = Vector3(0.5, 0.5, 3)
-
-[sub_resource type="BoxMesh" id="BoxMesh_3sf82"]
+[sub_resource type="BoxMesh" id="BoxMesh_mgs2a"]
 size = Vector3(3, 0.5, 0.5)
 
-[sub_resource type="BoxMesh" id="BoxMesh_wixq4"]
+[sub_resource type="BoxMesh" id="BoxMesh_idvqr"]
 size = Vector3(0.5, 0.5, 3)
 
-[sub_resource type="BoxMesh" id="BoxMesh_8508f"]
+[sub_resource type="BoxMesh" id="BoxMesh_2urqh"]
 size = Vector3(3, 0.5, 0.5)
 
-[sub_resource type="BoxMesh" id="BoxMesh_vn3xw"]
+[sub_resource type="BoxMesh" id="BoxMesh_lr2r6"]
 size = Vector3(0.5, 0.5, 3)
 
-[sub_resource type="BoxMesh" id="BoxMesh_owc5c"]
+[sub_resource type="BoxMesh" id="BoxMesh_rknpk"]
 size = Vector3(0.5, 0.5, 3)
 
-[sub_resource type="BoxMesh" id="BoxMesh_8u7cd"]
+[sub_resource type="BoxMesh" id="BoxMesh_d5r0x"]
 size = Vector3(0.5, 0.5, 3)
 
-[sub_resource type="BoxMesh" id="BoxMesh_4lgs7"]
+[sub_resource type="BoxMesh" id="BoxMesh_el7h3"]
 size = Vector3(3, 0.5, 0.5)
 
-[sub_resource type="BoxMesh" id="BoxMesh_tkvus"]
+[sub_resource type="BoxMesh" id="BoxMesh_fl5wc"]
 size = Vector3(3, 0.5, 0.5)
 
-[sub_resource type="BoxMesh" id="BoxMesh_l8ff5"]
+[sub_resource type="BoxMesh" id="BoxMesh_ygu3x"]
 size = Vector3(3, 0.5, 0.5)
 
-[sub_resource type="BoxMesh" id="BoxMesh_x351a"]
+[sub_resource type="BoxMesh" id="BoxMesh_bjqjh"]
+size = Vector3(0.5, 0.5, 3)
+
+[sub_resource type="BoxMesh" id="BoxMesh_0xgoc"]
 size = Vector3(3, 0.5, 0.5)
 
-[sub_resource type="BoxMesh" id="BoxMesh_im3d0"]
+[sub_resource type="BoxMesh" id="BoxMesh_p3aaw"]
 size = Vector3(3, 0.5, 0.5)
 
-[sub_resource type="BoxMesh" id="BoxMesh_xxhy1"]
+[sub_resource type="BoxMesh" id="BoxMesh_7hmwm"]
 size = Vector3(0.5, 0.5, 3)
 
-[sub_resource type="BoxMesh" id="BoxMesh_5xw3b"]
+[sub_resource type="BoxMesh" id="BoxMesh_s07hm"]
+size = Vector3(0.5, 0.5, 3)
+
+[sub_resource type="BoxMesh" id="BoxMesh_ua4o8"]
 size = Vector3(3, 0.5, 0.5)
 
-[sub_resource type="BoxMesh" id="BoxMesh_0hxrq"]
+[sub_resource type="BoxMesh" id="BoxMesh_jvigm"]
 size = Vector3(3, 0.5, 0.5)
 
-[sub_resource type="BoxMesh" id="BoxMesh_6retp"]
+[sub_resource type="BoxMesh" id="BoxMesh_mr3k0"]
 size = Vector3(0.5, 0.5, 3)
 
-[sub_resource type="BoxMesh" id="BoxMesh_gqtqc"]
+[sub_resource type="BoxMesh" id="BoxMesh_bnee4"]
 size = Vector3(3, 0.5, 0.5)
 
-[sub_resource type="BoxMesh" id="BoxMesh_1nyl3"]
+[sub_resource type="BoxMesh" id="BoxMesh_o2exw"]
 size = Vector3(0.5, 0.5, 3)
 
-[sub_resource type="BoxMesh" id="BoxMesh_b67l8"]
+[sub_resource type="BoxMesh" id="BoxMesh_gx1vc"]
 size = Vector3(3, 0.5, 0.5)
 
-[sub_resource type="BoxMesh" id="BoxMesh_sokjv"]
+[sub_resource type="BoxMesh" id="BoxMesh_ajcgq"]
 size = Vector3(0.5, 0.5, 3)
 
-[sub_resource type="BoxMesh" id="BoxMesh_6lklg"]
+[sub_resource type="BoxMesh" id="BoxMesh_ebvte"]
+size = Vector3(0.5, 0.5, 3)
+
+[sub_resource type="BoxMesh" id="BoxMesh_ceqjw"]
 size = Vector3(3, 0.5, 0.5)
 
-[sub_resource type="BoxMesh" id="BoxMesh_4ud18"]
+[sub_resource type="BoxMesh" id="BoxMesh_e3sto"]
 size = Vector3(3, 0.5, 0.5)
 
-[sub_resource type="BoxMesh" id="BoxMesh_tljud"]
+[sub_resource type="BoxMesh" id="BoxMesh_qhtkw"]
 size = Vector3(0.5, 0.5, 3)
 
-[sub_resource type="BoxMesh" id="BoxMesh_c4t5f"]
-size = Vector3(0.5, 0.5, 3)
-
-[sub_resource type="BoxMesh" id="BoxMesh_wpn2k"]
+[sub_resource type="BoxMesh" id="BoxMesh_g488o"]
 size = Vector3(3, 0.5, 0.5)
 
-[sub_resource type="BoxMesh" id="BoxMesh_rv0c8"]
+[sub_resource type="BoxMesh" id="BoxMesh_w2vxr"]
+size = Vector3(0.5, 0.5, 3)
+
+[sub_resource type="BoxMesh" id="BoxMesh_nmqk2"]
 size = Vector3(3, 0.5, 0.5)
 
-[sub_resource type="BoxMesh" id="BoxMesh_a4drr"]
-size = Vector3(0.5, 0.5, 3)
-
-[sub_resource type="BoxMesh" id="BoxMesh_drn4e"]
-size = Vector3(0.5, 0.5, 3)
-
-[sub_resource type="BoxMesh" id="BoxMesh_rjjij"]
+[sub_resource type="BoxMesh" id="BoxMesh_c4vii"]
 size = Vector3(3, 0.5, 0.5)
 
-[sub_resource type="BoxMesh" id="BoxMesh_vacad"]
-size = Vector3(0.5, 0.5, 3)
-
-[sub_resource type="BoxMesh" id="BoxMesh_a22rt"]
-size = Vector3(0.5, 0.5, 3)
-
-[sub_resource type="BoxMesh" id="BoxMesh_d4p0a"]
-size = Vector3(0.5, 0.5, 3)
-
-[sub_resource type="BoxMesh" id="BoxMesh_erdji"]
-size = Vector3(0.5, 0.5, 3)
-
-[sub_resource type="BoxMesh" id="BoxMesh_lhiml"]
+[sub_resource type="BoxMesh" id="BoxMesh_y4hvm"]
 size = Vector3(3, 0.5, 0.5)
 
-[sub_resource type="BoxMesh" id="BoxMesh_0wnxv"]
-size = Vector3(0.5, 0.5, 3)
-
-[sub_resource type="BoxMesh" id="BoxMesh_kxetg"]
+[sub_resource type="BoxMesh" id="BoxMesh_p7oqx"]
 size = Vector3(3, 0.5, 0.5)
 
-[sub_resource type="BoxMesh" id="BoxMesh_ir6jx"]
+[sub_resource type="BoxMesh" id="BoxMesh_ie7jt"]
 size = Vector3(3, 0.5, 0.5)
 
-[sub_resource type="BoxMesh" id="BoxMesh_blk66"]
+[sub_resource type="BoxMesh" id="BoxMesh_ew32k"]
 size = Vector3(0.5, 0.5, 3)
 
-[sub_resource type="BoxMesh" id="BoxMesh_3ekab"]
+[sub_resource type="BoxMesh" id="BoxMesh_g2cl1"]
+size = Vector3(0.5, 0.5, 3)
+
+[sub_resource type="BoxMesh" id="BoxMesh_o1c14"]
 size = Vector3(3, 0.5, 0.5)
 
-[sub_resource type="BoxMesh" id="BoxMesh_maotc"]
+[sub_resource type="BoxMesh" id="BoxMesh_0gypr"]
 size = Vector3(0.5, 0.5, 3)
 
-[sub_resource type="BoxMesh" id="BoxMesh_05780"]
+[sub_resource type="BoxMesh" id="BoxMesh_336sp"]
 size = Vector3(0.5, 0.5, 3)
 
-[sub_resource type="BoxMesh" id="BoxMesh_bdq4u"]
+[sub_resource type="BoxMesh" id="BoxMesh_wn6jl"]
 size = Vector3(0.5, 0.5, 3)
 
-[sub_resource type="BoxMesh" id="BoxMesh_3mlus"]
+[sub_resource type="BoxMesh" id="BoxMesh_24gm8"]
+size = Vector3(0.5, 0.5, 3)
+
+[sub_resource type="BoxMesh" id="BoxMesh_mat0u"]
+size = Vector3(0.5, 0.5, 3)
+
+[sub_resource type="BoxMesh" id="BoxMesh_xcoyb"]
+size = Vector3(0.5, 0.5, 3)
+
+[sub_resource type="BoxMesh" id="BoxMesh_n5vsb"]
+size = Vector3(0.5, 0.5, 3)
+
+[sub_resource type="BoxMesh" id="BoxMesh_prp5j"]
+size = Vector3(0.5, 0.5, 3)
+
+[sub_resource type="BoxMesh" id="BoxMesh_ajg20"]
+size = Vector3(0.5, 0.5, 3)
+
+[sub_resource type="BoxMesh" id="BoxMesh_oqlr7"]
+size = Vector3(0.5, 0.5, 3)
+
+[sub_resource type="BoxMesh" id="BoxMesh_73lif"]
+size = Vector3(0.5, 0.5, 3)
+
+[sub_resource type="BoxMesh" id="BoxMesh_ugufl"]
 size = Vector3(3, 0.5, 0.5)
 
-[sub_resource type="BoxMesh" id="BoxMesh_6s67t"]
-size = Vector3(0.5, 0.5, 3)
-
-[sub_resource type="BoxMesh" id="BoxMesh_y1o24"]
-size = Vector3(0.5, 0.5, 3)
-
-[sub_resource type="BoxMesh" id="BoxMesh_a43pt"]
+[sub_resource type="BoxMesh" id="BoxMesh_pha67"]
 size = Vector3(3, 0.5, 0.5)
 
-[sub_resource type="BoxMesh" id="BoxMesh_g0ehp"]
-size = Vector3(0.5, 0.5, 3)
-
-[sub_resource type="BoxMesh" id="BoxMesh_wyc3x"]
-size = Vector3(0.5, 0.5, 3)
-
-[sub_resource type="BoxMesh" id="BoxMesh_yxyep"]
-size = Vector3(0.5, 0.5, 3)
-
-[sub_resource type="BoxMesh" id="BoxMesh_dn1lw"]
-size = Vector3(0.5, 0.5, 3)
-
-[sub_resource type="BoxMesh" id="BoxMesh_avmbp"]
-size = Vector3(0.5, 0.5, 3)
-
-[sub_resource type="BoxMesh" id="BoxMesh_sejov"]
+[sub_resource type="BoxMesh" id="BoxMesh_qnjv5"]
 size = Vector3(3, 0.5, 0.5)
 
-[sub_resource type="BoxMesh" id="BoxMesh_s6sps"]
+[sub_resource type="BoxMesh" id="BoxMesh_prq5c"]
 size = Vector3(0.5, 0.5, 3)
 
-[sub_resource type="BoxMesh" id="BoxMesh_lllyh"]
-size = Vector3(0.5, 0.5, 3)
-
-[sub_resource type="BoxMesh" id="BoxMesh_2eymo"]
+[sub_resource type="BoxMesh" id="BoxMesh_5y6h6"]
 size = Vector3(3, 0.5, 0.5)
 
-[sub_resource type="BoxMesh" id="BoxMesh_l5utt"]
+[sub_resource type="BoxMesh" id="BoxMesh_vy3o3"]
 size = Vector3(3, 0.5, 0.5)
 
-[sub_resource type="BoxMesh" id="BoxMesh_p67k8"]
-size = Vector3(0.5, 0.5, 3)
-
-[sub_resource type="BoxMesh" id="BoxMesh_h7jms"]
+[sub_resource type="BoxMesh" id="BoxMesh_wdanj"]
 size = Vector3(3, 0.5, 0.5)
 
-[sub_resource type="BoxMesh" id="BoxMesh_8td8p"]
-size = Vector3(0.5, 0.5, 3)
-
-[sub_resource type="BoxMesh" id="BoxMesh_wff3b"]
-size = Vector3(0.5, 0.5, 3)
-
-[sub_resource type="BoxMesh" id="BoxMesh_4c7mp"]
-size = Vector3(0.5, 0.5, 3)
-
-[sub_resource type="BoxMesh" id="BoxMesh_qxul5"]
-size = Vector3(0.5, 0.5, 3)
-
-[sub_resource type="BoxMesh" id="BoxMesh_arc8f"]
+[sub_resource type="BoxMesh" id="BoxMesh_yvc0n"]
 size = Vector3(3, 0.5, 0.5)
 
-[sub_resource type="BoxMesh" id="BoxMesh_yy514"]
+[sub_resource type="BoxMesh" id="BoxMesh_dy6fi"]
 size = Vector3(0.5, 0.5, 3)
 
-[sub_resource type="BoxMesh" id="BoxMesh_i1di3"]
+[sub_resource type="BoxMesh" id="BoxMesh_teu6j"]
 size = Vector3(0.5, 0.5, 3)
 
-[sub_resource type="BoxMesh" id="BoxMesh_fxt1o"]
+[sub_resource type="BoxMesh" id="BoxMesh_dofvy"]
 size = Vector3(3, 0.5, 0.5)
 
-[sub_resource type="BoxMesh" id="BoxMesh_044jy"]
-size = Vector3(3, 0.5, 0.5)
-
-[sub_resource type="BoxMesh" id="BoxMesh_8e6c1"]
+[sub_resource type="BoxMesh" id="BoxMesh_bcpv5"]
 size = Vector3(0.5, 0.5, 3)
 
-[sub_resource type="BoxMesh" id="BoxMesh_usodw"]
+[sub_resource type="BoxMesh" id="BoxMesh_8ye71"]
 size = Vector3(0.5, 0.5, 3)
 
-[sub_resource type="BoxMesh" id="BoxMesh_dbrss"]
-size = Vector3(3, 0.5, 0.5)
-
-[sub_resource type="BoxMesh" id="BoxMesh_ay1mu"]
-size = Vector3(3, 0.5, 0.5)
-
-[sub_resource type="BoxMesh" id="BoxMesh_r4bd1"]
-size = Vector3(3, 0.5, 0.5)
-
-[sub_resource type="BoxMesh" id="BoxMesh_asi6m"]
-size = Vector3(3, 0.5, 0.5)
-
-[sub_resource type="BoxMesh" id="BoxMesh_8iaaw"]
+[sub_resource type="BoxMesh" id="BoxMesh_q7lxm"]
 size = Vector3(0.5, 0.5, 3)
 
-[sub_resource type="BoxMesh" id="BoxMesh_icppp"]
+[sub_resource type="BoxMesh" id="BoxMesh_h3obp"]
 size = Vector3(3, 0.5, 0.5)
 
-[sub_resource type="BoxMesh" id="BoxMesh_bv54l"]
+[sub_resource type="BoxMesh" id="BoxMesh_d7kw5"]
 size = Vector3(0.5, 0.5, 3)
 
-[sub_resource type="BoxMesh" id="BoxMesh_vfda0"]
+[sub_resource type="BoxMesh" id="BoxMesh_2xfxs"]
 size = Vector3(3, 0.5, 0.5)
 
-[sub_resource type="BoxMesh" id="BoxMesh_hx82v"]
+[sub_resource type="BoxMesh" id="BoxMesh_pvnbc"]
 size = Vector3(0.5, 0.5, 3)
 
-[sub_resource type="BoxMesh" id="BoxMesh_g25ue"]
+[sub_resource type="BoxMesh" id="BoxMesh_0gul7"]
 size = Vector3(0.5, 0.5, 3)
 
-[sub_resource type="BoxMesh" id="BoxMesh_ats7x"]
+[sub_resource type="BoxMesh" id="BoxMesh_yres1"]
+size = Vector3(0.5, 0.5, 3)
+
+[sub_resource type="BoxMesh" id="BoxMesh_r5d06"]
+size = Vector3(0.5, 0.5, 3)
+
+[sub_resource type="BoxMesh" id="BoxMesh_tl1sd"]
+size = Vector3(0.5, 0.5, 3)
+
+[sub_resource type="BoxMesh" id="BoxMesh_rucxm"]
+size = Vector3(0.5, 0.5, 3)
+
+[sub_resource type="BoxMesh" id="BoxMesh_232ws"]
 size = Vector3(3, 0.5, 0.5)
 
-[sub_resource type="BoxMesh" id="BoxMesh_gx47m"]
+[sub_resource type="BoxMesh" id="BoxMesh_egpu5"]
+size = Vector3(0.5, 0.5, 3)
+
+[sub_resource type="BoxMesh" id="BoxMesh_j5pif"]
+size = Vector3(0.5, 0.5, 3)
+
+[sub_resource type="BoxMesh" id="BoxMesh_cwncc"]
 size = Vector3(3, 0.5, 0.5)
 
-[sub_resource type="BoxMesh" id="BoxMesh_glo4n"]
-size = Vector3(0.5, 0.5, 3)
-
-[sub_resource type="BoxMesh" id="BoxMesh_jsfs3"]
+[sub_resource type="BoxMesh" id="BoxMesh_42ixm"]
 size = Vector3(3, 0.5, 0.5)
 
-[sub_resource type="BoxMesh" id="BoxMesh_4uwkf"]
+[sub_resource type="BoxMesh" id="BoxMesh_gs81n"]
 size = Vector3(0.5, 0.5, 3)
 
-[sub_resource type="BoxMesh" id="BoxMesh_vd26x"]
-size = Vector3(0.5, 0.5, 3)
-
-[sub_resource type="BoxMesh" id="BoxMesh_hhfdp"]
-size = Vector3(0.5, 0.5, 3)
-
-[sub_resource type="BoxMesh" id="BoxMesh_kkyv2"]
-size = Vector3(0.5, 0.5, 3)
-
-[sub_resource type="BoxMesh" id="BoxMesh_kuje3"]
-size = Vector3(0.5, 0.5, 3)
-
-[sub_resource type="BoxMesh" id="BoxMesh_k4t2b"]
+[sub_resource type="BoxMesh" id="BoxMesh_kh5vb"]
 size = Vector3(3, 0.5, 0.5)
 
-[sub_resource type="BoxMesh" id="BoxMesh_yd5s7"]
+[sub_resource type="BoxMesh" id="BoxMesh_c4ro0"]
+size = Vector3(0.5, 0.5, 3)
+
+[sub_resource type="BoxMesh" id="BoxMesh_u2c0m"]
+size = Vector3(0.5, 0.5, 3)
+
+[sub_resource type="BoxMesh" id="BoxMesh_do7eh"]
+size = Vector3(0.5, 0.5, 3)
+
+[sub_resource type="BoxMesh" id="BoxMesh_bmfr3"]
+size = Vector3(0.5, 0.5, 3)
+
+[sub_resource type="BoxMesh" id="BoxMesh_j824l"]
+size = Vector3(0.5, 0.5, 3)
+
+[sub_resource type="BoxMesh" id="BoxMesh_8vm8x"]
+size = Vector3(0.5, 0.5, 3)
+
+[sub_resource type="BoxMesh" id="BoxMesh_y5avg"]
+size = Vector3(0.5, 0.5, 3)
+
+[sub_resource type="BoxMesh" id="BoxMesh_6n4j1"]
+size = Vector3(0.5, 0.5, 3)
+
+[sub_resource type="BoxMesh" id="BoxMesh_dnlvv"]
 size = Vector3(3, 0.5, 0.5)
 
-[sub_resource type="BoxMesh" id="BoxMesh_c0qh4"]
+[sub_resource type="BoxMesh" id="BoxMesh_bpgrn"]
+size = Vector3(0.5, 0.5, 3)
+
+[sub_resource type="BoxMesh" id="BoxMesh_v4uy5"]
+size = Vector3(0.5, 0.5, 3)
+
+[sub_resource type="BoxMesh" id="BoxMesh_vcwbe"]
 size = Vector3(3, 0.5, 0.5)
 
-[sub_resource type="BoxMesh" id="BoxMesh_vjyp0"]
+[sub_resource type="BoxMesh" id="BoxMesh_i6ta4"]
+size = Vector3(3, 0.5, 0.5)
+
+[sub_resource type="BoxMesh" id="BoxMesh_n6ecl"]
+size = Vector3(0.5, 0.5, 3)
+
+[sub_resource type="BoxMesh" id="BoxMesh_xebra"]
+size = Vector3(0.5, 0.5, 3)
+
+[sub_resource type="BoxMesh" id="BoxMesh_q8uri"]
+size = Vector3(3, 0.5, 0.5)
+
+[sub_resource type="BoxMesh" id="BoxMesh_835v1"]
+size = Vector3(3, 0.5, 0.5)
+
+[sub_resource type="BoxMesh" id="BoxMesh_yceda"]
+size = Vector3(0.5, 0.5, 3)
+
+[sub_resource type="BoxMesh" id="BoxMesh_hdw1a"]
+size = Vector3(3, 0.5, 0.5)
+
+[sub_resource type="BoxMesh" id="BoxMesh_i7a2i"]
+size = Vector3(3, 0.5, 0.5)
+
+[sub_resource type="BoxMesh" id="BoxMesh_yqsvh"]
+size = Vector3(0.5, 0.5, 3)
+
+[sub_resource type="BoxMesh" id="BoxMesh_pt3fd"]
+size = Vector3(3, 0.5, 0.5)
+
+[sub_resource type="BoxMesh" id="BoxMesh_opjbg"]
+size = Vector3(0.5, 0.5, 3)
+
+[sub_resource type="BoxMesh" id="BoxMesh_0cfln"]
+size = Vector3(0.5, 0.5, 3)
+
+[sub_resource type="BoxMesh" id="BoxMesh_2xhwn"]
+size = Vector3(0.5, 0.5, 3)
+
+[sub_resource type="BoxMesh" id="BoxMesh_7228o"]
+size = Vector3(3, 0.5, 0.5)
+
+[sub_resource type="BoxMesh" id="BoxMesh_4qf5m"]
+size = Vector3(0.5, 0.5, 3)
+
+[sub_resource type="BoxMesh" id="BoxMesh_4flbx"]
+size = Vector3(0.5, 0.5, 3)
+
+[sub_resource type="BoxMesh" id="BoxMesh_axoxe"]
+size = Vector3(3, 0.5, 0.5)
+
+[sub_resource type="BoxMesh" id="BoxMesh_tvs55"]
+size = Vector3(3, 0.5, 0.5)
+
+[sub_resource type="BoxMesh" id="BoxMesh_degrv"]
+size = Vector3(0.5, 0.5, 3)
+
+[sub_resource type="BoxMesh" id="BoxMesh_fdcy6"]
+size = Vector3(3, 0.5, 0.5)
+
+[sub_resource type="BoxMesh" id="BoxMesh_fmnto"]
+size = Vector3(0.5, 0.5, 3)
+
+[sub_resource type="BoxMesh" id="BoxMesh_uh6jh"]
+size = Vector3(0.5, 0.5, 3)
+
+[sub_resource type="BoxMesh" id="BoxMesh_xa1ih"]
+size = Vector3(0.5, 0.5, 3)
+
+[sub_resource type="BoxMesh" id="BoxMesh_0gryy"]
+size = Vector3(0.5, 0.5, 3)
+
+[sub_resource type="BoxMesh" id="BoxMesh_nehwc"]
+size = Vector3(0.5, 0.5, 3)
+
+[sub_resource type="BoxMesh" id="BoxMesh_m41f4"]
+size = Vector3(0.5, 0.5, 3)
+
+[sub_resource type="BoxMesh" id="BoxMesh_vwe6o"]
+size = Vector3(0.5, 0.5, 3)
+
+[sub_resource type="BoxMesh" id="BoxMesh_jle5f"]
+size = Vector3(0.5, 0.5, 3)
+
+[sub_resource type="BoxMesh" id="BoxMesh_jsxuf"]
+size = Vector3(0.5, 0.5, 3)
+
+[sub_resource type="BoxMesh" id="BoxMesh_kqx1t"]
+size = Vector3(0.5, 0.5, 3)
+
+[sub_resource type="BoxMesh" id="BoxMesh_wp231"]
+size = Vector3(0.5, 0.5, 3)
+
+[sub_resource type="BoxMesh" id="BoxMesh_schhi"]
+size = Vector3(3, 0.5, 0.5)
+
+[sub_resource type="BoxMesh" id="BoxMesh_x5sas"]
+size = Vector3(3, 0.5, 0.5)
+
+[sub_resource type="BoxMesh" id="BoxMesh_6isxy"]
+size = Vector3(3, 0.5, 0.5)
+
+[sub_resource type="BoxMesh" id="BoxMesh_fab71"]
+size = Vector3(3, 0.5, 0.5)
+
+[sub_resource type="BoxMesh" id="BoxMesh_tisfv"]
+size = Vector3(3, 0.5, 0.5)
+
+[sub_resource type="BoxMesh" id="BoxMesh_ji2nd"]
+size = Vector3(3, 0.5, 0.5)
+
+[sub_resource type="BoxMesh" id="BoxMesh_grhhb"]
+size = Vector3(3, 0.5, 0.5)
+
+[sub_resource type="BoxMesh" id="BoxMesh_4xygc"]
+size = Vector3(3, 0.5, 0.5)
+
+[sub_resource type="BoxMesh" id="BoxMesh_r17le"]
+size = Vector3(3, 0.5, 0.5)
+
+[sub_resource type="BoxMesh" id="BoxMesh_k7n65"]
+size = Vector3(0.5, 0.5, 3)
+
+[sub_resource type="BoxMesh" id="BoxMesh_6dilt"]
 size = Vector3(3, 0.5, 0.5)
 
 [node name="Node3D" type="Node3D"]
-metadata/movement_data = Array[int]([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 10, 70, 0, 0, 8, 76, 70, 0, 0, 0, 0, 0, 0, 0, 0, 25, 85, 19, 10, 76, 76, 78, 85, 0, 0, 0, 0, 0, 0, 0, 0, 10, 78, 95, 87, 0, 2, 19, 0, 0, 0, 0, 0, 0, 0, 0, 0, 25, 93, 85, 19, 0, 25, 87, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 19, 0, 0, 19, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 10, 95, 70, 0, 19, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 27, 95, 95, 76, 85, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 25, 95, 85, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 19, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 19, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 25, 76, 68, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0])
+metadata/movement_data = Array[int]([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 10, 78, 70, 0, 10, 78, 70, 0, 0, 0, 0, 19, 0, 0, 10, 76, 93, 95, 85, 0, 25, 95, 85, 0, 0, 0, 0, 25, 76, 76, 87, 2, 0, 19, 0, 0, 0, 19, 0, 0, 0, 0, 0, 0, 0, 0, 19, 19, 0, 27, 76, 78, 76, 87, 0, 0, 0, 0, 0, 0, 0, 0, 19, 25, 70, 19, 0, 17, 0, 19, 0, 0, 0, 0, 0, 0, 0, 10, 95, 70, 19, 19, 0, 0, 0, 19, 0, 0, 0, 0, 0, 0, 0, 27, 95, 95, 93, 85, 0, 0, 0, 19, 0, 0, 0, 0, 0, 0, 0, 25, 95, 85, 0, 0, 0, 0, 0, 19, 0, 0, 0, 0, 0, 0, 0, 0, 19, 0, 0, 0, 0, 0, 0, 19, 0, 0, 0, 0, 0, 0, 0, 0, 19, 0, 0, 0, 0, 0, 0, 19, 0, 0, 0, 0, 0, 0, 0, 0, 25, 76, 68, 0, 8, 76, 76, 85, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0])
 metadata/grid_width = 16
 metadata/interactable_data = Dictionary[Vector2i, Dictionary]({
+Vector2i(5, 3): {
+0: [&"downstairs"]
+},
 Vector2i(6, 11): {
 1: [&"downstairs"]
+},
+Vector2i(8, 11): {
+3: [&"downstairs"]
+},
+Vector2i(9, 5): {
+2: [&"treasure"]
+},
+Vector2i(10, 1): {
+3: [&"treasure"]
+},
+Vector2i(12, 1): {
+1: [&"treasure"]
 }
 })
 
@@ -444,577 +626,800 @@ Vector2i(6, 11): {
 
 [node name="Floor" type="MeshInstance3D" parent="Geometry/Floors"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 80, 0, 80)
-mesh = SubResource("BoxMesh_djj65")
+mesh = SubResource("BoxMesh_n0gcf")
 
 [node name="Walls" type="Node3D" parent="Geometry"]
 
 [node name="Wall0" type="MeshInstance3D" parent="Geometry/Walls"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 5, 30)
-mesh = SubResource("BoxMesh_dyj8p")
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 5, 25)
+mesh = SubResource("BoxMesh_ka6nn")
 
 [node name="Wall1" type="MeshInstance3D" parent="Geometry/Walls"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 25, 5, 50)
-mesh = SubResource("BoxMesh_hro85")
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 25, 5, 40)
+mesh = SubResource("BoxMesh_vl4hu")
 
 [node name="Wall2" type="MeshInstance3D" parent="Geometry/Walls"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 40, 5, 55)
-mesh = SubResource("BoxMesh_nytt0")
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 40, 5, 50)
+mesh = SubResource("BoxMesh_16wk7")
 
 [node name="Wall3" type="MeshInstance3D" parent="Geometry/Walls"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 35, 5, 60)
-mesh = SubResource("BoxMesh_jty05")
+mesh = SubResource("BoxMesh_3w5th")
 
 [node name="Wall4" type="MeshInstance3D" parent="Geometry/Walls"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30, 5, 75)
-mesh = SubResource("BoxMesh_huwpj")
+mesh = SubResource("BoxMesh_qw7if")
 
 [node name="Wall5" type="MeshInstance3D" parent="Geometry/Walls"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 35, 5, 90)
-mesh = SubResource("BoxMesh_csstl")
+mesh = SubResource("BoxMesh_doe5g")
 
 [node name="Wall6" type="MeshInstance3D" parent="Geometry/Walls"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 40, 5, 105)
-mesh = SubResource("BoxMesh_ayvfe")
+mesh = SubResource("BoxMesh_ebsic")
 
 [node name="Wall7" type="MeshInstance3D" parent="Geometry/Walls"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 55, 5, 120)
-mesh = SubResource("BoxMesh_vj7x2")
+mesh = SubResource("BoxMesh_0spyt")
 
 [node name="Wall8" type="MeshInstance3D" parent="Geometry/Walls"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 70, 5, 115)
-mesh = SubResource("BoxMesh_y7bwi")
+mesh = SubResource("BoxMesh_37ti3")
 
 [node name="Wall9" type="MeshInstance3D" parent="Geometry/Walls"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 60, 5, 110)
-mesh = SubResource("BoxMesh_t1lqb")
+mesh = SubResource("BoxMesh_uiara")
 
 [node name="Wall10" type="MeshInstance3D" parent="Geometry/Walls"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 50, 5, 100)
-mesh = SubResource("BoxMesh_upds3")
+mesh = SubResource("BoxMesh_027yk")
 
 [node name="Wall11" type="MeshInstance3D" parent="Geometry/Walls"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 55, 5, 90)
-mesh = SubResource("BoxMesh_w50rj")
+mesh = SubResource("BoxMesh_ghprc")
 
 [node name="Wall12" type="MeshInstance3D" parent="Geometry/Walls"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 60, 5, 85)
-mesh = SubResource("BoxMesh_3jyv6")
+mesh = SubResource("BoxMesh_ytfn7")
 
 [node name="Wall13" type="MeshInstance3D" parent="Geometry/Walls"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 70, 5, 80)
-mesh = SubResource("BoxMesh_bjsuk")
+mesh = SubResource("BoxMesh_p8kq3")
 
 [node name="Wall14" type="MeshInstance3D" parent="Geometry/Walls"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 80, 5, 55)
-mesh = SubResource("BoxMesh_ajdor")
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 80, 5, 65)
+mesh = SubResource("BoxMesh_8ltv1")
 
 [node name="Wall15" type="MeshInstance3D" parent="Geometry/Walls"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 85, 5, 30)
-mesh = SubResource("BoxMesh_8ufy5")
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 85, 5, 50)
+mesh = SubResource("BoxMesh_5esfa")
 
 [node name="Wall16" type="MeshInstance3D" parent="Geometry/Walls"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 90, 5, 20)
-mesh = SubResource("BoxMesh_bg3os")
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 90, 5, 55)
+mesh = SubResource("BoxMesh_3e68i")
 
 [node name="Wall17" type="MeshInstance3D" parent="Geometry/Walls"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 75, 5, 10)
-mesh = SubResource("BoxMesh_xufp7")
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 95, 5, 60)
+mesh = SubResource("BoxMesh_vxjsu")
 
 [node name="Wall18" type="MeshInstance3D" parent="Geometry/Walls"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 60, 5, 15)
-mesh = SubResource("BoxMesh_seulh")
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 100, 5, 55)
+mesh = SubResource("BoxMesh_vh4ci")
 
 [node name="Wall19" type="MeshInstance3D" parent="Geometry/Walls"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 50, 5, 20)
-mesh = SubResource("BoxMesh_ymo84")
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 105, 5, 50)
+mesh = SubResource("BoxMesh_ttf5t")
 
 [node name="Wall20" type="MeshInstance3D" parent="Geometry/Walls"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 40, 5, 15)
-mesh = SubResource("BoxMesh_jqa1p")
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 110, 5, 80)
+mesh = SubResource("BoxMesh_kp0hs")
 
 [node name="Wall21" type="MeshInstance3D" parent="Geometry/Walls"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 25, 5, 10)
-mesh = SubResource("BoxMesh_8f5hg")
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 95, 5, 110)
+mesh = SubResource("BoxMesh_s7bnn")
 
 [node name="Wall22" type="MeshInstance3D" parent="Geometry/Walls"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 50, 5, 45)
-mesh = SubResource("BoxMesh_emtjx")
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 80, 5, 115)
+mesh = SubResource("BoxMesh_pl5wn")
 
 [node name="Wall23" type="MeshInstance3D" parent="Geometry/Walls"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 55, 5, 60)
-mesh = SubResource("BoxMesh_7j2ym")
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 100, 5, 120)
+mesh = SubResource("BoxMesh_ah6un")
 
 [node name="Wall24" type="MeshInstance3D" parent="Geometry/Walls"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 60, 5, 65)
-mesh = SubResource("BoxMesh_mg2a6")
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 120, 5, 75)
+mesh = SubResource("BoxMesh_ukmhm")
 
 [node name="Wall25" type="MeshInstance3D" parent="Geometry/Walls"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 65, 5, 70)
-mesh = SubResource("BoxMesh_lm1mw")
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 125, 5, 30)
+mesh = SubResource("BoxMesh_d47y1")
 
 [node name="Wall26" type="MeshInstance3D" parent="Geometry/Walls"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 70, 5, 60)
-mesh = SubResource("BoxMesh_wg65c")
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 130, 5, 20)
+mesh = SubResource("BoxMesh_pr3hw")
 
 [node name="Wall27" type="MeshInstance3D" parent="Geometry/Walls"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 65, 5, 50)
-mesh = SubResource("BoxMesh_jbg1v")
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 115, 5, 10)
+mesh = SubResource("BoxMesh_dmcj4")
 
 [node name="Wall28" type="MeshInstance3D" parent="Geometry/Walls"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 60, 5, 40)
-mesh = SubResource("BoxMesh_ehb3s")
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 100, 5, 20)
+mesh = SubResource("BoxMesh_i81lr")
 
 [node name="Wall29" type="MeshInstance3D" parent="Geometry/Walls"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 55, 5, 30)
-mesh = SubResource("BoxMesh_738ii")
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 105, 5, 30)
+mesh = SubResource("BoxMesh_7njt7")
 
 [node name="Wall30" type="MeshInstance3D" parent="Geometry/Walls"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20, 5, 30)
-mesh = SubResource("BoxMesh_pefny")
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 110, 5, 35)
+mesh = SubResource("BoxMesh_lk01f")
 
 [node name="Wall31" type="MeshInstance3D" parent="Geometry/Walls"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30, 5, 25)
-mesh = SubResource("BoxMesh_mvqu8")
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 95, 5, 40)
+mesh = SubResource("BoxMesh_egmgg")
 
 [node name="Wall32" type="MeshInstance3D" parent="Geometry/Walls"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20, 5, 15)
-mesh = SubResource("BoxMesh_32fcg")
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 80, 5, 35)
+mesh = SubResource("BoxMesh_i4y12")
 
 [node name="Wall33" type="MeshInstance3D" parent="Geometry/Walls"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 40, 5, 25)
-mesh = SubResource("BoxMesh_wdnw1")
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 85, 5, 30)
+mesh = SubResource("BoxMesh_7e4w0")
 
 [node name="Wall34" type="MeshInstance3D" parent="Geometry/Walls"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 40, 5, 45)
-mesh = SubResource("BoxMesh_bqdjv")
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 90, 5, 20)
+mesh = SubResource("BoxMesh_2arcn")
 
 [node name="Wall35" type="MeshInstance3D" parent="Geometry/Walls"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 70, 5, 20)
-mesh = SubResource("BoxMesh_4ue7b")
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 75, 5, 10)
+mesh = SubResource("BoxMesh_rqv01")
 
 [node name="Wall36" type="MeshInstance3D" parent="Geometry/Walls"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 65, 5, 30)
-mesh = SubResource("BoxMesh_y8k1m")
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 60, 5, 15)
+mesh = SubResource("BoxMesh_0lwda")
 
 [node name="Wall37" type="MeshInstance3D" parent="Geometry/Walls"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 70, 5, 35)
-mesh = SubResource("BoxMesh_m75i4")
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 50, 5, 20)
+mesh = SubResource("BoxMesh_rr0mk")
+
+[node name="Wall38" type="MeshInstance3D" parent="Geometry/Walls"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 40, 5, 25)
+mesh = SubResource("BoxMesh_hqsdk")
+
+[node name="Wall39" type="MeshInstance3D" parent="Geometry/Walls"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30, 5, 30)
+mesh = SubResource("BoxMesh_pct3e")
+
+[node name="Wall40" type="MeshInstance3D" parent="Geometry/Walls"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20, 5, 20)
+mesh = SubResource("BoxMesh_h3yng")
+
+[node name="Wall41" type="MeshInstance3D" parent="Geometry/Walls"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15, 5, 10)
+mesh = SubResource("BoxMesh_pojdh")
+
+[node name="Wall42" type="MeshInstance3D" parent="Geometry/Walls"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 70, 5, 50)
+mesh = SubResource("BoxMesh_cscee")
+
+[node name="Wall43" type="MeshInstance3D" parent="Geometry/Walls"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 60, 5, 30)
+mesh = SubResource("BoxMesh_owjae")
+
+[node name="Wall44" type="MeshInstance3D" parent="Geometry/Walls"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 50, 5, 45)
+mesh = SubResource("BoxMesh_g0xos")
+
+[node name="Wall45" type="MeshInstance3D" parent="Geometry/Walls"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 55, 5, 60)
+mesh = SubResource("BoxMesh_h5exu")
+
+[node name="Wall46" type="MeshInstance3D" parent="Geometry/Walls"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 60, 5, 65)
+mesh = SubResource("BoxMesh_mcrd5")
+
+[node name="Wall47" type="MeshInstance3D" parent="Geometry/Walls"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 60, 5, 40)
+mesh = SubResource("BoxMesh_hh6a0")
+
+[node name="Wall48" type="MeshInstance3D" parent="Geometry/Walls"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 65, 5, 50)
+mesh = SubResource("BoxMesh_oowxf")
 
 [node name="Doors" type="Node3D" parent="Geometry"]
 
-[node name="@MeshInstance3D@22725" type="MeshInstance3D" parent="Geometry/Doors"]
+[node name="@MeshInstance3D@29680" type="MeshInstance3D" parent="Geometry/Doors"]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 69, 4.5, 115)
-material_override = SubResource("StandardMaterial3D_skeao")
-mesh = SubResource("BoxMesh_be62m")
+material_override = SubResource("StandardMaterial3D_0ceyb")
+mesh = SubResource("BoxMesh_g01vg")
+
+[node name="@MeshInstance3D@29682" type="MeshInstance3D" parent="Geometry/Doors"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 55, 4.5, 31)
+material_override = SubResource("StandardMaterial3D_sc1ck")
+mesh = SubResource("BoxMesh_1wrs6")
+
+[node name="@MeshInstance3D@29683" type="MeshInstance3D" parent="Geometry/Doors"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 81, 4.5, 115)
+material_override = SubResource("StandardMaterial3D_hd1ml")
+mesh = SubResource("BoxMesh_r4lsb")
 
 [node name="Treasure" type="Node3D" parent="Geometry"]
 
+[node name="DungeonTreasure" parent="Geometry/Treasure" instance=ExtResource("1_vm0dq")]
+transform = Transform3D(-8.41444e-08, 0, -1.925, 0, 1.925, 0, 1.925, 0, -8.41444e-08, 102, 0, 15)
+
+[node name="@Node3D@29681" parent="Geometry/Treasure" instance=ExtResource("1_vm0dq")]
+transform = Transform3D(-8.41444e-08, 0, 1.925, 0, 1.925, 0, -1.925, 0, -8.41444e-08, 128, 0, 15)
+
+[node name="@Node3D@29684" parent="Geometry/Treasure" instance=ExtResource("1_vm0dq")]
+transform = Transform3D(-1.925, 0, -1.68289e-07, 0, 1.925, 0, 1.68289e-07, 0, -1.925, 95, 0, 58)
+
 [node name="Debug" type="Node3D" parent="."]
 
-[node name="@MeshInstance3D@22726" type="MeshInstance3D" parent="Debug"]
+[node name="@MeshInstance3D@29685" type="MeshInstance3D" parent="Debug"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15, 1, 18)
-mesh = SubResource("BoxMesh_dwb0d")
+mesh = SubResource("BoxMesh_4rpi1")
 
-[node name="@MeshInstance3D@22727" type="MeshInstance3D" parent="Debug"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 25, 1, 18)
-mesh = SubResource("BoxMesh_vadok")
+[node name="@MeshInstance3D@29686" type="MeshInstance3D" parent="Debug"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 65, 1, 18)
+mesh = SubResource("BoxMesh_wslof")
 
-[node name="@MeshInstance3D@22728" type="MeshInstance3D" parent="Debug"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 28, 1, 15)
-mesh = SubResource("BoxMesh_o1tpl")
-
-[node name="@MeshInstance3D@22729" type="MeshInstance3D" parent="Debug"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 35, 1, 18)
-mesh = SubResource("BoxMesh_5nfpl")
-
-[node name="@MeshInstance3D@22730" type="MeshInstance3D" parent="Debug"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 32, 1, 15)
-mesh = SubResource("BoxMesh_4v8w7")
-
-[node name="@MeshInstance3D@22731" type="MeshInstance3D" parent="Debug"]
+[node name="@MeshInstance3D@29687" type="MeshInstance3D" parent="Debug"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 68, 1, 15)
-mesh = SubResource("BoxMesh_5j3vd")
+mesh = SubResource("BoxMesh_70ely")
 
-[node name="@MeshInstance3D@22732" type="MeshInstance3D" parent="Debug"]
+[node name="@MeshInstance3D@29688" type="MeshInstance3D" parent="Debug"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 75, 1, 18)
+mesh = SubResource("BoxMesh_fkt22")
+
+[node name="@MeshInstance3D@29689" type="MeshInstance3D" parent="Debug"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 72, 1, 15)
-mesh = SubResource("BoxMesh_ybt7b")
+mesh = SubResource("BoxMesh_4jver")
 
-[node name="@MeshInstance3D@22733" type="MeshInstance3D" parent="Debug"]
+[node name="@MeshInstance3D@29690" type="MeshInstance3D" parent="Debug"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 78, 1, 15)
-mesh = SubResource("BoxMesh_0pq8m")
+mesh = SubResource("BoxMesh_wupox")
 
-[node name="@MeshInstance3D@22734" type="MeshInstance3D" parent="Debug"]
+[node name="@MeshInstance3D@29691" type="MeshInstance3D" parent="Debug"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 85, 1, 18)
-mesh = SubResource("BoxMesh_ps1q4")
+mesh = SubResource("BoxMesh_jocbg")
 
-[node name="@MeshInstance3D@22735" type="MeshInstance3D" parent="Debug"]
+[node name="@MeshInstance3D@29692" type="MeshInstance3D" parent="Debug"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 82, 1, 15)
-mesh = SubResource("BoxMesh_vyhfv")
+mesh = SubResource("BoxMesh_pawi3")
 
-[node name="@MeshInstance3D@22736" type="MeshInstance3D" parent="Debug"]
+[node name="@MeshInstance3D@29693" type="MeshInstance3D" parent="Debug"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 105, 1, 18)
+mesh = SubResource("BoxMesh_apft1")
+
+[node name="@MeshInstance3D@29694" type="MeshInstance3D" parent="Debug"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 108, 1, 15)
+mesh = SubResource("BoxMesh_u6ng7")
+
+[node name="@MeshInstance3D@29695" type="MeshInstance3D" parent="Debug"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 115, 1, 18)
+mesh = SubResource("BoxMesh_gekbi")
+
+[node name="@MeshInstance3D@29696" type="MeshInstance3D" parent="Debug"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 112, 1, 15)
+mesh = SubResource("BoxMesh_1nb2h")
+
+[node name="@MeshInstance3D@29697" type="MeshInstance3D" parent="Debug"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 118, 1, 15)
+mesh = SubResource("BoxMesh_mgs2a")
+
+[node name="@MeshInstance3D@29698" type="MeshInstance3D" parent="Debug"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 125, 1, 18)
+mesh = SubResource("BoxMesh_idvqr")
+
+[node name="@MeshInstance3D@29699" type="MeshInstance3D" parent="Debug"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 122, 1, 15)
+mesh = SubResource("BoxMesh_2urqh")
+
+[node name="@MeshInstance3D@29700" type="MeshInstance3D" parent="Debug"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15, 1, 22)
-mesh = SubResource("BoxMesh_6ieh5")
+mesh = SubResource("BoxMesh_lr2r6")
 
-[node name="@MeshInstance3D@22737" type="MeshInstance3D" parent="Debug"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18, 1, 25)
-mesh = SubResource("BoxMesh_3sf82")
+[node name="@MeshInstance3D@29701" type="MeshInstance3D" parent="Debug"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15, 1, 28)
+mesh = SubResource("BoxMesh_rknpk")
 
-[node name="@MeshInstance3D@22738" type="MeshInstance3D" parent="Debug"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 25, 1, 22)
-mesh = SubResource("BoxMesh_wixq4")
-
-[node name="@MeshInstance3D@22739" type="MeshInstance3D" parent="Debug"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 22, 1, 25)
-mesh = SubResource("BoxMesh_8508f")
-
-[node name="@MeshInstance3D@22740" type="MeshInstance3D" parent="Debug"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 35, 1, 22)
-mesh = SubResource("BoxMesh_vn3xw")
-
-[node name="@MeshInstance3D@22741" type="MeshInstance3D" parent="Debug"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 35, 1, 28)
-mesh = SubResource("BoxMesh_owc5c")
-
-[node name="@MeshInstance3D@22742" type="MeshInstance3D" parent="Debug"]
+[node name="@MeshInstance3D@29702" type="MeshInstance3D" parent="Debug"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 45, 1, 28)
-mesh = SubResource("BoxMesh_8u7cd")
+mesh = SubResource("BoxMesh_d5r0x")
 
-[node name="@MeshInstance3D@22743" type="MeshInstance3D" parent="Debug"]
+[node name="@MeshInstance3D@29703" type="MeshInstance3D" parent="Debug"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 48, 1, 25)
-mesh = SubResource("BoxMesh_4lgs7")
+mesh = SubResource("BoxMesh_el7h3")
 
-[node name="@MeshInstance3D@22744" type="MeshInstance3D" parent="Debug"]
+[node name="@MeshInstance3D@29704" type="MeshInstance3D" parent="Debug"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 52, 1, 25)
-mesh = SubResource("BoxMesh_tkvus")
+mesh = SubResource("BoxMesh_fl5wc")
 
-[node name="@MeshInstance3D@22745" type="MeshInstance3D" parent="Debug"]
+[node name="@MeshInstance3D@29705" type="MeshInstance3D" parent="Debug"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 58, 1, 25)
-mesh = SubResource("BoxMesh_l8ff5")
+mesh = SubResource("BoxMesh_ygu3x")
 
-[node name="@MeshInstance3D@22746" type="MeshInstance3D" parent="Debug"]
+[node name="@MeshInstance3D@29706" type="MeshInstance3D" parent="Debug"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 65, 1, 22)
+mesh = SubResource("BoxMesh_bjqjh")
+
+[node name="@MeshInstance3D@29707" type="MeshInstance3D" parent="Debug"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 62, 1, 25)
-mesh = SubResource("BoxMesh_x351a")
+mesh = SubResource("BoxMesh_0xgoc")
 
-[node name="@MeshInstance3D@22747" type="MeshInstance3D" parent="Debug"]
+[node name="@MeshInstance3D@29708" type="MeshInstance3D" parent="Debug"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 68, 1, 25)
-mesh = SubResource("BoxMesh_im3d0")
+mesh = SubResource("BoxMesh_p3aaw")
 
-[node name="@MeshInstance3D@22748" type="MeshInstance3D" parent="Debug"]
+[node name="@MeshInstance3D@29709" type="MeshInstance3D" parent="Debug"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 75, 1, 22)
+mesh = SubResource("BoxMesh_7hmwm")
+
+[node name="@MeshInstance3D@29710" type="MeshInstance3D" parent="Debug"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 75, 1, 28)
-mesh = SubResource("BoxMesh_xxhy1")
+mesh = SubResource("BoxMesh_s07hm")
 
-[node name="@MeshInstance3D@22749" type="MeshInstance3D" parent="Debug"]
+[node name="@MeshInstance3D@29711" type="MeshInstance3D" parent="Debug"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 72, 1, 25)
-mesh = SubResource("BoxMesh_5xw3b")
+mesh = SubResource("BoxMesh_ua4o8")
 
-[node name="@MeshInstance3D@22750" type="MeshInstance3D" parent="Debug"]
+[node name="@MeshInstance3D@29712" type="MeshInstance3D" parent="Debug"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 78, 1, 25)
-mesh = SubResource("BoxMesh_0hxrq")
+mesh = SubResource("BoxMesh_jvigm")
 
-[node name="@MeshInstance3D@22751" type="MeshInstance3D" parent="Debug"]
+[node name="@MeshInstance3D@29713" type="MeshInstance3D" parent="Debug"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 85, 1, 22)
-mesh = SubResource("BoxMesh_6retp")
+mesh = SubResource("BoxMesh_mr3k0")
 
-[node name="@MeshInstance3D@22752" type="MeshInstance3D" parent="Debug"]
+[node name="@MeshInstance3D@29714" type="MeshInstance3D" parent="Debug"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 82, 1, 25)
-mesh = SubResource("BoxMesh_gqtqc")
+mesh = SubResource("BoxMesh_bnee4")
 
-[node name="@MeshInstance3D@22753" type="MeshInstance3D" parent="Debug"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15, 1, 38)
-mesh = SubResource("BoxMesh_1nyl3")
+[node name="@MeshInstance3D@29715" type="MeshInstance3D" parent="Debug"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 105, 1, 22)
+mesh = SubResource("BoxMesh_o2exw")
 
-[node name="@MeshInstance3D@22754" type="MeshInstance3D" parent="Debug"]
+[node name="@MeshInstance3D@29716" type="MeshInstance3D" parent="Debug"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 108, 1, 25)
+mesh = SubResource("BoxMesh_gx1vc")
+
+[node name="@MeshInstance3D@29717" type="MeshInstance3D" parent="Debug"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 115, 1, 22)
+mesh = SubResource("BoxMesh_ajcgq")
+
+[node name="@MeshInstance3D@29718" type="MeshInstance3D" parent="Debug"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 115, 1, 28)
+mesh = SubResource("BoxMesh_ebvte")
+
+[node name="@MeshInstance3D@29719" type="MeshInstance3D" parent="Debug"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 112, 1, 25)
+mesh = SubResource("BoxMesh_ceqjw")
+
+[node name="@MeshInstance3D@29720" type="MeshInstance3D" parent="Debug"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 118, 1, 25)
+mesh = SubResource("BoxMesh_e3sto")
+
+[node name="@MeshInstance3D@29721" type="MeshInstance3D" parent="Debug"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 125, 1, 22)
+mesh = SubResource("BoxMesh_qhtkw")
+
+[node name="@MeshInstance3D@29722" type="MeshInstance3D" parent="Debug"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 122, 1, 25)
+mesh = SubResource("BoxMesh_g488o")
+
+[node name="@MeshInstance3D@29723" type="MeshInstance3D" parent="Debug"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15, 1, 32)
+mesh = SubResource("BoxMesh_w2vxr")
+
+[node name="@MeshInstance3D@29724" type="MeshInstance3D" parent="Debug"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18, 1, 35)
-mesh = SubResource("BoxMesh_b67l8")
+mesh = SubResource("BoxMesh_nmqk2")
 
-[node name="@MeshInstance3D@22755" type="MeshInstance3D" parent="Debug"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 25, 1, 38)
-mesh = SubResource("BoxMesh_sokjv")
-
-[node name="@MeshInstance3D@22756" type="MeshInstance3D" parent="Debug"]
+[node name="@MeshInstance3D@29725" type="MeshInstance3D" parent="Debug"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 22, 1, 35)
-mesh = SubResource("BoxMesh_6lklg")
+mesh = SubResource("BoxMesh_c4vii")
 
-[node name="@MeshInstance3D@22757" type="MeshInstance3D" parent="Debug"]
+[node name="@MeshInstance3D@29726" type="MeshInstance3D" parent="Debug"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 28, 1, 35)
-mesh = SubResource("BoxMesh_4ud18")
+mesh = SubResource("BoxMesh_y4hvm")
 
-[node name="@MeshInstance3D@22758" type="MeshInstance3D" parent="Debug"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 35, 1, 32)
-mesh = SubResource("BoxMesh_tljud")
-
-[node name="@MeshInstance3D@22759" type="MeshInstance3D" parent="Debug"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 35, 1, 38)
-mesh = SubResource("BoxMesh_c4t5f")
-
-[node name="@MeshInstance3D@22760" type="MeshInstance3D" parent="Debug"]
+[node name="@MeshInstance3D@29727" type="MeshInstance3D" parent="Debug"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 32, 1, 35)
-mesh = SubResource("BoxMesh_wpn2k")
+mesh = SubResource("BoxMesh_p7oqx")
 
-[node name="@MeshInstance3D@22761" type="MeshInstance3D" parent="Debug"]
+[node name="@MeshInstance3D@29728" type="MeshInstance3D" parent="Debug"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 38, 1, 35)
-mesh = SubResource("BoxMesh_rv0c8")
+mesh = SubResource("BoxMesh_ie7jt")
 
-[node name="@MeshInstance3D@22762" type="MeshInstance3D" parent="Debug"]
+[node name="@MeshInstance3D@29729" type="MeshInstance3D" parent="Debug"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 45, 1, 32)
-mesh = SubResource("BoxMesh_a4drr")
+mesh = SubResource("BoxMesh_ew32k")
 
-[node name="@MeshInstance3D@22763" type="MeshInstance3D" parent="Debug"]
+[node name="@MeshInstance3D@29730" type="MeshInstance3D" parent="Debug"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 45, 1, 38)
-mesh = SubResource("BoxMesh_drn4e")
+mesh = SubResource("BoxMesh_g2cl1")
 
-[node name="@MeshInstance3D@22764" type="MeshInstance3D" parent="Debug"]
+[node name="@MeshInstance3D@29731" type="MeshInstance3D" parent="Debug"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 42, 1, 35)
-mesh = SubResource("BoxMesh_rjjij")
+mesh = SubResource("BoxMesh_o1c14")
 
-[node name="@MeshInstance3D@22765" type="MeshInstance3D" parent="Debug"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 65, 1, 38)
-mesh = SubResource("BoxMesh_vacad")
+[node name="@MeshInstance3D@29732" type="MeshInstance3D" parent="Debug"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 55, 1, 38)
+mesh = SubResource("BoxMesh_0gypr")
 
-[node name="@MeshInstance3D@22766" type="MeshInstance3D" parent="Debug"]
+[node name="@MeshInstance3D@29733" type="MeshInstance3D" parent="Debug"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 75, 1, 32)
-mesh = SubResource("BoxMesh_a22rt")
+mesh = SubResource("BoxMesh_336sp")
 
-[node name="@MeshInstance3D@22767" type="MeshInstance3D" parent="Debug"]
+[node name="@MeshInstance3D@29734" type="MeshInstance3D" parent="Debug"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 75, 1, 38)
-mesh = SubResource("BoxMesh_d4p0a")
+mesh = SubResource("BoxMesh_wn6jl")
 
-[node name="@MeshInstance3D@22768" type="MeshInstance3D" parent="Debug"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15, 1, 42)
-mesh = SubResource("BoxMesh_erdji")
+[node name="@MeshInstance3D@29735" type="MeshInstance3D" parent="Debug"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 115, 1, 32)
+mesh = SubResource("BoxMesh_24gm8")
 
-[node name="@MeshInstance3D@22769" type="MeshInstance3D" parent="Debug"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18, 1, 45)
-mesh = SubResource("BoxMesh_lhiml")
+[node name="@MeshInstance3D@29736" type="MeshInstance3D" parent="Debug"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 115, 1, 38)
+mesh = SubResource("BoxMesh_mat0u")
 
-[node name="@MeshInstance3D@22770" type="MeshInstance3D" parent="Debug"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 25, 1, 42)
-mesh = SubResource("BoxMesh_0wnxv")
-
-[node name="@MeshInstance3D@22771" type="MeshInstance3D" parent="Debug"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 22, 1, 45)
-mesh = SubResource("BoxMesh_kxetg")
-
-[node name="@MeshInstance3D@22772" type="MeshInstance3D" parent="Debug"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 28, 1, 45)
-mesh = SubResource("BoxMesh_ir6jx")
-
-[node name="@MeshInstance3D@22773" type="MeshInstance3D" parent="Debug"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 35, 1, 42)
-mesh = SubResource("BoxMesh_blk66")
-
-[node name="@MeshInstance3D@22774" type="MeshInstance3D" parent="Debug"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 32, 1, 45)
-mesh = SubResource("BoxMesh_3ekab")
-
-[node name="@MeshInstance3D@22775" type="MeshInstance3D" parent="Debug"]
+[node name="@MeshInstance3D@29737" type="MeshInstance3D" parent="Debug"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 45, 1, 42)
-mesh = SubResource("BoxMesh_maotc")
+mesh = SubResource("BoxMesh_xcoyb")
 
-[node name="@MeshInstance3D@22776" type="MeshInstance3D" parent="Debug"]
+[node name="@MeshInstance3D@29738" type="MeshInstance3D" parent="Debug"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 45, 1, 48)
-mesh = SubResource("BoxMesh_05780")
+mesh = SubResource("BoxMesh_n5vsb")
 
-[node name="@MeshInstance3D@22777" type="MeshInstance3D" parent="Debug"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 65, 1, 42)
-mesh = SubResource("BoxMesh_bdq4u")
+[node name="@MeshInstance3D@29739" type="MeshInstance3D" parent="Debug"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 55, 1, 42)
+mesh = SubResource("BoxMesh_prp5j")
 
-[node name="@MeshInstance3D@22778" type="MeshInstance3D" parent="Debug"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 68, 1, 45)
-mesh = SubResource("BoxMesh_3mlus")
+[node name="@MeshInstance3D@29740" type="MeshInstance3D" parent="Debug"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 55, 1, 48)
+mesh = SubResource("BoxMesh_ajg20")
 
-[node name="@MeshInstance3D@22779" type="MeshInstance3D" parent="Debug"]
+[node name="@MeshInstance3D@29741" type="MeshInstance3D" parent="Debug"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 75, 1, 42)
-mesh = SubResource("BoxMesh_6s67t")
+mesh = SubResource("BoxMesh_oqlr7")
 
-[node name="@MeshInstance3D@22780" type="MeshInstance3D" parent="Debug"]
+[node name="@MeshInstance3D@29742" type="MeshInstance3D" parent="Debug"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 75, 1, 48)
-mesh = SubResource("BoxMesh_y1o24")
+mesh = SubResource("BoxMesh_73lif")
 
-[node name="@MeshInstance3D@22781" type="MeshInstance3D" parent="Debug"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 72, 1, 45)
-mesh = SubResource("BoxMesh_a43pt")
+[node name="@MeshInstance3D@29743" type="MeshInstance3D" parent="Debug"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 78, 1, 45)
+mesh = SubResource("BoxMesh_ugufl")
 
-[node name="@MeshInstance3D@22782" type="MeshInstance3D" parent="Debug"]
+[node name="@MeshInstance3D@29744" type="MeshInstance3D" parent="Debug"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 82, 1, 45)
+mesh = SubResource("BoxMesh_pha67")
+
+[node name="@MeshInstance3D@29745" type="MeshInstance3D" parent="Debug"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 88, 1, 45)
+mesh = SubResource("BoxMesh_qnjv5")
+
+[node name="@MeshInstance3D@29746" type="MeshInstance3D" parent="Debug"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 95, 1, 48)
+mesh = SubResource("BoxMesh_prq5c")
+
+[node name="@MeshInstance3D@29747" type="MeshInstance3D" parent="Debug"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 92, 1, 45)
+mesh = SubResource("BoxMesh_5y6h6")
+
+[node name="@MeshInstance3D@29748" type="MeshInstance3D" parent="Debug"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 98, 1, 45)
+mesh = SubResource("BoxMesh_vy3o3")
+
+[node name="@MeshInstance3D@29749" type="MeshInstance3D" parent="Debug"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 102, 1, 45)
+mesh = SubResource("BoxMesh_wdanj")
+
+[node name="@MeshInstance3D@29750" type="MeshInstance3D" parent="Debug"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 108, 1, 45)
+mesh = SubResource("BoxMesh_yvc0n")
+
+[node name="@MeshInstance3D@29751" type="MeshInstance3D" parent="Debug"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 115, 1, 42)
+mesh = SubResource("BoxMesh_dy6fi")
+
+[node name="@MeshInstance3D@29752" type="MeshInstance3D" parent="Debug"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 115, 1, 48)
+mesh = SubResource("BoxMesh_teu6j")
+
+[node name="@MeshInstance3D@29753" type="MeshInstance3D" parent="Debug"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 112, 1, 45)
+mesh = SubResource("BoxMesh_dofvy")
+
+[node name="@MeshInstance3D@29754" type="MeshInstance3D" parent="Debug"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 45, 1, 52)
-mesh = SubResource("BoxMesh_g0ehp")
+mesh = SubResource("BoxMesh_bcpv5")
 
-[node name="@MeshInstance3D@22783" type="MeshInstance3D" parent="Debug"]
+[node name="@MeshInstance3D@29755" type="MeshInstance3D" parent="Debug"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 45, 1, 58)
-mesh = SubResource("BoxMesh_wyc3x")
+mesh = SubResource("BoxMesh_8ye71")
 
-[node name="@MeshInstance3D@22784" type="MeshInstance3D" parent="Debug"]
+[node name="@MeshInstance3D@29756" type="MeshInstance3D" parent="Debug"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 55, 1, 52)
+mesh = SubResource("BoxMesh_q7lxm")
+
+[node name="@MeshInstance3D@29757" type="MeshInstance3D" parent="Debug"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 58, 1, 55)
+mesh = SubResource("BoxMesh_h3obp")
+
+[node name="@MeshInstance3D@29758" type="MeshInstance3D" parent="Debug"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 65, 1, 58)
+mesh = SubResource("BoxMesh_d7kw5")
+
+[node name="@MeshInstance3D@29759" type="MeshInstance3D" parent="Debug"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 62, 1, 55)
+mesh = SubResource("BoxMesh_2xfxs")
+
+[node name="@MeshInstance3D@29760" type="MeshInstance3D" parent="Debug"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 75, 1, 52)
-mesh = SubResource("BoxMesh_yxyep")
+mesh = SubResource("BoxMesh_pvnbc")
 
-[node name="@MeshInstance3D@22785" type="MeshInstance3D" parent="Debug"]
+[node name="@MeshInstance3D@29761" type="MeshInstance3D" parent="Debug"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 75, 1, 58)
-mesh = SubResource("BoxMesh_dn1lw")
+mesh = SubResource("BoxMesh_0gul7")
 
-[node name="@MeshInstance3D@22786" type="MeshInstance3D" parent="Debug"]
+[node name="@MeshInstance3D@29762" type="MeshInstance3D" parent="Debug"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 95, 1, 52)
+mesh = SubResource("BoxMesh_yres1")
+
+[node name="@MeshInstance3D@29763" type="MeshInstance3D" parent="Debug"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 115, 1, 52)
+mesh = SubResource("BoxMesh_r5d06")
+
+[node name="@MeshInstance3D@29764" type="MeshInstance3D" parent="Debug"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 115, 1, 58)
+mesh = SubResource("BoxMesh_tl1sd")
+
+[node name="@MeshInstance3D@29765" type="MeshInstance3D" parent="Debug"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 35, 1, 68)
-mesh = SubResource("BoxMesh_avmbp")
+mesh = SubResource("BoxMesh_rucxm")
 
-[node name="@MeshInstance3D@22787" type="MeshInstance3D" parent="Debug"]
+[node name="@MeshInstance3D@29766" type="MeshInstance3D" parent="Debug"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 38, 1, 65)
-mesh = SubResource("BoxMesh_sejov")
+mesh = SubResource("BoxMesh_232ws")
 
-[node name="@MeshInstance3D@22788" type="MeshInstance3D" parent="Debug"]
+[node name="@MeshInstance3D@29767" type="MeshInstance3D" parent="Debug"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 45, 1, 62)
-mesh = SubResource("BoxMesh_s6sps")
+mesh = SubResource("BoxMesh_egpu5")
 
-[node name="@MeshInstance3D@22789" type="MeshInstance3D" parent="Debug"]
+[node name="@MeshInstance3D@29768" type="MeshInstance3D" parent="Debug"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 45, 1, 68)
-mesh = SubResource("BoxMesh_lllyh")
+mesh = SubResource("BoxMesh_j5pif")
 
-[node name="@MeshInstance3D@22790" type="MeshInstance3D" parent="Debug"]
+[node name="@MeshInstance3D@29769" type="MeshInstance3D" parent="Debug"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 42, 1, 65)
-mesh = SubResource("BoxMesh_2eymo")
+mesh = SubResource("BoxMesh_cwncc")
 
-[node name="@MeshInstance3D@22791" type="MeshInstance3D" parent="Debug"]
+[node name="@MeshInstance3D@29770" type="MeshInstance3D" parent="Debug"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 48, 1, 65)
-mesh = SubResource("BoxMesh_l5utt")
+mesh = SubResource("BoxMesh_42ixm")
 
-[node name="@MeshInstance3D@22792" type="MeshInstance3D" parent="Debug"]
+[node name="@MeshInstance3D@29771" type="MeshInstance3D" parent="Debug"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 55, 1, 68)
-mesh = SubResource("BoxMesh_p67k8")
+mesh = SubResource("BoxMesh_gs81n")
 
-[node name="@MeshInstance3D@22793" type="MeshInstance3D" parent="Debug"]
+[node name="@MeshInstance3D@29772" type="MeshInstance3D" parent="Debug"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 52, 1, 65)
-mesh = SubResource("BoxMesh_h7jms")
+mesh = SubResource("BoxMesh_kh5vb")
 
-[node name="@MeshInstance3D@22794" type="MeshInstance3D" parent="Debug"]
+[node name="@MeshInstance3D@29773" type="MeshInstance3D" parent="Debug"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 65, 1, 62)
+mesh = SubResource("BoxMesh_c4ro0")
+
+[node name="@MeshInstance3D@29774" type="MeshInstance3D" parent="Debug"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 65, 1, 68)
+mesh = SubResource("BoxMesh_u2c0m")
+
+[node name="@MeshInstance3D@29775" type="MeshInstance3D" parent="Debug"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 75, 1, 62)
-mesh = SubResource("BoxMesh_8td8p")
+mesh = SubResource("BoxMesh_do7eh")
 
-[node name="@MeshInstance3D@22795" type="MeshInstance3D" parent="Debug"]
+[node name="@MeshInstance3D@29776" type="MeshInstance3D" parent="Debug"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 75, 1, 68)
-mesh = SubResource("BoxMesh_wff3b")
+mesh = SubResource("BoxMesh_bmfr3")
 
-[node name="@MeshInstance3D@22796" type="MeshInstance3D" parent="Debug"]
+[node name="@MeshInstance3D@29777" type="MeshInstance3D" parent="Debug"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 115, 1, 62)
+mesh = SubResource("BoxMesh_j824l")
+
+[node name="@MeshInstance3D@29778" type="MeshInstance3D" parent="Debug"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 115, 1, 68)
+mesh = SubResource("BoxMesh_8vm8x")
+
+[node name="@MeshInstance3D@29779" type="MeshInstance3D" parent="Debug"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 35, 1, 72)
-mesh = SubResource("BoxMesh_4c7mp")
+mesh = SubResource("BoxMesh_y5avg")
 
-[node name="@MeshInstance3D@22797" type="MeshInstance3D" parent="Debug"]
+[node name="@MeshInstance3D@29780" type="MeshInstance3D" parent="Debug"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 35, 1, 78)
-mesh = SubResource("BoxMesh_qxul5")
+mesh = SubResource("BoxMesh_6n4j1")
 
-[node name="@MeshInstance3D@22798" type="MeshInstance3D" parent="Debug"]
+[node name="@MeshInstance3D@29781" type="MeshInstance3D" parent="Debug"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 38, 1, 75)
-mesh = SubResource("BoxMesh_arc8f")
+mesh = SubResource("BoxMesh_dnlvv")
 
-[node name="@MeshInstance3D@22799" type="MeshInstance3D" parent="Debug"]
+[node name="@MeshInstance3D@29782" type="MeshInstance3D" parent="Debug"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 45, 1, 72)
-mesh = SubResource("BoxMesh_yy514")
+mesh = SubResource("BoxMesh_bpgrn")
 
-[node name="@MeshInstance3D@22800" type="MeshInstance3D" parent="Debug"]
+[node name="@MeshInstance3D@29783" type="MeshInstance3D" parent="Debug"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 45, 1, 78)
-mesh = SubResource("BoxMesh_i1di3")
+mesh = SubResource("BoxMesh_v4uy5")
 
-[node name="@MeshInstance3D@22801" type="MeshInstance3D" parent="Debug"]
+[node name="@MeshInstance3D@29784" type="MeshInstance3D" parent="Debug"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 42, 1, 75)
-mesh = SubResource("BoxMesh_fxt1o")
+mesh = SubResource("BoxMesh_vcwbe")
 
-[node name="@MeshInstance3D@22802" type="MeshInstance3D" parent="Debug"]
+[node name="@MeshInstance3D@29785" type="MeshInstance3D" parent="Debug"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 48, 1, 75)
-mesh = SubResource("BoxMesh_044jy")
+mesh = SubResource("BoxMesh_i6ta4")
 
-[node name="@MeshInstance3D@22803" type="MeshInstance3D" parent="Debug"]
+[node name="@MeshInstance3D@29786" type="MeshInstance3D" parent="Debug"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 55, 1, 72)
-mesh = SubResource("BoxMesh_8e6c1")
+mesh = SubResource("BoxMesh_n6ecl")
 
-[node name="@MeshInstance3D@22804" type="MeshInstance3D" parent="Debug"]
+[node name="@MeshInstance3D@29787" type="MeshInstance3D" parent="Debug"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 55, 1, 78)
-mesh = SubResource("BoxMesh_usodw")
+mesh = SubResource("BoxMesh_xebra")
 
-[node name="@MeshInstance3D@22805" type="MeshInstance3D" parent="Debug"]
+[node name="@MeshInstance3D@29788" type="MeshInstance3D" parent="Debug"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 52, 1, 75)
-mesh = SubResource("BoxMesh_dbrss")
+mesh = SubResource("BoxMesh_q8uri")
 
-[node name="@MeshInstance3D@22806" type="MeshInstance3D" parent="Debug"]
+[node name="@MeshInstance3D@29789" type="MeshInstance3D" parent="Debug"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 58, 1, 75)
-mesh = SubResource("BoxMesh_ay1mu")
+mesh = SubResource("BoxMesh_835v1")
 
-[node name="@MeshInstance3D@22807" type="MeshInstance3D" parent="Debug"]
+[node name="@MeshInstance3D@29790" type="MeshInstance3D" parent="Debug"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 65, 1, 72)
+mesh = SubResource("BoxMesh_yceda")
+
+[node name="@MeshInstance3D@29791" type="MeshInstance3D" parent="Debug"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 62, 1, 75)
-mesh = SubResource("BoxMesh_r4bd1")
+mesh = SubResource("BoxMesh_hdw1a")
 
-[node name="@MeshInstance3D@22808" type="MeshInstance3D" parent="Debug"]
+[node name="@MeshInstance3D@29792" type="MeshInstance3D" parent="Debug"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 68, 1, 75)
-mesh = SubResource("BoxMesh_asi6m")
+mesh = SubResource("BoxMesh_i7a2i")
 
-[node name="@MeshInstance3D@22809" type="MeshInstance3D" parent="Debug"]
+[node name="@MeshInstance3D@29793" type="MeshInstance3D" parent="Debug"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 75, 1, 72)
-mesh = SubResource("BoxMesh_8iaaw")
+mesh = SubResource("BoxMesh_yqsvh")
 
-[node name="@MeshInstance3D@22810" type="MeshInstance3D" parent="Debug"]
+[node name="@MeshInstance3D@29794" type="MeshInstance3D" parent="Debug"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 72, 1, 75)
-mesh = SubResource("BoxMesh_icppp")
+mesh = SubResource("BoxMesh_pt3fd")
 
-[node name="@MeshInstance3D@22811" type="MeshInstance3D" parent="Debug"]
+[node name="@MeshInstance3D@29795" type="MeshInstance3D" parent="Debug"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 115, 1, 72)
+mesh = SubResource("BoxMesh_opjbg")
+
+[node name="@MeshInstance3D@29796" type="MeshInstance3D" parent="Debug"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 115, 1, 78)
+mesh = SubResource("BoxMesh_0cfln")
+
+[node name="@MeshInstance3D@29797" type="MeshInstance3D" parent="Debug"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 35, 1, 82)
-mesh = SubResource("BoxMesh_bv54l")
+mesh = SubResource("BoxMesh_2xhwn")
 
-[node name="@MeshInstance3D@22812" type="MeshInstance3D" parent="Debug"]
+[node name="@MeshInstance3D@29798" type="MeshInstance3D" parent="Debug"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 38, 1, 85)
-mesh = SubResource("BoxMesh_vfda0")
+mesh = SubResource("BoxMesh_7228o")
 
-[node name="@MeshInstance3D@22813" type="MeshInstance3D" parent="Debug"]
+[node name="@MeshInstance3D@29799" type="MeshInstance3D" parent="Debug"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 45, 1, 82)
-mesh = SubResource("BoxMesh_hx82v")
+mesh = SubResource("BoxMesh_4qf5m")
 
-[node name="@MeshInstance3D@22814" type="MeshInstance3D" parent="Debug"]
+[node name="@MeshInstance3D@29800" type="MeshInstance3D" parent="Debug"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 45, 1, 88)
-mesh = SubResource("BoxMesh_g25ue")
+mesh = SubResource("BoxMesh_4flbx")
 
-[node name="@MeshInstance3D@22815" type="MeshInstance3D" parent="Debug"]
+[node name="@MeshInstance3D@29801" type="MeshInstance3D" parent="Debug"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 42, 1, 85)
-mesh = SubResource("BoxMesh_ats7x")
+mesh = SubResource("BoxMesh_axoxe")
 
-[node name="@MeshInstance3D@22816" type="MeshInstance3D" parent="Debug"]
+[node name="@MeshInstance3D@29802" type="MeshInstance3D" parent="Debug"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 48, 1, 85)
-mesh = SubResource("BoxMesh_gx47m")
+mesh = SubResource("BoxMesh_tvs55")
 
-[node name="@MeshInstance3D@22817" type="MeshInstance3D" parent="Debug"]
+[node name="@MeshInstance3D@29803" type="MeshInstance3D" parent="Debug"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 55, 1, 82)
-mesh = SubResource("BoxMesh_glo4n")
+mesh = SubResource("BoxMesh_degrv")
 
-[node name="@MeshInstance3D@22818" type="MeshInstance3D" parent="Debug"]
+[node name="@MeshInstance3D@29804" type="MeshInstance3D" parent="Debug"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 52, 1, 85)
-mesh = SubResource("BoxMesh_jsfs3")
+mesh = SubResource("BoxMesh_fdcy6")
 
-[node name="@MeshInstance3D@22819" type="MeshInstance3D" parent="Debug"]
+[node name="@MeshInstance3D@29805" type="MeshInstance3D" parent="Debug"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 115, 1, 82)
+mesh = SubResource("BoxMesh_fmnto")
+
+[node name="@MeshInstance3D@29806" type="MeshInstance3D" parent="Debug"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 115, 1, 88)
+mesh = SubResource("BoxMesh_uh6jh")
+
+[node name="@MeshInstance3D@29807" type="MeshInstance3D" parent="Debug"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 45, 1, 92)
-mesh = SubResource("BoxMesh_4uwkf")
+mesh = SubResource("BoxMesh_xa1ih")
 
-[node name="@MeshInstance3D@22820" type="MeshInstance3D" parent="Debug"]
+[node name="@MeshInstance3D@29808" type="MeshInstance3D" parent="Debug"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 45, 1, 98)
-mesh = SubResource("BoxMesh_vd26x")
+mesh = SubResource("BoxMesh_0gryy")
 
-[node name="@MeshInstance3D@22821" type="MeshInstance3D" parent="Debug"]
+[node name="@MeshInstance3D@29809" type="MeshInstance3D" parent="Debug"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 115, 1, 92)
+mesh = SubResource("BoxMesh_nehwc")
+
+[node name="@MeshInstance3D@29810" type="MeshInstance3D" parent="Debug"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 115, 1, 98)
+mesh = SubResource("BoxMesh_m41f4")
+
+[node name="@MeshInstance3D@29811" type="MeshInstance3D" parent="Debug"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 45, 1, 102)
-mesh = SubResource("BoxMesh_hhfdp")
+mesh = SubResource("BoxMesh_vwe6o")
 
-[node name="@MeshInstance3D@22822" type="MeshInstance3D" parent="Debug"]
+[node name="@MeshInstance3D@29812" type="MeshInstance3D" parent="Debug"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 45, 1, 108)
-mesh = SubResource("BoxMesh_kkyv2")
+mesh = SubResource("BoxMesh_jle5f")
 
-[node name="@MeshInstance3D@22823" type="MeshInstance3D" parent="Debug"]
+[node name="@MeshInstance3D@29813" type="MeshInstance3D" parent="Debug"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 115, 1, 102)
+mesh = SubResource("BoxMesh_jsxuf")
+
+[node name="@MeshInstance3D@29814" type="MeshInstance3D" parent="Debug"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 115, 1, 108)
+mesh = SubResource("BoxMesh_kqx1t")
+
+[node name="@MeshInstance3D@29815" type="MeshInstance3D" parent="Debug"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 45, 1, 112)
-mesh = SubResource("BoxMesh_kuje3")
+mesh = SubResource("BoxMesh_wp231")
 
-[node name="@MeshInstance3D@22824" type="MeshInstance3D" parent="Debug"]
+[node name="@MeshInstance3D@29816" type="MeshInstance3D" parent="Debug"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 48, 1, 115)
-mesh = SubResource("BoxMesh_k4t2b")
+mesh = SubResource("BoxMesh_schhi")
 
-[node name="@MeshInstance3D@22825" type="MeshInstance3D" parent="Debug"]
+[node name="@MeshInstance3D@29817" type="MeshInstance3D" parent="Debug"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 52, 1, 115)
-mesh = SubResource("BoxMesh_yd5s7")
+mesh = SubResource("BoxMesh_x5sas")
 
-[node name="@MeshInstance3D@22826" type="MeshInstance3D" parent="Debug"]
+[node name="@MeshInstance3D@29818" type="MeshInstance3D" parent="Debug"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 58, 1, 115)
-mesh = SubResource("BoxMesh_c0qh4")
+mesh = SubResource("BoxMesh_6isxy")
 
-[node name="@MeshInstance3D@22827" type="MeshInstance3D" parent="Debug"]
+[node name="@MeshInstance3D@29819" type="MeshInstance3D" parent="Debug"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 62, 1, 115)
-mesh = SubResource("BoxMesh_vjyp0")
+mesh = SubResource("BoxMesh_fab71")
+
+[node name="@MeshInstance3D@29820" type="MeshInstance3D" parent="Debug"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 88, 1, 115)
+mesh = SubResource("BoxMesh_tisfv")
+
+[node name="@MeshInstance3D@29821" type="MeshInstance3D" parent="Debug"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 92, 1, 115)
+mesh = SubResource("BoxMesh_ji2nd")
+
+[node name="@MeshInstance3D@29822" type="MeshInstance3D" parent="Debug"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 98, 1, 115)
+mesh = SubResource("BoxMesh_grhhb")
+
+[node name="@MeshInstance3D@29823" type="MeshInstance3D" parent="Debug"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 102, 1, 115)
+mesh = SubResource("BoxMesh_4xygc")
+
+[node name="@MeshInstance3D@29824" type="MeshInstance3D" parent="Debug"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 108, 1, 115)
+mesh = SubResource("BoxMesh_r17le")
+
+[node name="@MeshInstance3D@29825" type="MeshInstance3D" parent="Debug"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 115, 1, 112)
+mesh = SubResource("BoxMesh_k7n65")
+
+[node name="@MeshInstance3D@29826" type="MeshInstance3D" parent="Debug"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 112, 1, 115)
+mesh = SubResource("BoxMesh_6dilt")

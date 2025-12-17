@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://bncetcgk3rute"]
 
 [ext_resource type="PackedScene" uid="uid://bnt75gnnj88vc" path="res://scenes/dungeon/base_dungeon.tscn" id="1_mawk0"]
-[ext_resource type="PackedScene" uid="uid://dxpbq4imxxqp5" path="res://scenes/dungeon/dungeon_geometry/dungeon_1.tscn" id="2_3q7du"]
+[ext_resource type="PackedScene" uid="uid://5mc26avocsa2" path="res://scenes/dungeon/dungeon_geometry/dungeon_1.tscn" id="2_3q7du"]
 
 [node name="TestDungeon" instance=ExtResource("1_mawk0")]
 

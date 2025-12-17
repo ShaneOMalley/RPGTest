@@ -1,19 +1,22 @@
-[gd_resource type="Resource" script_class="DungeonData" load_steps=4 format=3 uid="uid://bqkaou3fea1jb"]
+[gd_resource type="Resource" script_class="DungeonData" load_steps=5 format=3 uid="uid://bqkaou3fea1jb"]
 
 [ext_resource type="PackedScene" uid="uid://bncetcgk3rute" path="res://scenes/dungeon/dungeon_simple_1.tscn" id="1_nvpy7"]
 [ext_resource type="PackedScene" uid="uid://b0xnx0i4ibphq" path="res://scenes/dungeon/dungeon_simple_2.tscn" id="2_rxyka"]
+[ext_resource type="PackedScene" uid="uid://yvnty3151jue" path="res://scenes/dungeon/dungeon_simple_3.tscn" id="3_rxyka"]
 [ext_resource type="Script" uid="uid://dgfgrijh0v11f" path="res://scripts/common/dungeon_crawling/dungeon_data.gd" id="3_tgta7"]
 
 [resource]
 script = ExtResource("3_tgta7")
-dungeon_scenes = Array[PackedScene]([ExtResource("1_nvpy7"), ExtResource("2_rxyka")])
-num_floors = 2
+dungeon_scenes = Array[PackedScene]([ExtResource("1_nvpy7"), ExtResource("2_rxyka"), ExtResource("3_rxyka")])
+num_floors = 3
 encounter_data_per_floor = Dictionary[int, StringName]({
 0: &"test_dungeon",
-1: &"test_dungeon"
+1: &"test_dungeon",
+2: &"test_dungeon"
 })
 treasure_data_per_floor = Dictionary[int, StringName]({
 0: &"test",
-1: &"test"
+1: &"test",
+2: &"test"
 })
 metadata/_custom_type_script = "uid://dgfgrijh0v11f"

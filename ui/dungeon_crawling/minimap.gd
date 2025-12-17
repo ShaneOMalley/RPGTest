@@ -2,7 +2,8 @@ class_name Minimap extends TextureRect
 
 var _image: Image
 
-const CELL_SIZE := 16 * 2
+const PLAYER_SIZE := 20
+const CELL_SIZE := 24
 const GRID_SIZE := 16
 const CELL_SURROUND_THICKNESS = 2
 
@@ -36,7 +37,8 @@ func surround_cell(grid_x: int, grid_y: int, up: bool, down: bool, left: bool, r
 	update_texture()
 
 func minimap_set_player_position(grid_x: float, grid_y: float) -> void:
-	($Player as Control).set_position(Vector2(grid_x * CELL_SIZE, grid_y * CELL_SIZE))
+	const OFFSET = (CELL_SIZE - PLAYER_SIZE) / 2
+	($Player as Control).set_position(Vector2(grid_x * CELL_SIZE + OFFSET, grid_y * CELL_SIZE + OFFSET))
 
 func minimap_set_player_rotation(rotation: float) -> void:
 	($Player as Control).rotation = -rotation

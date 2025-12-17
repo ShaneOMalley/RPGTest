@@ -15,10 +15,10 @@ func minimap_set_player_rotation(in_rotation: float):
 func update_floor_progress(current_floor_number: int, num_floors: int):
 	($DungeonFloorText as RichTextLabel).text = &"Floor %d/%d" % [current_floor_number, num_floors]
 	
-func update_player_interactables(messages: Array[String]):
-	if !messages.is_empty():
+func update_player_interactable(message: String):
+	if !message.is_empty():
 		($InteractionText as RichTextLabel).show()
-		($InteractionText as RichTextLabel).text = messages.reduce(func(accum, text): return &"%s\n%s" % [text, accum])
+		($InteractionText as RichTextLabel).text = message
 	else:
 		($InteractionText as RichTextLabel).hide()
 

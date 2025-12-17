@@ -30,8 +30,8 @@ func minimap_set_player_rotation(rotation: float) -> void:
 func update_floor_progress(current_floor_number: int, num_floors: int) -> void:
 	dungeon_crawling_ui.update_floor_progress(current_floor_number, num_floors)
 	
-func update_player_interactables(messages: Array[String]) -> void:
-	dungeon_crawling_ui.update_player_interactables(messages)
+func update_player_interactable(message: String) -> void:
+	dungeon_crawling_ui.update_player_interactable(message)
 
 func setup_ui() -> void:
 	if dungeon_crawling_ui:

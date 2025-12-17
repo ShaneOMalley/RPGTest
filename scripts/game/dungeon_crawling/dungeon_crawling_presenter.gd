@@ -25,15 +25,14 @@ func update_player_rotation(target_rotation: float) -> void:
 func update_floor_progress(current_floor_number: int, num_floors: int) -> void:
 	DungeonCrawlingView.update_floor_progress(current_floor_number, num_floors)
 	
-func update_player_interactables(interactables: Array) -> void:
-	var messages: Array[String]
-	for interactable in interactables:
-		messages.append(interactable.message)
-	DungeonCrawlingView.update_player_interactables(messages)
+func update_player_interactable(interactable: DungeonInteractable) -> void:
+	var message = interactable.message if is_instance_valid(interactable) else ""
+	DungeonCrawlingView.update_player_interactable(message)
 
-func on_dungeon_crawling_start(player_position: Vector3) -> void:
+func on_dungeon_crawling_start(player_position: Vector3, player_rotation: float) -> void:
 	DungeonCrawlingView.setup_ui()
 	update_player_position(player_position)
+	update_player_rotation(player_rotation)
 	
 func on_dungeon_crawling_finished() -> void:
 	DungeonCrawlingView.destroy_ui()
@@ -48,7 +47,7 @@ func _ready():
 	# DungeonManager.on_player_move.connect(update_player_position)
 	DungeonManager.on_player_move_started.connect(update_player_position)
 	DungeonManager.on_player_rotation_started.connect(update_player_rotation)
-	DungeonManager.on_player_interactables_updated.connect(update_player_interactables)
+	DungeonManager.on_player_interactable_updated.connect(update_player_interactable)
 	DungeonManager.on_dungeon_crawling_start.connect(on_dungeon_crawling_start)
 	DungeonManager.on_dungeon_crawling_finished.connect(on_dungeon_crawling_finished)
 	DungeonManager.on_dungeon_floor_start.connect(update_floor_progress)

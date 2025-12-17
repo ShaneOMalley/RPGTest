@@ -1,0 +1,11 @@
+[gd_scene load_steps=3 format=3 uid="uid://yvnty3151jue"]
+
+[ext_resource type="PackedScene" uid="uid://bnt75gnnj88vc" path="res://scenes/dungeon/base_dungeon.tscn" id="1_gpd5w"]
+[ext_resource type="PackedScene" uid="uid://da411y5qj0ubw" path="res://scenes/dungeon/dungeon_geometry/dungeon_3.tscn" id="2_gpd5w"]
+
+[node name="TestDungeon" instance=ExtResource("1_gpd5w")]
+
+[node name="DungeonPlayer" parent="." index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 135, 3.78, 45)
+
+[node name="Node3D" parent="GeometryParent" index="0" instance=ExtResource("2_gpd5w")]
