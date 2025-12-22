@@ -32,9 +32,13 @@ func apply() -> void:
 			if modifier.operator == Operator.ADDITIVE:
 				var current = target.get(modifier.attribute)
 				target.set(modifier.attribute, current + modifier.magnitude)
+			elif modifier.operator == Operator.MULTIPLY:
+				assert(false, "multiplicative instant modifiers not yet supported")
 	elif _duration == Duration.DURATION:
 		target.add_effect(self)
 
+	target.apply_attribute_caps()
+	
 	# TODO: Support status effects and other _duration effects
 	# TODO: Support multiplicative
 	BattleManager.on_battle_effect_applied.emit(self)

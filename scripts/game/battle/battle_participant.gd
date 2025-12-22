@@ -51,6 +51,10 @@ func get_attribute(attribute_id: StringName) -> Variant:
 	
 	return (base + additive) * multiplier
 	
+func apply_attribute_caps() -> void:
+	_hp = min(_hp, _max_hp)
+	_sp = min(_sp, _max_sp)
+	
 func add_effect(battle_effect: BattleEffect) -> void:
 	active_effects.append(battle_effect)
 	

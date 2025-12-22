@@ -1,7 +1,8 @@
 class_name UICharacterGraphics extends Control
 
 func play_animation(anim_id: StringName) -> void:
-	($AnimationPlayer as AnimationPlayer).play(anim_id)
+	if ($AnimationPlayer as AnimationPlayer).has_animation(anim_id):
+		($AnimationPlayer as AnimationPlayer).play(anim_id)
 	
 func _ready() -> void:
 	var animation_player := $AnimationPlayer as AnimationPlayer

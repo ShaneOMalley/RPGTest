@@ -11,7 +11,7 @@ const MOVEMENT_FLAG_LEFT := 4
 const MOVEMENT_FLAG_RIGHT := 8
 
 var interactable_data: Dictionary[Vector2i, DungeonInteractable]
-var _movement_data: Array[int]
+var _movement_data: Array#[int]
 var _grid_width: int
 
 var _encounter_data_weighted: Dictionary[StringName, float]
@@ -106,7 +106,7 @@ func get_closest_interactable_mesh(collection: Array, grid_x: int, grid_y: int) 
 	local_collection.sort_custom(func(a, b): return a.position.distance_to(cell_position) < b.position.distance_to(cell_position))
 	return local_collection.front()
 	
-func _setup_interactable_data(in_interactable_data: Dictionary[Vector2i, Dictionary]) -> void:
+func _setup_interactable_data(in_interactable_data):#: Dictionary[Vector2i, Dictionary]) -> void:
 	interactable_data.clear()
 	
 	# var thing: Array[Node] = _current_scene.get_children(true).filter(func(child): return child is DungeonTreasure)
@@ -158,14 +158,17 @@ func set_dungeon_floor_index(in_index: int) -> void:
 	# await Engine.get_main_loop().process_frame # Stinky. There doesn't seem to be signal for scene change in Godot 4.4
 	
 	var geometry := _current_scene.find_child(&"GeometryParent").get_child(0)
-	_movement_data = geometry.get_meta(&"movement_data")
+	print("meta list: ", geometry.get_meta_list())
+	print("movement_data: ", geometry.get_meta(&"movement_data"))
+	_movement_data = (geometry.get_meta(&"movement_data") as Array[int])
 	_grid_width = geometry.get_meta(&"grid_width")
 	
 	get_tree().root.add_child(_current_scene)
 	
 	_setup_encounter_data(_current_dungeon_data.encounter_data_per_floor[in_index])
 	_setup_treasure_data(_current_dungeon_data.treasure_data_per_floor[in_index])
-	_setup_interactable_data(geometry.get_meta(&"interactable_data"))
+	var interactable_data = geometry.get_meta(&"interactable_data")
+	_setup_interactable_data(interactable_data)
 	_reset_steps_counter()
 	
 	on_dungeon_floor_start.emit(_current_floor_index + 1, _floors.size())

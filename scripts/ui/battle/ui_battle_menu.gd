@@ -33,9 +33,11 @@ func _make_menu_button(text: String, disabled: bool, mouse_entered_callback: Cal
 	ui_entry.show()
 	ui_entry.set_text(text)
 	ui_entry.disabled = disabled
-	ui_entry.pressed.connect(pressed_callback)
-	ui_entry.mouse_entered.connect(mouse_entered_callback)
-	ui_entry.focus_entered.connect(mouse_entered_callback)
+	if pressed_callback:
+		ui_entry.pressed.connect(pressed_callback)
+	if mouse_entered_callback:
+		ui_entry.mouse_entered.connect(mouse_entered_callback)
+		ui_entry.focus_entered.connect(mouse_entered_callback)
 	
 	# if _num_used_battle_menu_entries == 1:
 	# 	print("grabbing focus on %s button", text)

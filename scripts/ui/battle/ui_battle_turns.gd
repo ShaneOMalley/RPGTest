@@ -71,7 +71,7 @@ func delete_turn(turn_uid: int) -> void:
 	#turn_ui.hide()
 	turn_ui.queue_free()
 	
-	_ui_turn_entries.erase(turn_uid)
+	_ui_turn_entries.erase(_uid_to_ui_turn[turn_uid])
 	_uid_to_ui_turn.erase(turn_uid)
 	
 func play_animation_for_turn(turn_uid: int, anim_name: StringName) -> void:

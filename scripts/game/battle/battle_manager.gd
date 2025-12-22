@@ -283,7 +283,7 @@ func _get_next_normal_turn_time(participant: BattleParticipant) -> float:
 	)
 	# if !_participant_turns.is_empty():
 
-	var last_participant_turn: BattleTurn = _participant_turns.back()
+	var last_participant_turn: BattleTurn = _participant_turns.back() if !_participant_turns.is_empty() else null
 	var period := participant.get_turn_period()
 	
 	# Support for nuking participant from turns list and recalculating mid-battle. Maybe don't do it this way:
@@ -389,5 +389,10 @@ func _process(_delta: float) -> void:
 	# 	PlayerPartyManager.inventory.add_item(&"potion")
 	# 	PlayerPartyManager.inventory.add_item(&"dud")
 	
-# func _ready() -> void:
+func _ready() -> void:
+	# hacky hack hack
+	# preload("res://game/participants/enemies/enemy_goblin.tres")
+	# preload("res://game/participants/player/player_base.tres")
+	print("debug buld:", OS.is_debug_build())
+	pass
 # 	_setup_battle()
