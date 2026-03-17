@@ -59,7 +59,6 @@ grow_horizontal = 0
 text = "Somalia asdfasdf
 
 "
-fit_content = true
 scroll_active = false
 
 [node name="TextHP" type="RichTextLabel" parent="Border/Content"]

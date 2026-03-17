@@ -25,7 +25,7 @@ signal on_battle_animation_requested(anim_id: StringName, target: BattleParticip
 signal on_request_show_battle_menu(participant: BattleParticipant, battle_turn: BattleTurn)
 signal on_request_out_of_combat_menu()
 signal on_request_hide_battle_menu()
-signal on_battle_particiant_removed(participant: BattleParticipant)
+signal on_battle_participant_removed(participant: BattleParticipant)
 signal on_battle_turns_updated(turns: Array[BattleTurn])
 
 # todo: just make these public?
@@ -169,8 +169,9 @@ func add_participant(participant: BattleParticipant) -> void:
 func kill_participant(participant: BattleParticipant) -> void:
 	participants.erase(participant)
 	_turns = _turns.filter(func(turn: BattleTurn): return turn.participant != participant)
-	on_battle_particiant_removed.emit(participant)
+	on_battle_participant_removed.emit(participant)
 	on_battle_turns_updated.emit(_turns)
+	PlayerPartyManager.remove_player_if_exists(participant)
 	
 	if participant.affiliation == Affiliation.ENEMY:
 		_current_battle_rewards.get_or_add(&"gold", 0)

@@ -43,7 +43,7 @@
 	{
 		"max_hp": 20,
 		"max_sp": 10,
-		"strength": 3000,
+		"strength": 30,
 		"agility": 10,
 		"magic": 4,
 		"vitality": 1,

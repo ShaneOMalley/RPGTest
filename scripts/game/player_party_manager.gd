@@ -32,6 +32,10 @@ func reload_participants() -> void:
 
 func clear_participants() -> void:
 	_participants.clear()
+	
+func remove_player_if_exists(player: BattleParticipant) -> void:
+	if _participants.has(player):
+		_participants.erase(player)
 
 func add_participants_async(ids: Array[StringName], callback := Callable()) -> void:
 	BattleParticipant.load_participants_async(ids, func(): 

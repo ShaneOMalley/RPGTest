@@ -235,7 +235,7 @@ func on_request_out_of_combat_menu() -> void:
 	BattleView.show_out_of_combat_menu(entries)
 
 # Misc
-func on_battle_particiant_removed(battle_participant: BattleParticipant) -> void:
+func on_battle_participant_removed(battle_participant: BattleParticipant) -> void:
 	if battle_participant.affiliation == BattleManager.Affiliation.ENEMY:
 		BattleView.remove_enemy(battle_participant.uid)
 	elif battle_participant.affiliation == BattleManager.Affiliation.PLAYER:
@@ -262,7 +262,7 @@ func _ready():
 	BattleManager.on_request_show_battle_menu.connect(on_request_show_battle_menu)
 	BattleManager.on_request_out_of_combat_menu.connect(on_request_out_of_combat_menu)
 	BattleManager.on_request_hide_battle_menu.connect(on_request_hide_battle_menu)
-	BattleManager.on_battle_particiant_removed.connect(on_battle_particiant_removed)
+	BattleManager.on_battle_participant_removed.connect(on_battle_participant_removed)
 	BattleManager.on_battle_turns_updated.connect(on_battle_turns_updated)
 	
 	BattleView.on_ability_and_target_selected.connect(on_ability_and_target_selected)
