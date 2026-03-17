@@ -1,0 +1,39 @@
+{
+	"levels": [
+		{
+			"id": "level_1",
+			"enemies": [
+				{
+					"id": "goblin",
+					"hp": 1.0
+				},
+				{
+					"id": "ghoul",
+					"hp": 2.0
+				},
+				{
+					"id": "goblin"
+				}
+			],
+			"players": [
+				{
+					"id": "player_chronomancer",
+					"hp": 1.0
+				},
+				{
+					"id": "player_warrior",
+					"sp": 3.0
+				},
+				{
+					"id": "player",
+					"sp": 3.0
+				},
+				{
+					"id": "player",
+					"sp": 3.0
+				}
+			],
+			"start_time": 100.0
+		}
+	]
+}
