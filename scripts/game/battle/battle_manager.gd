@@ -35,6 +35,8 @@ var _state_machine: FSMBattle
 var _encounter_group_id
 var _current_battle_rewards: Dictionary[StringName, int]
 
+var _challenge_mode_level_id: StringName
+
 ## FSM
 func block_fsm(time: float) -> void:
 	_state_machine.start_blocking_timer(time)
@@ -42,6 +44,12 @@ func block_fsm(time: float) -> void:
 ## State getters
 func get_encounter_group_id() -> StringName:
 	return _encounter_group_id
+	
+func get_challenge_mode_level_id() -> StringName:
+	return _challenge_mode_level_id
+	
+func is_challenge_mode() -> bool:
+	return _challenge_mode_level_id != &""
 
 func get_participants() -> Array[BattleParticipant]:
 	return participants
@@ -318,6 +326,9 @@ func _build_turns_list(num_turns: int):
 	# var filter_func = func(battle_turn: BattleTurn) -> bool:
 	# 	return battle_turn.turn_type != BattleTurn.TurnType.NORMAL
 	# _turns.filter(filter_func)
+	
+	if num_turns == 0:
+		return
 
 	_participant_next_turn_time.clear()
 	for participant in participants:
@@ -348,6 +359,28 @@ func setup_battle(in_encounter_group_id: StringName):
 	_last_actual_turn_time_for_participant.clear()
 	
 	_encounter_group_id = in_encounter_group_id
+	_challenge_mode_level_id = &""
+	
+	_is_finished_setting_up_participants = false
+	_ui_battle_fade_is_complete = false
+
+	_state_machine = FSMBattle.new()
+	_state_machine.on_state_entered.connect(_on_state_entered)
+	_state_machine.on_state_exited.connect(_on_state_exited)
+	add_child(_state_machine)
+	_state_machine.start()
+
+	on_battle_started.emit()
+	
+func setup_challenge_mode_battle(in_challenge_mode_level_id: StringName):
+	DungeonManager.set_player_input_blocked_reason(&"battle", true)
+
+	_battle_time = 0.0
+	_current_turn = null
+	_last_actual_turn_time_for_participant.clear()
+	
+	_encounter_group_id = &""
+	_challenge_mode_level_id = in_challenge_mode_level_id 
 	
 	_is_finished_setting_up_participants = false
 	_ui_battle_fade_is_complete = false

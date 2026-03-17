@@ -5,10 +5,12 @@ var _filled_cells: Dictionary[int, bool]
 var dungeon_crawling_ui: UIDungeonCrawling
 
 func hide_ui() -> void:
-	dungeon_crawling_ui.hide()
+	if dungeon_crawling_ui:
+		dungeon_crawling_ui.hide()
 
 func show_ui() -> void:
-	dungeon_crawling_ui.show()
+	if dungeon_crawling_ui:
+		dungeon_crawling_ui.show()
 
 # Update minimap
 func minimap_fill_cell(grid_x: int, grid_y: int, up: bool, down: bool, left: bool, right: bool) -> void:

@@ -36,6 +36,11 @@ custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
 text = "Recruitment"
 
+[node name="ChallengeMode" type="Button" parent="Menu"]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+text = "Challenge Mode"
+
 [node name="Shop" type="Button" parent="Menu"]
 custom_minimum_size = Vector2(0, 50)
 layout_mode = 2

@@ -1,6 +1,6 @@
 class_name BattleAbilityAttack extends BattleAbility
 
-var effect: BattleEffectAttack
+var effect: BattleEffect
 
 func execute(in_target: BattleParticipant, in_turn_target: BattleTurn = null) -> void:
 	super.execute(in_target)
@@ -12,8 +12,11 @@ func execute(in_target: BattleParticipant, in_turn_target: BattleTurn = null) ->
 	set_lifetime(1.9)
 	# AnimationCallbackManager.get_event_signal(&"on_animation_finished").connect(func(anim_id): if anim_id == "attack": end())
 
+func _get_attack_effect() -> BattleEffect:
+	return BattleEffectAttack.new(_source, _target)
+	
 func _apply_attack_effect() -> void:
-	effect = BattleEffectAttack.new(_source, _target)
+	effect = _get_attack_effect()
 	effect.apply()
 
 	BattleManager.play_fx(fx_affect_target, _target)

@@ -1,7 +1,7 @@
 {
 	"player" :
 	{
-		"max_hp": 100,
+		"max_hp": 1,
 		"max_sp": 30,
 		"strength": 30,
 		"agility": 11,
@@ -10,27 +10,40 @@
 
 		"participant_data_path": "res://game/participants/player/player_base.tres",
 
-		"abilities": ["attack", "nuke", "skip_turn", "repeat_turn", "pass", "haste", "slow", "repeating_turn"]
+		"abilities": ["attack", "nuke", "skip_turn", "repeat_turn", "pass", "haste", "slow", "repeating_turn", "powerful_attack"]
 	},
 	"player_chronomancer" :
 	{
-		"max_hp": 100,
+		"max_hp": 80,
 		"max_sp": 30,
-		"strength": 30,
+		"strength": 10,
 		"agility": 11,
-		"magic": 10,
+		"magic": 15,
 		"vitality": 6,
 
 		"participant_data_path": "res://game/participants/player/player_base.tres",
 
 		"abilities": ["attack", "nuke", "haste", "slow", "skip_turn", "repeat_turn", "skip_many_turns", "pass", "repeating_turn"]
 	},
+    "player_warrior" :
+    {
+        "max_hp": 140,
+        "max_sp": 15,
+        "strength": 30,
+        "agility": 8,
+        "magic": 1,
+        "vitality": 8,
+
+        "participant_data_path": "res://game/participants/player/player_base.tres",
+
+        "abilities": ["attack", "powerful_attack", "nuke", "pass", "repeating_turn"]
+    },
 
 	"ghoul" :
 	{
 		"max_hp": 20,
 		"max_sp": 10,
-		"strength": 30,
+		"strength": 3000,
 		"agility": 10,
 		"magic": 4,
 		"vitality": 1,

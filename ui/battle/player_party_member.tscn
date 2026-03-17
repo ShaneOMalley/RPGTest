@@ -56,9 +56,10 @@ offset_top = 9.0
 offset_right = 153.0
 offset_bottom = 33.0
 grow_horizontal = 0
-text = "Somalia
+text = "Somalia asdfasdf
 
 "
+fit_content = true
 scroll_active = false
 
 [node name="TextHP" type="RichTextLabel" parent="Border/Content"]

@@ -6,7 +6,7 @@ class_name BattleEffectAttack extends BattleEffect
 
 var damage: int
 
-func _init(in_source: BattleParticipant, in_target: BattleParticipant) -> void:
+func _init(in_source: BattleParticipant, in_target: BattleParticipant, damage_multiplier: float = 1.0) -> void:
 	super._init(in_source, in_target)
-	damage = floori(max(0, source.get_attribute(&"_strength") - (target.get_attribute(&"_vitality") / 2.0)))
+	damage = floori(max(0, source.get_attribute(&"_strength") * damage_multiplier - (target.get_attribute(&"_vitality") / 2.0)))
 	_modifiers.append(BattleEffectModifier.new(&"_hp", -damage, Operator.ADDITIVE))

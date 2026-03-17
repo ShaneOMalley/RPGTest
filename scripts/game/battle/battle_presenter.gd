@@ -110,6 +110,7 @@ func on_battle_effect_applied(battle_effect: BattleEffect) -> void:
 		BattleView.update_enemy_hp(target.uid, target.get_attribute(&"_hp"), target.get_attribute(&"_max_hp"))
 	elif target.affiliation == BattleManager.Affiliation.PLAYER:
 		BattleView.update_player_hp(target.uid, target.get_attribute(&"_hp"), target.get_attribute(&"_max_hp"))
+		BattleView.update_player_sp(target.uid, target.get_attribute(&"_sp"), target.get_attribute(&"_max_sp"))
 
 	# print(battle_effect.to_string())
 	
