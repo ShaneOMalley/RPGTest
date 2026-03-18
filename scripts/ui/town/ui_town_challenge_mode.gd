@@ -4,6 +4,12 @@ var recruit_buttons: Dictionary[StringName, Button]
 
 func on_click_challenge_mode(challenge_mode_entry: TownManager.ChallengeModeEntry) -> void:
 	BattleManager.setup_challenge_mode_battle(challenge_mode_entry.config_id)
+	hide()
+	BattleManager.on_battle_finished.connect(_on_battle_finished)
+	
+func _on_battle_finished() -> void:
+	show()
+	BattleManager.on_battle_finished.disconnect(_on_battle_finished)
 
 func setup_ui() -> void:
 	var challenge_mode_data := TownManager.challenge_mode_data
@@ -22,6 +28,7 @@ func setup_ui() -> void:
 
 func go_back() -> void:
 	TownManager.show_town_ui(load("res://ui/town/town_ui.tscn")) # preload doesn't work for some reason
+	BattleManager.on_battle_finished.disconnect(_on_battle_finished)
 
 func _ready() -> void:
 	$Menu/ChallengeLevelTemplate.hide()

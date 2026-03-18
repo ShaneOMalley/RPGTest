@@ -1,0 +1,7 @@
+[gd_resource type="Resource" script_class="BattleAbilityPowerChargeAttack" load_steps=2 format=3 uid="uid://wmebdm0a0sm2"]
+
+[ext_resource type="Script" uid="uid://c51occggn8ter" path="res://scripts/game/battle/abilities/battle_ability_power_charge.gd" id="1_11g8v"]
+
+[resource]
+script = ExtResource("1_11g8v")
+metadata/_custom_type_script = "uid://d4f1cetlvgfb"

@@ -43,6 +43,10 @@ class TurnModifierRepeat extends TurnModifier:
 		super._init([], [], &"repeating_turn", TurnModifier.Type.REPEAT)
 		BattleManager.on_battle_ability_execute.connect(on_battle_ability_execute)
 		
+class TurnModifierPowerCharge extends TurnModifier:
+	func _init():
+		super._init([&"power_charge_attack"], [], &"", TurnModifier.Type.POWER_CHARGE_ATTACK)
+	
 	# func _ready():
 	# 	BattleManager.on_battle_ability_execute.connect(on_battle_ability_execute)
 	

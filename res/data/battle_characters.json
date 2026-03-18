@@ -10,7 +10,7 @@
 
 		"participant_data_path": "res://game/participants/player/player_base.tres",
 
-		"abilities": ["attack", "nuke", "skip_turn", "repeat_turn", "pass", "haste", "slow", "repeating_turn", "powerful_attack"]
+		"abilities": ["attack", "nuke", "skip_turn", "repeat_turn", "pass", "haste", "slow", "repeating_turn"]
 	},
 	"player_chronomancer" :
 	{
@@ -36,7 +36,7 @@
 
         "participant_data_path": "res://game/participants/player/player_base.tres",
 
-        "abilities": ["attack", "powerful_attack", "nuke", "pass", "repeating_turn"]
+        "abilities": ["attack", "power_charge", "power_charge_attack", "nuke", "pass", "repeating_turn"]
     },
 
 	"ghoul" :

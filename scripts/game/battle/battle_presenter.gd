@@ -176,6 +176,8 @@ func on_battle_turns_updated(turns: Array[BattleTurn]) -> void:
 				modifier_text = "skipping!"
 			if turn_modifier.type == BattleTurn.TurnModifier.Type.REPEAT:
 				modifier_text = "repeating!"
+			if turn_modifier.type == BattleTurn.TurnModifier.Type.POWER_CHARGE_ATTACK:
+				modifier_text = "unleashing attack!"
 				
 		BattleView.set_turn_text_and_time(turn.uid, control_string, modifier_text, turn.time)
 		

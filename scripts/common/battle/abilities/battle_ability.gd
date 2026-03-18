@@ -28,7 +28,8 @@ static var ability_class_registry: Dictionary[StringName, String] = {
 	&"repeat_turn" : "res://game/abilities/ability_repeat_turn.tres",
 	
 	# Warrior
-	&"powerful_attack": "res://game/abilities/ability_powerful_attack.tres",
+	&"power_charge": "res://game/abilities/ability_power_charge.tres",
+	&"power_charge_attack": "res://game/abilities/ability_power_charge_attack.tres",
 
 	# Misc
 	&"repeating_turn" : "res://game/abilities/ability_repeating_turn.tres",
@@ -53,7 +54,8 @@ static var ability_categories: Dictionary[StringName, StringName] = {
 	&"skip_many_turns": &"magic",
 	
 	# Warrior
-	&"powerful_attack": &"",
+	&"power_charge": &"",
+	&"power_charge_attack": &"",
 	
 	# Misc
 	&"repeat_turn": &"magic",
