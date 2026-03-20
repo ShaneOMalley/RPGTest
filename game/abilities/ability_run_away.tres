@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="BattleAbilityPowerCharge" load_steps=2 format=3 uid="uid://dsrciba22cceu"]
+
+[ext_resource type="Script" uid="uid://cjc1aqsn3h0r8" path="res://scripts/game/battle/abilities/battle_ability_run_away.gd" id="1_xdjep"]
+
+[resource]
+script = ExtResource("1_xdjep")
+sp_cost = 0
+metadata/_custom_type_script = "uid://d4f1cetlvgfb"

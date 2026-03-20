@@ -37,6 +37,9 @@ func add_turn(turn_uid: int, character_graphics: PackedScene, affiliation: Battl
 func sort_turns(sorted_turn_uids: Array) -> void:
 	var container := $Mask/TurnsContainer as Container
 	
+	var max_index := -1
+	var entries: Dictionary[int, UIBattleTurn]
+	
 	for turn_uid in _uid_to_ui_turn:
 		if !_uid_to_ui_turn.has(turn_uid):
 			continue
@@ -49,7 +52,17 @@ func sort_turns(sorted_turn_uids: Array) -> void:
 		if index == -1:
 			continue
 			
-		container.move_child(entry, index)
+		max_index = max(index, max_index)
+		entries[index] = entry
+		
+	for i in range(max_index):
+		var entry := entries[i]
+		if !is_instance_valid(entry):
+			continue
+			
+		container.move_child(entry, i)
+		
+	container.queue_sort()
 		
 func set_turn_text_and_time(turn_uid: int, text: String, modifier_text: String, time: float) -> void:
 	var entry := _uid_to_ui_turn[turn_uid]

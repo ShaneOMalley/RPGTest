@@ -3,35 +3,26 @@
 		{
 			"id": "level_1",
 			"enemies": [
-				{
-					"id": "goblin",
-					"hp": 1.0
-				},
-				{
-					"id": "ghoul",
-					"hp": 2.0
-				},
-				{
-					"id": "goblin"
-				}
+				{ "id": "goblin", "hp": 1.0 },
+				{ "id": "ghoul", "hp": 2.0 },
+				{ "id": "goblin" }
 			],
 			"players": [
-				{
-					"id": "player_chronomancer",
-					"hp": 1.0
-				},
-				{
-					"id": "player_warrior",
-					"sp": 3.0
-				},
-				{
-					"id": "player",
-					"sp": 3.0
-				},
-				{
-					"id": "player",
-					"sp": 3.0
-				}
+				{ "id": "player_chronomancer", "hp": 1.0 },
+				{ "id": "player_warrior", "sp": 3.0 },
+				{ "id": "player", "sp": 3.0 },
+				{ "id": "player", "sp": 3.0 }
+			],
+			"start_time": 100.0
+		},
+		{
+			"id": "level_2",
+			"enemies": [
+				{ "id": "challenge_scaredy_cat" }
+			],
+			"players": [
+				{ "id": "challenge_player_chronomancer" },
+				{ "id": "challenge_player_warrior" }
 			],
 			"start_time": 100.0
 		}

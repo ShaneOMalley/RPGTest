@@ -10,7 +10,8 @@
 
 		"participant_data_path": "res://game/participants/player/player_base.tres",
 
-		"abilities": ["attack", "nuke", "skip_turn", "repeat_turn", "pass", "haste", "slow", "repeating_turn"]
+		"abilities": ["attack", "nuke", "skip_turn", "repeat_turn", "pass", "haste", "slow", "repeating_turn" ],
+        "ai": ""
 	},
 	"player_chronomancer" :
 	{
@@ -23,7 +24,8 @@
 
 		"participant_data_path": "res://game/participants/player/player_base.tres",
 
-		"abilities": ["attack", "nuke", "haste", "slow", "skip_turn", "repeat_turn", "skip_many_turns", "pass", "repeating_turn"]
+		"abilities": ["attack", "nuke", "haste", "slow", "skip_turn", "repeat_turn", "skip_many_turns", "pass", "repeating_turn" ],
+        "ai": ""
 	},
     "player_warrior" :
     {
@@ -36,7 +38,8 @@
 
         "participant_data_path": "res://game/participants/player/player_base.tres",
 
-        "abilities": ["attack", "power_charge", "power_charge_attack", "nuke", "pass", "repeating_turn"]
+        "abilities": ["attack", "power_charge", "power_charge_attack", "nuke", "pass", "repeating_turn" ],
+        "ai": ""
     },
 
 	"ghoul" :
@@ -50,7 +53,8 @@
 
 		"participant_data_path": "res://game/participants/enemies/enemy_goblin.tres",
 
-		"abilities": ["attack", "pass", "repeating_turn"],
+		"abilities": ["attack", "pass", "repeating_turn" ],
+        "ai": "",
 		
 		"gold_reward_min": 50,
 		"gold_reward_max": 56
@@ -66,9 +70,57 @@
 
 		"participant_data_path": "res://game/participants/enemies/enemy_goblin.tres",
 
-		"abilities": ["attack", "pass", "repeating_turn"],
+		"abilities": ["attack", "pass", "repeating_turn" ],
+        "ai": "",
 		
 		"gold_reward_min": 40,
 		"gold_reward_max": 44
-	}
+	},
+
+    "challenge_player_chronomancer" :
+    {
+        "max_hp": 80,
+        "max_sp": 20,
+        "strength": 10,
+        "agility": 5,
+        "magic": 15,
+        "vitality": 6,
+
+        "participant_data_path": "res://game/participants/player/player_base.tres",
+
+        "abilities": ["attack", "haste", "slow", "pass" ],
+        "ai": ""
+    },
+    "challenge_player_warrior" :
+    {
+        "max_hp": 140,
+        "max_sp": 15,
+        "strength": 30,
+        "agility": 4,
+        "magic": 1,
+        "vitality": 8,
+
+        "participant_data_path": "res://game/participants/player/player_base.tres",
+
+        "abilities": ["attack", "power_charge", "power_charge_attack", "pass" ],
+        "ai": ""
+    },
+  
+    "challenge_scaredy_cat" :
+    {
+        "max_hp": 65,
+        "max_sp": 0,
+        "strength": 30,
+        "agility": 3,
+        "magic": 5,
+        "vitality": 3,
+
+        "participant_data_path": "res://game/participants/enemies/enemy_goblin.tres",
+
+        "abilities": [ "pass", "repeating_turn", "scaredy_cat_run" ],
+        "ai": "challenge_scaredy_cat",
+
+        "gold_reward_min": 40,
+        "gold_reward_max": 44 
+    }
 }

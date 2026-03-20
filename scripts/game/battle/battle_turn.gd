@@ -25,7 +25,7 @@ class TurnModifier:
 		
 class TurnModifierNormal extends TurnModifier:
 	func _init():
-		super._init([], [&"repeating_turn"], &"", TurnModifier.Type.NORMAL)
+		super._init([], [&"repeating_turn", &"power_charge_attack"], &"", TurnModifier.Type.NORMAL)
 		
 class TurnModifierSkip extends TurnModifier:
 	func _init():

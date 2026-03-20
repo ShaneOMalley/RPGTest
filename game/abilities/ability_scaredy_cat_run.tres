@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="BattleAbilityScaredyCatRun" load_steps=3 format=3 uid="uid://b432yb2ix8qbv"]
+
+[ext_resource type="Script" uid="uid://c5gvenxtja2wu" path="res://scripts/game/battle/abilities/battle_ability_scaredy_cat_run.gd" id="1_ovf4x"]
+[ext_resource type="PackedScene" uid="uid://cbssyre83ci4j" path="res://game/ui_fx/uifx_pass.tscn" id="1_yo080"]
+
+[resource]
+script = ExtResource("1_ovf4x")
+fx_activate = ExtResource("1_yo080")
+sp_cost = 0
+metadata/_custom_type_script = "uid://d4f1cetlvgfb"

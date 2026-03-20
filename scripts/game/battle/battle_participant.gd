@@ -3,9 +3,11 @@ class_name BattleParticipant extends Node
 var affiliation: BattleManager.Affiliation
 var config_id: StringName
 var uid: StringName
+var ai: StringName
 
 var abilities: Dictionary[StringName, BattleAbility]
 var active_effects: Array[BattleEffect]
+var run_away_reason: StringName
 
 # Instant Attributes: Should only be affected by INSTANT effects
 var _hp: int
@@ -100,6 +102,7 @@ static func create_from_config(in_config_id: StringName) -> BattleParticipant:
 	var participant := BattleParticipant.new();
 	participant.config_id = in_config_id
 	participant.uid = create_unique_id(in_config_id)
+	participant.ai = data.ai
 	participant._max_hp = data.max_hp
 	participant._hp = data.max_hp
 	participant._max_sp = data.max_sp

@@ -40,6 +40,10 @@ static var ability_class_registry: Dictionary[StringName, String] = {
 	# Debug
 	&"nuke": "res://game/abilities/ability_nuke.tres",
 	&"extra_turn": "res://game/abilities/ability_extra_turn.tres",
+	
+	# Challenge Scaredy Cat
+	&"run_away": "res://game/abilities/ability_run_away.tres",
+	&"scaredy_cat_run": "res://game/abilities/ability_scaredy_cat_run.tres",
 }
 
 static var ability_categories: Dictionary[StringName, StringName] = {
@@ -69,6 +73,10 @@ static var ability_categories: Dictionary[StringName, StringName] = {
 
 	# Forced
 	&"repeating_turn": &"",
+	
+	# Challenge Scaredy Cat
+	&"run_away": &"",
+	&"scaredy_cat_run": &"",
 }
 
 # TODO: Right now there is an assumption that the only execution context 

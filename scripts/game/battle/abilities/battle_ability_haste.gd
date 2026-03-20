@@ -9,6 +9,8 @@ func execute(in_target: BattleParticipant, in_turn_target: BattleTurn = null) ->
 	
 	set_lifetime(1.3)
 	show_message()
+	
+	_agility_effect = null
 
 func prepare(in_target: BattleParticipant, in_turn_target: BattleTurn = null) -> void:
 	# remove agility modifier from other participant

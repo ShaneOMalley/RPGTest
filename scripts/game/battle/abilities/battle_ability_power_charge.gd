@@ -38,3 +38,6 @@ func cancel() -> void:
 	
 func is_valid_for_target(possible_target: BattleParticipant) -> bool:
 	return possible_target == _source
+	
+func get_message() -> String:
+	return "%s is gearing up for a big attack!" % _target.get_display_name()
