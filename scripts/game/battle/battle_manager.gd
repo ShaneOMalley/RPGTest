@@ -31,6 +31,7 @@ signal on_battle_turns_updated(turns: Array[BattleTurn])
 # todo: just make these public?
 var _turns: Array[BattleTurn]
 var _battle_time: float = 0
+var _battle_start_time: float = 0 # this will be 0, except for in some challenges
 var _state_machine: FSMBattle
 var _encounter_group_id
 var _current_battle_rewards: Dictionary[StringName, int]
@@ -178,6 +179,10 @@ func kill_participant(participant: BattleParticipant) -> void:
 		_current_battle_rewards[&"gold"] += participant.generate_gold_reward()
 
 ## Turn Management
+func set_battle_start_time(in_battle_start_time: float) -> void:
+	# _battle_start_time = in_battle_start_time
+	_battle_time = in_battle_start_time
+
 var _current_turn: BattleTurn
 var _last_actual_turn_time_for_participant: Dictionary[BattleParticipant, float]
 func goto_next_turn() -> void:
@@ -360,6 +365,7 @@ func setup_battle(in_encounter_group_id: StringName):
 	DungeonManager.set_player_input_blocked_reason(&"battle", true)
 
 	_battle_time = 0.0
+	_battle_start_time = 0.0
 	_current_turn = null
 	_last_actual_turn_time_for_participant.clear()
 	
@@ -381,6 +387,7 @@ func setup_challenge_mode_battle(in_challenge_mode_level_id: StringName):
 	DungeonManager.set_player_input_blocked_reason(&"battle", true)
 
 	_battle_time = 0.0
+	_battle_start_time = 0.0
 	_current_turn = null
 	_last_actual_turn_time_for_participant.clear()
 	
@@ -409,6 +416,12 @@ func finish_battle():
 
 func complete_pre_setup():
 	_build_turns_list(MAX_TURNS)
+	
+	while _turns.front().time < _battle_time:
+		_turns.pop_front()
+	
+	_build_turns_list(MAX_TURNS - _turns.size())
+	
 	on_battle_pre_setup_complete.emit()
 
 func _on_state_entered(id: StringName) -> void:

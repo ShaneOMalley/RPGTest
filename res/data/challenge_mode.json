@@ -13,7 +13,7 @@
 				{ "id": "player", "sp": 3.0 },
 				{ "id": "player", "sp": 3.0 }
 			],
-			"start_time": 100.0
+			"start_time": 0.0
 		},
 		{
 			"id": "level_2",
@@ -24,7 +24,18 @@
 				{ "id": "challenge_player_chronomancer" },
 				{ "id": "challenge_player_warrior" }
 			],
-			"start_time": 100.0
+			"start_time": 0.0
+		},
+		{
+			"id": "level_3",
+			"enemies": [
+				{ "id": "challenge_scaredy_cat_2" }
+			],
+			"players": [
+				{ "id": "challenge_player_chronomancer_2" },
+				{ "id": "challenge_player_warrior_2" }
+			],
+			"start_time": 28.0
 		}
 	]
 }

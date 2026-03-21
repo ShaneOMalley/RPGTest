@@ -41,10 +41,13 @@ func on_enter() -> void:
 	var json = JSON.parse_string(file.get_as_text()) 
 	# var level_data = json["levels"][challenge_mode_level_id]
 	
+	
 	var found_index = json["levels"].find_custom(func(level_entry):
 		return level_entry.id == challenge_mode_level_id
 	)
 	var level_data = json["levels"][found_index]
+	
+	BattleManager.set_battle_start_time(level_data["start_time"])
 	
 	enemy_group.clear()
 	for enemy_data in level_data["enemies"]:
