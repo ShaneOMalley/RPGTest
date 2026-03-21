@@ -58,7 +58,7 @@ func _init() -> void:
 	inventory = PlayerPartyInventory.new()
 
 func _ready():
-	add_participants_async([&"player_warrior", &"player_chronomancer", &"player"])
+	add_participants_async([&"player_warrior", &"player_chronomancer"])
 	# add_participants_async([&"player", &"player"])
 	# add_participants_async([&"player"])
 	BattleManager.on_battle_finished.connect(on_battle_finished)

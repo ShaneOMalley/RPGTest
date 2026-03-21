@@ -15,9 +15,9 @@ func on_enter() -> void:
 		BattleManager.queue_ability_execution(ability_execution.ability, ability_execution.target, ability_execution.turn_target)
 		
 	else:
-		if !current_turn.turn_modifier.forced_ability_id.is_empty():
+		if !current_turn.get_modifier().forced_ability_id.is_empty():
 			# assume that we need to execute the forced ability with a "self" target
-			var ability := participant.abilities[current_turn.turn_modifier.forced_ability_id]
+			var ability := participant.abilities[current_turn.get_modifier().forced_ability_id]
 			BattleManager.queue_ability_execution(ability, participant)
 			return
 

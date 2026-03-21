@@ -5,7 +5,7 @@ func execute(in_target: BattleParticipant, in_turn_target: BattleTurn = null) ->
 	
 	var current_turn := BattleManager.get_current_turn()
 	
-	var repeat_modifier := (current_turn.turn_modifier as BattleTurn.TurnModifierRepeat)
+	var repeat_modifier := (current_turn.get_modifier() as BattleTurn.TurnModifierRepeat)
 	assert(repeat_modifier)
 	
 	# Just execute ability on BattleManager. This will work since since it will happen before fsm has chance to advance

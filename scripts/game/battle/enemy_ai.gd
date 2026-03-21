@@ -9,7 +9,7 @@ var enemy_ai: Dictionary[StringName, Callable] = {
 			
 		for participant in opposing_participants:
 			var next_turn := BattleManager.get_next_turn_for_participant(participant)
-			if next_turn.turn_modifier.type == BattleTurn.TurnModifier.Type.POWER_CHARGE_ATTACK:
+			if next_turn.get_modifier().type == BattleTurn.TurnModifier.Type.POWER_CHARGE_ATTACK:
 				self_participant.run_away_reason = &"enemy power charging"
 				break
 				# var run_ability := self_participant.abilities[&"run_away"]

@@ -70,16 +70,16 @@ var uid: int
 var time: float
 var participant: BattleParticipant
 var turn_type: TurnType
-var turn_modifier: TurnModifier
 var linked_turn: BattleTurn
 var time_offset_from_linked_turn: float
 var ability_execution_info: BattleManager.AbilityExecution
+var _turn_modifier: TurnModifier
 
 func get_affiliation() -> BattleManager.Affiliation:
 	return participant.affiliation
 	
 func is_ability_allowed(ability_id: StringName) -> bool:
-	return !is_instance_valid(turn_modifier) or turn_modifier.is_ability_allowed(ability_id)
+	return !is_instance_valid(_turn_modifier) or _turn_modifier.is_ability_allowed(ability_id)
 
 static var uid_count: int = 0
 func _init(in_time: float, in_participant: BattleParticipant, in_turn_type: TurnType):
@@ -88,10 +88,29 @@ func _init(in_time: float, in_participant: BattleParticipant, in_turn_type: Turn
 	time = in_time
 	participant = in_participant
 	turn_type = in_turn_type
-	turn_modifier = TurnModifierNormal.new()
+	_turn_modifier = TurnModifierNormal.new()
 	
 func _to_string() -> String:
 	return "T: %7.1f, %10s" % [time, participant]
+	
+const _turn_modifier_priorities : Dictionary[TurnModifier.Type, int] = { 
+	TurnModifier.Type.NORMAL: 0,
+	TurnModifier.Type.POWER_CHARGE_ATTACK: 1,
+	TurnModifier.Type.REPEAT: 2,
+	TurnModifier.Type.SKIP: 3
+}
+
+func set_modifier(in_turn_modifier: TurnModifier) -> void:
+	# if _turn_modifier_priorities[in_turn_modifier.type] < _turn_modifier_priorities[_turn_modifier.type]:
+	# 	return
+		
+	_turn_modifier = in_turn_modifier
+	
+func get_modifier() -> TurnModifier:
+	return _turn_modifier
+	
+func clear_modifier() -> void:
+	_turn_modifier = BattleTurn.TurnModifierNormal.new()
 
 class TurnManipulation:
 	# todo: remove this

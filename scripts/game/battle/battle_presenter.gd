@@ -169,7 +169,7 @@ func on_battle_turns_updated(turns: Array[BattleTurn]) -> void:
 	for turn in turns:
 		# BattleView.add_turn(new_turn.uid, new_turn.participant.uid, new_turn.participant.affiliation)
 		var control_string = "%s: uid: %d" % [turn.participant.uid, turn.uid]
-		var turn_modifier := turn.turn_modifier
+		var turn_modifier := turn.get_modifier()
 		var modifier_text: String 
 		if turn_modifier:
 			if turn_modifier.type == BattleTurn.TurnModifier.Type.SKIP:

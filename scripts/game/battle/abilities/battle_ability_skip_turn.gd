@@ -15,24 +15,24 @@ func execute(in_target: BattleParticipant, in_turn_target: BattleTurn = null) ->
 func prepare(in_target: BattleParticipant, in_turn_target: BattleTurn = null) -> void:
 	# hack until turn_target feature is removed
 	if is_instance_valid(_modified_turn):
-		_modified_turn.turn_modifier = BattleTurn.TurnModifierNormal.new()
+		_modified_turn.clear_modifier()
 		
 	_modified_turn = BattleManager.get_next_turn_for_participant(in_target)
-	_modified_turn.turn_modifier = BattleTurn.TurnModifierSkip.new()
+	_modified_turn.set_modifier(BattleTurn.TurnModifierSkip.new())
 	BattleManager.force_update_turns()
 	
 	super.prepare(in_target, in_turn_target)
 	
 func cancel_prepare() -> void:
 	if is_instance_valid(_modified_turn):
-		_modified_turn.turn_modifier = BattleTurn.TurnModifierNormal.new()
+		_modified_turn.clear_modifier()
 		BattleManager.force_update_turns()
 		
 	super.cancel_prepare()
 	
 func cancel() -> void:
 	if is_instance_valid(_modified_turn):
-		_modified_turn.turn_modifier = BattleTurn.TurnModifierNormal.new()
+		_modified_turn.clear_modifier()
 		BattleManager.force_update_turns()
 		
 	super.cancel()

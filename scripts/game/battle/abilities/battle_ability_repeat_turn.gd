@@ -24,8 +24,8 @@ func prepare(in_target: BattleParticipant, in_turn_target: BattleTurn = null) ->
 		_created_turn.linked_turn = in_turn_target
 		_created_turn.time_offset_from_linked_turn = 0.01
 		
-		_created_turn.turn_modifier = BattleTurn.TurnModifierRepeat.new()
-		(_created_turn.turn_modifier as BattleTurn.TurnModifierRepeat).turn_uid_to_repeat = in_turn_target.uid
+		_created_turn.set_modifier(BattleTurn.TurnModifierRepeat.new())
+		(_created_turn.get_modifier() as BattleTurn.TurnModifierRepeat).turn_uid_to_repeat = in_turn_target.uid
 		
 		BattleManager.insert_turn(_created_turn)
 		

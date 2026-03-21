@@ -207,6 +207,10 @@ func get_next_turn_for_participant(participant: BattleParticipant) -> BattleTurn
 	var index := _turns.find_custom(func(turn: BattleTurn): return turn.participant == participant and turn != _current_turn)
 	return _turns[index]
 	
+func get_next_normal_turn_for_participant(participant: BattleParticipant) -> BattleTurn:
+	var index := _turns.find_custom(func(turn: BattleTurn): return turn.participant == participant and turn != _current_turn and turn.get_modifier().type == BattleTurn.TurnModifier.Type.NORMAL)
+	return _turns[index]
+	
 func get_turns_for_participant(participant: BattleParticipant) -> Array[BattleTurn]:
 	return _turns.filter(func(turn: BattleTurn): return turn.participant == participant)
 	
