@@ -14,6 +14,9 @@ func _on_battle_finished() -> void:
 	BattleManager.on_battle_finished.disconnect(_on_battle_finished)
 	
 func refresh_ui() -> void:
+	if Input.is_key_pressed(KEY_9):
+		ChallengeManager.set_unlock_level(ChallengeManager.MAX_CHALLENGES + 1)
+		
 	var unlock_level = ChallengeManager.get_unlock_level()
 	for challenge_number in challenge_buttons:
 		var challenge_button = challenge_buttons[challenge_number]
@@ -22,9 +25,6 @@ func refresh_ui() -> void:
 		
 	if unlock_level >= ChallengeManager.MAX_CHALLENGES + 1:
 		$AllChallengesComplete.show()
-		
-	if Input.is_key_pressed(KEY_9):
-		ChallengeManager.set_unlock_level(ChallengeManager.MAX_CHALLENGES + 1)
 
 func setup_ui() -> void:
 	var challenge_mode_data := TownManager.challenge_mode_data

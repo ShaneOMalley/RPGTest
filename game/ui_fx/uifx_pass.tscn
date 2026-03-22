@@ -28,6 +28,7 @@ metadata/_custom_type_script = "uid://ccj4csqnfquqi"
 
 [node name="GPUParticles2D" type="GPUParticles2D" parent="."]
 material = SubResource("CanvasItemMaterial_rhu86")
+emitting = false
 amount = 1
 texture = ExtResource("2_mhcbh")
 lifetime = 1.06

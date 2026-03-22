@@ -1,0 +1,28 @@
+[gd_scene load_steps=5 format=3 uid="uid://bgee3fwuckexe"]
+
+[ext_resource type="Script" uid="uid://ccj4csqnfquqi" path="res://scripts/ui/battle/ui_fx.gd" id="1_u5kmd"]
+[ext_resource type="Texture2D" uid="uid://d4h0c460kjtuv" path="res://res/particles/textures/grim_reaper_kill.png" id="2_u5kmd"]
+[ext_resource type="Material" uid="uid://dfwv8i15bbsal" path="res://res/particles/process_materials/test_particle_process_material.tres" id="3_u7ij3"]
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_kwyp4"]
+particles_animation = true
+particles_anim_h_frames = 7
+particles_anim_v_frames = 1
+particles_anim_loop = false
+
+[node name="UIFX" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("1_u5kmd")
+metadata/_custom_type_script = "uid://ccj4csqnfquqi"
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="."]
+material = SubResource("CanvasItemMaterial_kwyp4")
+emitting = false
+amount = 1
+texture = ExtResource("2_u5kmd")
+lifetime = 3.25
+one_shot = true
+process_material = ExtResource("3_u7ij3")

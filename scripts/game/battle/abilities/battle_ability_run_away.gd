@@ -33,6 +33,6 @@ func get_message() -> String:
 	if _target.run_away_reason == &"damaged":
 		return "%s is injured and runs away!" % _target.get_display_name()
 	elif _target.run_away_reason == &"enemy power charging":
-		return "%s gets runs away to avoid power charge!" % _target.get_display_name()
+		return "%s runs away to avoid power charge!" % _target.get_display_name()
 	else:
 		return "%s runs away!" % _target.get_display_name()

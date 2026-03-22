@@ -2,11 +2,11 @@
 
 [ext_resource type="Script" uid="uid://1pbfgkupl1ye" path="res://scripts/game/battle/abilities/battle_ability_grim_reaper_kill.gd" id="1_1tnad"]
 [ext_resource type="PackedScene" uid="uid://bvkr4e5f5ju3a" path="res://game/ui_fx/uifx_use_skill.tscn" id="1_odxsi"]
-[ext_resource type="PackedScene" uid="uid://dme81fha7jgl2" path="res://game/ui_fx/uifx_attack.tscn" id="2_2v0nx"]
+[ext_resource type="PackedScene" uid="uid://bgee3fwuckexe" path="res://game/ui_fx/uifx_use_grim_reaper_kill.tscn" id="2_odxsi"]
 
 [resource]
 script = ExtResource("1_1tnad")
 fx_activate = ExtResource("1_odxsi")
-fx_affect_target = ExtResource("2_2v0nx")
+fx_affect_target = ExtResource("2_odxsi")
 sp_cost = 0
 metadata/_custom_type_script = "uid://d4f1cetlvgfb"
