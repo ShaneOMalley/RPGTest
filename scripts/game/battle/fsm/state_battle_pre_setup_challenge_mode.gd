@@ -41,7 +41,6 @@ func on_enter() -> void:
 	var json = JSON.parse_string(file.get_as_text()) 
 	# var level_data = json["levels"][challenge_mode_level_id]
 	
-	
 	var found_index = json["levels"].find_custom(func(level_entry):
 		return level_entry.id == challenge_mode_level_id
 	)
@@ -62,6 +61,8 @@ func on_enter() -> void:
 	combined_groups.append_array(player_group)
 
 	BattleParticipant.load_participants_async(combined_groups, _on_load_complete)
+	
+	BattleManager.set_challenge_number(level_data.challenge_number)
 	
 func on_exit() -> void:
 	BattleView.setup_battle_ui()

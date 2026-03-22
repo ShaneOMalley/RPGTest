@@ -37,6 +37,7 @@ var _encounter_group_id
 var _current_battle_rewards: Dictionary[StringName, int]
 
 var _challenge_mode_level_id: StringName
+var _challenge_number: int
 
 ## FSM
 func block_fsm(time: float) -> void:
@@ -48,6 +49,12 @@ func get_encounter_group_id() -> StringName:
 	
 func get_challenge_mode_level_id() -> StringName:
 	return _challenge_mode_level_id
+	
+func set_challenge_number(in_challenge_number: int) -> void:
+	_challenge_number = in_challenge_number
+	
+func get_challenge_number() -> int:
+	return _challenge_number
 	
 func is_challenge_mode() -> bool:
 	return _challenge_mode_level_id != &""
