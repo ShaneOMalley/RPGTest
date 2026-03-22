@@ -1,6 +1,7 @@
 class_name UITownChallengeMode extends Control
 
 var challenge_buttons: Dictionary[int, Button]
+var check_icon: Texture2D
 
 func on_click_challenge_mode(challenge_mode_entry: TownManager.ChallengeModeEntry) -> void:
 	BattleManager.setup_challenge_mode_battle(challenge_mode_entry.config_id)
@@ -15,7 +16,9 @@ func _on_battle_finished() -> void:
 func refresh_ui() -> void:
 	var unlock_level = ChallengeManager.get_unlock_level()
 	for challenge_number in challenge_buttons:
-		challenge_buttons[challenge_number].disabled = unlock_level < challenge_number
+		var challenge_button = challenge_buttons[challenge_number]
+		challenge_button.disabled = unlock_level < challenge_number
+		challenge_button.icon = check_icon if unlock_level > challenge_number else null
 		
 	if unlock_level >= ChallengeManager.MAX_CHALLENGES + 1:
 		$AllChallengesComplete.show()
@@ -25,6 +28,8 @@ func refresh_ui() -> void:
 
 func setup_ui() -> void:
 	var challenge_mode_data := TownManager.challenge_mode_data
+	
+	check_icon = $Menu/ChallengeLevelTemplate.icon
 	
 	for config_id in challenge_mode_data:
 		var challenge_mode_entry: TownManager.ChallengeModeEntry = challenge_mode_data[config_id]

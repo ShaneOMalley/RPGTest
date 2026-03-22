@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://bvofric0htxlp"]
+[gd_scene load_steps=3 format=3 uid="uid://bvofric0htxlp"]
 
 [ext_resource type="Script" uid="uid://ddia0v4b1rsb0" path="res://scripts/ui/town/ui_town_challenge_mode.gd" id="1_7wsnb"]
+[ext_resource type="Texture2D" uid="uid://cd5tw1ogqyh2l" path="res://res/ui/check.png" id="2_nhobm"]
 
 [node name="TownChallengeModeUI" type="Control"]
 layout_mode = 3
@@ -30,6 +31,8 @@ alignment = 1
 custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
 text = "Level 1"
+icon = ExtResource("2_nhobm")
+icon_alignment = 2
 
 [node name="Back" type="Button" parent="Menu"]
 custom_minimum_size = Vector2(0, 50)
