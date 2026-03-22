@@ -2,21 +2,7 @@
 	"levels": [
 		{
 			"id": "level_1",
-			"enemies": [
-				{ "id": "goblin", "hp": 1.0 },
-				{ "id": "ghoul", "hp": 2.0 },
-				{ "id": "goblin" }
-			],
-			"players": [
-				{ "id": "player_chronomancer", "hp": 1.0 },
-				{ "id": "player_warrior", "sp": 3.0 },
-				{ "id": "player", "sp": 3.0 },
-				{ "id": "player", "sp": 3.0 }
-			],
-			"start_time": 0.0
-		},
-		{
-			"id": "level_2",
+			"challenge_number": 1,
 			"enemies": [
 				{ "id": "challenge_scaredy_cat" }
 			],
@@ -27,7 +13,8 @@
 			"start_time": 0.0
 		},
 		{
-			"id": "level_3",
+			"id": "level_2",
+			"challenge_number": 2,
 			"enemies": [
 				{ "id": "challenge_scaredy_cat_2" }
 			],
@@ -36,6 +23,21 @@
 				{ "id": "challenge_player_warrior_2" }
 			],
 			"start_time": 28.0
+		},
+		{
+			"id": "level_3",
+			"challenge_number": 3,
+			"enemies": [
+				{ "id": "challenge_smasher" },
+				{ "id": "challenge_grim_reaper" }
+			],
+			"players": [
+				{ "id": "challenge_player_chronomancer_3" },
+				{ "id": "challenge_player_warrior_2" },
+				{ "id": "challenge_player_warrior_2" },
+				{ "id": "challenge_player_warrior_2" }
+			],
+			"start_time": 0.0
 		}
 	]
 }

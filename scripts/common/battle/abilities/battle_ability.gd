@@ -44,6 +44,12 @@ static var ability_class_registry: Dictionary[StringName, String] = {
 	# Challenge Scaredy Cat
 	&"run_away": "res://game/abilities/ability_run_away.tres",
 	&"scaredy_cat_run": "res://game/abilities/ability_scaredy_cat_run.tres",
+	
+	# Challenge Smasher
+	&"smasher_smash": "res://game/abilities/ability_smasher_smash.tres",
+	
+	# Challenge Grim Reaper
+	&"grim_reaper_kill": "res://game/abilities/ability_grim_reaper_kill.tres",
 }
 
 static var ability_categories: Dictionary[StringName, StringName] = {
@@ -183,8 +189,8 @@ func initialize(in_source: BattleParticipant, in_ability_id: StringName) -> void
 	_source = in_source
 	_ability_id = in_ability_id
 
-func show_message() -> void:
-	BattleManager.request_message(get_message(), 1.1)
+func show_message(time: float = 1.1) -> void:
+	BattleManager.request_message(get_message(), time)
 	
 func consume_resources() -> void:
 	consume_sp()

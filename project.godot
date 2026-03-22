@@ -31,6 +31,7 @@ DungeonCrawlingPresenter="*res://scripts/game/dungeon_crawling/dungeon_crawling_
 PlayerPartyManager="*res://scripts/game/player_party_manager.gd"
 TownManager="*res://scripts/game/town_manager.gd"
 EnemyAI="*res://scripts/game/battle/enemy_ai.gd"
+ChallengeManager="*res://game/challenge_manager.gd"
 
 [editor_plugins]
 

@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="BattleAbilitySmasherSmash" load_steps=4 format=3 uid="uid://dq1qre87teevf"]
+
+[ext_resource type="Script" uid="uid://bpsr0qcxmabch" path="res://scripts/game/battle/abilities/battle_ability_smasher_smash.gd" id="1_gbfa2"]
+[ext_resource type="PackedScene" uid="uid://bvkr4e5f5ju3a" path="res://game/ui_fx/uifx_use_skill.tscn" id="1_jvjtc"]
+[ext_resource type="PackedScene" uid="uid://dme81fha7jgl2" path="res://game/ui_fx/uifx_attack.tscn" id="2_4c1eo"]
+
+[resource]
+script = ExtResource("1_gbfa2")
+fx_activate = ExtResource("1_jvjtc")
+fx_affect_target = ExtResource("2_4c1eo")
+sp_cost = 0
+metadata/_custom_type_script = "uid://d4f1cetlvgfb"

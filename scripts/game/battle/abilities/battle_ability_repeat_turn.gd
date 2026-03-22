@@ -56,8 +56,7 @@ func end() -> void:
 	_created_turn = null
 	
 func is_valid_for_target(possible_target: BattleParticipant) -> bool:
-	return possible_target.affiliation == _source.affiliation
-	# return true
+	return true
 	
 func get_message() -> String:
 	return "%s will repeat whatever they do next!" % _target.get_display_name()

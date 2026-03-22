@@ -186,7 +186,7 @@ func set_battle_start_time(in_battle_start_time: float) -> void:
 var _current_turn: BattleTurn
 var _last_actual_turn_time_for_participant: Dictionary[BattleParticipant, float]
 func goto_next_turn() -> void:
-	if is_instance_valid(_current_turn):
+	if _turns.front() == _current_turn:
 		_turns.pop_front()
 		
 	_current_turn = _turns.front()
@@ -327,6 +327,10 @@ func _generate_normal_turn(time: float, participant: BattleParticipant):
 	# var last_participant_turn: BattleTurn = _turns.filter(func(turn: BattleTurn): return turn.participant == participant).back()
 	# var period := participant.get_turn_period()
 	# var time := last_participant_turn.time + period if last_participant_turn else period
+	var participant_index := participants.find(participant)
+	const time_stagger := 0.05
+	time += participant_index * time_stagger
+	
 	_turns.push_back(BattleTurn.new(time, participant, BattleTurn.TurnType.NORMAL))
 	_sort_turns()
 	on_battle_turns_updated.emit(_turns)
@@ -385,7 +389,7 @@ func setup_battle(in_encounter_group_id: StringName):
 	
 func setup_challenge_mode_battle(in_challenge_mode_level_id: StringName):
 	DungeonManager.set_player_input_blocked_reason(&"battle", true)
-
+	
 	_battle_time = 0.0
 	_battle_start_time = 0.0
 	_current_turn = null

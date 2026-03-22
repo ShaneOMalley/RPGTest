@@ -7,6 +7,7 @@ class RecruitEntry:
 	
 class ChallengeModeEntry:
 	var config_id: StringName
+	var challenge_number: int
 	var enemies: Array[Dictionary]
 	var players: Array[Dictionary]
 	var starting_time: float
@@ -37,6 +38,7 @@ func build_challenge_mode_data() -> void:
 	for level_data in data.levels:
 		var entry := ChallengeModeEntry.new()
 		entry.config_id = level_data.id
+		entry.challenge_number = level_data.challenge_number
 		for enemy_data in level_data.enemies:
 			entry.enemies.append({ &"id": enemy_data.get(&"id"), &"hp": enemy_data.get(&"hp"), &"sp": enemy_data.get(&"sp") })
 		for player_data in level_data.players:
