@@ -11,5 +11,8 @@ func execute(in_target: BattleParticipant, in_turn_target: BattleTurn = null) ->
 func is_valid_for_target(possible_target: BattleParticipant) -> bool:
 	return possible_target == _source
 	
+func auto_select_sole_target() -> bool:
+	return true
+	
 func get_message() -> String:
 	return "%s does nothing..." % _source.get_display_name()

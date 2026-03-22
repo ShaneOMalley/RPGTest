@@ -204,6 +204,9 @@ func on_request_show_battle_menu(battle_participant: BattleParticipant, battle_t
 				var valid_participants = BattleManager.get_participants().filter(ability.is_valid_for_target)
 				for valid_participant in valid_participants:
 					entry.valid_participant_targets.append(valid_participant.uid)
+					
+				if ability.auto_select_sole_target() && valid_participants.size() == 1:
+					entry.auto_target_id = valid_participants[0].uid
 		
 				entries.append(entry)
 	

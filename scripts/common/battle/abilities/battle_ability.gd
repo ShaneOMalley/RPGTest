@@ -141,6 +141,9 @@ func is_valid_for_target(_possible_target: BattleParticipant) -> bool:
 func requires_turn_target() -> bool:
 	return false
 	
+func auto_select_sole_target() -> bool:
+	return false
+	
 func get_message() -> String:
 	return ""
 	

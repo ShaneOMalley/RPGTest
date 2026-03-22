@@ -50,3 +50,5 @@ func end() -> void:
 func is_valid_for_target(possible_target: BattleParticipant) -> bool:
 	return possible_target.affiliation == _source.affiliation
 
+func auto_select_sole_target() -> bool:
+	return false

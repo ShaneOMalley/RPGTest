@@ -29,5 +29,8 @@ func _apply_attack_effect():
 func is_valid_for_target(possible_target: BattleParticipant) -> bool:
 	return possible_target == _source
 	
+func auto_select_sole_target() -> bool:
+	return true
+	
 func get_message() -> String:
 	return "%s drops a nuke" % _source.get_display_name()

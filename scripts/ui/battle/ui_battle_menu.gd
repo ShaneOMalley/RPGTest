@@ -53,6 +53,7 @@ class BattleMenuEntry:
 	var can_activate: bool
 	var valid_participant_targets: Array[StringName]
 	var requires_turn_target: bool
+	var auto_target_id: StringName
 
 func show_battle_menu(entries: Array[BattleMenuEntry], current_category: StringName = &"") -> void:
 	_hide_all_menu_buttons()
@@ -72,7 +73,13 @@ func show_battle_menu(entries: Array[BattleMenuEntry], current_category: StringN
 				text = "%s (SP: %d)" % [entry.ability_string, entry.ability_sp_cost]
 			else:
 				text = entry.ability_string
-			var on_pressed := func(): show_target_menu(entry.ability_id, entry.category, entry.valid_participant_targets, entries, entry.requires_turn_target)
+				
+			var on_pressed: Callable
+			if entry.auto_target_id == &"":
+				on_pressed = func(): show_target_menu(entry.ability_id, entry.category, entry.valid_participant_targets, entries, entry.requires_turn_target)
+			else:
+				on_pressed = func(): ability_select_target(-1, entry.ability_id, entry.auto_target_id)
+	
 			_make_menu_button(text, !entry.can_activate, Callable(), on_pressed)
 		elif current_category == &"":
 			# make category buttons
@@ -164,9 +171,9 @@ func out_of_combat_select_ability(entries: Array[OutOfCombatAbilityEntry], categ
 func out_of_combat_select_target(entries: Array[OutOfCombatAbilityEntry], current_entry: OutOfCombatAbilityEntry) -> void:
 	_hide_all_menu_buttons()
 	
+	var valid_targets = current_entry.valid_participant_targets_func.call()
 	_make_menu_button("cancel", false, Callable(), out_of_combat_select_ability.bind(entries, current_entry.category_id, current_entry.source_id))
 	
-	var valid_targets = current_entry.valid_participant_targets_func.call()
 	for target_id in valid_targets:
 		_make_menu_button(target_id, !current_entry.valid_for_target_func.call(target_id), Callable(), out_of_combat_execute_ability.bind(entries, current_entry, target_id))
 	
