@@ -178,6 +178,8 @@ func goto_next_floor() -> void:
 	if _current_floor_index >= _floors.size():
 		end_dungeon_crawling()
 		TownManager.enter_town_scene()
+		PlayerPartyManager.reset_player_party()
+		BattleView.hide_ui()
 	else:
 		set_dungeon_floor_index(_current_floor_index)
 		
@@ -222,7 +224,6 @@ func get_player_input_blocked() -> bool:
 func set_player_input_blocked_reason(reason: Variant, blocked: bool) -> void:
 	_player_input_blocked_reasons[reason] = blocked
 	
-
 # func _ready():
 # 	reset()
 

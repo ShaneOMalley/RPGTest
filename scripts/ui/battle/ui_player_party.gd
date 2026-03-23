@@ -59,6 +59,9 @@ func add_player(uid: StringName, character_graphics: PackedScene, hp: int, max_h
 			player_ui.populate(uid, character_graphics, hp, max_hp, sp, max_sp)
 			_player_to_ui_index[uid] = index
 			return
+			
+func clear_players():
+	_player_to_ui_index.clear()
 
 func update_player_hp(uid: StringName, hp: int, max_hp: int) -> void:
 	var index = _player_to_ui_index[uid]

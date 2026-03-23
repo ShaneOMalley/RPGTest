@@ -12,12 +12,16 @@ func on_battle_ui_setup_requested() -> void:
 		BattleView.setup_enemy(enemy.uid, enemy.participant_data.character_graphics, enemy.get_attribute(&"_hp"), enemy.get_attribute(&"_max_hp"))
 		
 	on_battle_turns_updated(BattleManager._turns)
+	
+func on_town_reopened() -> void:
+	pass
 
 func on_player_party_updated(participants: Array[BattleParticipant]) -> void:
 	if !BattleView.ui_is_setup:
 		return
 
 	BattleView.hide_all_players_info()
+	BattleView.clear_players()
 
 	var players := participants
 	for player in players:

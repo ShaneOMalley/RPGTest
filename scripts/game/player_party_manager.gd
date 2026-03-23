@@ -11,10 +11,6 @@ func _on_new_item_added(item_id: StringName) -> void:
 	for participant in _participants:
 		PlayerPartyInventory.grant_item_ability_to_particpant(item_id, participant)
 
-func on_item_depleted(item_id: StringName) -> void:
-	# do nothig for now (to accommodate use item -> repeat turn trick)
-	pass
-
 func _on_load_complete(participant_ids: Array[StringName]) -> void:
 	for participant_id in participant_ids:
 		var participant = BattleParticipant.create_from_config(participant_id)
@@ -24,12 +20,15 @@ func _on_load_complete(participant_ids: Array[StringName]) -> void:
 		_participants.append(participant)
 	on_player_party_updated.emit(_participants)
 	
+# For challenge mode
 func save_participants() -> void:
 	_participants_copy = _participants.duplicate()
 	
+# For challenge mode
 func reload_participants() -> void:
 	_participants = _participants_copy
 
+# For challenge mode
 func clear_participants() -> void:
 	_participants.clear()
 	
@@ -56,10 +55,14 @@ func on_battle_finished() -> void:
 		
 func _init() -> void:
 	inventory = PlayerPartyInventory.new()
+	
+func reset_player_party():
+	_participants.clear()
+	add_participants_async([&"player_warrior", &"player_chronomancer"])
 
 func _ready():
-	add_participants_async([&"player_warrior", &"player_chronomancer"])
 	# add_participants_async([&"player", &"player"])
 	# add_participants_async([&"player"])
+	reset_player_party()
 	BattleManager.on_battle_finished.connect(on_battle_finished)
 	inventory.new_item_added.connect(_on_new_item_added)

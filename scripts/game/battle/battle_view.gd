@@ -78,6 +78,9 @@ func update_player_sp(uid: StringName, sp: int, max_sp: int) -> void:
 
 func remove_player(uid: StringName) -> void:
 	player_party_ui.remove_player(uid)
+	
+func clear_players() -> void:
+	player_party_ui.clear_players()
 
 func hide_all_players_info() -> void:
 	player_party_ui.hide_all_players_info()
@@ -104,6 +107,9 @@ func on_battle_menu_visibility_changed() -> void:
 	
 # UI Management
 func setup_battle_ui() -> void:
+	if is_instance_valid(battle_ui):
+		return
+
 	# TODO: Define this path in config (also, find out how to do config in Godot?)
 	battle_ui = preload("res://ui/battle/battle_ui.tscn").instantiate()
 	turns_ui = battle_ui.find_child(&"Turns")
