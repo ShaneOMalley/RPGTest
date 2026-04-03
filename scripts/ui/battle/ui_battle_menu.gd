@@ -188,22 +188,42 @@ func out_of_combat_execute_ability(entries: Array[OutOfCombatAbilityEntry], curr
 
 func hide_battle_menu() -> void:
 	hide()
+	
+var _current_highlight_participant_uid: StringName
+func update_highlight_participant(new_participant_uid: StringName):
+	var highlight_fx_template := preload("res://game/ui_fx/uifx_highlight.tscn")
+	if _current_highlight_participant_uid != &"":
+		var old_participant := BattleManager.get_participant(_current_highlight_participant_uid)
+		BattleManager.stop_fx(highlight_fx_template, old_participant)
+	
+	if new_participant_uid != &"":
+		var participant := BattleManager.get_participant(new_participant_uid)
+		BattleManager.play_fx(highlight_fx_template, participant)
+	
+	_current_highlight_participant_uid = new_participant_uid
+
+func stop_highlight_participant():
+	update_highlight_participant(&"")
 
 func ability_prepare(turn_target_uid: int, ability_id: StringName, target_uid: StringName) -> void:
 	print(" -- PREPARE")
+	update_highlight_participant(target_uid)
 	on_ability_prepare.emit(ability_id, target_uid, turn_target_uid)
 	
 func ability_cancel(ability_id: StringName, previous_entries: Array[BattleMenuEntry], ability_category: StringName) -> void:
 	print(" -- CANCEL")
 	on_ability_cancel.emit(ability_id)
+	stop_highlight_participant()
 	show_battle_menu(previous_entries, ability_category)
 	
 func ability_cancel_prepare(ability_id: StringName) -> void:
 	print(" -- CANCEL PREPARE")
+	stop_highlight_participant()
 	on_ability_cancel_prepare.emit(ability_id)
 	
 func ability_select_target(turn_target_uid: int, ability_id: StringName, target_uid: StringName) -> void:
 	print(" -- SELECT TARGET")
+	stop_highlight_participant()
 	on_ability_and_target_selected.emit(ability_id, target_uid, turn_target_uid)
 	
 	_clear_turns_ui_connections()
