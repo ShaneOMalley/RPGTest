@@ -29,7 +29,7 @@ func find_fallback_target() -> Array:
 	return [possible_targets.pick_random(), null]
 
 func get_message() -> String:
-	return "%s heals %s for %d hp!" % [_source.get_display_name(), _target.get_display_name(), effect.hp]
+	return tr("ABILITY_MESSAGE_POTION").format({"source": _source.get_display_name(), "target": _target.get_display_name(), "hp_amount": effect.hp})
 
 func execute_out_of_combat(_in_source: BattleParticipant, _in_target: BattleParticipant) -> void:
 	super.execute_out_of_combat(_in_source, _in_target)

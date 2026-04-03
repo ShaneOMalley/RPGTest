@@ -34,5 +34,5 @@ func is_valid_for_target(possible_target: BattleParticipant) -> bool:
 	return possible_target == _source
 	
 func get_message() -> String:
-	return "%s is repeating their turn!" % _source.get_display_name()
+	return tr("ABILITY_MESSAGE_REPEATING_TURN").format({"target": _target.get_display_name()})
 	

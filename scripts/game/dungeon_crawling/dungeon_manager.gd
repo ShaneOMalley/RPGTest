@@ -143,7 +143,7 @@ func _setup_interactable_data(in_interactable_data):#: Dictionary[Vector2i, Dict
 				treasures.sort_custom(comp)
 				var closest_treasure := get_closest_interactable_mesh(treasures, position.x, position.y)
 				if num_treasures < max_treasures:
-					interactable_data[position] = DungeonInteractable.new(direction, get_treasure.bind(closest_treasure), "[E] Open Chest")
+					interactable_data[position] = DungeonInteractable.new(direction, get_treasure.bind(closest_treasure), tr("DUNGEON_OPEN_CHEST"))
 				else:
 					closest_treasure.visible = false
 				num_treasures += 1
@@ -185,7 +185,7 @@ func goto_next_floor() -> void:
 		
 func get_treasure(closest_treasure: DungeonTreasure) -> void:
 	var treasure_id := _get_random_treasure()
-	BattleManager.request_message("You got a %s!" % treasure_id, 1.1)
+	BattleManager.request_message(tr("DUNGEON_FOUND_ITEM").format({"found_item": tr("ITEM_" + treasure_id.to_upper())}), 1.1)
 	DungeonManager.block_player_input_for_duration(1.1)
 	closest_treasure.open()
 

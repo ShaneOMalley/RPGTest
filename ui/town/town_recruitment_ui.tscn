@@ -34,8 +34,7 @@ text = "Recruit Character (50 gold)"
 [node name="Back" type="Button" parent="Menu"]
 custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
-text = "Back
-"
+text = "UI_BACK"
 
 [node name="GoldText" type="RichTextLabel" parent="."]
 layout_mode = 0

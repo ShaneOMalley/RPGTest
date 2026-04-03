@@ -62,7 +62,7 @@ func show_battle_menu(entries: Array[BattleMenuEntry], current_category: StringN
 	var seen_categories: Dictionary[StringName, bool]
 	
 	if current_category != &"":
-		_make_menu_button("cancel", false, Callable(), func(): show_battle_menu(entries, &""))
+		_make_menu_button(tr("ABILITY_CANCEL"), false, Callable(), func(): show_battle_menu(entries, &""))
 	
 	for index in range(entries.size()):
 		var entry := entries[index]
@@ -70,7 +70,7 @@ func show_battle_menu(entries: Array[BattleMenuEntry], current_category: StringN
 		if current_category == entry.category:
 			var text: String
 			if entry.ability_sp_cost > 0:
-				text = "%s (SP: %d)" % [entry.ability_string, entry.ability_sp_cost]
+				text = tr("ABILITY_WITH_SP_COST").format({"ability": entry.ability_string, "sp_cost": entry.ability_sp_cost})
 			else:
 				text = entry.ability_string
 				
@@ -86,7 +86,7 @@ func show_battle_menu(entries: Array[BattleMenuEntry], current_category: StringN
 			if !seen_categories.get(entry.category, false):
 				seen_categories[entry.category] = true
 				
-				var text := entry.category
+				var text := "ABILITY_CATEGORY_" + entry.category.to_upper()
 				var on_pressed := func(): show_battle_menu(entries, entry.category)
 				_make_menu_button(text, false, Callable(), on_pressed)
 	
@@ -103,14 +103,17 @@ func show_target_menu(ability_id: StringName, ability_category: StringName, vali
 
 		var pressed_callback: Callable
 		var mouse_entered_callback: Callable
+		var text: StringName
 		if target_uid == &"cancel":
 			pressed_callback = ability_cancel.bind(ability_id, previous_entries, ability_category)
 			mouse_entered_callback = ability_cancel_prepare.bind(ability_id)
+			text = tr("ABILITY_CANCEL")
 		else:
 			mouse_entered_callback = ability_prepare.bind(-1, ability_id, target_uid)
 			pressed_callback = ability_select_target.bind(-1, ability_id, target_uid)
+			text = BattleManager.get_participant(target_uid).get_display_name()
 		
-		var button := _make_menu_button(target_uid, false, mouse_entered_callback, pressed_callback)
+		var button := _make_menu_button(text, false, mouse_entered_callback, pressed_callback)
 		print("right neighbor", button.focus_neighbor_right)
 		
 	if requires_turn_target:
@@ -135,9 +138,9 @@ func show_out_of_combat_menu(entries: Array[OutOfCombatAbilityEntry]) -> void:
 	_hide_all_menu_buttons()
 	
 	var first_source_id := entries[0].source_id if !entries.is_empty() else &""
-	_make_menu_button("cancel", false, Callable(), hide) # $BattleMenuBackground.hide)
-	_make_menu_button("Magic", false, Callable(), out_of_combat_select_source.bind(entries, &"magic"))
-	_make_menu_button("Items", false, Callable(), out_of_combat_select_ability.bind(entries, &"item", first_source_id))
+	_make_menu_button(tr("ABILITY_CANCEL"), false, Callable(), hide) # $BattleMenuBackground.hide)
+	_make_menu_button(tr("ABILITY_CATEGORY_MAGIC"), false, Callable(), out_of_combat_select_source.bind(entries, &"magic"))
+	_make_menu_button(tr("ABILITY_CATEGORY_ITEM"), false, Callable(), out_of_combat_select_ability.bind(entries, &"item", first_source_id))
 
 	# $BattleMenuBackground.show()
 	show()
@@ -149,7 +152,7 @@ func out_of_combat_select_source(entries: Array[OutOfCombatAbilityEntry], catego
 	for entry in entries:
 		sources[entry.source_id] = true
 		
-	_make_menu_button("cancel", false, Callable(), show_out_of_combat_menu.bind(entries))
+	_make_menu_button(tr("ABILITY_CANCEL"), false, Callable(), show_out_of_combat_menu.bind(entries))
 		
 	for source_id in sources.keys():
 		_make_menu_button(source_id, false, Callable(), out_of_combat_select_ability.bind(entries, category_filter, source_id))
@@ -158,9 +161,9 @@ func out_of_combat_select_ability(entries: Array[OutOfCombatAbilityEntry], categ
 	_hide_all_menu_buttons()
 	
 	if category_filter == &"item":
-		_make_menu_button("cancel", false, Callable(), show_out_of_combat_menu.bind(entries))
+		_make_menu_button(tr("ABILITY_CANCEL"), false, Callable(), show_out_of_combat_menu.bind(entries))
 	else:
-		_make_menu_button("cancel", false, Callable(), out_of_combat_select_source.bind(entries, category_filter))
+		_make_menu_button(tr("ABILITY_CANCEL"), false, Callable(), out_of_combat_select_source.bind(entries, category_filter))
 		
 	# var valid_entries: Array[OutOfCombatAbilityEntry]
 	for entry in entries:
@@ -172,10 +175,11 @@ func out_of_combat_select_target(entries: Array[OutOfCombatAbilityEntry], curren
 	_hide_all_menu_buttons()
 	
 	var valid_targets = current_entry.valid_participant_targets_func.call()
-	_make_menu_button("cancel", false, Callable(), out_of_combat_select_ability.bind(entries, current_entry.category_id, current_entry.source_id))
+	_make_menu_button(tr("ABILITY_CANCEL"), false, Callable(), out_of_combat_select_ability.bind(entries, current_entry.category_id, current_entry.source_id))
 	
 	for target_id in valid_targets:
-		_make_menu_button(target_id, !current_entry.valid_for_target_func.call(target_id), Callable(), out_of_combat_execute_ability.bind(entries, current_entry, target_id))
+		var text := PlayerPartyManager.get_participant_with_uid(target_id).get_display_name()
+		_make_menu_button(text, !current_entry.valid_for_target_func.call(target_id), Callable(), out_of_combat_execute_ability.bind(entries, current_entry, target_id))
 	
 func out_of_combat_execute_ability(entries: Array[OutOfCombatAbilityEntry], current_entry: OutOfCombatAbilityEntry, target_id: StringName) -> void:
 	on_ability_out_of_combat_execute.emit(current_entry.ability_id, current_entry.source_id, target_id)

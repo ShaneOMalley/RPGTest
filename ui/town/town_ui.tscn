@@ -29,25 +29,35 @@ alignment = 1
 [node name="StartDungeon" type="Button" parent="Menu"]
 custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
-text = "Start Dungeon"
-
-[node name="Recruitment" type="Button" parent="Menu"]
-custom_minimum_size = Vector2(0, 50)
-layout_mode = 2
-text = "Recruitment"
+text = "UI_START_DUNGEON
+"
 
 [node name="ChallengeMode" type="Button" parent="Menu"]
 custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
-text = "Challenge Mode"
+text = "UI_CHALLENGE_MODE
+"
+
+[node name="Recruitment" type="Button" parent="Menu"]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+text = "UI_RECRUITMENT"
+
+[node name="ChangeLanguage" type="Button" parent="Menu"]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+text = "UI_LANGUAGE_CHANGE_TO_JAPANESE
+"
 
 [node name="Shop" type="Button" parent="Menu"]
+visible = false
 custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
 disabled = true
 text = "Shop"
 
 [node name="Healing" type="Button" parent="Menu"]
+visible = false
 custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
 disabled = true
@@ -55,6 +65,7 @@ text = "Healing
 "
 
 [node name="Back" type="Button" parent="Menu"]
+visible = false
 custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
 disabled = true

@@ -59,5 +59,5 @@ func is_valid_for_target(possible_target: BattleParticipant) -> bool:
 	return true
 	
 func get_message() -> String:
-	return "%s will repeat whatever they do next!" % _target.get_display_name()
+	return tr("ABILITY_MESSAGE_REPEAT_TURN").format({"target": _target.get_display_name()})
 	

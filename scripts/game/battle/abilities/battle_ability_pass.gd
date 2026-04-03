@@ -15,4 +15,4 @@ func auto_select_sole_target() -> bool:
 	return true
 	
 func get_message() -> String:
-	return "%s does nothing..." % _source.get_display_name()
+	return tr("ABILITY_MESSAGE_PASS").format({"source": _source.get_display_name()})

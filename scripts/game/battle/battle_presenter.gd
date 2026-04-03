@@ -9,7 +9,7 @@ func on_battle_ui_setup_requested() -> void:
 
 	var enemies := BattleManager.get_enemies()
 	for enemy in enemies:
-		BattleView.setup_enemy(enemy.uid, enemy.participant_data.character_graphics, enemy.get_attribute(&"_hp"), enemy.get_attribute(&"_max_hp"))
+		BattleView.setup_enemy(enemy.uid, enemy.name_key, enemy.participant_data.character_graphics, enemy.get_attribute(&"_hp"), enemy.get_attribute(&"_max_hp"))
 		
 	on_battle_turns_updated(BattleManager._turns)
 	
@@ -29,8 +29,8 @@ func on_player_party_updated(participants: Array[BattleParticipant]) -> void:
 		var max_hp = player.get_attribute(&"_max_hp")
 		var sp = player.get_attribute(&"_sp")
 		var max_sp = player.get_attribute(&"_max_sp")
-		BattleView.setup_player(player.uid, player.participant_data.character_graphics, hp, max_hp, sp, max_sp)
-
+		BattleView.setup_player(player.uid, player.name_key, player.participant_data.character_graphics, hp, max_hp, sp, max_sp)
+	
 func on_battle_fade_complete() -> void:
 	BattleManager.set_battle_fade_complete(true)
 	
@@ -172,18 +172,17 @@ func on_battle_turns_updated(turns: Array[BattleTurn]) -> void:
 	
 	for turn in turns:
 		# BattleView.add_turn(new_turn.uid, new_turn.participant.uid, new_turn.participant.affiliation)
-		var control_string = "%s: uid: %d" % [turn.participant.uid, turn.uid]
 		var turn_modifier := turn.get_modifier()
 		var modifier_text: String 
 		if turn_modifier:
 			if turn_modifier.type == BattleTurn.TurnModifier.Type.SKIP:
-				modifier_text = "skipping!"
+				modifier_text = tr("UI_BATTLE_TURN_MODIFIER_SKIP")
 			if turn_modifier.type == BattleTurn.TurnModifier.Type.REPEAT:
-				modifier_text = "repeating!"
+				modifier_text = tr("UI_BATTLE_TURN_MODIFIER_REPEAT")
 			if turn_modifier.type == BattleTurn.TurnModifier.Type.POWER_CHARGE_ATTACK:
-				modifier_text = "unleashing attack!"
+				modifier_text = tr("UI_BATTLE_TURN_MODIFIER_POWER_CHARGE_ATTACK")
 				
-		BattleView.set_turn_text_and_time(turn.uid, control_string, modifier_text, turn.time)
+		BattleView.set_turn_text_and_time(turn.uid, tr(turn.participant.name_key), modifier_text, turn.time)
 		
 	BattleView.sort_turns(sorted_turn_uids)
 	

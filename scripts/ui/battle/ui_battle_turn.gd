@@ -12,10 +12,10 @@ func set_character_graphics(character_graphics: PackedScene) -> void:
 	$CharacterGraphicsParent.add_child(_character_graphics_instance)
 
 func set_turn_text(in_text: String) -> void:
-	($Text as RichTextLabel).set_text(in_text)
+	($TextContainer/Text as RichTextLabel).set_text(in_text)
 	
 func set_modifier_text(in_text: String) -> void:
-	var label := ($ModifierText as RichTextLabel)
+	var label := ($TextContainer/ModifierText as RichTextLabel)
 	if in_text.is_empty():
 		label.hide()
 	else:

@@ -18,7 +18,7 @@ class InventoryItemData:
 			var ability_resource_path := BattleAbility.ability_class_registry[ability_id]
 			_ability_template = load(ability_resource_path).duplicate() as BattleAbility
 		var ability_instance := _ability_template.duplicate()
-		ability_instance.initialize(source, ability_id)
+		ability_instance.initialize(source, ability_id, "ABILITY_" + ability_id.to_upper())
 		ability_instance._consumable_item_id = item_id
 		return ability_instance
 		

@@ -32,4 +32,4 @@ func find_fallback_target() -> Array:
 	return [possible_targets.pick_random(), null]
 
 func get_message() -> String:
-	return "%s attacks %s for %d damage!" % [_source.get_display_name(), _target.get_display_name(), effect.damage]
+	return tr("ABILITY_MESSAGE_ATTACK").format({"source": _source.get_display_name(), "target": _target.get_display_name(), "damage_amount": effect.damage})

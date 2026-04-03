@@ -4,11 +4,11 @@ var _hp: int
 var _max_hp: int
 var _character_graphics_instance: UICharacterGraphics
 
-func populate(participant_name: String, character_graphics: PackedScene, hp: int, max_hp: int) -> void:
+func populate(name_key: String, character_graphics: PackedScene, hp: int, max_hp: int) -> void:
 	_character_graphics_instance = character_graphics.instantiate()
 	_character_graphics_instance.play_animation(&"idle")
 	$CharacterGraphicsParent.add_child(_character_graphics_instance)
-	$HPName.text = participant_name
+	$HPName.text = tr(name_key)
 	update_hp(hp, max_hp)
 	pass
 

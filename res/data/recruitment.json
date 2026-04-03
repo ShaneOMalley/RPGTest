@@ -1,6 +1,6 @@
 ﻿{
 	"recruitment_groups":
 	{
-		"test1": ["player", "player"]
+		"test1": [{"config_id": "player_warrior", "name_key": "PLAYER_WARRIOR"}]
 	}
 }

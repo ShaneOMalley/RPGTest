@@ -8,7 +8,7 @@ func on_click_recruit(config_id: StringName) -> void:
 	var current_gold = PlayerPartyManager.inventory.gold
 	if current_gold >= recruit_entry.price:
 		PlayerPartyManager.add_participants_async([config_id])
-		current_gold -= recruit_entry.price
+		PlayerPartyManager.inventory.gold -= recruit_entry.price
 		recruit_entry.is_recruited = true;
 		
 	update_ui()
@@ -35,11 +35,11 @@ func update_ui() -> void:
 		button.disabled = current_gold < recruit_entry.price or recruit_entry.is_recruited
 		
 		if recruit_entry.is_recruited:
-			button.text = "Recruited %s!" % recruit_entry.config_id
+			button.text = tr("UI_RECRUITMENT_RECRUITED").format({"participant": tr(recruit_entry.name_key)})
 		else:
-			button.text = "Recruit %s (%d gold)" % [recruit_entry.config_id, recruit_entry.price]
+			button.text = tr("UI_RECRUITMENT_RECRUIT").format({"participant": tr(recruit_entry.name_key), "gold": recruit_entry.price})
 			
-	$GoldText.text = "Gold: %d" % current_gold
+	$GoldText.text = tr("UI_RECRUITMENT_GOLD").format({"gold": current_gold})
 			
 func go_back() -> void:
 	TownManager.show_town_ui(load("res://ui/town/town_ui.tscn")) # preload doesn't work for some reason

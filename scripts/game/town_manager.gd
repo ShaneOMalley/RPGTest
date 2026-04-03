@@ -2,6 +2,7 @@ extends Node
 
 class RecruitEntry:
 	var config_id: StringName
+	var name_key: StringName
 	var price: int
 	var is_recruited: bool
 	
@@ -22,9 +23,10 @@ func build_recruit_data() -> void:
 	var data = JSON.parse_string(json_file.get_as_text())
 	
 	var recruitment_group = data.recruitment_groups.test1
-	for participant_config_id in recruitment_group:
+	for participant_info in recruitment_group:
 		var recruit_entry = RecruitEntry.new()
-		recruit_entry.config_id = participant_config_id
+		recruit_entry.config_id = participant_info.config_id
+		recruit_entry.name_key = participant_info.name_key
 		recruit_entry.price = 50
 		recruit_entry.is_recruited = false
 		

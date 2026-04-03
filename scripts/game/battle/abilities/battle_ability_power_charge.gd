@@ -51,4 +51,4 @@ func auto_select_sole_target() -> bool:
 	return true
 	
 func get_message() -> String:
-	return "%s is gearing up for a big attack!" % _target.get_display_name()
+	return tr("ABILITY_MESSAGE_POWER_CHARGE").format({"source": _source.get_display_name()})

@@ -40,12 +40,12 @@ func is_valid_for_target(possible_target: BattleParticipant) -> bool:
 	
 func get_message() -> String:
 	if _turns_remaining_until_run == 1:
-		return "%s runs away!" % _source.get_display_name()
+		return tr("ABILITY_MESSAGE_SCAREDY_CAT_RUN").format({"source": _source.get_display_name()})
 	elif _target.run_away_reason == &"damaged":
-		return "%s is injured and runs away!" % _target.get_display_name()
+		return tr("ABILITY_MESSAGE_SCAREDY_CAT_INJURED_RUN").format({"source": _source.get_display_name()})
 	elif _target.run_away_reason == &"enemy power charging":
-		return "%s runs away to avoid power charge!" % _target.get_display_name()
+		return tr("ABILITY_MESSAGE_SCAREDY_CAT_AVOID_POWER_CHARGE").format({"source": _source.get_display_name()})
 	elif _turns_remaining_until_run == 2:
-		return "%s will run away on its next turn" % _source.get_display_name()
+		return tr("ABILITY_MESSAGE_SCAREDY_CAT_WILL_RUN").format({"source": _source.get_display_name()})
 	else:
 		return "%s [invalid scaredy_cat_run behaviour]!" % _source.get_display_name()

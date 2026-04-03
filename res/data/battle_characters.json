@@ -1,6 +1,7 @@
 {
 	"player" :
 	{
+	    "name_key": "PLAYER",
 		"max_hp": 1,
 		"max_sp": 30,
 		"strength": 30,
@@ -15,6 +16,7 @@
 	},
 	"player_chronomancer" :
 	{
+	    "name_key": "PLAYER_CHRONOMANCER",
 		"max_hp": 80,
 		"max_sp": 30,
 		"strength": 10,
@@ -24,11 +26,12 @@
 
 		"participant_data_path": "res://game/participants/player/player_base.tres",
 
-		"abilities": ["attack", "nuke", "haste", "slow", "skip_turn", "repeat_turn", "skip_many_turns", "pass", "repeating_turn" ],
+		"abilities": ["attack", "nuke", "haste", "slow", "skip_turn", "repeat_turn", "pass", "repeating_turn" ],
         "ai": ""
 	},
     "player_warrior" :
     {
+	    "name_key": "PLAYER_WARRIOR",
         "max_hp": 140,
         "max_sp": 15,
         "strength": 30,
@@ -44,6 +47,7 @@
 
 	"ghoul" :
 	{
+	    "name_key": "ENEMY_GHOUL",
 		"max_hp": 20,
 		"max_sp": 10,
 		"strength": 30,
@@ -61,6 +65,7 @@
 	},
 	"goblin" :
 	{
+	    "name_key": "ENEMY_GOBLIN",
 		"max_hp": 17,
 		"max_sp": 0,
 		"strength": 30,
@@ -79,6 +84,7 @@
 
     "challenge_player_chronomancer" :
     {
+	    "name_key": "PLAYER_CHRONOMANCER",
         "max_hp": 80,
         "max_sp": 20,
         "strength": 10,
@@ -93,6 +99,7 @@
     },
     "challenge_player_chronomancer_2" :
     {
+	    "name_key": "PLAYER_CHRONOMANCER",
         "max_hp": 80,
         "max_sp": 15,
         "strength": 10,
@@ -107,6 +114,7 @@
     },
     "challenge_player_chronomancer_3" :
     {
+	    "name_key": "PLAYER_CHRONOMANCER",
         "max_hp": 80,
         "max_sp": 30,
         "strength": 10,
@@ -121,6 +129,7 @@
     },
     "challenge_player_warrior" :
     {
+	    "name_key": "PLAYER_WARRIOR",
         "max_hp": 140,
         "max_sp": 15,
         "strength": 30,
@@ -135,6 +144,7 @@
     },
     "challenge_player_warrior_2" :
     {
+	    "name_key": "PLAYER_WARRIOR",
         "max_hp": 140,
         "max_sp": 15,
         "strength": 30,
@@ -150,6 +160,7 @@
   
     "challenge_scaredy_cat" :
     {
+	    "name_key": "ENEMY_SCAREDY_CAT",
         "max_hp": 65,
         "max_sp": 0,
         "strength": 30,
@@ -167,6 +178,7 @@
     },
     "challenge_scaredy_cat_2" :
     {
+	    "name_key": "ENEMY_SCAREDY_CAT",
         "max_hp": 130,
         "max_sp": 0,
         "strength": 30,
@@ -185,6 +197,7 @@
   
     "challenge_smasher" :
     {
+	    "name_key": "ENEMY_SCAREDY_OGRE",
         "max_hp": 200,
         "max_sp": 0,
         "strength": 30,
@@ -202,6 +215,7 @@
     },
     "challenge_grim_reaper" :
     {
+	    "name_key": "ENEMY_SCAREDY_GRIM_REAPER",
         "max_hp": 666,
         "max_sp": 0,
         "strength": 30,

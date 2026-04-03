@@ -41,9 +41,9 @@ func play_animation(anim_id: StringName, target_uid: StringName) -> void:
 	element.play_animation(anim_id)
 	
 # Enemy
-func add_enemy(uid: StringName, character_graphics: PackedScene, hp: int, max_hp: int) -> void:
+func add_enemy(uid: StringName, name_key: StringName, character_graphics: PackedScene, hp: int, max_hp: int) -> void:
 	var ui_enemy := $EnemyPrototype.duplicate() as UIEnemy
-	ui_enemy.populate(uid, character_graphics, hp, max_hp)
+	ui_enemy.populate(name_key, character_graphics, hp, max_hp)
 	ui_enemy.show()
 	_enemies[uid] = ui_enemy
 	add_child(ui_enemy)

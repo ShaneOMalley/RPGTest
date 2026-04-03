@@ -1,6 +1,7 @@
 class_name BattleAbility extends Resource
 
 var _ability_id: StringName
+var _name_key: StringName
 var _source: BattleParticipant
 var _target: BattleParticipant
 var _turn_target: BattleTurn
@@ -98,11 +99,11 @@ func execute(in_target: BattleParticipant, in_turn_target: BattleTurn = null) ->
 	consume_resources()
 	
 	# all abilities: shrink current turn
-	var turn_manipulation := BattleTurn.TurnManipulation.new()
-	turn_manipulation.turns = [BattleManager.get_current_turn()]
-	turn_manipulation.anim_name = &"shrink"
-	turn_manipulation.type = BattleTurn.TurnManipulation.Type.REMOVE
-	BattleManager.on_battle_turn_manipulation.emit([turn_manipulation])
+	# var turn_manipulation := BattleTurn.TurnManipulation.new()
+	# turn_manipulation.turns = [BattleManager.get_current_turn()]
+	# turn_manipulation.anim_name = &"shrink"
+	# turn_manipulation.type = BattleTurn.TurnManipulation.Type.REMOVE
+	# BattleManager.on_battle_turn_manipulation.emit([turn_manipulation])
 	
 func execute_out_of_combat(_in_source: BattleParticipant, _in_target: BattleParticipant) -> void:
 	consume_resources()
@@ -149,10 +150,10 @@ func get_message() -> String:
 	
 func get_display_name() -> String:
 	if _consumable_item_id == &"":
-		return _ability_id
+		return tr(_name_key)
 		
 	var consumable_item_count = PlayerPartyManager.inventory.items.get(_consumable_item_id, 0)
-	return "%s (x%d)" % [_ability_id, consumable_item_count]
+	return tr(_name_key).format({"quantity": consumable_item_count})
 	
 # This handles case where turn is repeated, but the original target is no longer valid
 # return in format: [target: Participant, turn_target: BattleTurn]
@@ -188,9 +189,10 @@ func set_timer(time: float, callable: Callable) -> void:
 func set_lifetime(lifetime: float) -> void:
 	set_timer(lifetime, end)
 
-func initialize(in_source: BattleParticipant, in_ability_id: StringName) -> void:
+func initialize(in_source: BattleParticipant, in_ability_id: StringName, in_name_key: StringName) -> void:
 	_source = in_source
 	_ability_id = in_ability_id
+	_name_key = in_name_key
 
 func show_message(time: float = 1.1) -> void:
 	BattleManager.request_message(get_message(), time)

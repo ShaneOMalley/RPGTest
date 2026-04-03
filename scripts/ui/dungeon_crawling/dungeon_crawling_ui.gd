@@ -13,7 +13,7 @@ func minimap_set_player_rotation(in_rotation: float):
 	($Minimap as Minimap).minimap_set_player_rotation(in_rotation)
 		
 func update_floor_progress(current_floor_number: int, num_floors: int):
-	($DungeonFloorText as RichTextLabel).text = &"Floor %d/%d" % [current_floor_number, num_floors]
+	($DungeonFloorText as RichTextLabel).text = tr("UI_DUNGEON_FLOOR").format({"floor_number": current_floor_number, "max_floor_number": num_floors})
 	
 func update_player_interactable(message: String):
 	if !message.is_empty():

@@ -36,7 +36,7 @@ func setup_ui() -> void:
 		var button = ($Menu/ChallengeLevelTemplate.duplicate() as Button)
 		button.pressed.connect(on_click_challenge_mode.bind(challenge_mode_entry))
 		button.show()
-		button.text = challenge_mode_entry.config_id
+		button.text = tr("UI_CHALLENGE_MODE_LEVEL").format({"level_number": challenge_mode_entry.challenge_number})
 		$Menu/ChallengeLevelTemplate.add_sibling(button)
 		
 		# todo set button text

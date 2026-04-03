@@ -20,7 +20,6 @@ metadata/_custom_type_script = "uid://ccj4csqnfquqi"
 
 [node name="GPUParticles2D" type="GPUParticles2D" parent="."]
 material = SubResource("CanvasItemMaterial_kwyp4")
-emitting = false
 amount = 1
 texture = ExtResource("2_u5kmd")
 lifetime = 3.25

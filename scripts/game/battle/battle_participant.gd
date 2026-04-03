@@ -3,6 +3,7 @@ class_name BattleParticipant extends Node
 var affiliation: BattleManager.Affiliation
 var config_id: StringName
 var uid: StringName
+var name_key: StringName
 var ai: StringName
 
 var abilities: Dictionary[StringName, BattleAbility]
@@ -81,7 +82,7 @@ func _to_string() -> String:
 	return "「%s」" % uid
 	
 func get_display_name() -> String:
-	return config_id
+	return tr(name_key)
 	
 static var config_id_counters: Dictionary[StringName, int]
 static func create_unique_id(in_config_id: StringName) -> StringName:
@@ -102,6 +103,7 @@ static func create_from_config(in_config_id: StringName) -> BattleParticipant:
 	var participant := BattleParticipant.new();
 	participant.config_id = in_config_id
 	participant.uid = create_unique_id(in_config_id)
+	participant.name_key = data.name_key
 	participant.ai = data.ai
 	participant._max_hp = data.max_hp
 	participant._hp = data.max_hp
@@ -128,7 +130,7 @@ static func create_from_config(in_config_id: StringName) -> BattleParticipant:
 			var ability_resource_path := BattleAbility.ability_class_registry[ability_id]
 			# This is smelly. It would be better to refactor so that resources are read-only, and there is a separate "instance" ("spec" in GAS terminology)
 			var ability := load(ability_resource_path).duplicate() as BattleAbility
-			ability.initialize(participant, ability_id)
+			ability.initialize(participant, ability_id, "ABILITY_" + ability_id.to_upper())
 			participant.abilities[ability_id] = ability
 
 	return participant

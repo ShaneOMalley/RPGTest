@@ -49,4 +49,4 @@ func is_valid_for_target(possible_target: BattleParticipant) -> bool:
 	return possible_target.affiliation != _source.affiliation
 	
 func get_message() -> String:
-	return "%s attacks %s for %d damage, but also hurts itself!" % [_source.get_display_name(), _target.get_display_name(), target_effect.damage]
+	return tr("ABILITY_MESSAGE_SMASHER_SMASH").format({"source": _source.get_display_name(), "target": _target.get_display_name(), "damage_amount": target_effect.damage})

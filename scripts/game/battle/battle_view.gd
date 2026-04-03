@@ -57,8 +57,8 @@ func play_animation(anim_id: StringName, target_uid: StringName) -> void:
 func clear_enemies() -> void:
 	enemies_ui.clear_enemies()
 
-func setup_enemy(uid: StringName, character_graphics: PackedScene, hp: int, max_hp: int) -> void:
-	enemies_ui.add_enemy(uid, character_graphics, hp, max_hp)
+func setup_enemy(uid: StringName, name_key: StringName, character_graphics: PackedScene, hp: int, max_hp: int) -> void:
+	enemies_ui.add_enemy(uid, name_key, character_graphics, hp, max_hp)
 
 func update_enemy_hp(uid: StringName, hp: int, max_hp: int) -> void:
 	enemies_ui.update_enemy_hp(uid, hp, max_hp)
@@ -67,8 +67,8 @@ func remove_enemy(uid: StringName) -> void:
 	enemies_ui.remove_enemy(uid)
 
 # Player
-func setup_player(uid: StringName, character_graphics: PackedScene, hp: int, max_hp: int, sp: int, max_sp: int) -> void:
-	player_party_ui.add_player(uid, character_graphics, hp, max_hp, sp, max_sp)
+func setup_player(uid: StringName, name_key: StringName, character_graphics: PackedScene, hp: int, max_hp: int, sp: int, max_sp: int) -> void:
+	player_party_ui.add_player(uid, name_key, character_graphics, hp, max_hp, sp, max_sp)
 
 func update_player_hp(uid: StringName, hp: int, max_hp: int) -> void:
 	player_party_ui.update_player_hp(uid, hp, max_hp)
@@ -87,6 +87,7 @@ func hide_all_players_info() -> void:
 	
 # Message UI
 func show_message(message: String, duration: float) -> void:
+	print("Message: " + message)
 	player_party_ui.show_message(message, duration)
 
 # Battle Menu

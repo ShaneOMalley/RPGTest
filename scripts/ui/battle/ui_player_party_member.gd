@@ -6,13 +6,13 @@ var _sp: int
 var _max_sp: int
 var _character_graphics_instance: UICharacterGraphics
 
-func populate(participant_name: String, character_graphics: PackedScene, hp: int, max_hp: int, sp: int, max_sp: int) -> void:
+func populate(participant_name: StringName, character_graphics: PackedScene, hp: int, max_hp: int, sp: int, max_sp: int) -> void:
 	_character_graphics_instance = character_graphics.instantiate()
 	_character_graphics_instance.play_animation(&"idle")
 	$Border/Content/CharacterGraphicsParent.add_child(_character_graphics_instance)
 	$Border/Content.show()
 
-	$Border/Content/TextName.text = participant_name
+	$Border/Content/TextName.text = tr(participant_name)
 	update_hp(hp, max_hp)
 	update_sp(sp, max_sp)
 

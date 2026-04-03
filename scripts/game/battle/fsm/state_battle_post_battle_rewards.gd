@@ -15,6 +15,6 @@ func on_enter() -> void:
 		
 		healing_effect.apply()
 		restore_sp_effect.apply()
-	
-	BattleManager.request_message("you got %d gold!\nRestored some hp and sp" % gold, 1.1)
+		
+	BattleManager.request_message(tr("BATTLE_RESULT_MESSAGE").format({"gold_amount": gold}), 1.1)
 	BattleManager.block_fsm(1.1)

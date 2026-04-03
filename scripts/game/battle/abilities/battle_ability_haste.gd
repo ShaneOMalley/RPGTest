@@ -50,4 +50,4 @@ func is_valid_for_target(_possible_target: BattleParticipant) -> bool:
 	return true
 	
 func get_message() -> String:
-	return "%s speeds %s up" % [_source.get_display_name(), _target.get_display_name()]
+	return tr("ABILITY_MESSAGE_HASTE").format({"source": _source.get_display_name(), "target": _target.get_display_name()})

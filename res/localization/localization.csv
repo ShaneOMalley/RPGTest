@@ -1,0 +1,61 @@
+key,en,jp
+PLAYER_WARRIOR,Warrior,戦士
+PLAYER_CHRONOMANCER,Chronomancer,時間の魔術師
+ENEMY_GOBLIN,Goblin,ゴブリン
+ENEMY_GHOUL,Ghoul,ゴースト
+ENEMY_GRIM_REAPER,Grim Reaper,死神
+ENEMY_OGRE,Ogre,オーガー
+ENEMY_SCAREDY_CAT,Scaredy Cat,弱虫
+ITEM_POTION,Potion,ポーション
+UI_START_DUNGEON,Start Dungeon,はじめる
+UI_RECRUITMENT,Recruitment,仲間にする
+UI_RECRUITMENT_RECRUITED,Recruited {participant},「{participant}」を仲間にした！
+UI_RECRUITMENT_RECRUIT,Recruit {participant} ({gold} gold),「{participant}」を仲間にする（{gold}金）
+UI_RECRUITMENT_GOLD,Gold: {gold},金:{gold}
+UI_CHALLENGE_MODE,Challenge Mode,難題モード
+UI_CHALLENGE_MODE_LEVEL,Level {level_number},レベル{level_number}
+UI_LANGUAGE_CHANGE_TO_ENGLISH,Change Language to English,Change Language to English
+UI_LANGUAGE_CHANGE_TO_JAPANESE,日本語に変更する,日本語に変更する
+UI_BACK,Back,もどる
+UI_PLAYER_HP,HP: {hp}/{max_hp},HP: {hp}/{max_hp}
+UI_PLAYER_SP,SP: {sp}/{max_sp},SP: {sp}/{max_sp}
+UI_DUNGEON_FLOOR,Floor {floor_number}/{max_floor_number},{floor_number}/{max_floor_number}階
+UI_DUNGEON_NAME_GREYBOX_DIMENSION,The Greybox Dimension,灰色地獄
+UI_BATTLE_TURN_MODIFIER_SKIP,Skipping!,スキップ
+UI_BATTLE_TURN_MODIFIER_REPEAT,Repeating!,再行動
+UI_BATTLE_TURN_MODIFIER_POWER_CHARGE_ATTACK,Unleashing Attack!,強くたたく
+ABILITY_WITH_SP_COST,{ability} (SP: {sp_cost}),{ability} (SP: {sp_cost})
+ABILITY_POTION,Potion (x{quantity}),ポーション（x{quantity}）
+ABILITY_ATTACK,Attack,たたく
+ABILITY_PASS,Pass,パス
+ABILITY_MAGIC,Magic,まほう
+ABILITY_CANCEL,Cancel,キャンセル
+ABILITY_REPEAT_TURN,Repeat Turn,再行動
+ABILITY_SKIP_TURN,Skip Turn,行動封じ
+ABILITY_SLOW,Slow,速度減る
+ABILITY_HASTE,Haste,速度増える
+ABILITY_POWER_CHARGE,Power Charge,力をためる
+ABILITY_POWER_CHARGE_ATTACK,Power Charge Attack,強くたたく
+ABILITY_CATEGORY_MAGIC,Magic,魔法
+ABILITY_CATEGORY_ITEM,Item,アイテム
+ABILITY_CATEGORY_DEBUG,Debug,Debug
+ABILITY_MESSAGE_SCAREDY_CAT_RUN,{source} runs away!,「{source}」は脱出した！
+ABILITY_MESSAGE_SCAREDY_CAT_INJURED_RUN,{source} is injured and runs away!,「{source}」はケガして　脱出した！
+ABILITY_MESSAGE_SCAREDY_CAT_AVOID_POWER_CHARGE,{source} runs away to avoid power charge!,「力をためる」をそらすのために　「{source}」は脱出した！
+ABILITY_MESSAGE_SCAREDY_CAT_WILL_RUN,{source} will run away on its next turn,次の出番に「{source}」は脱出する
+ABILITY_MESSAGE_GRIM_REAPER_LEAVE,{source} senses there will be nore more death. It leaves,
+ABILITY_MESSAGE_GRIM_REAPER_KILL,{target} was near enough to death. {source} guides them to the afterlife!,
+ABILITY_MESSAGE_GRIM_REAPER_WAIT,There are no souls near death. {source} awaits...,
+ABILITY_MESSAGE_SMASHER_SMASH,{source} Attacks {target} for {damage_amount} damage... but also hurts itself,{damage_amount}ダメージほどに　「{source}」は「{target}」をたたいたけど、自身もケガした！
+ABILITY_MESSAGE_ATTACK,{source} attacks {target} for {damage_amount} damage!,{damage_amount}ダメージほどに「{source}」は「{target}」をたたいた！
+ABILITY_MESSAGE_POTION,{source} heals {target} for {hp_amount} hp!,「{hp_amount}」HPほどに　「{source}」は「{target}」をなおした！
+ABILITY_MESSAGE_PASS,{source} does nothing...,「{source}」は何もやってない
+ABILITY_MESSAGE_SLOW,{source} slows {target} down,「{source}」は「{target}」の速度を減った
+ABILITY_MESSAGE_HASTE,{source} speeds {target} up,「{source}」は「{target}」の速度を増えた
+ABILITY_MESSAGE_POWER_CHARGE,{source} is gearing up for a big attack,「{source}」は力をためている
+ABILITY_MESSAGE_REPEAT_TURN,{target} will repeat whatever they do next,「{target}」の次の出番を再行動させる
+ABILITY_MESSAGE_REPEATING_TURN,{target} is repeating their turn!,「{target}」の出番を再行動させる
+ABILITY_MESSAGE_SKIP_TURN,{target} will skip their next turn,「{target}」の次の出番をスキップさせる
+BATTLE_RESULT_MESSAGE,You got {gold_amount} gold.\nRestored some HP and MP,{gold_amount}金を手に入れた\nHPとMPを少し回復した
+DUNGEON_OPEN_CHEST,[E] Open Chest,[E] 宝ばこをあける
+DUNGEON_FOUND_ITEM,Found {found_item}!,「{found_item}」を見つけた！

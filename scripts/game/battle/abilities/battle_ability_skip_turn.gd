@@ -41,4 +41,4 @@ func is_valid_for_target(_possible_target: BattleParticipant) -> bool:
 	return true
 
 func get_message() -> String:
-	return "%s will skip their next turn!" % _target.get_display_name()
+	return tr("ABILITY_MESSAGE_SKIP_TURN").format({"target": _target.get_display_name()})
