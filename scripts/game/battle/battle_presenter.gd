@@ -203,6 +203,7 @@ func on_request_show_battle_menu(battle_participant: BattleParticipant, battle_t
 				entry.ability_sp_cost = ability.sp_cost
 				entry.can_activate = ability.can_activate()
 				entry.requires_turn_target = ability.requires_turn_target()
+				entry.ui_sort_priority = ability.ui_sort_priority
 
 				var valid_participants = BattleManager.get_participants().filter(ability.is_valid_for_target)
 				for valid_participant in valid_participants:
@@ -237,6 +238,7 @@ func on_request_out_of_combat_menu() -> void:
 					return results
 				entry.valid_for_target_func = func(target_uid): return ability.is_valid_for_target(PlayerPartyManager.get_participant_with_uid(target_uid))
 				entry.can_activate_func = func(): return !PlayerPartyManager.get_participants().filter(ability.is_valid_for_target).is_empty() and ability.has_enough_resources()
+				entry.ui_sort_priority = ability.ui_sort_priority
 				
 				entries.append(entry)
 	

@@ -15,6 +15,7 @@ signal on_end()
 @export var fx_activate: PackedScene
 @export var fx_affect_target: PackedScene
 @export var sp_cost: int = 0
+@export var ui_sort_priority: int = 0
 
 static var ability_class_registry: Dictionary[StringName, String] = {
 	# Common
@@ -84,6 +85,12 @@ static var ability_categories: Dictionary[StringName, StringName] = {
 	# Challenge Scaredy Cat
 	&"run_away": &"",
 	&"scaredy_cat_run": &"",
+}
+
+static var ability_category_ui_sort_priorities: Dictionary[StringName, int] = {
+	&"magic": 2,
+	&"item": 1,
+	&"debug": -900,
 }
 
 # TODO: Right now there is an assumption that the only execution context 
