@@ -4,9 +4,18 @@ var message: String
 var direction: Player.Direction
 var _on_execute: Callable
 
+var enabled := true;
+var is_one_shot := true;
+
 func execute() -> void:
+	if !enabled:
+		return
+	
 	if _on_execute.is_valid():
 		_on_execute.call()
+		
+	if is_one_shot:
+		enabled = false
 	
 func _init(in_direction: Player.Direction, in_on_execute: Callable, in_message: String) -> void:
 	_on_execute = in_on_execute

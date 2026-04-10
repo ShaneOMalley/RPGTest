@@ -26,7 +26,8 @@ func save_participants() -> void:
 	
 # For challenge mode
 func reload_participants() -> void:
-	_participants = _participants_copy
+	_participants = _participants_copy.duplicate()
+	PlayerPartyManager.on_player_party_updated.emit(PlayerPartyManager._participants)
 
 # For challenge mode
 func clear_participants() -> void:
@@ -58,7 +59,7 @@ func _init() -> void:
 	
 func reset_player_party():
 	_participants.clear()
-	add_participants_async([&"player_warrior", &"player_chronomancer"])
+	add_participants_async([&"player_warrior", &"player_chronomancer", &"player"])
 
 func _ready():
 	# add_participants_async([&"player", &"player"])

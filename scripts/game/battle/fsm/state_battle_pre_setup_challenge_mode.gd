@@ -27,6 +27,7 @@ func _on_load_complete() -> void:
 	PlayerPartyManager.save_participants()
 	PlayerPartyManager.clear_participants()
 	PlayerPartyManager._participants = BattleManager.get_players() # todo, encapsulate this
+	PlayerPartyManager.on_player_party_updated.emit(PlayerPartyManager._participants)
 	# PlayerPartyManager.add_participants_async(player_group)
 	
 	var timer := BattleManager.get_tree().create_timer(0.5)

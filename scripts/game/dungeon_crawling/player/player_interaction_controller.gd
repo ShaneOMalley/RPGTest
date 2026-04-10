@@ -16,7 +16,8 @@ func prepare_interactables(grid_x: int, grid_y: int, direction: Player.Direction
 	var grid_position = Vector2i(grid_x, grid_y)
 	
 	var interactable = DungeonManager.interactable_data.get(grid_position, null)
-	_valid_interactable = interactable if is_instance_valid(interactable) and interactable.direction == direction else null
+	var valid = is_instance_valid(interactable) and interactable.enabled and interactable.direction == direction
+	_valid_interactable = interactable if valid else null
 		
 	on_interactable_updated.emit(_valid_interactable)
 	
@@ -66,6 +67,7 @@ func _process(delta: float) -> void:
 		if is_instance_valid(_valid_interactable):
 			_valid_interactable.execute()
 			on_execute_interaction.emit(_valid_interactable)
+			on_interactable_updated.emit(null)
 			
 	# TODO: Find more suitable place for this. Maybe have generic "player action" input listener
 	if Input.is_action_just_pressed(&"player_menu"):
