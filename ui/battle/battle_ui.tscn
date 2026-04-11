@@ -130,7 +130,7 @@ size_flags_stretch_ratio = 2.0
 visible = false
 custom_minimum_size = Vector2(0, 30)
 layout_mode = 2
-text = "Attack"
+text = "Prototype"
 alignment = 0
 script = ExtResource("3_wfc18")
 

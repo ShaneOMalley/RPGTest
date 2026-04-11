@@ -45,23 +45,33 @@ func _make_menu_button(text: String, disabled: bool, mouse_entered_callback: Cal
 	
 	# if _num_used_battle_menu_entries == 1:
 	# 	print("grabbing focus on %s button", text)
-	ui_entry.grab_focus()
 	
 	return ui_entry
 	
 func _sort_menu_buttons() -> void:
 	var container := $BattleMenuBackground/BattleMenu
 	
-	var sorted_buttons: Array = container.get_children().duplicate()
+	var sorted_buttons: Array = container.get_children()#.duplicate()
 	sorted_buttons.sort_custom(func(a, b): 
-		var a_priority = a.get_meta(&"ui_sort_priority", 0)
-		var b_priority = b.get_meta(&"ui_sort_priority", 0)
+		var a_priority = a.get_meta(&"ui_sort_priority", -10)
+		var b_priority = b.get_meta(&"ui_sort_priority", -10)
 		return a_priority > b_priority)
 		
 	for i in range(sorted_buttons.size()):
 		container.move_child(sorted_buttons[i], i)
 		
 	container.queue_sort()
+	_highlight_first_button.call_deferred()
+
+func _highlight_first_button() -> void:
+	var container := $BattleMenuBackground/BattleMenu as VBoxContainer
+	var num_buttons := container.get_child_count()
+	
+	for i in range(num_buttons):
+		if container.get_child(i).visible:
+			container.get_child(i).grab_focus()
+			return
+	
 	
 class BattleMenuEntry:
 	var ability_id: StringName

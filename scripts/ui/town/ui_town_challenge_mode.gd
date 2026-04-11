@@ -25,6 +25,8 @@ func refresh_ui() -> void:
 		
 	if unlock_level >= ChallengeManager.MAX_CHALLENGES + 1:
 		$AllChallengesComplete.show()
+		
+	($Menu/Back as Button).grab_focus()
 
 func setup_ui() -> void:
 	var challenge_mode_data := TownManager.challenge_mode_data
@@ -52,6 +54,5 @@ func go_back() -> void:
 func _ready() -> void:
 	$Menu/ChallengeLevelTemplate.hide()
 	($Menu/Back as Button).pressed.connect(go_back)
-	($Menu/Back as Button).grab_focus()
 	$AllChallengesComplete.hide()
 	setup_ui()
