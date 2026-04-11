@@ -37,6 +37,9 @@ func set_turn_text_and_time(turn_uid: int, text: String, modifier_text: String, 
 func delete_turn(turn_uid: int) -> void:
 	turns_ui.delete_turn(turn_uid)
 	
+func clear_turns() -> void:
+	turns_ui.clear_turns()
+	
 # FX
 func play_fx(effect_prototype: PackedScene, target_uid: StringName) -> void:
 	# Just attempt to play for both enemies and player characters

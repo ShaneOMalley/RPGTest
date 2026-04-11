@@ -87,6 +87,11 @@ func delete_turn(turn_uid: int) -> void:
 	_ui_turn_entries.erase(_uid_to_ui_turn[turn_uid])
 	_uid_to_ui_turn.erase(turn_uid)
 	
+func clear_turns() -> void:
+	var turn_uids = _uid_to_ui_turn.keys().duplicate()
+	for turn_uid in turn_uids:
+		delete_turn(turn_uid)
+	
 func play_animation_for_turn(turn_uid: int, anim_name: StringName) -> void:
 	var turn_ui := _uid_to_ui_turn[turn_uid]
 	turn_ui.play_animation(anim_name)

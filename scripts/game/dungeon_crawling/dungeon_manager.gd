@@ -167,8 +167,8 @@ func set_dungeon_floor_index(in_index: int) -> void:
 	
 	_setup_encounter_data(_current_dungeon_data.encounter_data_per_floor[in_index])
 	_setup_treasure_data(_current_dungeon_data.treasure_data_per_floor[in_index])
-	var interactable_data = geometry.get_meta(&"interactable_data")
-	_setup_interactable_data(interactable_data)
+	var geometry_interactable_data = geometry.get_meta(&"interactable_data")
+	_setup_interactable_data(geometry_interactable_data)
 	_reset_steps_counter()
 	
 	on_dungeon_floor_start.emit(_current_floor_index + 1, _floors.size())
@@ -177,9 +177,6 @@ func goto_next_floor() -> void:
 	_current_floor_index += 1
 	if _current_floor_index >= _floors.size():
 		end_dungeon_crawling()
-		TownManager.enter_town_scene()
-		PlayerPartyManager.reset_player_party()
-		BattleView.hide_ui()
 	else:
 		set_dungeon_floor_index(_current_floor_index)
 		
@@ -213,9 +210,14 @@ func reset() -> void:
 		num_floors -= 1
 		
 	_current_floor_index = -1
-
+	
 func end_dungeon_crawling() -> void:
+	if _current_scene:
+		_current_scene.queue_free()
 	on_dungeon_crawling_finished.emit()
+	TownManager.enter_town_scene()
+	PlayerPartyManager.reset_player_party()
+	BattleView.hide_ui()
 	
 var _player_input_blocked_reasons: Dictionary[Variant, bool]
 func get_player_input_blocked() -> bool:

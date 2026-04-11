@@ -38,6 +38,7 @@ func on_battle_fade_complete() -> void:
 func on_battle_finished() -> void:
 	_previous_battle_turns.clear()
 	BattleView.hide_battle_ui()
+	BattleView.clear_turns()
 	
 func on_dungeon_crawling_start(_player_position: Vector3, _player_rotation: float) -> void:
 	BattleView.setup_battle_ui()
@@ -259,7 +260,7 @@ func _ready():
 	BattleManager.on_message_requested.connect(on_message_requested)
 	
 	BattleManager.on_battle_effect_applied.connect(on_battle_effect_applied)
-	
+
 	BattleManager.on_battle_turn_manipulation.connect(on_battle_turn_manipulation)
 	BattleManager.on_battle_ability_execute.connect(on_battle_ability_execute)
 	# BattleManager.on_battle_ability_prepare_start.connect(on_battle_ability_prepare_start)

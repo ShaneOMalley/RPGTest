@@ -23,6 +23,7 @@ func play_fx(effect_prototype: PackedScene, target_uid: StringName) -> void:
 	var element := _enemies[target_uid]
 
 	instance.position = element.get_global_transform_with_canvas().get_origin() + element.size / 2
+	instance.z_index = 2
 	get_tree().root.add_child(instance)
 	
 	_fx_instances.append(FXInstance.new(target_uid, effect_prototype, instance))
@@ -56,6 +57,10 @@ func remove_enemy(uid: StringName) -> void:
 		_enemies[uid].queue_free()
 		
 func clear_enemies() -> void:
+	for enemy_uid in _enemies:
+		if _enemies.has(enemy_uid) and is_instance_valid(_enemies[enemy_uid]):
+			_enemies[enemy_uid].queue_free()
+		
 	_enemies.clear()
 	_fx_instances.clear()
 		

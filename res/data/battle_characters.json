@@ -197,7 +197,7 @@
   
     "challenge_smasher" :
     {
-	    "name_key": "ENEMY_SCAREDY_OGRE",
+	    "name_key": "ENEMY_OGRE",
         "max_hp": 200,
         "max_sp": 0,
         "strength": 30,
@@ -215,7 +215,7 @@
     },
     "challenge_grim_reaper" :
     {
-	    "name_key": "ENEMY_SCAREDY_GRIM_REAPER",
+	    "name_key": "ENEMY_GRIM_REAPER",
         "max_hp": 666,
         "max_sp": 0,
         "strength": 30,
