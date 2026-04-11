@@ -134,6 +134,13 @@ text = "Prototype"
 alignment = 0
 script = ExtResource("3_wfc18")
 
+[node name="BattleMenuHeader" type="Label" parent="BattleMenu/BattleMenuBackground"]
+layout_mode = 1
+offset_top = -30.0
+offset_right = 51.0
+offset_bottom = -7.0
+text = "Battle Menu Header"
+
 [node name="Padding2" type="Control" parent="BattleMenu"]
 layout_mode = 2
 size_flags_horizontal = 3

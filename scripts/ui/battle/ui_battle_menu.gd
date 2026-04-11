@@ -87,6 +87,7 @@ class BattleMenuEntry:
 func show_battle_menu(entries: Array[BattleMenuEntry], current_category: StringName = &"") -> void:
 	_hide_all_menu_buttons()
 	_clear_turns_ui_connections()
+	_hide_battle_menu_header()
 	
 	var seen_categories: Dictionary[StringName, bool]
 	
@@ -105,7 +106,7 @@ func show_battle_menu(entries: Array[BattleMenuEntry], current_category: StringN
 				
 			var on_pressed: Callable
 			if entry.auto_target_id == &"":
-				on_pressed = func(): show_target_menu(entry.ability_id, entry.category, entry.valid_participant_targets, entries, entry.requires_turn_target)
+				on_pressed = func(): show_target_menu(entry.ability_id, entry.category, entry.valid_participant_targets, entries, text, entry.requires_turn_target)
 			else:
 				on_pressed = func(): ability_select_target(-1, entry.ability_id, entry.auto_target_id)
 	
@@ -122,8 +123,9 @@ func show_battle_menu(entries: Array[BattleMenuEntry], current_category: StringN
 	_sort_menu_buttons()
 	show()
 	
-func show_target_menu(ability_id: StringName, ability_category: StringName, valid_participant_targets: Array[StringName], previous_entries: Array[BattleMenuEntry], requires_turn_target: bool = false) -> void:
+func show_target_menu(ability_id: StringName, ability_category: StringName, valid_participant_targets: Array[StringName], previous_entries: Array[BattleMenuEntry], ability_string: String, requires_turn_target: bool = false) -> void:
 	_hide_all_menu_buttons()
+	_show_battle_menu_header(ability_string)
 	
 	var options := valid_participant_targets.duplicate() as Array[StringName]
 	options.push_front(&"cancel")
@@ -171,6 +173,7 @@ class OutOfCombatAbilityEntry:
 
 func show_out_of_combat_menu(entries: Array[OutOfCombatAbilityEntry]) -> void:
 	_hide_all_menu_buttons()
+	_hide_battle_menu_header()
 	
 	var first_source_id := entries[0].source_id if !entries.is_empty() else &""
 	var ability_sort_priorities := BattleAbility.ability_category_ui_sort_priorities
@@ -185,6 +188,7 @@ func show_out_of_combat_menu(entries: Array[OutOfCombatAbilityEntry]) -> void:
 	
 func out_of_combat_select_source(entries: Array[OutOfCombatAbilityEntry], category_filter: StringName) -> void:
 	_hide_all_menu_buttons()
+	_hide_battle_menu_header()
 	
 	var sources: Dictionary[StringName, bool]
 	for entry in entries:
@@ -199,6 +203,7 @@ func out_of_combat_select_source(entries: Array[OutOfCombatAbilityEntry], catego
 	
 func out_of_combat_select_ability(entries: Array[OutOfCombatAbilityEntry], category_filter: StringName, source_filter: StringName) -> void:
 	_hide_all_menu_buttons()
+	_hide_battle_menu_header()
 	
 	if category_filter == &"item":
 		_make_menu_button(tr("ABILITY_CANCEL"), false, Callable(), show_out_of_combat_menu.bind(entries), CANCEL_BUTTON_PRIORITY)
@@ -215,6 +220,9 @@ func out_of_combat_select_ability(entries: Array[OutOfCombatAbilityEntry], categ
 	
 func out_of_combat_select_target(entries: Array[OutOfCombatAbilityEntry], current_entry: OutOfCombatAbilityEntry) -> void:
 	_hide_all_menu_buttons()
+	# _show_battle_menu_header(current_entry.display_name_func.call())
+	var update_header = func(): _show_battle_menu_header(current_entry.display_name_func.call())
+	update_header.call_deferred()
 	
 	var valid_targets = current_entry.valid_participant_targets_func.call()
 	_make_menu_button(tr("ABILITY_CANCEL"), false, Callable(), out_of_combat_select_ability.bind(entries, current_entry.category_id, current_entry.source_id), CANCEL_BUTTON_PRIORITY)
@@ -229,6 +237,9 @@ func out_of_combat_execute_ability(entries: Array[OutOfCombatAbilityEntry], curr
 	on_ability_out_of_combat_execute.emit(current_entry.ability_id, current_entry.source_id, target_id)
 	if !current_entry.can_activate_func.call():
 		out_of_combat_select_ability(entries, current_entry.category_id, current_entry.source_id)
+	else:
+		var update_header = func(): _show_battle_menu_header(current_entry.display_name_func.call())
+		update_header.call_deferred()
 
 func hide_battle_menu() -> void:
 	hide()
@@ -245,6 +256,16 @@ func update_highlight_participant(new_participant_uid: StringName):
 		BattleManager.play_fx(highlight_fx_template, participant)
 	
 	_current_highlight_participant_uid = new_participant_uid
+	
+func _show_battle_menu_header(header: String) -> void:
+	if header != "":
+		$BattleMenuBackground/BattleMenuHeader.text = header
+		$BattleMenuBackground/BattleMenuHeader.show()
+	else:
+		$BattleMenuBackground/BattleMenuHeader.hide()
+		
+func _hide_battle_menu_header() -> void:
+	$BattleMenuBackground/BattleMenuHeader.hide()
 
 func stop_highlight_participant():
 	update_highlight_participant(&"")
@@ -256,6 +277,7 @@ func ability_prepare(turn_target_uid: int, ability_id: StringName, target_uid: S
 	
 func ability_cancel(ability_id: StringName, previous_entries: Array[BattleMenuEntry], ability_category: StringName) -> void:
 	print(" -- CANCEL")
+	_hide_battle_menu_header()
 	on_ability_cancel.emit(ability_id)
 	stop_highlight_participant()
 	show_battle_menu(previous_entries, ability_category)
@@ -267,6 +289,7 @@ func ability_cancel_prepare(ability_id: StringName) -> void:
 	
 func ability_select_target(turn_target_uid: int, ability_id: StringName, target_uid: StringName) -> void:
 	print(" -- SELECT TARGET")
+	_hide_battle_menu_header()
 	stop_highlight_participant()
 	on_ability_and_target_selected.emit(ability_id, target_uid, turn_target_uid)
 	
@@ -289,3 +312,4 @@ func _clear_turns_ui_connections() -> void:
 func _ready() -> void:
 	turns_ui = get_parent().find_child(&"BattleBackground").find_child(&"Turns")
 	hide()
+	$BattleMenuBackground/BattleMenuHeader.hide()

@@ -182,10 +182,10 @@ func can_activate() -> bool:
 	return false
 	
 func is_hidden() -> bool:
-	if _consumable_item_id == &"":
-		return false
+	if _consumable_item_id != &"":
+		return !PlayerPartyManager.inventory.items.has(_consumable_item_id)
 		
-	return !PlayerPartyManager.inventory.items.has(_consumable_item_id)
+	return false
 
 # Helper function for calling a callable after a certain amount of time
 func set_timer(time: float, callable: Callable) -> void:
