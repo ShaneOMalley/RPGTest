@@ -39,6 +39,7 @@ text = "UI_CHALLENGE_MODE
 "
 
 [node name="Recruitment" type="Button" parent="Menu"]
+visible = false
 custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
 text = "UI_RECRUITMENT"

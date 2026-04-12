@@ -59,7 +59,7 @@ func _init() -> void:
 	
 func reset_player_party():
 	_participants.clear()
-	add_participants_async([&"player_warrior", &"player_chronomancer", &"player"])
+	add_participants_async([&"player_warrior", &"player_chronomancer"])
 	# add_participants_async([&"player"])
 
 func _ready():
