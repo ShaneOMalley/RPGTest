@@ -94,7 +94,7 @@
 
         "participant_data_path": "res://game/participants/player/player_base.tres",
 
-        "abilities": ["attack", "haste", "slow", "pass", "repeat_turn", "repeating_turn" ],
+        "abilities": ["attack", "haste", "pass", "repeat_turn", "repeating_turn" ],
         "ai": ""
     },
     "challenge_player_chronomancer_2" :
