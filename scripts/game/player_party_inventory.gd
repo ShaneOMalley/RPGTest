@@ -71,6 +71,14 @@ func remove_item(item_id: StringName) -> void:
 		item_data[item_id].unload_ability()
 		item_depleted.emit(item_id)
 		
+func clear_inventory() -> void:
+	var old_item_ids = items.keys().duplicate()
+	items.clear()
+	
+	for item_id in old_item_ids:
+		item_data[item_id].unload_ability()
+		item_depleted.emit(item_id)
+		
 func get_item_count(item_id: StringName) -> int:
 	return items.get(item_id, 0)
 

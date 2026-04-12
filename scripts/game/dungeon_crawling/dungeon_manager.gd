@@ -218,6 +218,7 @@ func end_dungeon_crawling() -> void:
 	TownManager.enter_town_scene()
 	PlayerPartyManager.reset_player_party()
 	BattleView.hide_ui()
+	PlayerPartyManager.inventory.clear_inventory()
 	
 var _player_input_blocked_reasons: Dictionary[Variant, bool]
 func get_player_input_blocked() -> bool:
