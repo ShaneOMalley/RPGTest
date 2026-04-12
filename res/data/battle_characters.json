@@ -178,7 +178,7 @@
     },
     "challenge_scaredy_cat_2" :
     {
-	    "name_key": "ENEMY_SCAREDY_CAT",
+	    "name_key": "ENEMY_FAT_SCAREDY_CAT",
         "max_hp": 130,
         "max_sp": 0,
         "strength": 30,

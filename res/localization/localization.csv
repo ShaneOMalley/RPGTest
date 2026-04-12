@@ -6,6 +6,7 @@ ENEMY_GHOUL,Ghoul,ゴースト
 ENEMY_GRIM_REAPER,Grim Reaper,死神
 ENEMY_OGRE,Ogre,オーガー
 ENEMY_SCAREDY_CAT,Scaredy Cat,弱虫
+ENEMY_FAT_SCAREDY_CAT,Fat Scaredy Cat,太い弱虫
 ITEM_POTION,Potion,ポーション
 UI_START_DUNGEON,Start Dungeon,はじめる
 UI_RECRUITMENT,Recruitment,仲間にする
