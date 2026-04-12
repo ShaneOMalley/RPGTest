@@ -8,3 +8,5 @@ func on_enter() -> void:
 	
 func _finish_battle() -> void:
 	BattleManager.finish_battle()
+	BattleView.hide_ui()
+	PlayerPartyManager.reload_participants()

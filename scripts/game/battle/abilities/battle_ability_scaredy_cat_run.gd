@@ -28,6 +28,7 @@ func _do_run_away() -> void:
 		turn_manipulation.turns.push_back(participant_turn)
 		
 	BattleManager.on_battle_turn_manipulation.emit([turn_manipulation])
+	BattleManager.force_lose()
 	
 	set_timer(0.6, _remove_participant)
 	BattleManager.block_fsm(1)

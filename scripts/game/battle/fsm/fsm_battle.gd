@@ -23,11 +23,11 @@ func _init() -> void:
 	add_transition("turn_decision_player", "turn_ability", func(): return BattleManager.has_queued_ability())
 	add_transition("turn_decision_enemy", "turn_ability", func(): return BattleManager.has_queued_ability())
 	add_transition("turn_ability", "turn_handle_death", func(): return !BattleManager.has_executing_ability())
-	add_transition("turn_handle_death", "turn_setup", func(): return !BattleManager.get_players().is_empty() and !BattleManager.get_enemies().is_empty())
-	add_transition("turn_handle_death", "post_battle_rewards", func(): return !BattleManager.get_players().is_empty() and BattleManager.get_enemies().is_empty() && !BattleManager.is_challenge_mode())
-	add_transition("turn_handle_death", "turn_finish_battle_challenge_mode", func(): return !BattleManager.get_players().is_empty() and BattleManager.get_enemies().is_empty() && BattleManager.is_challenge_mode())
-	add_transition("turn_handle_death", "game_over_normal", func(): return BattleManager.get_players().is_empty() && !BattleManager.is_challenge_mode())
-	add_transition("turn_handle_death", "game_over_challenge_mode", func(): return BattleManager.get_players().is_empty() && BattleManager.is_challenge_mode())
+	add_transition("turn_handle_death", "turn_setup", func(): return !BattleManager.get_is_forcing_lose() and (!BattleManager.get_players().is_empty() and !BattleManager.get_enemies().is_empty()))
+	add_transition("turn_handle_death", "post_battle_rewards", func(): return !BattleManager.get_is_forcing_lose() and (!BattleManager.get_players().is_empty() and BattleManager.get_enemies().is_empty() && !BattleManager.is_challenge_mode()))
+	add_transition("turn_handle_death", "turn_finish_battle_challenge_mode", func(): return !BattleManager.get_is_forcing_lose() and (!BattleManager.get_players().is_empty() and BattleManager.get_enemies().is_empty() && BattleManager.is_challenge_mode()))
+	add_transition("turn_handle_death", "game_over_normal", func(): return !BattleManager.is_challenge_mode() and (BattleManager.get_is_forcing_lose() or BattleManager.get_players().is_empty()))
+	add_transition("turn_handle_death", "game_over_challenge_mode", func(): return BattleManager.is_challenge_mode() and (BattleManager.get_is_forcing_lose() or BattleManager.get_players().is_empty()))
 	add_transition("post_battle_rewards", "turn_finish_battle", func(): return true)
 	
 func start() -> void:

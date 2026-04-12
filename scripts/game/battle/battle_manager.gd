@@ -66,6 +66,13 @@ func get_participant(uid: StringName) -> BattleParticipant:
 	var index := participants.find_custom((func(participant): return participant.uid == uid))
 	return participants[index]
 	
+var _is_forcing_lose := false
+func force_lose() -> void:
+	_is_forcing_lose = true
+	
+func get_is_forcing_lose() -> bool:
+	return _is_forcing_lose
+	
 # TODO: Cache this instead of filtering each time it's called
 func get_enemies() -> Array[BattleParticipant]:
 	# var filter_enemies := func(participant: BattleParticipant) -> bool:
@@ -424,6 +431,7 @@ func finish_battle():
 	_state_machine.queue_free()
 	_current_battle_rewards.clear()
 	on_battle_finished.emit()
+	_is_forcing_lose = false
 
 func complete_pre_setup():
 	_build_turns_list(MAX_TURNS)
