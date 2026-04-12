@@ -146,6 +146,11 @@ func get_is_executing() -> bool:
 func is_valid_for_target(_possible_target: BattleParticipant) -> bool:
 	return true
 	
+# This function must be subclassed and return false for targets that this ability could target, but not right now
+# e.g: a potion could target your allies, but it can't right now if that ally is on full health
+func is_target_blocked(_possible_target: BattleParticipant) -> bool:
+	return false
+	
 func requires_turn_target() -> bool:
 	return false
 	

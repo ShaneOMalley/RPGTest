@@ -213,6 +213,7 @@ func on_request_show_battle_menu(battle_participant: BattleParticipant, battle_t
 				if ability.auto_select_sole_target() && valid_participants.size() == 1:
 					entry.auto_target_id = valid_participants[0].uid
 		
+				entry.participant_blocked_func = ability.is_target_blocked.bind()
 				entries.append(entry)
 	
 	BattleView.show_battle_menu(entries)
@@ -240,6 +241,7 @@ func on_request_out_of_combat_menu() -> void:
 				entry.valid_for_target_func = func(target_uid): return ability.is_valid_for_target(PlayerPartyManager.get_participant_with_uid(target_uid))
 				entry.can_activate_func = func(): return !PlayerPartyManager.get_participants().filter(ability.is_valid_for_target).is_empty() and ability.has_enough_resources()
 				entry.ui_sort_priority = ability.ui_sort_priority
+				entry.participant_blocked_func = ability.is_target_blocked
 				
 				entries.append(entry)
 	

@@ -24,6 +24,9 @@ func _apply_healing_effect() -> void:
 func is_valid_for_target(_possible_target: BattleParticipant) -> bool:
 	return _possible_target.affiliation == _source.affiliation
 	
+func is_target_blocked(_possible_target: BattleParticipant) -> bool:
+	return _possible_target.get_attribute(&"_hp") >= _possible_target.get_attribute(&"_max_hp")
+
 func find_fallback_target() -> Array:
 	var possible_targets = BattleManager.participants.filter(func(participant): return is_valid_for_target(participant))
 	return [possible_targets.pick_random(), null]
