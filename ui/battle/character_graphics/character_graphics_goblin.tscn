@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=3 uid="uid://dmg04y4axhrup"]
+
+[ext_resource type="PackedScene" uid="uid://bl4r5viwx6r1i" path="res://ui/battle/character_graphics/character_graphics.tscn" id="1_8d1xj"]
+[ext_resource type="SpriteFrames" uid="uid://bgm1ilhhvmfb3" path="res://res/sprites/enemies/sprite_frame_goblin.tres" id="2_8d1xj"]
+
+[node name="CharacterGraphicsEnemy" instance=ExtResource("1_8d1xj")]
+texture = null
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." index="0"]
+
+[node name="AnimatedSprite2D" parent="AnimatedSpriteParent" index="0"]
+sprite_frames = ExtResource("2_8d1xj")
+animation = &"idle"
+offset = Vector2(128, 128)

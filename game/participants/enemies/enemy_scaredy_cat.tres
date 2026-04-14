@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="ParticipantData" load_steps=3 format=3 uid="uid://eiqhs5ngqa16"]
+
+[ext_resource type="PackedScene" uid="uid://woayde86jcta" path="res://ui/battle/character_graphics/character_graphics_scaredy_cat.tscn" id="1_xdnj3"]
+[ext_resource type="Script" uid="uid://gg7drsvm21dh" path="res://scripts/game/battle/participants/participant_data.gd" id="2_blp1r"]
+
+[resource]
+script = ExtResource("2_blp1r")
+character_graphics = ExtResource("1_xdnj3")
+metadata/_custom_type_script = "uid://gg7drsvm21dh"

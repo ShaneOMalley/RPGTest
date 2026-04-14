@@ -24,7 +24,7 @@
 		"magic": 15,
 		"vitality": 6,
 
-		"participant_data_path": "res://game/participants/player/player_base.tres",
+		"participant_data_path": "res://game/participants/player/player_chronomancer.tres",
 
 		"abilities": ["attack", "nuke", "haste", "slow", "skip_turn", "repeat_turn", "pass", "repeating_turn" ],
         "ai": ""
@@ -39,7 +39,7 @@
         "magic": 1,
         "vitality": 8,
 
-        "participant_data_path": "res://game/participants/player/player_base.tres",
+        "participant_data_path": "res://game/participants/player/player_warrior.tres",
 
         "abilities": ["attack", "power_charge", "power_charge_attack", "nuke", "pass", "repeating_turn" ],
         "ai": ""
@@ -55,7 +55,7 @@
 		"magic": 4,
 		"vitality": 1,
 
-		"participant_data_path": "res://game/participants/enemies/enemy_goblin.tres",
+		"participant_data_path": "res://game/participants/enemies/enemy_ghoul.tres",
 
 		"abilities": ["attack", "pass", "repeating_turn" ],
         "ai": "",
@@ -92,7 +92,7 @@
         "magic": 15,
         "vitality": 6,
 
-        "participant_data_path": "res://game/participants/player/player_base.tres",
+        "participant_data_path": "res://game/participants/player/player_chronomancer.tres",
 
         "abilities": ["attack", "haste", "pass", "repeat_turn", "repeating_turn" ],
         "ai": ""
@@ -107,7 +107,7 @@
         "magic": 15,
         "vitality": 6,
 
-        "participant_data_path": "res://game/participants/player/player_base.tres",
+        "participant_data_path": "res://game/participants/player/player_chronomancer.tres",
 
         "abilities": ["attack", "pass", "repeat_turn", "repeating_turn" ],
         "ai": ""
@@ -122,7 +122,7 @@
         "magic": 15,
         "vitality": 6,
 
-        "participant_data_path": "res://game/participants/player/player_base.tres",
+        "participant_data_path": "res://game/participants/player/player_chronomancer.tres",
 
         "abilities": ["attack", "pass", "repeat_turn", "repeating_turn" ],
         "ai": ""
@@ -137,7 +137,7 @@
         "magic": 1,
         "vitality": 8,
 
-        "participant_data_path": "res://game/participants/player/player_base.tres",
+        "participant_data_path": "res://game/participants/player/player_warrior.tres",
 
         "abilities": ["attack", "power_charge", "power_charge_attack", "pass", "repeating_turn" ],
         "ai": ""
@@ -152,7 +152,7 @@
         "magic": 1,
         "vitality": 8,
 
-        "participant_data_path": "res://game/participants/player/player_base.tres",
+        "participant_data_path": "res://game/participants/player/player_warrior.tres",
 
         "abilities": ["attack", "power_charge", "power_charge_attack", "pass", "repeating_turn" ],
         "ai": ""
@@ -168,7 +168,7 @@
         "magic": 5,
         "vitality": 3,
 
-        "participant_data_path": "res://game/participants/enemies/enemy_goblin.tres",
+        "participant_data_path": "res://game/participants/enemies/enemy_scaredy_cat.tres",
 
         "abilities": [ "pass", "repeating_turn", "scaredy_cat_run" ],
         "ai": "challenge_scaredy_cat",
@@ -186,7 +186,7 @@
         "magic": 5,
         "vitality": 3,
 
-        "participant_data_path": "res://game/participants/enemies/enemy_goblin.tres",
+        "participant_data_path": "res://game/participants/enemies/enemy_scaredy_cat.tres",
 
         "abilities": [ "pass", "repeating_turn", "scaredy_cat_run" ],
         "ai": "challenge_scaredy_cat",
@@ -223,7 +223,7 @@
         "magic": 5,
         "vitality": 1000,
 
-        "participant_data_path": "res://game/participants/enemies/enemy_goblin.tres",
+        "participant_data_path": "res://game/participants/enemies/enemy_grim_reaper.tres",
 
         "abilities": [ "pass", "grim_reaper_kill", "repeating_turn" ],
         "ai": "challenge_grim_reaper",

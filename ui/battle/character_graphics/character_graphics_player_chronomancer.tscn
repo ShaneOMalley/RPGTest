@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=3 uid="uid://d36etta2h7y8m"]
+
+[ext_resource type="PackedScene" uid="uid://bl4r5viwx6r1i" path="res://ui/battle/character_graphics/character_graphics.tscn" id="1_tobjm"]
+[ext_resource type="SpriteFrames" uid="uid://df4uex5c8lmdy" path="res://res/sprites/player/sprite_frames_player_chronomancer.tres" id="2_tobjm"]
+
+[node name="CharacterGraphicsEnemy" instance=ExtResource("1_tobjm")]
+texture = null
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." index="0"]
+
+[node name="AnimatedSprite2D" parent="AnimatedSpriteParent" index="0"]
+sprite_frames = ExtResource("2_tobjm")
+animation = &"attack"
+offset = Vector2(128, 128)

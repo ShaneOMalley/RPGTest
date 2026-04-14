@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://by8ko4w2dgslh"]
+[gd_scene load_steps=12 format=3 uid="uid://by8ko4w2dgslh"]
 
 [ext_resource type="PackedScene" uid="uid://bk3tvyhf7s8eg" path="res://ui/battle/ui_enemy.tscn" id="1_02iql"]
 [ext_resource type="Script" uid="uid://pkhib2brsl7a" path="res://scripts/ui/battle/ui_battle.gd" id="1_6je2w"]
@@ -6,6 +6,7 @@
 [ext_resource type="Script" uid="uid://8qrnrxijldix" path="res://scripts/ui/battle/ui_battle_menu_entry.gd" id="3_wfc18"]
 [ext_resource type="Script" uid="uid://byp4up7voodce" path="res://scripts/ui/battle/ui_battle_menu.gd" id="4_3y3fr"]
 [ext_resource type="PackedScene" uid="uid://dqaaps217u72n" path="res://ui/battle/turns_ui.tscn" id="5_uml01"]
+[ext_resource type="Theme" uid="uid://cov6wdxer57mb" path="res://ui/button_theme.tres" id="7_75018"]
 [ext_resource type="PackedScene" uid="uid://cfd7pgu3r6snw" path="res://ui/battle/player_party_ui.tscn" id="7_otsaf"]
 
 [sub_resource type="Animation" id="Animation_uml01"]
@@ -125,11 +126,13 @@ grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 2.0
+theme_override_constants/separation = 1
 
 [node name="BattleMenuEntryPrototype" type="Button" parent="BattleMenu/BattleMenuBackground/BattleMenu"]
 visible = false
 custom_minimum_size = Vector2(0, 30)
 layout_mode = 2
+theme = ExtResource("7_75018")
 text = "Prototype"
 alignment = 0
 script = ExtResource("3_wfc18")

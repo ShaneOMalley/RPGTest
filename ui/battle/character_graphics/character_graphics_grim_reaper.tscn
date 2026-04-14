@@ -1,0 +1,15 @@
+[gd_scene load_steps=3 format=3 uid="uid://slukkgwsy2tp"]
+
+[ext_resource type="PackedScene" uid="uid://bl4r5viwx6r1i" path="res://ui/battle/character_graphics/character_graphics.tscn" id="1_ilyvh"]
+[ext_resource type="SpriteFrames" uid="uid://bhpxpyc3r5rvm" path="res://ui/battle/character_graphics/sprite_frame_grim_reaper.tres" id="4_igkhn"]
+
+[node name="CharacterGraphicsEnemy" instance=ExtResource("1_ilyvh")]
+texture = null
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." index="0"]
+
+[node name="AnimatedSprite2D" parent="AnimatedSpriteParent" index="0"]
+sprite_frames = ExtResource("4_igkhn")
+animation = &"idle"
+frame_progress = 0.245264
+offset = Vector2(128, 128)

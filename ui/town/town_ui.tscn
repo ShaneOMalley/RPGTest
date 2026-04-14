@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://cojkedoquhitj"]
+[gd_scene load_steps=3 format=3 uid="uid://cojkedoquhitj"]
 
 [ext_resource type="Script" uid="uid://cfuxbv0xcaimf" path="res://scripts/ui/town/ui_town.gd" id="1_76fhd"]
+[ext_resource type="Theme" uid="uid://cov6wdxer57mb" path="res://ui/button_theme.tres" id="2_whrt3"]
 
 [node name="TownUI" type="Control"]
 layout_mode = 3
@@ -29,12 +30,14 @@ alignment = 1
 [node name="StartDungeon" type="Button" parent="Menu"]
 custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
+theme = ExtResource("2_whrt3")
 text = "UI_START_DUNGEON
 "
 
 [node name="ChallengeMode" type="Button" parent="Menu"]
 custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
+theme = ExtResource("2_whrt3")
 text = "UI_CHALLENGE_MODE
 "
 
@@ -47,6 +50,7 @@ text = "UI_RECRUITMENT"
 [node name="ChangeLanguage" type="Button" parent="Menu"]
 custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
+theme = ExtResource("2_whrt3")
 text = "UI_LANGUAGE_CHANGE_TO_JAPANESE
 "
 

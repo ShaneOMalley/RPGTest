@@ -1,0 +1,86 @@
+[gd_resource type="SpriteFrames" load_steps=12 format=3 uid="uid://bhpxpyc3r5rvm"]
+
+[ext_resource type="Texture2D" uid="uid://cxvoyrswplclf" path="res://res/sprites/enemies/grim_reaper.png" id="1_aktsx"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jw114"]
+atlas = ExtResource("1_aktsx")
+region = Rect2(0, 0, 256, 256)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0nd71"]
+atlas = ExtResource("1_aktsx")
+region = Rect2(256, 0, 256, 256)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gph6p"]
+atlas = ExtResource("1_aktsx")
+region = Rect2(512, 0, 256, 256)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_i66to"]
+atlas = ExtResource("1_aktsx")
+region = Rect2(768, 0, 256, 256)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_h0tu1"]
+atlas = ExtResource("1_aktsx")
+region = Rect2(0, 256, 256, 256)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_celx3"]
+atlas = ExtResource("1_aktsx")
+region = Rect2(256, 256, 256, 256)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gbbma"]
+atlas = ExtResource("1_aktsx")
+region = Rect2(512, 256, 256, 256)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_sq1qr"]
+atlas = ExtResource("1_aktsx")
+region = Rect2(768, 256, 256, 256)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_aktsx"]
+atlas = ExtResource("1_aktsx")
+region = Rect2(0, 0, 256, 256)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_y6cab"]
+atlas = ExtResource("1_aktsx")
+region = Rect2(0, 512, 256, 256)
+
+[resource]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jw114")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0nd71")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gph6p")
+}, {
+"duration": 3.0,
+"texture": SubResource("AtlasTexture_i66to")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_h0tu1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_celx3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gbbma")
+}, {
+"duration": 10.0,
+"texture": SubResource("AtlasTexture_sq1qr")
+}],
+"loop": false,
+"name": &"attack",
+"speed": 15.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_aktsx")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_y6cab")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}]

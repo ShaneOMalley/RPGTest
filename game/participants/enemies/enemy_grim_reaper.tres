@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="ParticipantData" load_steps=3 format=3 uid="uid://democtijec0nk"]
+
+[ext_resource type="PackedScene" uid="uid://slukkgwsy2tp" path="res://ui/battle/character_graphics/character_graphics_grim_reaper.tscn" id="1_qjc7y"]
+[ext_resource type="Script" uid="uid://gg7drsvm21dh" path="res://scripts/game/battle/participants/participant_data.gd" id="2_6jlxm"]
+
+[resource]
+script = ExtResource("2_6jlxm")
+character_graphics = ExtResource("1_qjc7y")
+metadata/_custom_type_script = "uid://gg7drsvm21dh"

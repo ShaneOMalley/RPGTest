@@ -1,0 +1,54 @@
+[gd_resource type="SpriteFrames" load_steps=6 format=3 uid="uid://df4uex5c8lmdy"]
+
+[ext_resource type="Texture2D" uid="uid://c38eqgvo1t63d" path="res://res/sprites/player/player_chronomancer_spritesheet.png" id="1_qhsvt"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qhsvt"]
+atlas = ExtResource("1_qhsvt")
+region = Rect2(256, 0, 256, 256)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rkjyb"]
+atlas = ExtResource("1_qhsvt")
+region = Rect2(256, 256, 256, 256)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1om4d"]
+atlas = ExtResource("1_qhsvt")
+region = Rect2(0, 256, 256, 256)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_iuj0g"]
+atlas = ExtResource("1_qhsvt")
+region = Rect2(0, 0, 256, 256)
+
+[resource]
+animations = [{
+"frames": [{
+"duration": 4.0,
+"texture": SubResource("AtlasTexture_qhsvt")
+}],
+"loop": false,
+"name": &"attack",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 4.0,
+"texture": SubResource("AtlasTexture_rkjyb")
+}],
+"loop": false,
+"name": &"casting",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 4.0,
+"texture": SubResource("AtlasTexture_1om4d")
+}],
+"loop": false,
+"name": &"getting_hit",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_iuj0g")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}]

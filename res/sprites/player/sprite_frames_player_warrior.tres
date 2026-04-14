@@ -1,0 +1,54 @@
+[gd_resource type="SpriteFrames" load_steps=6 format=3 uid="uid://di4cpu6s6obyw"]
+
+[ext_resource type="Texture2D" uid="uid://bnjy1b877hi6w" path="res://res/sprites/player/player_warrior_spritesheet.png" id="1_811ui"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6va0n"]
+atlas = ExtResource("1_811ui")
+region = Rect2(256, 0, 256, 256)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vf87y"]
+atlas = ExtResource("1_811ui")
+region = Rect2(256, 256, 256, 256)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_s3hie"]
+atlas = ExtResource("1_811ui")
+region = Rect2(0, 256, 256, 256)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2r0f3"]
+atlas = ExtResource("1_811ui")
+region = Rect2(0, 0, 256, 256)
+
+[resource]
+animations = [{
+"frames": [{
+"duration": 4.0,
+"texture": SubResource("AtlasTexture_6va0n")
+}],
+"loop": false,
+"name": &"attack",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 4.0,
+"texture": SubResource("AtlasTexture_vf87y")
+}],
+"loop": false,
+"name": &"casting",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 4.0,
+"texture": SubResource("AtlasTexture_s3hie")
+}],
+"loop": false,
+"name": &"getting_hit",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2r0f3")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}]

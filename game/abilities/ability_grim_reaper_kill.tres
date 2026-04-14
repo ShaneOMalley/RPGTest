@@ -9,4 +9,5 @@ script = ExtResource("1_1tnad")
 fx_activate = ExtResource("1_odxsi")
 fx_affect_target = ExtResource("2_odxsi")
 sp_cost = 0
+ui_sort_priority = 0
 metadata/_custom_type_script = "uid://d4f1cetlvgfb"

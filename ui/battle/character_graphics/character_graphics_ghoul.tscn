@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=3 uid="uid://bii8fu8vwvq4s"]
+
+[ext_resource type="PackedScene" uid="uid://bl4r5viwx6r1i" path="res://ui/battle/character_graphics/character_graphics.tscn" id="1_mh564"]
+[ext_resource type="SpriteFrames" uid="uid://dspflirxkd45k" path="res://res/sprites/enemies/sprite_frames_ghoul.tres" id="2_mh564"]
+
+[node name="CharacterGraphicsEnemy" instance=ExtResource("1_mh564")]
+texture = null
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." index="0"]
+
+[node name="AnimatedSprite2D" parent="AnimatedSpriteParent" index="0"]
+sprite_frames = ExtResource("2_mh564")
+animation = &"idle"
+offset = Vector2(128, 128)

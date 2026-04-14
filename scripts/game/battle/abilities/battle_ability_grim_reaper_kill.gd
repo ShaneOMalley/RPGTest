@@ -6,6 +6,8 @@ func execute(in_target: BattleParticipant, in_turn_target: BattleTurn = null) ->
 	super.execute(in_target, in_turn_target)
 
 	# BattleManager.play_fx(fx_activate, _source)
+	BattleManager.play_fx(fx_activate, _source)
+	BattleManager.play_animation(&"attack", _source)
 
 	set_lifetime(3)
 	set_timer(0.2, show_message.bind(2.6))

@@ -93,6 +93,9 @@ func clear_turns() -> void:
 		delete_turn(turn_uid)
 	
 func play_animation_for_turn(turn_uid: int, anim_name: StringName) -> void:
+	if !_uid_to_ui_turn.has(turn_uid):
+		return
+	
 	var turn_ui := _uid_to_ui_turn[turn_uid]
 	turn_ui.play_animation(anim_name)
 	
