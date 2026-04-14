@@ -47,8 +47,8 @@ func is_valid_for_target(possible_target: BattleParticipant) -> bool:
 func get_message() -> String:
 	if _target:
 		if _target == _source:
-			return "%s senses there will be no more death. It leaves" % _source.get_display_name()
+			return tr("ABILITY_MESSAGE_GRIM_REAPER_LEAVE").format({"source": _source.get_display_name()})
 		else:
-			return "%s was near enough to death, so %s guides them to the afterlife!" % [_target.get_display_name(), _source.get_display_name()]
+			return tr("ABILITY_MESSAGE_GRIM_REAPER_KILL").format({"source": _source.get_display_name(), "target": _target.get_display_name()})
 	else:
-		return "There are no souls near death. %s waits..." % _source.get_display_name()
+		return tr("ABILITY_MESSAGE_GRIM_REAPER_WAIT").format({"source": _source.get_display_name()})

@@ -11,7 +11,7 @@
 
 		"participant_data_path": "res://game/participants/player/player_base.tres",
 
-		"abilities": ["attack", "nuke", "skip_turn", "repeat_turn", "pass", "haste", "slow", "repeating_turn" ],
+		"abilities": ["attack", "skip_turn", "repeat_turn", "pass", "haste", "slow", "repeating_turn" ],
         "ai": ""
 	},
 	"player_chronomancer" :
@@ -26,7 +26,7 @@
 
 		"participant_data_path": "res://game/participants/player/player_chronomancer.tres",
 
-		"abilities": ["attack", "nuke", "haste", "slow", "skip_turn", "repeat_turn", "pass", "repeating_turn" ],
+		"abilities": ["attack", "haste", "slow", "skip_turn", "repeat_turn", "pass", "repeating_turn" ],
         "ai": ""
 	},
     "player_warrior" :
@@ -41,7 +41,7 @@
 
         "participant_data_path": "res://game/participants/player/player_warrior.tres",
 
-        "abilities": ["attack", "power_charge", "power_charge_attack", "nuke", "pass", "repeating_turn" ],
+        "abilities": ["attack", "power_charge", "power_charge_attack", "pass", "repeating_turn" ],
         "ai": ""
     },
 

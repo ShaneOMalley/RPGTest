@@ -855,6 +855,7 @@ transform = Transform3D(-8.41444e-08, 0, 1.925, 0, 1.925, 0, -1.925, 0, -8.41444
 transform = Transform3D(-1.925, 0, -1.68289e-07, 0, 1.925, 0, 1.68289e-07, 0, -1.925, 95, 0, 58)
 
 [node name="Debug" type="Node3D" parent="."]
+visible = false
 
 [node name="@MeshInstance3D@29685" type="MeshInstance3D" parent="Debug"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15, 1, 18)

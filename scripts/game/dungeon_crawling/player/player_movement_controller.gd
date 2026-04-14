@@ -142,3 +142,5 @@ func _process(delta: float):
 
 	if !is_moving && !DungeonManager.get_player_input_blocked():
 		_handle_input(delta)
+		
+	

@@ -134,7 +134,7 @@ func _setup_interactable_data(in_interactable_data):#: Dictionary[Vector2i, Dict
 		match interactable_id:
 			&"downstairs":
 				if num_downstairs_doors < max_downstairs_doors:
-					interactable_data[position] = DungeonInteractable.new(direction, goto_next_floor, "[E] Go Downstairs")
+					interactable_data[position] = DungeonInteractable.new(direction, goto_next_floor, tr("DUNGEON_GO_DOWNSTAIRS"))
 				else:
 					var closest_downstairs_door := get_closest_interactable_mesh(downstairs_doors, position.x, position.y)
 					closest_downstairs_door.visible = false
@@ -230,6 +230,6 @@ func set_player_input_blocked_reason(reason: Variant, blocked: bool) -> void:
 # func _ready():
 # 	reset()
 
-# func _process(delta: float) -> void:
-# 	if Input.is_action_just_pressed(&"ui_right"):
-# 		goto_next_floor()
+func _process(delta: float) -> void:
+	if !get_player_input_blocked() and Input.is_action_just_pressed(&"debug_end_dungeon_crawling"):
+		end_dungeon_crawling()
