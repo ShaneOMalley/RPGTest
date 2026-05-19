@@ -17,13 +17,11 @@ func refresh_ui() -> void:
 	if Input.is_key_pressed(KEY_9):
 		ChallengeManager.set_unlock_level(ChallengeManager.MAX_CHALLENGES + 1)
 		
-	var unlock_level = ChallengeManager.get_unlock_level()
 	for challenge_number in challenge_buttons:
 		var challenge_button = challenge_buttons[challenge_number]
-		challenge_button.disabled = unlock_level < challenge_number
-		challenge_button.icon = check_icon if unlock_level > challenge_number else null
+		challenge_button.icon = check_icon if ChallengeManager.get_is_challenge_completed(challenge_number) else null
 		
-	if unlock_level >= ChallengeManager.MAX_CHALLENGES + 1:
+	if ChallengeManager.get_is_all_challenges_completed():
 		$AllChallengesComplete.show()
 		
 	($Menu/Back as Button).grab_focus()
