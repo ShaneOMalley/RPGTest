@@ -1,6 +1,6 @@
 key,en,jp
 PLAYER_WARRIOR,Warrior,戦士
-PLAYER_CHRONOMANCER,Chronomancer,時間の魔術師
+PLAYER_CHRONOMANCER,Chronomancer,時間の賢者
 ENEMY_GOBLIN,Goblin,ゴブリン
 ENEMY_GHOUL,Ghoul,ゴースト
 ENEMY_GRIM_REAPER,Grim Reaper,死神
@@ -13,7 +13,7 @@ UI_RECRUITMENT,Recruitment,仲間にする
 UI_RECRUITMENT_RECRUITED,Recruited {participant},「{participant}」を仲間にした！
 UI_RECRUITMENT_RECRUIT,Recruit {participant} ({gold} gold),「{participant}」を仲間にする（{gold}金）
 UI_RECRUITMENT_GOLD,Gold: {gold},金:{gold}
-UI_CHALLENGE_MODE,Challenge Mode,難題モード
+UI_CHALLENGE_MODE,Challenge Mode,チャレンジモード
 UI_CHALLENGE_MODE_LEVEL,Level {level_number},レベル{level_number}
 UI_LANGUAGE_CHANGE_TO_ENGLISH,Change Language to English,Change Language to English
 UI_LANGUAGE_CHANGE_TO_JAPANESE,日本語に変更する,日本語に変更する
