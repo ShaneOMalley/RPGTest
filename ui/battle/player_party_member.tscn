@@ -4,6 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://dlts5y3fepqfr" path="res://ui/battle/character_graphics/character_graphics_player_base.tscn" id="2_0iy02"]
 
 [node name="ColorRect" type="ColorRect"]
+self_modulate = Color(0, 0, 0, 1)
 custom_minimum_size = Vector2(212, 94)
 offset_right = 212.0
 offset_bottom = 94.0
@@ -15,10 +16,10 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 2.0
-offset_top = 2.0
-offset_right = -2.0
-offset_bottom = -2.0
+offset_left = 4.0
+offset_top = 4.0
+offset_right = -4.0
+offset_bottom = -4.0
 grow_horizontal = 2
 grow_vertical = 2
 color = Color(0.507972, 0.507972, 0.507972, 1)

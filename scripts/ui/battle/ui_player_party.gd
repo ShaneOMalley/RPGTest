@@ -70,7 +70,11 @@ func update_player_hp(uid: StringName, hp: int, max_hp: int) -> void:
 func update_player_sp(uid: StringName, sp: int, max_sp: int) -> void:
 	var index = _player_to_ui_index[uid]
 	get_player_ui(index).update_sp(sp, max_sp)
-
+	
+func set_player_highlighted(uid: StringName, highlighted: bool) -> void:
+	var index = _player_to_ui_index[uid]
+	get_player_ui(index).set_highlighted(highlighted)
+	
 func remove_player(uid: StringName) -> void:
 	var index = _player_to_ui_index[uid]
 	get_player_ui(index).hide_info()

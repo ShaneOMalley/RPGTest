@@ -78,6 +78,9 @@ func update_player_hp(uid: StringName, hp: int, max_hp: int) -> void:
 	
 func update_player_sp(uid: StringName, sp: int, max_sp: int) -> void:
 	player_party_ui.update_player_sp(uid, sp, max_sp)
+	
+func set_player_highlighted(uid: StringName, highlighted: bool) -> void:
+	player_party_ui.set_player_highlighted(uid, highlighted)
 
 func remove_player(uid: StringName) -> void:
 	player_party_ui.remove_player(uid)

@@ -27,6 +27,8 @@ signal on_request_out_of_combat_menu()
 signal on_request_hide_battle_menu()
 signal on_battle_participant_removed(participant: BattleParticipant)
 signal on_battle_turns_updated(turns: Array[BattleTurn])
+signal on_turn_start(turn_uid: int)
+signal on_turn_end(turn_uid: int)
 
 # todo: just make these public?
 var _turns: Array[BattleTurn]
@@ -200,12 +202,17 @@ func set_battle_start_time(in_battle_start_time: float) -> void:
 var _current_turn: BattleTurn
 var _last_actual_turn_time_for_participant: Dictionary[BattleParticipant, float]
 func goto_next_turn() -> void:
+	if _current_turn:
+		on_turn_end.emit(_current_turn.uid)
+	
 	if _turns.front() == _current_turn:
 		_turns.pop_front()
 		
 	_current_turn = _turns.front()
 	_last_actual_turn_time_for_participant[_current_turn.participant] = _current_turn.time
 	_battle_time = _current_turn.time
+	
+	on_turn_start.emit(_current_turn.uid)
 	
 	_build_turns_list(MAX_TURNS - _turns.size())
 	on_battle_turns_updated.emit(_turns)

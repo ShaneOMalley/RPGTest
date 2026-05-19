@@ -9,6 +9,9 @@ var _character_graphics_instance: UICharacterGraphics
 func populate(participant_name: StringName, character_graphics: PackedScene, hp: int, max_hp: int, sp: int, max_sp: int) -> void:
 	_character_graphics_instance = character_graphics.instantiate()
 	_character_graphics_instance.play_animation(&"idle")
+	
+	for child in $Border/Content/CharacterGraphicsParent.get_children():
+		child.queue_free()
 	$Border/Content/CharacterGraphicsParent.add_child(_character_graphics_instance)
 	$Border/Content.show()
 
@@ -35,3 +38,6 @@ func hide_info() -> void:
 	
 func play_animation(anim_id: StringName) -> void:
 	_character_graphics_instance.play_animation(anim_id)
+	
+func set_highlighted(highlighted: bool) -> void:
+	$Border.self_modulate = Color.GOLD if highlighted else Color.WHITE

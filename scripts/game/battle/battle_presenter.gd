@@ -83,6 +83,24 @@ func on_ability_out_of_combat_execute(ability_id: StringName, source_id: StringN
 	var target := PlayerPartyManager.get_participant_with_uid(target_id)
 	BattleManager.execute_ability_out_of_combat(ability, source, target)
 	
+func on_turn_start(turn_uid: int) -> void:
+	var index = BattleManager._turns.find_custom(func(turn): return turn.uid == turn_uid)
+	if index == -1:
+		return
+		
+	var participant = BattleManager._turns[index].participant
+	if participant.affiliation == BattleManager.Affiliation.PLAYER:
+		BattleView.set_player_highlighted(participant.uid, true)
+	
+func on_turn_end(turn_uid: int) -> void:
+	var index = BattleManager._turns.find_custom(func(turn): return turn.uid == turn_uid)
+	if index == -1:
+		return
+		
+	var participant = BattleManager._turns[index].participant
+	if participant.affiliation == BattleManager.Affiliation.PLAYER:
+		BattleView.set_player_highlighted(participant.uid, false)
+	
 func on_battle_menu_show() -> void:
 	DungeonManager.set_player_input_blocked_reason(&"battle_menu", true)
 	
@@ -277,6 +295,9 @@ func _ready():
 	BattleManager.on_request_hide_battle_menu.connect(on_request_hide_battle_menu)
 	BattleManager.on_battle_participant_removed.connect(on_battle_participant_removed)
 	BattleManager.on_battle_turns_updated.connect(on_battle_turns_updated)
+	
+	BattleManager.on_turn_start.connect(on_turn_start)
+	BattleManager.on_turn_end.connect(on_turn_end)
 	
 	BattleView.on_ability_and_target_selected.connect(on_ability_and_target_selected)
 	BattleView.on_ability_out_of_combat_execute.connect(on_ability_out_of_combat_execute)
