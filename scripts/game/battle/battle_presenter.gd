@@ -39,6 +39,7 @@ func on_battle_finished() -> void:
 	_previous_battle_turns.clear()
 	BattleView.hide_battle_ui()
 	BattleView.clear_turns()
+	BattleView.clear_all_player_highlights()
 	
 func on_dungeon_crawling_start(_player_position: Vector3, _player_rotation: float) -> void:
 	BattleView.setup_battle_ui()

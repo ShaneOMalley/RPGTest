@@ -75,6 +75,11 @@ func set_player_highlighted(uid: StringName, highlighted: bool) -> void:
 	var index = _player_to_ui_index[uid]
 	get_player_ui(index).set_highlighted(highlighted)
 	
+func clear_all_player_highlights() -> void:
+	for player_uid in _player_to_ui_index:
+		var index = _player_to_ui_index[player_uid]
+		get_player_ui(index).set_highlighted(false)
+	
 func remove_player(uid: StringName) -> void:
 	var index = _player_to_ui_index[uid]
 	get_player_ui(index).hide_info()
